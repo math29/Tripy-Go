@@ -138,7 +138,7 @@ test:
 production:
   sessions:
     default:
-      database: <%= E<%= ENV['OPENSHIFT_APP_NAME'] %>NV['OPENSHIFT_APP_NAME'] %>
+      database: <%= ENV['OPENSHIFT_APP_NAME'] %>
       hosts:
         - <%="#{ENV['OPENSHIFT_MONGODB_DB_HOST']}:#{ENV['OPENSHIFT_MONGODB_DB_PORT']}" %>
       username: <%= ENV['OPENSHIFT_MONGODB_DB_USERNAME'] %>
