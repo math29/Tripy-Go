@@ -1,2 +1,0 @@
-# WTC
-World Travel Community
