@@ -4,7 +4,13 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
 
+# We use mondoid for mongoDB gesture
 gem 'mongoid', git: 'https://github.com/mongoid/mongoid.git'
+
+# File upload
+gem 'carrierwave'
+# Allow to resize our images
+gem 'mini_magick', '3.8.0'
 
 # Add bootstrap for rails
 gem 'twitter-bootstrap-rails'
@@ -30,6 +36,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Users authentification
 gem 'devise'
+#Add Gravatar to our app
+gem 'gravtastic'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
