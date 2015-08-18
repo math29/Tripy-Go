@@ -5,9 +5,11 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.3'
 
 gem 'mongoid', git: 'https://github.com/mongoid/mongoid.git'
-gem 'twitter-bootstrap-rails'
-gem 'less-rails'
 
+# Add bootstrap for rails
+gem 'twitter-bootstrap-rails'
+# Add Less
+gem 'less-rails'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
