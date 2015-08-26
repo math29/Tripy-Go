@@ -1,7 +1,14 @@
 <div class="navbar-float" ng-include="'components/navbar/navbar.html'"></div>
 
-<div id="map"></div>
+<div class="travels">
+	<div class="panel panel-default travel-panel" ng-repeat="travel in travels">
+		<div class="panel-heading">
+			{{ travel.title }}
+		</div>
+		<div class="panel-body">
+			{{ travel.description }}
+		</div>
+	</div>
+</div>
 
-<script async defer
-  	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3BOlOv7Kg4XD_x3P9sAmHEEFCCyam4EU&callback=initMap">
-</script>
+<ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>

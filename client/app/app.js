@@ -6,9 +6,11 @@ angular.module('wtcApp', [
   'ngSanitize',
   'ngRoute',
   'btford.socket-io',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'uiGmapgoogle-maps'
 ])
-  .config(function ($routeProvider, $locationProvider, $httpProvider) {
+
+  .config(function ($routeProvider, $locationProvider, $httpProvider, uiGmapGoogleMapApiProvider) {
     $routeProvider
       .otherwise({
         redirectTo: '/'
@@ -16,6 +18,12 @@ angular.module('wtcApp', [
 
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
+
+    uiGmapGoogleMapApiProvider.configure({
+      key: 'AIzaSyC3BOlOv7Kg4XD_x3P9sAmHEEFCCyam4EU',
+      v: '3.17',
+      libraries: 'weather,geometry,visualization'
+    });
   })
 
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
