@@ -1,21 +1,21 @@
 'use strict';
 
-describe('Controller: StartWithCtrl', function () {
+describe('Controller: FindAPlaceCtrl', function () {
 
   // load the controller's module
   beforeEach(module('wtcApp'));
 
-  var StartWithCtrl, scope;
+  var FindAPlaceCtrl, scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    StartWithCtrl = $controller('StartWithCtrl', {
+    FindAPlaceCtrl = $controller('FindAPlaceCtrl', {
       $scope: scope
     });
   }));
 
-  it('should display something', function () {
+  it('should ...', function () {
     expect(1).toEqual(1);
   });
 });
