@@ -1,0 +1,17 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="col-md-12">
+	<p>Donnez nous des renseignements sur vous et vos envies pour ce voyage !</p>
+
+	<form class="travel-form" ng-submit="addTrip()" name="travelForm">
+	    <textarea class="form-control" ng-model="newComment" rows="3" placeholder="Enter a new trip" required></textarea>
+	    <input class="btn btn-primary" type="submit" value="Post">
+  	</form>
+
+  	<ul class="travels-list">
+	    <li ng-repeat="travel in travels">
+			<header>{{ travel.author.id }}</header>
+			<!-- <p>{{ trip.content }}</p> -->
+	    </li>
+  	</ul>
+</div>
