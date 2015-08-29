@@ -9,7 +9,7 @@ angular.module('wtcApp')
     }
 
     $scope.addTrip = function() {
-		$http.post('/api/travels', { content: $scope.newTravel });
+		$http.post('/api/travels', $scope.newTravel);
     };
 
     // Grab the initial set of available comments

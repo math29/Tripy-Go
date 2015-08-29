@@ -5,6 +5,9 @@ angular.module('wtcApp')
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
+    },{
+      'title': 'Let\'s travel !',
+      'link': '/start_with'
     }];
 
     $scope.isCollapsed = true;

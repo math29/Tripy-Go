@@ -11,7 +11,13 @@ var TravelSchema = new Schema({
   author: {
     type: Schema.Types.ObjectId,
     ref: 'User'
-  }
+  },
+  budget: Number,
+  nbTravellers: Number,
+  date_departure: Date,
+  date_return: Date,
+  month_departure: Date,
+  region_idea: { type: String, default: "" }
 });
 
 module.exports = mongoose.model('Travel', TravelSchema);

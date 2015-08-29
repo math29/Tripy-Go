@@ -1,12 +1,38 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="col-md-12">
-	<p>Donnez nous des renseignements sur vous et vos envies pour ce voyage !</p>
+	<div class="container">
+		<h2>Donnez nous des renseignements sur vous et vos envies pour ce voyage !</h2>
+		<br />
 
-	<form class="travel-form" ng-submit="addTrip()" name="travelForm">
-	    <textarea class="form-control" ng-model="newComment" rows="3" placeholder="Enter a new trip" required></textarea>
-	    <input class="btn btn-primary" type="submit" value="Post">
-  	</form>
+		<div class="row">
+			<form class="travel-form" ng-submit="addTrip()" name="travelForm">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">€</span>
+						<input type="number" ng-model="newTravel.budget" class="form-control" aria-label="Budget pour votre voyage" placeholder="Budget pour votre voyage">
+						<span class="input-group-addon">.00</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+						<input type="Number" ng-model="newTravel.nbTravellers" class="form-control" aria-label="Nombre de voyageurs" placeholder="Nombre de voyageurs">
+					</div>
+			    </div>
+			    <div class="form-group choice-type-dates">
+			    	<div class="btn-group" role="group" aria-label="Type dates idea">
+						<button type="button" class="btn btn-default">Dates précises</button>
+						<button type="button" class="btn btn-default">Mois</button>
+					</div>
+			    </div>
+			    <div class="form-group">
+			    	<input class="btn btn-primary" type="submit" value="Post">
+			    </div>
+		  	</form>
+	  	</div>
+	</div>
+
 
   	<ul class="travels-list">
 	    <li ng-repeat="travel in travels">
