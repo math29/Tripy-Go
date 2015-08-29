@@ -4,6 +4,7 @@ describe('Controller: StartWithCtrl', function () {
 
   // load the controller's module
   beforeEach(module('wtcApp'));
+  beforeEach(module('socketMock'));
 
   var StartWithCtrl, scope;
 
