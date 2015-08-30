@@ -4,6 +4,7 @@ describe('Controller: FindAPlaceCtrl', function () {
 
   // load the controller's module
   beforeEach(module('wtcApp'));
+  // beforeEach(module('socketMock'));
 
   var FindAPlaceCtrl, scope;
 

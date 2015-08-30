@@ -38,8 +38,6 @@ angular.module('wtcApp')
 
 
 
-
-
       $scope.today = function() {
         $scope.dt = new Date();
       };
