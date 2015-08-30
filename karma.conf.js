@@ -22,7 +22,7 @@ module.exports = function(config) {
       'client/bower_components/lodash/dist/lodash.compat.js',
       'client/bower_components/angular-socket-io/socket.js',
       'client/app/app.js',
-      'client/app/app.coffee',
+      'client/app/app.css',
       'client/app/**/*.js',
       'client/app/**/*.coffee',
       'client/components/**/*.js',
@@ -46,8 +46,6 @@ module.exports = function(config) {
     ngJade2JsPreprocessor: {
       stripPrefix: 'client/'
     },
-
-    
 
     // list of files / patterns to exclude
     exclude: [],

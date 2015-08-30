@@ -6,6 +6,7 @@ angular.module('wtcApp', [
   'ngSanitize',
   'ngRoute',
   'btford.socket-io',
+  'ngAnimate',
   'ui.bootstrap'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
