@@ -6,7 +6,10 @@ angular.module('wtcApp')
         $scope.newTravel = {
         	author: Auth.getCurrentUser(),
             date_departure: {},
-            date_return: {}
+            date_return: {},
+            month_departure: {},
+            choose_by_dates: false,
+            choose_by_month: false
         }
 
         $scope.addTrip = function() {
@@ -37,73 +40,86 @@ angular.module('wtcApp')
 
 
 
+        // DatePicker Definition
 
-      $scope.today = function() {
-        $scope.dt = new Date();
-      };
-      $scope.today();
+        $scope.today = function() {
+          $scope.dt = new Date();
+        };
+        $scope.today();
 
-      $scope.clear = function () {
-        $scope.dt = null;
-      };
+        $scope.clear = function () {
+          $scope.dt = null;
+        };
 
-      // Disable weekend selection
-      $scope.disabled = function(date, mode) {
-        return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-      };
+        // Disable weekend selection
+        $scope.disabled = function(date, mode) {
+            return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+        };
 
-      $scope.toggleMin = function() {
-        $scope.minDate = $scope.minDate ? null : new Date();
-      };
-      $scope.toggleMin();
+        $scope.toggleMin = function() {
+            $scope.minDate = $scope.minDate ? null : new Date();
+        };
+        $scope.toggleMin();
 
-      $scope.open = function($event) {
-        $scope.status.opened = true;
-        console.log($scope.status)
-      };
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
 
-      $scope.dateOptions = {
-        formatYear: 'yy',
-        startingDay: 1
-      };
+        /* ======== Datepicker Popup gesture ========== */
 
-      $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-      $scope.format = $scope.formats[0];
+        // Definition
+        $scope.open = function($event, select) {
+            switch(select){
+                case "date_departure":
+                    $scope.status.date_departure = true;
+                    break;
+                case "date_return":
+                    $scope.status.date_return = true;
+                    break;
+                case "month_departure":
+                    $scope.status.month_departure = true;
+                    break;
+            }
+        };
 
-      $scope.status = {
-        opened: false
-      };
+        //Initilisation
+        $scope.status = {
+            date_departure: false,
+            date_return: false,
+            month_departure: false
+        };
 
-      var tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      var afterTomorrow = new Date();
-      afterTomorrow.setDate(tomorrow.getDate() + 2);
-      $scope.events =
+        var tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        var afterTomorrow = new Date();
+        afterTomorrow.setDate(tomorrow.getDate() + 2);
+
+        $scope.events =
         [
-          {
-            date: tomorrow,
-            status: 'full'
-          },
-          {
-            date: afterTomorrow,
-            status: 'partially'
-          }
+            {
+                date: tomorrow,
+                status: 'full'
+            },
+            {
+                date: afterTomorrow,
+                status: 'partially'
+            }
         ];
 
-      $scope.getDayClass = function(date, mode) {
-        if (mode === 'day') {
-          var dayToCheck = new Date(date).setHours(0,0,0,0);
+        $scope.getDayClass = function(date, mode) {
+            if (mode === 'day') {
+                var dayToCheck = new Date(date).setHours(0,0,0,0);
 
-          for (var i=0;i<$scope.events.length;i++){
-            var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+                for (var i=0;i<$scope.events.length;i++){
+                    var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
 
-            if (dayToCheck === currentDay) {
-              return $scope.events[i].status;
+                    if (dayToCheck === currentDay) {
+                        return $scope.events[i].status;
+                    }
+                }
             }
-          }
-        }
 
-        return '';
-      };
-      console.log($scope.status)
+            return '';
+        };
     });

@@ -17,6 +17,8 @@ var TravelSchema = new Schema({
   date_departure: Date,
   date_return: Date,
   month_departure: Date,
+  choose_by_dates: Boolean,
+  choose_by_month: Boolean,
   region_idea: { type: String, default: "" }
 });
 

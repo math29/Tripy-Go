@@ -14,25 +14,61 @@
 						<span class="input-group-addon">.00</span>
 					</div>
 				</div>
+
 				<div class="form-group">
 					<div class="input-group">
 						<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
 						<input type="Number" ng-model="newTravel.nbTravellers" class="form-control" aria-label="Nombre de voyageurs" placeholder="Nombre de voyageurs">
 					</div>
 			    </div>
+
 			    <div class="form-group choice-type-dates">
-			    	<div class="btn-group" role="group" aria-label="Type dates idea">
-						<button type="button" class="btn btn-default">Dates précises</button>
-						<button type="button" class="btn btn-default">Mois</button>
-					</div>
-			    </div>
-			    <div class="form-group">
-			    	<input class="btn btn-primary" type="submit" value="Post">
+                    <div class="btn-group" role="group" aria-label="Type dates idea">
+                        <button type="button" class="btn btn-default" id="focus_dates" ng-click="newTravel.choose_by_dates = true; newTravel.choose_by_month = false">Dates précises</button>
+                        <button type="button" class="btn btn-default" id="focus_month" ng-click="newTravel.choose_by_month = true; newTravel.choose_by_dates = false">Mois</button>
+                    </div>
 			    </div>
 
-			    <pre>{{newTravel|json}}</pre>
-		  	</form>
-	  	</div>
+                <div class="form-group" ng-show="newTravel.choose_by_dates">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="input-group">
+                                <input type="date" class="form-control" datepicker-popup ng-model="newTravel.date_departure" is-open="status.date_departure" min-date="minDate" max-date="{{date | date:'2020-06-22'}}" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open($event, 'date_departure')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <p class="input-group">
+                                <input type="date" class="form-control" datepicker-popup ng-model="newTravel.date_return" is-open="status.date_return" min-date="minDate" max-date="{{date | date:'2020-06-22'}}" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open($event, 'date_return')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class = "form-group" ng-show="newTravel.choose_by_month">
+                <div class="col-md-offset-3 col-md-6">
+                        <p class="input-group">
+                            <input type="date" class="form-control" datepicker-popup ng-model="newTravel.month_departure" is-open="status.month_departure" min-date="minDate" max-date="{{date | date:'2020-06-22'}}" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event, 'month_departure')"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input class="btn btn-primary" type="submit" value="Post">
+                </div>
+
+                <pre>{{newTravel|json}}</pre>
+            </form>
+        </div>
 	</div>
 
 
@@ -42,47 +78,4 @@
 			<!-- <p>{{ trip.content }}</p> -->
 	    </li>
   	</ul>
-
-
-
-
-
-  	<pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
-
-    <h4>Inline</h4>
-    <div style="display:inline-block; min-height:290px;">
-      <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></datepicker>
-    </div>
-
-    <h4>Popup</h4>
-    <div class="row">
-        <div class="col-md-6">
-            <p class="input-group">
-              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="status.opened" min-date="minDate" max-date="'2020-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-            </p>
-        </div>
-
-        <div class="col-md-6">
-            <p class="input-group">
-              <input type="date" class="form-control" datepicker-popup ng-model="dt" is-open="status.opened" min-date="minDate" max-date="'2020-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-            </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <label>Format:</label> <select class="form-control" ng-model="format" ng-options="f for f in formats"><option></option></select>
-        </div>
-    </div>
-
-    <hr />
-    <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
-    <button type="button" class="btn btn-sm btn-default" ng-click="dt = '2009-08-24'">2009-08-24</button>
-    <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
-    <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" tooltip="After today restriction">Min date</button>
 </div>
