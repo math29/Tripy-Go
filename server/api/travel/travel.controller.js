@@ -24,18 +24,6 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
   // don't include the date_created, if a user specified it
   delete req.body.date_created;
-  // var travel = new Travel(_.merge(
-  //   {
-  //     author: req.user._id,
-  //     budget: req.budget
-  //   }
-  //   , req.body
-  // ));
-
-  // travel.save(function(err, travel) {
-  //   if(err) { return handleError(res, err); }
-  //   return res.json(201, travel);
-  // });
   Travel.create(req.body, function(err, travel) {
     if(err) { return handleError(res, err); }
     return res.status(201).json(travel);

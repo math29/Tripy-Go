@@ -9,7 +9,8 @@ angular.module('wtcApp')
             date_return: {},
             month_departure: {},
             choose_by_dates: false,
-            choose_by_month: false
+            choose_by_month: false,
+            personal_interest: {}
         }
 
         $scope.addTrip = function() {

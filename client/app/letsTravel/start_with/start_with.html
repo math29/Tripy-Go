@@ -33,7 +33,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <p class="input-group">
-                                <input type="date" class="form-control" datepicker-popup ng-model="newTravel.date_departure" is-open="status.date_departure" min-date="minDate" max-date="{{date | date:'2020-06-22'}}" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                <input type="date" class="form-control" datepicker-popup ng-model="newTravel.date_departure" is-open="status.date_departure" min-date="minDate" max-date="{{date | date:'2020-06-22'}}" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="open($event, 'date_departure')"><i class="glyphicon glyphicon-calendar"></i></button>
                                 </span>
@@ -42,7 +42,7 @@
 
                         <div class="col-md-6">
                             <p class="input-group">
-                                <input type="date" class="form-control" datepicker-popup ng-model="newTravel.date_return" is-open="status.date_return" min-date="minDate" max-date="{{date | date:'2020-06-22'}}" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                <input type="date" class="form-control" datepicker-popup ng-model="newTravel.date_return" is-open="status.date_return" min-date="minDate" max-date="{{date | date:'2020-06-22'}}" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="open($event, 'date_return')"><i class="glyphicon glyphicon-calendar"></i></button>
                                 </span>
@@ -52,13 +52,37 @@
                 </div>
 
                 <div class = "form-group" ng-show="newTravel.choose_by_month">
-                <div class="col-md-offset-3 col-md-6">
-                        <p class="input-group">
-                            <input type="date" class="form-control" datepicker-popup ng-model="newTravel.month_departure" is-open="status.month_departure" min-date="minDate" max-date="{{date | date:'2020-06-22'}}" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="open($event, 'month_departure')"><i class="glyphicon glyphicon-calendar"></i></button>
-                            </span>
-                        </p>
+                    <div class="row">
+                        <div class="col-md-offset-3 col-md-6">
+                            <p class="input-group">
+                                <input type="date" class="form-control" datepicker-popup ng-model="newTravel.month_departure" is-open="status.month_departure" min-date="minDate" max-date="{{date | date:'2020-06-22'}}" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open($event, 'month_departure')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <h4>Quels sont vos centres d'intérêts ?</h4>
+                        <div class="col-md-offset-1 col-md-11">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="newTravel.personal_interest.playa" />
+                                    La plage
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-offset-1 col-md-11">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="newTravel.personal_interest.mountain" />
+                                    La montagne
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

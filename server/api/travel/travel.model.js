@@ -19,7 +19,15 @@ var TravelSchema = new Schema({
   month_departure: Date,
   choose_by_dates: Boolean,
   choose_by_month: Boolean,
-  region_idea: { type: String, default: "" }
+  personal_interest: {
+    playa: { type: Boolean, default: false },
+    nature: { type: Boolean, default: false }
+  },
+  region_idea: { type: String, default: "" },
+  hashtags: {
+    type: Schema.Types.ObjectId,
+    ref: 'Hashtag'
+  }
 });
 
 module.exports = mongoose.model('Travel', TravelSchema);
