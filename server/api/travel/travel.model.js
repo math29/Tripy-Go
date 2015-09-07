@@ -24,10 +24,10 @@ var TravelSchema = new Schema({
     nature: { type: Boolean, default: false }
   },
   region_idea: { type: String, default: "" },
-  hashtags: {
+  hashtags: [{
     type: Schema.Types.ObjectId,
     ref: 'Hashtag'
-  }
+  }]
 });
 
 module.exports = mongoose.model('Travel', TravelSchema);

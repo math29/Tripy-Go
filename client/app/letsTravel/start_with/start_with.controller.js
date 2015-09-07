@@ -11,10 +11,34 @@ angular.module('wtcApp')
             choose_by_dates: false,
             choose_by_month: false,
             personal_interest: {}
-        }
+        };
+
+        $scope.newHashtags = [
+            {
+                name: "test",
+                info: "Petit test"
+            },
+            {
+                name: "test2",
+                info: "Petit test2"
+            }
+        ];
 
         $scope.addTrip = function() {
-    		$http.post('/api/travels', $scope.newTravel);
+            // Create Hashtag
+            function createHashtag(element, index, array) {
+                console.log($http.get('/api/hashtags',{ name: element.name}));
+                // $http.post('/api/hashtags', element);
+                console.log("a[" + index + "] = " + element.name);
+            }
+
+            // Here gesture hashtag
+            console.log($scope.newHashtags);
+            // console.log($scope.newTravel);
+            $scope.newHashtags.forEach(createHashtag);
+            // $http.post('/api/hashtags', $scope.hashtags);
+            // $scope.newTravel.hashtags
+    		// $http.post('/api/travels', $scope.newTravel);
         };
 
         // Grab the initial set of available comments
@@ -33,9 +57,26 @@ angular.module('wtcApp')
     		});
         });
 
+        // Grab the initial set of available comments
+        $http.get('/api/hashtags').success(function(hashtags) {
+            $scope.hashtags = hashtags;
+
+            // Update array with any new or deleted items pushed from the socket
+            socket.syncUpdates('hashtag', $scope.hashtags, function(event, hashtag, hashtags) {
+                // This callback is fired after the comments array is updated by the socket listeners
+                // sort the array every time its modified
+                hashtags.sort(function(a, b) {
+                    a = new Date(a.date_created);
+                    b = new Date(b.date_created);
+                    return a>b ? -1 : a<b ? 1 : 0;
+                });
+            });
+        });
+
         // Clean up listeners when the controller is destroyed
         $scope.$on('$destroy', function () {
     		socket.unsyncUpdates('travel');
+            socket.unsyncUpdates('hashtag');
         });
 
 

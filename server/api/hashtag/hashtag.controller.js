@@ -20,6 +20,15 @@ exports.show = function(req, res) {
   });
 };
 
+// Get a single hashtag
+exports.showByName = function(req, res) {
+  Hashtag.findByName(req.params.name, function (err, hashtag) {
+    if(err) { return handleError(res, err); }
+    if(!hashtag) { return res.status(404).send('Not Found'); }
+    return res.json(hashtag);
+  });
+};
+
 // Creates a new hashtag in the DB.
 exports.create = function(req, res) {
   delete req.body.date_created;
