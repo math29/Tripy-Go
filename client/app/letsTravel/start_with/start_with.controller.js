@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wtcApp')
-    .controller('StartWithCtrl', function ($scope, $http, socket, Auth) {
+    .controller('StartWithCtrl', function ($scope, $http, socket, Auth, $window) {
 
         $scope.newTravel = {
         	author: Auth.getCurrentUser(),
@@ -14,14 +14,13 @@ angular.module('wtcApp')
             selectedHashtags: []
         };
 
+        /*****************************************************/
+        //              New Travel Gesture
+        /*****************************************************/
+
         $scope.addTrip = function() {
-            // Here gesture hashtag
-            // console.log($scope.newHashtags);
-            // console.log($scope.newTravel);
-            // $scope.newHashtags.forEach(createHashtag);
-            // $http.post('/api/hashtags', $scope.hashtags);
-            // $scope.newTravel.hashtags
     		$http.post('/api/travels', $scope.newTravel);
+            $window.location.href = '/find_a_place/newTravel';
         };
 
         // Grab the initial set of available travels

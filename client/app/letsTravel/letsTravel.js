@@ -8,7 +8,7 @@ angular.module('wtcApp')
         controller: 'StartWithCtrl',
         authenticate: true
       })
-      .when('/find_a_place', {
+      .when('/find_a_place/:travelID', {
         templateUrl: 'app/letsTravel/find_a_place/find_a_place.html',
         controller: 'FindAPlaceCtrl'
       });
