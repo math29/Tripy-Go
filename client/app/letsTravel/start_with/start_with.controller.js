@@ -15,20 +15,13 @@ angular.module('wtcApp')
         };
 
         $scope.addTrip = function() {
-            // Create Hashtag
-            function createHashtag(element, index, array) {
-                console.log($http.get('/api/hashtags',{ name: element.name}));
-                // $http.post('/api/hashtags', element);
-                console.log("a[" + index + "] = " + element.name);
-            }
-
             // Here gesture hashtag
-            console.log($scope.newHashtags);
+            // console.log($scope.newHashtags);
             // console.log($scope.newTravel);
-            $scope.newHashtags.forEach(createHashtag);
+            // $scope.newHashtags.forEach(createHashtag);
             // $http.post('/api/hashtags', $scope.hashtags);
             // $scope.newTravel.hashtags
-    		// $http.post('/api/travels', $scope.newTravel);
+    		$http.post('/api/travels', $scope.newTravel);
         };
 
         // Grab the initial set of available travels

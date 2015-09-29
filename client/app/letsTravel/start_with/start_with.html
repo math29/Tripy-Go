@@ -22,6 +22,8 @@
 					</div>
 			    </div>
 
+                <hr>
+
 			    <div class="form-group choice-type-dates">
                     <div class="btn-group" role="group" aria-label="Type dates idea">
                         <button type="button" class="btn btn-default" id="focus_dates" ng-click="newTravel.choose_by_dates = true; newTravel.choose_by_month = false">Dates précises</button>
@@ -64,6 +66,8 @@
                     </div>
                 </div>
 
+                <hr>
+
                 <div class="form-group">
                     <div class="row">
                         <h4>Quels sont vos centres d'intérêts ?</h4>
@@ -86,6 +90,8 @@
                     </div>
                 </div>
 
+                <hr>
+
                 <div class="form-group">
                     <div class="row">
                         <h4>Gérez vos Hashtags</h4>
@@ -105,21 +111,31 @@
                     <div class="row">
                         <div class="col-lg-5">
                             <label>Ajoutez des Hashtags </label>
-                            <p class="input-group">
-                                <input id="searchinputhashtag" type="search" class="form-control" placeholder="Add a new Hashtag here.">
-                                <!-- <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-primary" ng-click="addHashtag()">Créer ce Hashtag !</button>
-                                </span> -->
-                            </p>
+
+                            <div class="input-group">
+                                <input type="search" id="searchinputhashtag" class="form-control" placeholder="Search for...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                            </div>
+                            <br>
+
                             <div id="searchlist" class="list-group">
                                 <a class="list-group-item" tooltip="{{ hashtag.info }}" ng-click="addHashtag(hashtag)"  ng-repeat="hashtag in allHashtags"><span>{{ hashtag.name }}</span></a>
                             </div>
                         </div>
+
                         <div class="col-lg-offset-2 col-lg-5">
                             <label>Créez d'autres Hashtags</label>
-                            <input type="text" placeholder="Nom" class="form-control" ng-model="newHashtag.name">
-                            <input type="text" placeholder="Description" class="form-control" ng-model="newHashtag.info">
-                            <button type="button" class="btn btn-primary" ng-click="createHashtag()">Créer</button>
+                            <div class="form-group">
+                                <input type="text" placeholder="Nom" class="form-control" ng-model="newHashtag.name">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="Description" class="form-control" ng-model="newHashtag.info">
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary" ng-click="createHashtag()">Créer</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -134,12 +150,11 @@
 	</div>
 
 
-  	<ul class="travels-list">
+  	<!-- <ul class="travels-list">
 	    <li ng-repeat="travel in travels">
 			<header>{{ travel.author.id }}</header>
-			<!-- <p>{{ trip.content }}</p> -->
 	    </li>
-  	</ul>
+  	</ul> -->
 </div>
 
 <script>

@@ -21,10 +21,10 @@ var TravelSchema = new Schema({
   choose_by_month: Boolean,
   personal_interest: {
     playa: { type: Boolean, default: false },
-    nature: { type: Boolean, default: false }
+    mountain: { type: Boolean, default: false }
   },
   region_idea: { type: String, default: "" },
-  hashtags: [{
+  selectedHashtags: [{
     type: Schema.Types.ObjectId,
     ref: 'Hashtag'
   }]
