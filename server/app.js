@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-require('newrelic');
-
->>>>>>> ff4b3a61dda553f042e6dcba4dd87f7fe7df06c0
 /**
  * Main application file
  */
