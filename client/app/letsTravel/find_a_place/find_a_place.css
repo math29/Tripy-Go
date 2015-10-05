@@ -1,16 +1,27 @@
-html, body { height: 100%; margin: 0; padding: 0; }
+html, body, #map_canvas {
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+}
 
-.content{
-	height: 100%;
-	width: 100%;
+#map_canvas {
+    position: relative;
 }
 
 .angular-google-map-container {
-	width:100%;
-    /*height:calc(100% - 0);*/
-    position:absolute;
-    right:0;
-    top:0;
-    bottom:0;
-    overflow:hidden;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+.angular-google-map-container{
+	height: 100%;
+    width: 100%;
+}
+
+.google-map-searchbox{
+	top: 15px !important;
+	left: 15px;
 }
