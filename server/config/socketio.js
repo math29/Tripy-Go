@@ -18,12 +18,8 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
-<<<<<<< HEAD
   require('../api/hashtag/hashtag.socket').register(socket);
   require('../api/travel/travel.socket').register(socket);
-=======
->>>>>>> ff4b3a61dda553f042e6dcba4dd87f7fe7df06c0
-  require('../api/thing/thing.socket').register(socket);
 }
 
 module.exports = function (socketio) {
