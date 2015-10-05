@@ -1,0 +1,14 @@
+<div class="navbar-float" ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="travels">
+	<div class="panel panel-default travel-panel" ng-repeat="travel in travels">
+		<div class="panel-heading">
+			{{ travel.title }}
+		</div>
+		<div class="panel-body">
+			{{ travel.description }}
+		</div>
+	</div>
+</div>
+
+<ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
