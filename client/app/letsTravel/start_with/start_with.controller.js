@@ -19,8 +19,10 @@ angular.module('wtcApp')
         /*****************************************************/
 
         $scope.addTrip = function() {
-    		$http.post('/api/travels', $scope.newTravel);
-            $window.location.href = '/find_a_place/newTravel';
+    		$http.post('/api/travels', $scope.newTravel).success(function(travel) {
+                // console.log("/find_a_place/newTravel?travelID=" + travel._id);
+                $window.location.href = '/find_a_place/' + travel._id;
+            });
         };
 
         // Grab the initial set of available travels
@@ -49,7 +51,7 @@ angular.module('wtcApp')
         $http.get('/api/hashtags').success(function(allHashtags) {
             $scope.allHashtags = allHashtags;
             socket.syncUpdates('hashtag', $scope.allHashtags);
-            console.log($scope.allHashtags);
+            // console.log($scope.allHashtags);
         });
 
         $scope.createHashtag = function() {
