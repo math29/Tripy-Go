@@ -1,0 +1,16 @@
+html, body { height: 100%; margin: 0; padding: 0; }
+
+.content{
+	height: 100%;
+	width: 100%;
+}
+
+.angular-google-map-container {
+	width:100%;
+    /*height:calc(100% - 0);*/
+    position:absolute;
+    right:0;
+    top:0;
+    bottom:0;
+    overflow:hidden;
+}
