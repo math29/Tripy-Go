@@ -8,22 +8,10 @@ html, body, #map_canvas {
     position: relative;
 }
 
+
 /************************/
 /*Google MAPS properties*/
 /************************/
-
-.angular-google-map-container {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-}
-
-.angular-google-map-container{
-	height: 100%;
-    width: 100%;
-}
 
 .google-map-searchbox{
 	top: 15px !important;
