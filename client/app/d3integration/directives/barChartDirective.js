@@ -2,7 +2,9 @@ angular.module('wtcApp.directives',['d3'])
 	.directive('barchart', ['d3Service', function(d3Service){
 		return {
 			restrict: 'EA',
-			scope: {},
+			scope: {
+				data: '=' // data-binding bidirectionnel
+			},
 			link: function(scope, element, attrs){
 				d3Service.d3().then(function(d3) {
 					var margin= parseInt(attrs.margin) || 20,
@@ -18,12 +20,15 @@ angular.module('wtcApp.directives',['d3'])
 						scope.$apply();
 					};
 
-					scope.data = [
+					/*scope.data = [
 						{name: "Greg", score: 98},
 						{name: "Ari", score: 96},
 						{name: "Q", score: 75},
 						{name: "Loser", score: 48}
-					];
+					];*/
+					scope.$watch('data', function(newVals, oldVals){
+						return scope.render(newVals);
+					}, true);
 
 					scope.$watch(function(){
 						return angular.element(window)[0].innerWidth;

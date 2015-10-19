@@ -18,7 +18,10 @@
       </ul>
     </div>
   </div>
-  <div barchart bar-height="20" bar-padding="5"></div>
+
+  <div ng-controller="BarChartCtrl">
+    <div barchart bar-height="20" bar-padding="5" data="data"></div>
+  </div>
 
   <form class="thing-form">
     <label>Syncs in realtime across clients</label>

@@ -3,8 +3,8 @@ angular.module('wtcApp.controllers')
 		$scope.greeting = "Retailler la page pour actualiser le diagramme";
 		$scope.data = [
 			{name: "Greg", score: 98},
-			{name: "Ari": score: 96},
-			{name:"Q": score: 75}
+			{name: "Ari", score: 96},
+			{name:"Q", score: 75}
 			];
 		
 	}]);
