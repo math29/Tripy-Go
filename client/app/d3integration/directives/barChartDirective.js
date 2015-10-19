@@ -20,12 +20,6 @@ angular.module('wtcApp.directives',['d3'])
 						scope.$apply();
 					};
 
-					/*scope.data = [
-						{name: "Greg", score: 98},
-						{name: "Ari", score: 96},
-						{name: "Q", score: 75},
-						{name: "Loser", score: 48}
-					];*/
 					scope.$watch('data', function(newVals, oldVals){
 						return scope.render(newVals);
 					}, true);
