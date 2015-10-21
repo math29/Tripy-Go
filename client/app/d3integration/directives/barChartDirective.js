@@ -1,28 +1,25 @@
-angular.module('wtcApp.directives',['d3'])
-	.directive('barchart', ['d3Service', function(d3Service){
+angular.module('wtcApp.directives')
+	.directive('barchart', [ function(){
 		return {
 			restrict: 'EA',
 			scope: {
 				data: '=' // data-binding bidirectionnel
 			},
 			link: function(scope, element, attrs){
-				d3Service.d3().then(function(d3) {
+			//	d3Service.d3().then(function(d3) {
 					var margin= parseInt(attrs.margin) || 20,
 						barHeight = parseInt(attrs.barHeight) || 20,
-						barPadding = parseInt(attrs.barPadding) || 5;
-		
-					var svg = d3.select(element[0])
-						.append('svg')
-						.style('width', '100%');
+						barPadding = parseInt(attrs.barPadding) || 5;	
+					
 
 					// redimensionnement de la fenetre
 					window.onresize = function(){
 						scope.$apply();
 					};
 
-					scope.$watch('data', function(newVals, oldVals){
+					/*scope.$watch('data', function(newVals, oldVals){
 						return scope.render(newVals);
-					}, true);
+					}, true);*/
 
 					scope.$watch(function(){
 						return angular.element(window)[0].innerWidth;
@@ -31,12 +28,14 @@ angular.module('wtcApp.directives',['d3'])
 					});
 					
 					scope.render = function(data){
+						var svg = d3.select(element[0])
+						.append('svg')
+						.style('width', '100%');
 						// remove all previous items before render
 						svg.selectAll('*').remove();
 
 						// If we don't pass any data, return out of the element
 						if (!data){
-							alert("No data");
 							return;
 						}
 
@@ -83,7 +82,7 @@ angular.module('wtcApp.directives',['d3'])
 
 					};
 			
-			})
+			//})
 		}
 	}
 	}]);

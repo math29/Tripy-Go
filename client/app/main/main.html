@@ -1,5 +1,6 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
+
 <header class="hero-unit" id="banner">
   <div class="container">
     <h1>World Travel Community !</h1>
@@ -19,9 +20,10 @@
     </div>
   </div>
 
-  <div ng-controller="BarChartCtrl">
-    <div barchart bar-height="20" bar-padding="5" data="data"></div>
+  <div id="bacCtrl" ng-controller="BarChartCtrl">
+    <div id="barDor" barchart bar-height="20" bar-padding="5" data="data"></div>
   </div>
+	<div id="map" d3map height="600"></div>
 
   <form class="thing-form">
     <label>Syncs in realtime across clients</label>
