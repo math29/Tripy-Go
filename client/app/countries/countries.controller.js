@@ -4,11 +4,16 @@ angular.module('wtcApp')
   .controller('CountryCtrl', function ($scope, $http, $window, Auth, Country) {
 
     // Use the Country $resource to fetch all countries
-    $scope.countries = Country.query();
+    //$scope.countries = Country.query();
     $scope.addCountry = false;
     $scope.new_country = {};
     $scope.errors = [];
     $scope.messages = [];
+    $scope.keys = [];
+    $scope.orderby="";
+    $scope.orderOptions = ['+','-'];
+    console.log($scope.orderOptions);
+    $scope.orderType = $scope.orderOptions[0];
 
     $scope.edit = function(country){
       $scope.new_country = country;
@@ -16,6 +21,23 @@ angular.module('wtcApp')
       scrollTo($window, "countryForm");
     }
 
+    $scope.get = function(){
+      var res = $http.get('/api/countries');
+      res.success(function(data, status, headers, config){
+        $scope.countries = data;
+        $scope.keys = Object.keys(data[0]);
+        $scope.keys.splice(0,1);
+        $scope.keys.splice($scope.keys.length-1,1);
+          $scope.selection = $scope.keys[1];
+          $scope.orderby = $scope.keys[1];
+      });
+      res.error(function(data, status, headers, config){
+        alert("error");
+        console.log(data);
+      });
+    }
+
+    $scope.get();
     $scope.create = function(country){
       delete country._id
       var res = $http.post('/api/countries', country);
@@ -48,13 +70,28 @@ angular.module('wtcApp')
           $scope.countries.splice(i, 1);
         }
       });
-
+    };
 
     $scope.scrollTo = function(id) {
-      var anchor = document.getElementById(match.id);
-      console.log(anchor);
-      var container = angular.element(document.getElementById('scroll-container'));
-      $window.container.scrollToElement(anchor, 0, 800);
-    }
+          var anchor = document.getElementById(match.id);
+          console.log(anchor);
+          var container = angular.element(document.getElementById('scroll-container'));
+          $window.container.scrollToElement(anchor, 0, 800);
     };
+
+    $scope.getClassFromInfo = function(country){
+      if(!textIsValid(country.country_name) || !textIsValid(country.country_code) || !textIsValid(country.area) || !textIsValid(country.capital) || !textIsValid(country.continent)){
+        return "danger";
+      }
+    };
+
+    function textIsValid(text){
+      var valid = true;
+
+      if(typeof text=='undefined' || text.length==0 )valid = false;
+
+      return valid;
+    };
+
+
   });
