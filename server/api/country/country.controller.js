@@ -96,19 +96,19 @@ function checkCountryObject(country){
 	var errors = {};
 	errors.errors = [];
 
-	if(typeof country.country_code == 'undefined'){
+	if(typeof country.country_code == 'undefined' || country.country_code ==""){
   		errors.errors.push("Il manque le code pays");
   	}
-  	if(typeof country.country_name == 'undefined'){
+  	if(typeof country.country_name == 'undefined' || country.country_name == ""){
   		errors.errors.push("Il manque le nom du pays");
   	}
-  	if(typeof country.population == 'undefined'){
+  	if(typeof country.population == 'undefined' || country.population == ""){
   		country.population = 0;
   	}
-  	if(typeof country.continent == 'undefined'){
+  	if(typeof country.continent == 'undefined' || country.continent == ""){
   		errors.errors.push("Il manque le continent du pays");
   	}
-  	if(typeof country.area == 'undefined'){
+  	if(typeof country.area == 'undefined' || country.area == ""){
   		errors.errors.push("Il manque la superficie du pays");
   	}
   	return errors;
