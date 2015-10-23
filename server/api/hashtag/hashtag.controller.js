@@ -31,6 +31,7 @@ exports.showByName = function(req, res) {
 
 // Creates a new hashtag in the DB.
 exports.create = function(req, res) {
+	console.log(req.body);
   delete req.body.date_created;
   Hashtag.create(req.body, function(err, hashtag) {
     if(err) { return handleError(res, err); }
