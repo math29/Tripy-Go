@@ -24,7 +24,6 @@ exports.show = function(req, res) {
 exports.showByName = function(req, res) {
   var searchQuery = new Object;
   searchQuery[req.params.cat] = req.params.name;
-  console.log(searchQuery);
   Country.find(searchQuery, function (err, country) {
     if(err) { return handleError(res, err); }
     if(!country) { return res.status(404).send('Not Found'); }
