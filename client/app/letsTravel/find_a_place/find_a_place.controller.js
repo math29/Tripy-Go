@@ -8,7 +8,7 @@ angular.module('wtcApp')
             libraries: 'weather,geometry,visualization,places' // Required for SearchBox.
         });
     })
-    .controller('FindAPlaceCtrl', function ($scope, $routeParams) {
+    .controller('FindAPlaceCtrl', function ($scope, $http, $routeParams) {
 
         // First focus of the MAP
         $scope.map = {center: {latitude: 40.1451, longitude: -99.6680 }, zoom: 4 };
@@ -33,5 +33,8 @@ angular.module('wtcApp')
         $scope.searchbox = { template:'searchbox.tpl.html', events:events};
 
         var travelID = $routeParams.travelID;
+        console.log("Let's find this travel");
+        var travel = $http.delete('/api/travels/' + travelID);
+        console.log(travel);
         $scope.message = "L'id est : " + travelID;
     });
