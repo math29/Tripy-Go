@@ -2,7 +2,7 @@
   "name": "wtc",
   "version": "0.0.0",
   "main": "server/app.js",
-  "apidoc":{
+  "apidoc": {
     "title": "API to travel all around the world"
   },
   "dependencies": {
@@ -96,7 +96,7 @@
     "start": "node server/app.js",
     "test": "grunt test",
     "update-webdriver": "node node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update",
-    "apidoc": "apidoc -i server/api -o apidoc/ -t node_modules/apidoc/template"
+    "gendoc": "apidoc -i server/api -o apidoc/ -t node_modules/apidoc/template"
   },
   "private": true
 }
