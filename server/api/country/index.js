@@ -6,6 +6,29 @@ var auth = require('../../auth/auth.service');
 
 var router = express.Router();
 
+/**
+ * @api {get} /api/countries Request list of all countries
+ * @apiName GetCountries
+ * @apiGroup Countries
+ *
+ * @apiSuccess {Array} array of countries
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *  [
+ *    {
+ *      "country_code":"CO",
+ *      "country_name":"Country",
+ *      ...
+ *    }, ...
+ *  ]
+ *
+ * @apiError User not authenticated
+ *
+ * @apiErrorExample Error-Response:
+ *  HTTP/1.1 403 Forbidden
+ *  Unauthorized
+ */
 router.get('/', auth.isAuthenticated(), controller.index);
 router.get('/:cat/:name', auth.isAuthenticated(), controller.showByName);
 router.post('/', auth.hasRole('admin'), controller.create);
