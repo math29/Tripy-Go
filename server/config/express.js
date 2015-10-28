@@ -43,7 +43,7 @@ module.exports = function(app) {
       db: 'wtc'
     })
   }));
-  
+
   if ('production' === env) {
     app.use(favicon(path.join(config.root, 'public', 'favicon.ico')));
     app.use(express.static(path.join(config.root, 'public')));
@@ -56,6 +56,7 @@ module.exports = function(app) {
     app.use(express.static(path.join(config.root, '.tmp')));
     app.use(express.static(path.join(config.root, 'client')));
     app.set('appPath', path.join(config.root, 'client'));
+    app.use('/doc', express.static(path.join(config.root, 'apidoc')));
     app.use(morgan('dev'));
     app.use(errorHandler()); // Error handler - has to be last
   }

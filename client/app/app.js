@@ -9,7 +9,9 @@ angular.module('wtcApp', [
   'ngAnimate',
   'ui.bootstrap',
   'ui.bootstrap',
-  'uiGmapgoogle-maps'
+  'uiGmapgoogle-maps',
+  'wtcApp.directives',
+  'wtcApp.controllers'
 ])
 
   .config(function ($routeProvider, $locationProvider, $httpProvider, uiGmapGoogleMapApiProvider) {
@@ -65,3 +67,7 @@ angular.module('wtcApp', [
       });
     });
   });
+  
+  angular.module('d3', []);
+  angular.module('wtcApp.directives', ['d3']);
+  angular.module('wtcApp.controllers', []);

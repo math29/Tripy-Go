@@ -2,6 +2,9 @@
   "name": "wtc",
   "version": "0.0.0",
   "main": "server/app.js",
+  "apidoc": {
+    "title": "API to travel all around the world"
+  },
   "dependencies": {
     "body-parser": "~1.5.0",
     "composable-middleware": "^0.3.0",
@@ -33,6 +36,7 @@
     "eslint": "^1.6.0",
     "grunt": "~0.4.4",
     "grunt-angular-templates": "^0.5.4",
+    "grunt-apidoc": "^0.10.1",
     "grunt-autoprefixer": "~0.7.2",
     "grunt-build-control": "~0.4.0",
     "grunt-concurrent": "~0.5.0",
@@ -92,8 +96,7 @@
     "start": "node server/app.js",
     "test": "grunt test",
     "update-webdriver": "node node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update",
-    "ci-test": "istanbul cover tape \"test/*-test.js\" > test.tap && istanbul report clover",
-    "ci-lint": "eslint -f checkstyle index.js > checkstyle-result.xml"
+    "gendoc": "apidoc -i server/api -o apidoc/ -t node_modules/apidoc/template"
   },
   "private": true
 }
