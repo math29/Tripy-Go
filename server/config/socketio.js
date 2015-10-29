@@ -18,6 +18,8 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/transportIntern/transportIntern.socket').register(socket);
+  require('../api/place/place.socket').register(socket);
   require('../api/transport/transport.socket').register(socket);
   require('../api/hashtag/hashtag.socket').register(socket);
   require('../api/travel/travel.socket').register(socket);
