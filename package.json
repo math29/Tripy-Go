@@ -30,9 +30,10 @@
     "socket.io": "^1.0.6",
     "socket.io-client": "^1.0.6",
     "socketio-jwt": "^3.0.0"
+
   },
   "devDependencies": {
-    "apidoc":"~0.13.1",
+    "apidoc": "~0.13.1",
     "connect-livereload": "~0.4.0",
     "eslint": "^1.6.0",
     "grunt": "~0.4.4",

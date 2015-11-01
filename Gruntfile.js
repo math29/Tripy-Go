@@ -122,7 +122,7 @@ module.exports = function (grunt) {
     jshint: {
       options: {
         jshintrc: '<%= yeoman.client %>/.jshintrc',
-        reporter: require('jshint-stylish')
+        reporter: require('jshint-stylish'),
       },
       server: {
         options: {
@@ -149,7 +149,17 @@ module.exports = function (grunt) {
           '<%= yeoman.client %>/{app,components}/**/*.spec.js',
           '<%= yeoman.client %>/{app,components}/**/*.mock.js'
         ]
-      }
+      },
+      jenkins: {
+        options: {
+            jshintrc: 'server/.jshintrc',
+            reporter: 'checkstyle',
+            reporterOutput: 'report/jshint.xml',
+        },
+        src: [ 'server/**/*.js',
+                '!server/**/*.spec.js'
+               ]
+    }
     },
 
     // Empties folders to start fresh
@@ -431,12 +441,23 @@ module.exports = function (grunt) {
     },
 
     mochaTest: {
-      options: {
-        reporter: 'spec'
+      test: {
+        options: {
+          reporter: 'spec'
+        },
+        src: ['server/**/*.spec.js']
       },
-      src: ['server/**/*.spec.js']
+      jenkins: {
+        options: {
+          reporter: 'XUnit',
+          captureFile: './report/unit.xml',
+          quiet: false,
+          clearRequireCache: false
+        },
+        src: ['server/**/*.spec.js']
+      }
     },
-
+    
     protractor: {
       options: {
         configFile: 'protractor.conf.js'
@@ -568,7 +589,7 @@ module.exports = function (grunt) {
       return grunt.task.run([
         'env:all',
         'env:test',
-        'mochaTest'
+        'mochaTest',
       ]);
     }
 
