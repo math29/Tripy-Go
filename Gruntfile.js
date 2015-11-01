@@ -449,8 +449,9 @@ module.exports = function (grunt) {
       },
       jenkins: {
         options: {
-          reporter: 'XUnit',
-          captureFile: './report/unit.xml',
+          reporter: 'xunit',
+          require: 'should',
+          captureFile: './report/xunit.xml',
           quiet: false,
           clearRequireCache: false
         },
