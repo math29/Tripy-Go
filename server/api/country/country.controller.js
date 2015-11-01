@@ -25,7 +25,7 @@ exports.show = function(req, res) {
 
 // Get a single country
 exports.showByName = function(req, res) {
-  var searchQuery = new Object;
+  var searchQuery = {};
   searchQuery[req.params.cat] = req.params.name;
   Country.find(searchQuery, function (err, country) {
     if(err) { return handleError(res, err); }
@@ -43,7 +43,7 @@ exports.create = function(req, res) {
 	var errors = checkCountryObject(req.body);
 
   // si il n'y à aucun message d'erreur, on ajoute le pays
-	if(errors.errors.length == 0){
+	if(errors.errors.length === 0){
 		Country.update({ country_name: { $eq: req.body.country_name}}, req.body, {upsert: true}, function(err, country) {
 		if(err) { return handleError(res, err); }
 		if(typeof country.upserted !== 'undefined')statusCode = 201;
@@ -64,7 +64,7 @@ exports.update = function(req, res) {
 
   var errors = checkCountryObject(req.body);
 
-  if(errors.errors.length==0){
+  if(errors.errors.length === 0){
   Country.findById(req.params.id, function (err, country) {
     if (err) { return handleError(res, err); }
     if(!country) { return res.status(404).send('Not Found'); }
@@ -98,19 +98,19 @@ function checkCountryObject(country){
 	var errors = {};
 	errors.errors = [];
 
-	if(typeof country.country_code == 'undefined' || country.country_code ==""){
+	if(typeof country.country_code === 'undefined' || country.country_code === ""){
   		errors.errors.push("Il manque le code pays");
   	}
-  	if(typeof country.country_name == 'undefined' || country.country_name == ""){
+  	if(typeof country.country_name === 'undefined' || country.country_name === ""){
   		errors.errors.push("Il manque le nom du pays");
   	}
-  	if(typeof country.population == 'undefined' || country.population == ""){
+  	if(typeof country.population === 'undefined' || country.population === ""){
   		country.population = 0;
   	}
-  	if(typeof country.continent == 'undefined' || country.continent == ""){
+  	if(typeof country.continent === 'undefined' || country.continent === ""){
   		errors.errors.push("Il manque le continent du pays");
   	}
-  	if(typeof country.area == 'undefined' || country.area == ""){
+  	if(typeof country.area === 'undefined' || country.area === ""){
   		errors.errors.push("Il manque la superficie du pays");
   	}
   	return errors;
