@@ -157,6 +157,7 @@ module.exports = function (grunt) {
             reporterOutput: 'report/jshint.xml',
         },
         src: [ 'server/**/*.js',
+                '<%= yeoman.client %>/app/**/*.js',
                 '!server/**/*.spec.js'
                ]
     }
