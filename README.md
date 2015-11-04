@@ -9,6 +9,7 @@ Pour cela rien de plus simple, il suffit de cloner le projet, d'installer [Mongo
 
     npm install
     bower install
+    sudo npm install grunt -g
 Et c'est fait.
 
 ----
