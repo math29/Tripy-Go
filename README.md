@@ -68,6 +68,51 @@ La seconde étape sera celle concernant les tests unitaire, il faudra là indiqu
 Il ne vous reste plus qu'à `lancer un build du projet` et observer les résultats.
 
 
+---
+# Sonar
+
+Sonar permet d'avoir un suivi sur la qualité du code, des un fichier de règle sera mis en place plus tard.
+
+---
+## Instalation
+
+Je vous conseille d'instaler la version 5.2 qui est nettement plus belle et plus rapide. Vous pouvez le télécharger à cette adresse: [sonar](http://www.sonarqube.org/downloads/)
+
+Décompressez l'archive dans le dossier qui vous convient, puis allez dans le dossier `bin/votreOS/` puis lancez la commande suivante: 
+
+    ./sonar.sh  start   # pour Linux ou mac
+    StartSonar.bat      # pour Windows
+
+Après quelques secondes, vous pourrez accéder à Sonar à sur le port 9000 par défaut, ce qui peut être embétant, étant donné que notre application tourne sur le port 9000 elle aussi.
+Pour régler ce problème, ouvrez le fichier `conf/sonar.properties` dans le répertoire de sonar, puis remlacez la ligne 
+
+    sonar.web.port=9000
+
+par la suivante:
+
+    sonar.web.port=8085
+
+et voilà, fini les conflits.
+
+Si vous n'avez pas réussi à lancer Sonar avec les instructions précédentes, suivez le tutoriel suivant pour instaler sonar: [cliquez ici](http://docs.sonarqube.org/display/SONAR/Get+Started+in+Two+Minutes)
+
+---
+## Lancer une analyse
+
+Pour lancer l'analyse, il vous suffit d'avoir `sonarRunner` sur votre machine, voire même en variable d'environnement idéalement, puis placez vous à la racine du projet `WTC`, puis lancez la commande suivante:
+
+    sonar-runner
+
+où sonar-runner est la variable d'environnement contenant le chemin vers `sonar-runner` ou le vhemin vers `sonar-runner`,
+vous devriez maintenant avoir un rapport dans `sonar`
+
+
+---
+## Configuration
+
+Lorsque vous créerez une branche, il peut être bien de modifier le fichier sonar.properties pour lui changer la clef et le nom.
+
 ----
 ## changelog
 * 1-Novembre-2015 Ajout de l'intégration de Jenkins
+* 5-Novembre-2015 Ajout de la notice Sonar
