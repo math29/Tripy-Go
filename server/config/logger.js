@@ -1,15 +1,24 @@
+// requiert Winston pour logger
 var winston = require('winston');
+
+
+// On emet les erreurs
 winston.emitErrs = true;
 
-
+// instanciation du logger
 var logger = new winston.Logger({
+    // modes de transports du logger
     transports: [
+    // log dans la console tous les niveaux
     new winston.transports.Console({
             level: 'silly',
             handleExceptions: true,
             json: false,
             colorize: true
         }),
+        /* enregistrement des logs dans un fichier, uniquement à partir du niveau info.
+         * logs dans 5 fichiers de 5 MB maximum au format JSON
+         */
         new winston.transports.File({
             level: 'info',
             filename: './logs/all-logs.log',
@@ -19,7 +28,6 @@ var logger = new winston.Logger({
             maxFiles: 5,
             colorize: false
         })
-
     ],
     exitOnError: false
 });

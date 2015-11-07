@@ -13,23 +13,30 @@ var mongoose = require('mongoose');
 var config = require('./config/environment');
 var logger = require('./config/logger');
 var winston = require('winston');
+// requiert WinstonDB pour logger dans mongoDB.
+require('winston-mongodb').MongoDB;
 
 // on ne transmet les logs que sur les environnement de développement et de production
-if(process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test'){
-	logger.remove(winston.transports.Console);
-	if(process.env.NODE_ENV === 'test'){
+switch(process.env.NODE_ENV){
+  case 'production':
+    removeConsole(logger);
+    break;
+  case 'test':
+    removeConsole(logger);
     logger.remove(winston.transports.File);
-		logger.add(winston.transports.File, {
-			level: 'debug',
-            filename: './logs/tests-logs.log',
-            handleExceptions: true,
-            json: true,
-            maxsize: 5242880, //5MB
-            maxFiles: 1,
-            colorize: false
-		});
-	}
-
+    		logger.add(winston.transports.File, {
+    			level: 'debug',
+                filename: './logs/tests-logs.log',
+                handleExceptions: true,
+                json: true,
+                maxsize: 5242880, //5MB
+                maxFiles: 1,
+                colorize: false
+    		});
+    break;
+  default:
+    addMongoLog(logger, config.mongo.uri)
+    break;
 }
 
 // Connect to database
@@ -62,3 +69,25 @@ server.listen(config.port, config.ip, function () {
 
 // Expose app
 exports = module.exports = app;
+
+/**
+ * supprime la sortie console du logger log
+ *
+ * @param log logger dont on veut supprimer la sortie
+ */
+
+function removeConsole(log){
+  log.remove(winston.transports.Console);
+}
+
+
+/**
+ * ajoute la sortie mongo au logger log
+ *
+ * @param log logger dont on veut ajouter la sortie
+ */
+function addMongoLog(log, database){
+  log.add(winston.transports.MongoDB,{
+    db: database
+   });
+}
