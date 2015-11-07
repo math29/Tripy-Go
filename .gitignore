@@ -9,6 +9,7 @@ client/bower_components
 dist
 apidoc
 report
+logs
 
 /server/config/local.env.js
 npm-debug.log

@@ -1,15 +1,26 @@
 'use strict';
 
 var _ = require('lodash');
+var logger = require('../../config/logger.js');
 var Country = require('./country.model');
+var TAG = "CountryController";
 
-// Get list of countries
+/**
+ * Get list of countries
+ *
+ * @param req request
+ * @param res response
+ */
 exports.index = function(req, res) {
   Country.find()
   .sort({country_name:1})
   .exec(
     function (err, countries) {
-    if(err) { return handleError(res, err); }
+      // vérifie que la requête mongo n'à pas échoué
+      if(err) {
+        logger.error('%s: Can\'t index country: '+1, TAG);
+        return handleError(res, err); 
+      }
     return res.status(200).json(countries);
   });
 };
@@ -18,7 +29,10 @@ exports.index = function(req, res) {
 exports.show = function(req, res) {
   Country.findById(req.params.id, function (err, country) {
     if(err) { return handleError(res, err); }
-    if(!country) { return res.status(404).send('Not Found'); }
+    if(!country) { 
+      logger.warn('%s: Could not found country with id: '+req.params.id, TAG);
+      return res.status(404).send('Not Found'); 
+    }
     return res.json(country);
   });
 };
@@ -60,12 +74,12 @@ exports.create = function(req, res) {
 
 // Updates an existing country in the DB.
 exports.update = function(req, res) {
-  if(req.body._id) { delete req.body._id; }
-
+  // on vérifie si les paramètres sont corrects
   var errors = checkCountryObject(req.body);
 
+  // si la liste des erruers est vide, on peut lancer l'update
   if(errors.errors.length === 0){
-  Country.findById(req.params.id, function (err, country) {
+    Country.findById(req.params.id, function (err, country) {
     if (err) { return handleError(res, err); }
     if(!country) { return res.status(404).send('Not Found'); }
     var updated = _.merge(country, req.body);
@@ -98,22 +112,32 @@ function checkCountryObject(country){
 	var errors = {};
 	errors.errors = [];
 
-	if(typeof country.country_code === 'undefined' || country.country_code === ""){
-  		errors.errors.push("Il manque le code pays");
-  	}
-  	if(typeof country.country_name === 'undefined' || country.country_name === ""){
-  		errors.errors.push("Il manque le nom du pays");
-  	}
-  	if(typeof country.population === 'undefined' || country.population === ""){
-  		country.population = 0;
-  	}
-  	if(typeof country.continent === 'undefined' || country.continent === ""){
-  		errors.errors.push("Il manque le continent du pays");
-  	}
-  	if(typeof country.area === 'undefined' || country.area === ""){
-  		errors.errors.push("Il manque la superficie du pays");
-  	}
-  	return errors;
+	if(!isDefined(country.country_code)){
+  	errors.errors.push("Il manque le code pays");
+  }
+  if(!isDefined(country.country_name)){
+  	errors.errors.push("Il manque le nom du pays");
+  }
+  if(!isDefined(country.population)){
+  	country.population = 0;
+  }
+  if(!isDefined(country.continent)){
+  	errors.errors.push("Il manque le continent du pays");
+  }
+  if(!isDefined(country.area)){
+  	errors.errors.push("Il manque la superficie du pays");
+  }
+  return errors;
+}
+
+/**
+ * Vérifie si un paramétre est défini ou non vide
+ *
+ * @param parameter variable a vérifier
+ * @return true si la variable est définie et non nulle, false sinon
+ */
+function isDefined(parameter){
+  return (undefined != parameter && parameter !== "");
 }
 
 function handleError(res, err) {
