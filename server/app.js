@@ -77,6 +77,7 @@ exports = module.exports = app;
  */
 
 function removeConsole(log){
+  log.info("remove console output");
   log.remove(winston.transports.Console);
 }
 
@@ -88,6 +89,8 @@ function removeConsole(log){
  */
 function addMongoLog(log, database){
   log.add(winston.transports.MongoDB,{
+    level: 'info',
     db: database
    });
+   log.info("add MongoDB output to output");
 }
