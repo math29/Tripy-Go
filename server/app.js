@@ -35,7 +35,7 @@ switch(process.env.NODE_ENV){
     		});
     break;
   default:
-    addMongoLog(logger, config.mongo.uri)
+    addMongoLog(logger, config.mongo.uri);
     break;
 }
 
@@ -68,7 +68,7 @@ server.listen(config.port, config.ip, function () {
 });
 
 // Expose app
-exports = module.exports = app;
+module.exports = app;
 
 /**
  * supprime la sortie console du logger log

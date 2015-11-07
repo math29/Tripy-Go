@@ -60,7 +60,7 @@ exports.create = function(req, res) {
   var statusCode = 202;
 
   //verrification de l'objet country
-	var errors = checkCountryObject(req.body);
+  var errors = checkCountryObject(req.body);
 
   // si il n'y à aucun message d'erreur, on ajoute le pays
 	if(errors.errors.length === 0){

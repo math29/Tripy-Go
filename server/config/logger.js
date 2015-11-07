@@ -49,25 +49,25 @@ var logger_debug_old = logger.debug;
     var fileAndLine = traceCaller(1);
     arguments[0] = fileAndLine+": "+arguments[0];
     return logger_info_old.apply(this, arguments);
-  }
+  };
 
   logger.error = function(msg) {
     var fileAndLine = traceCaller(1);
     arguments[0] = fileAndLine+": "+arguments[0];
     return logger_error_old.apply(this, arguments);
-  }
+  };
 
   logger.warn = function(msg) {
     var fileAndLine = traceCaller(1);
     arguments[0] = fileAndLine+": "+arguments[0];
     return logger_warn_old.apply(this, arguments);
-  }
+  };
 
   logger.debug = function(msg) {
     var fileAndLine = traceCaller(1);
     arguments[0] = fileAndLine+": "+arguments[0];
     return logger_debug_old.apply(this, arguments);
-  }
+  };
 
   /**
   * examines the call stack and returns a string indicating

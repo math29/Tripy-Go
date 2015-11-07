@@ -13,7 +13,7 @@ exports.register = function(socket) {
   Hashtag.schema.post('remove', function (doc) {
     onRemove(socket, doc);
   });
-}
+};
 
 function onSave(socket, doc) {
   socket.emit('hashtag:save', doc);

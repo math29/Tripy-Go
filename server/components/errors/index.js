@@ -3,8 +3,8 @@
  */
 
 'use strict';
-
-module.exports[404] = function pageNotFound(req, res) {
+// page not found error
+module.exports[404] = function (req, res) {
   var viewFilePath = '404';
   var statusCode = 404;
   var result = {
