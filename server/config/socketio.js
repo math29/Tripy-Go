@@ -8,6 +8,7 @@ var config = require('./environment');
 
 // When the user disconnects.. perform this
 function onDisconnect(socket) {
+  socket.emit('disconnected');
 }
 
 // When the user connects.. perform this

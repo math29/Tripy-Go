@@ -15,10 +15,10 @@ exports.register = function(socket) {
   });
 }
 
-function onSave(socket, doc, cb) {
+function onSave(socket, doc) {
   socket.emit('travel:save', doc);
 }
 
-function onRemove(socket, doc, cb) {
+function onRemove(socket, doc) {
   socket.emit('travel:remove', doc);
 }

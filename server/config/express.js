@@ -62,7 +62,6 @@ module.exports = function(app) {
       app.use('/doc', express.static(path.join(config.root, 'apidoc')));
       app.use(require('morgan')({ "stream": logger.stream }));
     }
-    //app.use(morgan('dev'));
     app.use(errorHandler()); // Error handler - has to be last
   }
 };
