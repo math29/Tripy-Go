@@ -18,7 +18,7 @@ var winston = require('winston');
 if(process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test'){
 	logger.remove(winston.transports.Console);
 	if(process.env.NODE_ENV === 'test'){
-		logger.remove(winston.transports.File);
+    logger.remove(winston.transports.File);
 		logger.add(winston.transports.File, {
 			level: 'debug',
             filename: './logs/tests-logs.log',
@@ -49,6 +49,7 @@ var socketio = require('socket.io')(server, {
   serveClient: config.env !== 'production',
   path: '/socket.io-client'
 });
+// fichiers de configurations
 require('./config/socketio')(socketio);
 require('./config/express')(app);
 require('./routes')(app);

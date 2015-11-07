@@ -27,7 +27,7 @@ var logger = new winston.Logger({
 module.exports = logger;
 
 module.exports.stream = {
-    write: function(message, encoding){
+    write: function(message){
         logger.info(message);
     }
 };
@@ -79,7 +79,7 @@ var logger_debug_old = logger.debug;
       a=s.indexOf('\n',a+1);
       if( a<0 ) { a=s.lastIndexOf('\n',s.length); break;}
     }
-    b=s.indexOf('\n',a+1); if( b<0 ) b=s.length;
+    var b=s.indexOf('\n',a+1); if( b<0 ) b=s.length;
     a=Math.max(s.lastIndexOf(' ',b), s.lastIndexOf('/',b));
     b=s.lastIndexOf(':',b);
     s=s.substring(a+1,b);

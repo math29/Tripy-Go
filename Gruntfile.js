@@ -451,14 +451,14 @@ module.exports = function (grunt) {
         options: {
           reporter: 'xunit',
           require: 'should',
-          captureFile: './report/xunit.xml',
+          captureFile: './report/TESTxunit.xml',
           quiet: false,
           clearRequireCache: false
         },
         src: ['server/**/*.spec.js']
       }
     },
-    
+
     protractor: {
       options: {
         configFile: 'protractor.conf.js'
