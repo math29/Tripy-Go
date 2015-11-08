@@ -15,7 +15,7 @@ var country = new Country({
   languages:"fr"
 });
 
-describe('Country Model', function() {
+describe('country_model', function() {
   before(function(done) {
     // Clear countries before testing
     Country.remove().exec().then(function() {

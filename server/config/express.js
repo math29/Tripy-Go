@@ -18,6 +18,8 @@ var passport = require('passport');
 var session = require('express-session');
 var mongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');
+var logger = require('./logger');
+
 
 module.exports = function(app) {
   var env = app.get('env');
@@ -56,8 +58,10 @@ module.exports = function(app) {
     app.use(express.static(path.join(config.root, '.tmp')));
     app.use(express.static(path.join(config.root, 'client')));
     app.set('appPath', path.join(config.root, 'client'));
-    app.use('/doc', express.static(path.join(config.root, 'apidoc')));
-    app.use(morgan('dev'));
+    if('test' !== env){
+      app.use('/doc', express.static(path.join(config.root, 'apidoc')));
+      app.use(require('morgan')({ "stream": logger.stream }));
+    }
     app.use(errorHandler()); // Error handler - has to be last
   }
 };

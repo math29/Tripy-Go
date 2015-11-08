@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var logger = require('../../config/logger');
 var Hashtag = require('./hashtag.model');
 
 // Get list of hashtags
@@ -31,7 +32,7 @@ exports.showByName = function(req, res) {
 
 // Creates a new hashtag in the DB.
 exports.create = function(req, res) {
-	console.log(req.body);
+	logger.debug(req.body);
   delete req.body.date_created;
   Hashtag.create(req.body, function(err, hashtag) {
     if(err) { return handleError(res, err); }

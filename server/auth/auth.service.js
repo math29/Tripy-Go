@@ -7,6 +7,7 @@ var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
 var compose = require('composable-middleware');
 var User = require('../api/user/user.model');
+var logger = require('../config/logger');
 var validateJwt = expressJwt({ secret: config.secrets.session });
 
 /**
@@ -26,8 +27,14 @@ function isAuthenticated() {
     // Attach user to request
     .use(function(req, res, next) {
       User.findById(req.user._id, function (err, user) {
-        if (err) return next(err);
-        if (!user) return res.status(401).send('Unauthorized');
+        if (err){
+          logger.error('Could not attach user to request', user);
+          return next(err);
+        }
+        if (!user) {
+          logger.warn("User is not defined");
+          return res.status(401).send('Unauthorized');
+        }
 
         req.user = user;
         next();
@@ -39,11 +46,14 @@ function isAuthenticated() {
  * Checks if the user role meets the minimum requirements of the route
  */
 function hasRole(roleRequired) {
-  if (!roleRequired) throw new Error('Required role needs to be set');
+  if (!roleRequired){
+    logger.error("role is required");
+    throw new Error('Required role needs to be set');
+   }
 
   return compose()
     .use(isAuthenticated())
-    .use(function meetsRequirements(req, res, next) {
+    .use(function (req, res, next) {
       if (config.userRoles.indexOf(req.user.role) >= config.userRoles.indexOf(roleRequired)) {
         next();
       }
@@ -57,15 +67,18 @@ function hasRole(roleRequired) {
  * Returns a jwt token signed by the app secret
  */
 function signToken(id) {
-  return jwt.sign({ _id: id }, config.secrets.session, { expiresInMinutes: 60*5 });
+  return jwt.sign({ _id: id }, config.secrets.session, { expiresIn: 60*60*5 });
 }
 
 /**
  * Set token cookie directly for oAuth strategies
  */
 function setTokenCookie(req, res) {
-  if (!req.user) return res.status(404).json({ message: 'Something went wrong, please try again.'});
-  var token = signToken(req.user._id, req.user.role);
+  if (!req.user) {
+    logger.error("No user associate to the request");
+    return res.status(404).json({ message: 'Something went wrong, please try again.'});
+  }
+  var token = signToken(req.user._id);
   res.cookie('token', JSON.stringify(token));
   res.redirect('/');
 }

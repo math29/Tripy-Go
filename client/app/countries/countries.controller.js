@@ -32,7 +32,6 @@ angular.module('wtcApp')
           $scope.orderby = $scope.keys[1];
       });
       res.error(function(data, status, headers, config){
-        alert("error");
         console.log(data);
       });
     }
