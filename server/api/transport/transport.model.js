@@ -3,12 +3,26 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-var options = { discriminatorKey: 'kind' };
 
 var TransportSchema = new Schema({
   name: String,
-  info: String,
-  active: Boolean
-},options);
+  active: Boolean,
+  departure: {
+    type: Schema.Types.ObjectId,
+    ref: 'Place'
+  },
+  arrival: {
+    type: Schema.Types.ObjectId,
+    ref: 'Place'
+  },
+  cost: Number,
+  duration: Date,
+  departure_time: Date,
+  arrival_time: Date,
+  travel: {
+    type: Schema.Types.ObjectId,
+    ref: 'Travel'
+  }
+});
 
 module.exports = mongoose.model('Transport', TransportSchema);
