@@ -44,10 +44,10 @@ exports.create = function (req, res) {
 /**
  * Get a single user
  */
-exports.show = function (req, res) {
+exports.show = function (req, res, next) {
   var userId = req.params.id;
 
-  User.findById(userId, function (err, user) {
+  User.findById(userId, function (err, user, next) {
     if (err) {
       logger.error("Could not retrieve user", user);
       return next(err);
@@ -99,7 +99,7 @@ exports.me = function(req, res) {
   var userId = req.user._id;
   User.findOne({
     _id: userId
-  }, '-salt -hashedPassword', function(err, user) { // don't ever give out the password or salt
+  }, '-salt -hashedPassword', function(err, user, next) { // don't ever give out the password or salt
     if (err) {
       logger.error("Could not ge user infos ME", user);
       return next(err);

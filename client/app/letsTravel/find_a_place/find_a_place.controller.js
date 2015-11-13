@@ -21,8 +21,8 @@ angular.module('wtcApp')
                 var place = searchBox.getPlaces();
                 $scope.map = {
                     center: {
-                        "latitude": place[0].geometry.location.lat(),
-                        "longitude": place[0].geometry.location.lng()
+                        'latitude': place[0].geometry.location.lat(),
+                        'longitude': place[0].geometry.location.lng()
                     },
                     zoom: 13
                 };
@@ -33,8 +33,8 @@ angular.module('wtcApp')
         $scope.searchbox = { template:'searchbox.tpl.html', events:events};
 
         var travelID = $routeParams.travelID;
-        console.log("Let's find this travel");
+        console.log('Let\'s find this travel');
         var travel = $http.delete('/api/travels/' + travelID);
         console.log(travel);
-        $scope.message = "L'id est : " + travelID;
+        $scope.message = 'L\'id est : ' + travelID;
     });

@@ -66,14 +66,14 @@ angular.module('wtcApp')
             if(!isInArray(hashtag, $scope.newTravel.selectedHashtags)){
                 $scope.newTravel.selectedHashtags.push(hashtag);
             }
-        }
+        };
 
         $scope.deSelectHashtag = function(hashtag) {
             var index = $scope.newTravel.selectedHashtags.indexOf(hashtag);
             if (index > -1) {
                 $scope.newTravel.selectedHashtags.splice(index, 1);
             }
-        }
+        };
 
         // Usefull method that allow us to check if is or not in array (Return True if it is !)
         function isInArray(value, array) {
@@ -122,13 +122,13 @@ angular.module('wtcApp')
         // Definition
         $scope.open = function($event, select) {
             switch(select){
-                case "date_departure":
+                case 'date_departure':
                     $scope.status.date_departure = true;
                     break;
-                case "date_return":
+                case 'date_return':
                     $scope.status.date_return = true;
                     break;
-                case "month_departure":
+                case 'month_departure':
                     $scope.status.month_departure = true;
                     break;
             }

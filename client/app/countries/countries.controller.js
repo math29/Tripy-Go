@@ -10,7 +10,7 @@ angular.module('wtcApp')
     $scope.errors = [];
     $scope.messages = [];
     $scope.keys = [];
-    $scope.orderby="";
+    $scope.orderby='';
     $scope.orderOptions = ['+','-'];
     console.log($scope.orderOptions);
     $scope.orderType = $scope.orderOptions[0];
@@ -18,12 +18,12 @@ angular.module('wtcApp')
     $scope.edit = function(country){
       $scope.new_country = country;
       $scope.addCountry = true;
-      scrollTo($window, "countryForm");
-    }
+      scrollTo($window, 'countryForm');
+    };
 
     $scope.get = function(){
       var res = $http.get('/api/countries');
-      res.success(function(data, status, headers, config){
+      res.success(function(data){
         $scope.countries = data;
         $scope.keys = Object.keys(data[0]);
         $scope.keys.splice(0,1);
@@ -31,36 +31,36 @@ angular.module('wtcApp')
           $scope.selection = $scope.keys[1];
           $scope.orderby = $scope.keys[1];
       });
-      res.error(function(data, status, headers, config){
+      res.error(function(data){
         console.log(data);
       });
-    }
+    };
 
     $scope.get();
     $scope.create = function(country){
-      delete country._id
+      delete country._id;
       var res = $http.post('/api/countries', country);
-      res.success(function(data, status, headers, config) {
+      res.success(function(data) {
         $scope.message = data;
         console.log(data);
         if(typeof data.nModified !== 'undefined'){
-           $scope.messages.push("Country "+country.country_name+" has been modified");
-           scrollTo($window, "countryForm");
+           $scope.messages.push('Country '+country.country_name+' has been modified');
+           scrollTo($window, 'countryForm');
         }
 
       });
-      res.error(function(data, status, headers, config) {
+      res.error(function(data) {
         if(typeof data.errors !== 'undefined'){
           for(var i=0; i<data.errors.length; i++){
             $scope.errors.push(data.errors[i]);
           }
           //$scope.errors.push(data.errors);
-          scrollTo($window, "countryForm");
+          scrollTo($window, 'countryForm');
         }
       });
        $scope.addCountry = false;
        $scope.new_country = {};
-    }
+    };
 
     $scope.delete = function(country) {
       Country.remove({ id: country._id });
@@ -72,25 +72,27 @@ angular.module('wtcApp')
     };
 
     $scope.scrollTo = function(id) {
-          var anchor = document.getElementById(match.id);
+          var anchor = document.getElementById(id);
           console.log(anchor);
-          var container = angular.element(document.getElementById('scroll-container'));
+          //var container = angular.element(document.getElementById('scroll-container'));
           $window.container.scrollToElement(anchor, 0, 800);
     };
 
     $scope.getClassFromInfo = function(country){
       if(!textIsValid(country.country_name) || !textIsValid(country.country_code) || !textIsValid(country.area) || !textIsValid(country.capital) || !textIsValid(country.continent)){
-        return "danger";
+        return 'danger';
       }
     };
 
     function textIsValid(text){
       var valid = true;
 
-      if(typeof text=='undefined' || text.length==0 )valid = false;
+      if(typeof text === 'undefined' || text.length === 0 ){
+        valid = false;
+      }
 
       return valid;
-    };
+    }
 
 
   });

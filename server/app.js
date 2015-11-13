@@ -14,7 +14,7 @@ var config = require('./config/environment');
 var logger = require('./config/logger');
 var winston = require('winston');
 // requiert WinstonDB pour logger dans mongoDB.
-require('winston-mongodb').MongoDB;
+require('winston-mongodb');
 
 // on ne transmet les logs que sur les environnement de développement et de production
 switch(process.env.NODE_ENV){

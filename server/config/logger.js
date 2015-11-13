@@ -47,26 +47,30 @@ var logger_debug_old = logger.debug;
 
   logger.info = function(msg) {
     var fileAndLine = traceCaller(1);
-    arguments[0] = fileAndLine+": "+arguments[0];
-    return logger_info_old.apply(this, arguments);
+    var newArgs = arguments
+    newArgs[0] = fileAndLine+": "+arguments[0];
+    return logger_info_old.apply(this, newArgs);
   };
 
   logger.error = function(msg) {
     var fileAndLine = traceCaller(1);
-    arguments[0] = fileAndLine+": "+arguments[0];
-    return logger_error_old.apply(this, arguments);
+    var newArgs = arguments
+    newArgs[0] = fileAndLine+": "+arguments[0];
+    return logger_error_old.apply(this, newArgs);
   };
 
   logger.warn = function(msg) {
     var fileAndLine = traceCaller(1);
-    arguments[0] = fileAndLine+": "+arguments[0];
-    return logger_warn_old.apply(this, arguments);
+    var newArgs = arguments
+    newArgs[0] = fileAndLine+": "+arguments[0];
+    return logger_warn_old.apply(this, newArgs);
   };
 
   logger.debug = function(msg) {
     var fileAndLine = traceCaller(1);
-    arguments[0] = fileAndLine+": "+arguments[0];
-    return logger_debug_old.apply(this, arguments);
+    var newArgs = arguments
+    newArgs[0] = fileAndLine+": "+arguments[0];
+    return logger_debug_old.apply(this, newArgs);
   };
 
   /**
@@ -81,8 +85,8 @@ var logger_debug_old = logger.debug;
   function traceCaller(n) {
     if( isNaN(n) || n<0) n=1;
     n+=1;
-    var s = (new Error()).stack
-      , a=s.indexOf('\n',5);
+    var s = (new Error()).stack;
+    var a = s.indexOf('\n',5);
     while(n--) {
       a=s.indexOf('\n',a+1);
       if( a<0 ) { a=s.lastIndexOf('\n',s.length); break;}
