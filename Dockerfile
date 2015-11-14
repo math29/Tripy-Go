@@ -1,4 +1,4 @@
-FROM node:0.10.36
+FROM node:0.10.35
 
 MAINTAINER Yoann Diquelou
 
