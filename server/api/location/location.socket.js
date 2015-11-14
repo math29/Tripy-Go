@@ -4,21 +4,21 @@
 
 'use strict';
 
-var Place = require('./place.model');
+var Location = require('./location.model');
 
 exports.register = function(socket) {
-  Place.schema.post('save', function (doc) {
+  Location.schema.post('save', function (doc) {
     onSave(socket, doc);
   });
-  Place.schema.post('remove', function (doc) {
+  Location.schema.post('remove', function (doc) {
     onRemove(socket, doc);
   });
 }
 
 function onSave(socket, doc, cb) {
-  socket.emit('place:save', doc);
+  socket.emit('location:save', doc);
 }
 
 function onRemove(socket, doc, cb) {
-  socket.emit('place:remove', doc);
+  socket.emit('location:remove', doc);
 }

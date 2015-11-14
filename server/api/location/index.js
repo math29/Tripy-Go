@@ -1,12 +1,13 @@
 'use strict';
 
 var express = require('express');
-var controller = require('./place.controller');
+var controller = require('./location.controller');
 
 var router = express.Router();
 
 router.get('/', controller.index);
 router.get('/:id', controller.show);
+router.get('/:longitude/:latitude/:distance/:limit', controller.findLocation);
 router.post('/', controller.create);
 router.put('/:id', controller.update);
 router.patch('/:id', controller.update);

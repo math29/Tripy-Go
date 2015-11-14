@@ -23,6 +23,12 @@ exports.show = function(req, res) {
 // Creates a new transport in the DB.
 exports.create = function(req, res) {
   Transport.create(req.body, function(err, transport) {
+    if(transport.baggages != null && (transport.baggages != "SMALL" || transport.baggages != "MEDIUM" || transport.baggages != "LARGE") ){
+      transport.baggages != null;
+    }
+    if(transport.confort != null && (transport.confort < 0 || transport.confort > 5)){
+      transport.confort = null;
+    }
     if(err) { return handleError(res, err); }
     return res.status(201).json(transport);
   });
