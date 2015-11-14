@@ -1,0 +1,19 @@
+web:
+  build: .
+  links:
+   - db
+  ports:
+   - "5858:5858"
+   - "8080:8080"
+   - "35729:35729"
+  volumes:
+   - ./:/home/mean/
+  environment:
+   NODE_ENV: production
+   MONGOLAB_URI: mongodb://db/wtc-docker
+   PORT: 8080
+
+db:
+  image: mongo:2.4.14
+  ports:
+   - "27017:27017"

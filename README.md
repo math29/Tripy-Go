@@ -138,6 +138,18 @@ vous devriez maintenant avoir un rapport dans `sonar`
 
 Lorsque vous créerez une branche, il peut être bien de modifier le fichier sonar.properties pour lui changer la clef et le nom.
 
+---
+## Docker
+
+Une configuration docker est disponible pour simuler l'environnement de production en place sur `openshift` il y à cependant une impossibilité d'ajouter les images.
+
+pour lancer le container, rien de plus simple, après avoir installé `Docker`, lancez les commandes suivantes:
+
+  # Construction du container
+  docker-compose build
+  # lancement du container
+  docker-compose up
+
 ----
 ## changelog
 * 1-Novembre-2015 Ajout de l'intégration de Jenkins

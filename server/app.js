@@ -64,7 +64,7 @@ require('./routes')(app);
 
 // Start server
 server.listen(config.port, config.ip, function () {
-  logger.info('server listening on %d, in %s mode', config.port, app.get('env'));
+  logger.info('server listening on %d, in %s mode on ip: %s', config.port, app.get('env'), config.ip);
 });
 
 // Expose app
