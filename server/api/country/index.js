@@ -18,7 +18,7 @@ var router = express.Router();
 
 
 /**
- *  @apiDefine ApiParams
+ *  @apiDefine ApiParamsCountry
  *
  *
  * @apiParam {String} country_code   Country code abreviation
@@ -94,7 +94,7 @@ router.get('/:cat/:name', auth.isAuthenticated(), controller.showByName);
   * @apiName InsertCountry
   * @apiGroup Countries
   *
-  * @apiUse ApiParams
+  * @apiUse ApiParamsCountry
   *
   * @apiSuccess {Object} Object response
   *
@@ -119,7 +119,7 @@ router.post('/', auth.hasRole('admin'), controller.create);
   * @apiName UpdateCountry
   * @apiGroup Countries
   *
-  * @apiUse ApiParams
+  * @apiUse ApiParamsCountry
   *
   * @apiSuccess {Object} Object response
   *

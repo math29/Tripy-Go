@@ -17,7 +17,7 @@ var router = express.Router();
 
 
 /**
- *  @apiDefine ApiParams
+ *  @apiDefine ApiParamsTransports
  *
  *
  * @apiParam {String} Name 			 			Name given by the user to the transport
@@ -60,7 +60,7 @@ var router = express.Router();
  *		},
  *      "cost":15426.3,
  *      "duration":{
- *			
+ *
  *		},
  *      "departure_time":389,
  *      "arrival_time":"en-VC,fr",
@@ -81,7 +81,7 @@ router.get('/:id', controller.show);
   * @apiName InsertTransport
   * @apiGroup Transports
   *
-  * @apiUse ApiParams
+  * @apiUse ApiParamsCountry
   *
   * @apiSuccess {Object} Object response
   *
@@ -106,7 +106,7 @@ router.post('/', controller.create);
   * @apiName UpdateTransport
   * @apiGroup Transports
   *
-  * @apiUse ApiParams
+  * @apiUse ApiParamsCountry
   *
   * @apiSuccess {Object} Object response
   *
