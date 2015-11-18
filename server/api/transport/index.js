@@ -77,7 +77,7 @@ router.get('/', controller.index);
 router.get('/:id', controller.show);
 
 /**
-  * @api {post} /api/transports Insert a transport in database
+  * @api {post} /api/transports Insert a transport
   * @apiName InsertTransport
   * @apiGroup Transports
   *
@@ -102,8 +102,8 @@ router.get('/:id', controller.show);
 router.post('/', controller.create);
 
 /**
-  * @api {put} /api/transports Update a transport in database
-  * @apiName UpdateTransport
+  * @api {put} /api/transports Substitute a transport
+  * @apiName SubstituteTransport
   * @apiGroup Transports
   *
   * @apiUse ApiParamsCountry
@@ -125,7 +125,45 @@ router.post('/', controller.create);
   *
   */
 router.put('/:id', controller.update);
+
+/**
+  * @api {put} /api/transports Update a transport
+  * @apiName UpdateTransport
+  * @apiGroup Transports
+  *
+  * @apiUse ApiParamsCountry
+  *
+  * @apiSuccess {Object} Object response
+  *
+  * @apiSuccessExample Success-Response:
+  *   HTTP/1.1 201 Created:
+  *      {
+  *         "ok":1,
+  *         "nModified":0,
+  *         "upserted":[
+  *           {
+  *             "index":0,
+  *             "_id":"34347838758deb5"
+  *           }
+  *         ]
+  *     }
+  *
+  */
 router.patch('/:id', controller.update);
+
+/**
+  * @api {delete} /api/transports/:id Delete a transport
+  * @apiName DeleteTransport
+  * @apiGroup Transports
+  *
+  * @apiSuccess {Object} Object response
+  *
+  * @apiSuccessExample Success-Response:
+  *   HTTP/1.1 204 No Content:
+  *      {
+  *     }
+  *
+  */
 router.delete('/:id', controller.destroy);
 
 module.exports = router;

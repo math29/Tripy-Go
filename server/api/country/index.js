@@ -90,7 +90,7 @@ router.get('/', auth.isAuthenticated(), controller.index);
 router.get('/:cat/:name', auth.isAuthenticated(), controller.showByName);
 
 /**
-  * @api {post} /api/countries Insert a country in database
+  * @api {post} /api/countries Insert a country
   * @apiName InsertCountry
   * @apiGroup Countries
   *
@@ -115,7 +115,7 @@ router.get('/:cat/:name', auth.isAuthenticated(), controller.showByName);
 router.post('/', auth.hasRole('admin'), controller.create);
 
 /**
-  * @api {put} /api/countries Update a country in database
+  * @api {put} /api/countries Update a country
   * @apiName UpdateCountry
   * @apiGroup Countries
   *
@@ -138,6 +138,22 @@ router.post('/', auth.hasRole('admin'), controller.create);
   *
   */
 router.put('/:id', auth.hasRole('admin'), controller.update);
+
+/**
+  * @api {delete} /api/countries/:id Delete a country
+  * @apiName DeleteCountry
+  * @apiGroup Countries
+  *
+  * @apiParam {Number} id   Id of the Country you want to delete
+  *
+  * @apiSuccess {Object} Object response
+  *
+  * @apiSuccessExample Success-Response:
+  *   HTTP/1.1 204 No Content:
+  *      {
+  *     }
+  *
+  */
 router.delete('/:id', auth.hasRole('admin'), controller.destroy);
 
 module.exports = router;

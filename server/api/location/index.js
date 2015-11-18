@@ -104,7 +104,7 @@ router.get('/:id', controller.show);
 router.get('/:longitude/:latitude/:distance/:limit', controller.findLocation);
 
 /**
-  * @api {post} /api/locations Insert a location in database
+  * @api {post} /api/locations Insert a location
   * @apiName InsertLocation
   * @apiGroup Locations
   *
@@ -128,8 +128,8 @@ router.get('/:longitude/:latitude/:distance/:limit', controller.findLocation);
 router.post('/', controller.create);
 
 /**
-  * @api {put} /api/locations Update a location in database
-  * @apiName UpdateLocation
+  * @api {put} /api/locations Substitute a location
+  * @apiName SubstituteLocation
   * @apiGroup Locations
   *
   * @apiUse ApiParamsLocations
@@ -153,9 +153,36 @@ router.post('/', controller.create);
 router.put('/:id', controller.update);
 
 /**
-  * @api {delete} /api/countries/:id Delete a country from database
+  * @api {patch} /api/locations Update a location
+  * @apiName UpdateLocation
+  * @apiGroup Locations
+  *
+  * @apiUse ApiParamsLocations
+  *
+  * @apiSuccess {Object} Object response
+  *
+  * @apiSuccessExample Success-Response:
+  *   HTTP/1.1 201 Created:
+  *      {
+  *         "ok":1,
+  *         "nModified":0,
+  *         "upserted":[
+  *           {
+  *             "index":0,
+  *             "_id":"34347838758deb5"
+  *           }
+  *         ]
+  *     }
+  *
+  */
+router.patch('/:id', controller.update);
+
+/**
+  * @api {delete} /api/locations/:id Delete a country
   * @apiName DeleteLocation
   * @apiGroup Locations
+  *
+  * @apiParam {Number} id 	Id of the Location you want to delete
   *
   * @apiSuccess {Object} Object response
   *
