@@ -47,28 +47,19 @@ var router = express.Router();
  * @apiSuccessExample Success-Response:
  *   HTTP/1.1 200 OK
  *  [
- *    {
- *      "Name":"Intern Transport",
- *      "active":true,
- *      "departure":{
- *			name: String,
- * 			loc: [12.15564, 14.46466]
- *		},
- *      "arrival":{
- *			name: String,
- * 			loc: [0.15564, 1.46466]
- *		},
- *      "cost":15426.3,
- *      "duration":{
- *
- *		},
- *      "departure_time":389,
- *      "arrival_time":"en-VC,fr",
- *      "travel":"en-VC,fr",
- *      "walking_time":"en-VC,fr",
- *      "baggages":"en-VC,fr",
- *      "confort":"en-VC,fr",
- *    }, ...
+ *      {
+ *            "__v": 0,
+ *            "active": true,
+ *            "departure": "564ceecea3300dfc3906f536",
+ *            "arrival": "564ceecea3300dfc3906f536",
+ *            "cost": 15426.3,
+ *            "departure_time": "1970-01-01T00:00:00.389Z",
+ *            "arrival_time": "2015-09-07T19:50:05.708Z",
+ *            "travel": "201500090700095000057008",
+ *            "baggages": "MEDIUM",
+ *            "confort": 1,
+ *            "_id": "564cf500bbb31f62475efc31"
+ *       }, ...
  *  ]
  *
  * @apiUse UserNotAuthorized
@@ -88,15 +79,18 @@ router.get('/:id', controller.show);
   * @apiSuccessExample Success-Response:
   *   HTTP/1.1 201 Created:
   *      {
-  *         "ok":1,
-  *         "nModified":0,
-  *         "upserted":[
-  *           {
-  *             "index":0,
-  *             "_id":"34347838758deb5"
-  *           }
-  *         ]
-  *     }
+  *            "__v": 0,
+  *            "active": true,
+  *            "departure": "564ceecea3300dfc3906f536",
+  *            "arrival": "564ceecea3300dfc3906f536",
+  *            "cost": 15426.3,
+  *            "departure_time": "1970-01-01T00:00:00.389Z",
+  *            "arrival_time": "2015-09-07T19:50:05.708Z",
+  *            "travel": "201500090700095000057008",
+  *            "baggages": "MEDIUM",
+  *            "confort": 1,
+  *            "_id": "564cf500bbb31f62475efc31"
+  *       }
   *
   */
 router.post('/', controller.create);
@@ -113,15 +107,9 @@ router.post('/', controller.create);
   * @apiSuccessExample Success-Response:
   *   HTTP/1.1 201 Created:
   *      {
-  *         "ok":1,
-  *         "nModified":0,
-  *         "upserted":[
-  *           {
-  *             "index":0,
-  *             "_id":"34347838758deb5"
-  *           }
-  *         ]
-  *     }
+  *          "__v": 0,
+  *          "_id": "564cf49161e7bc8345166168"
+  *      }
   *
   */
 router.put('/:id', controller.update);
