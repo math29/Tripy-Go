@@ -46,33 +46,115 @@ var router = express.Router();
  *   HTTP/1.1 200 OK
  *  [
  *    	{
- *	        "_id": "5612bb652e5ef4a40f41acc4",
- *	        "author": "5612bad22e5ef4a40f41acc3",
- *	        "date_departure": null,
- *	        "date_return": null,
- *	        "month_departure": null,
- *	        "choose_by_dates": false,
- *	        "choose_by_month": false,
- *	        "budget": 2000000,
- *	        "nbTravellers": 15,
- *	        "__v": 0,
- *	        "selectedHashtags": [],
- *	        "region_idea": "",
- *	        "personal_interest": {
- *	            "mountain": false,
- *	            "playa": false
- *	        },
- *	        "date_created": "2015-10-05T18:03:17.925Z"
  *	    },...
  *  ]
  *
  * @apiUse UserNotAuthorized
  */
 router.get('/', auth.hasRole('admin'), controller.index);
+
+/**
+  * @api {delete} /api/users/:id Delete a user
+  * @apiName DeleteUser
+  * @apiGroup Users
+  *
+  * @apiParam {Number} id   Id of the User you want to delete
+  *
+  * @apiSuccess {Object} Object response
+  *
+  * @apiSuccessExample Success-Response:
+  *   HTTP/1.1 204 No Content:
+  *      {
+  *     }
+  *
+  */
 router.delete('/:id', auth.hasRole('admin'), controller.destroy);
+
+/**
+ * @api {get} /api/users/me Get current user connected
+ * @apiVersion 0.0.0
+ * @apiName GetCurrentUser
+ * @apiGroup Users
+ *
+ * @apiSuccess {User} current user
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *  [
+ *    	{
+ *	    },...
+ *  ]
+ *
+ * @apiUse UserNotAuthorized
+ */
 router.get('/me', auth.isAuthenticated(), controller.me);
+
+/**
+  * @api {get} /api/users/:id/password Change Password
+  * @apiName PutChangePassWord
+  * @apiGroup Users
+  *
+  * @apiParam {Number} id  User Id you want to change password
+  *
+  * @apiSuccess {User} Modified User
+  *
+  * @apiSuccessExample Success-Response:
+  *   HTTP/1.1 Success-Response:
+  *   [
+  *    ...
+  *    ]
+  *
+  *
+  */
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
+
+/**
+ * @api {get} /api/users/:id Get By Id
+ * @apiVersion 0.0.0
+ * @apiName GetUsersById
+ * @apiGroup Users
+ *
+ * @apiParam {Number} id  Id of the target user
+ *
+ * @apiSuccess {User} User
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *  [
+ *      {
+ *            "__v": 0,
+ *			  ...
+ *            "_id": "564cf500bbb31f62475efc31"
+ *       }
+ *  ]
+ *
+ * @apiUse UserNotAuthorized
+ */
 router.get('/:id', auth.isAuthenticated(), controller.show);
+
+/**
+  * @api {post} /api/users Insert a User
+  * @apiName InsertUser
+  * @apiGroup Users
+  *
+  * @apiUse ApiParamsUser
+  *
+  * @apiSuccess {Object} Object response
+  *
+  * @apiSuccessExample Success-Response:
+  *   HTTP/1.1 201 Created:
+  *      {
+  *         "ok":1,
+  *         "nModified":0,
+  *         "upserted":[
+  *           {
+  *             "index":0,
+  *             "_id":"34347838758deb5"
+  *           }
+  *         ]
+  *     }
+  *
+  */
 router.post('/', controller.create);
 
 module.exports = router;

@@ -197,6 +197,8 @@ router.patch('/:id', controller.update);
   * @apiName DeleteTravel
   * @apiGroup Travels
   *
+  * @apiParam {Number} id   Id of the Travel you want to delete
+  *
   * @apiSuccess {Object} Object response
   *
   * @apiSuccessExample Success-Response:
