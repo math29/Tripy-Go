@@ -26,7 +26,7 @@ var router = express.Router();
 
 /**
  * @api {get} /api/locations Request list of all locations
- * @apiVersion 1.0.0
+ * @apiVersion 0.0.0
  * @apiName GetLocations
  * @apiGroup Locations
  *
@@ -128,7 +128,7 @@ router.get('/:longitude/:latitude/:distance/:limit', controller.findLocation);
 router.post('/', controller.create);
 
 /**
-  * @api {put} /api/locations Substitute a location
+  * @api {put} /api/locations/:id Substitute a location
   * @apiName SubstituteLocation
   * @apiGroup Locations
   *
@@ -153,7 +153,7 @@ router.post('/', controller.create);
 router.put('/:id', controller.update);
 
 /**
-  * @api {patch} /api/locations Update a location
+  * @api {patch} /api/locations/:id Update a location
   * @apiName UpdateLocation
   * @apiGroup Locations
   *
@@ -178,7 +178,7 @@ router.put('/:id', controller.update);
 router.patch('/:id', controller.update);
 
 /**
-  * @api {delete} /api/locations/:id Delete a country
+  * @api {delete} /api/locations/:id Delete a location
   * @apiName DeleteLocation
   * @apiGroup Locations
   *

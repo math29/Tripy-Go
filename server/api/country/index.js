@@ -32,7 +32,7 @@ var router = express.Router();
 
 /**
  * @api {get} /api/countries Request list of all countries
- * @apiVersion 1.0.0
+ * @apiVersion 0.0.0
  * @apiName GetCountries
  * @apiGroup Countries
  *

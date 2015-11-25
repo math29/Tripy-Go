@@ -17,7 +17,7 @@ var router = express.Router();
 
 
 /**
- *  @apiDefine ApiParamsTransports
+ *  @apiDefine ApiParamsTransport
  *
  *
  * @apiParam {String} Name 			 			Name given by the user to the transport
@@ -38,7 +38,7 @@ var router = express.Router();
 
 /**
  * @api {get} /api/transports Request list of all transports
- * @apiVersion 1.0.0
+ * @apiVersion 0.0.0
  * @apiName GetTransports
  * @apiGroup Transports
  *
@@ -65,6 +65,37 @@ var router = express.Router();
  * @apiUse UserNotAuthorized
  */
 router.get('/', controller.index);
+
+/**
+ * @api {get} /api/transports/:id Get By Id
+ * @apiVersion 0.0.0
+ * @apiName GetTransportsById
+ * @apiGroup Transports
+ *
+ * @apiParam {Number} id  Id of the target transport
+ *
+ * @apiSuccess {Transport} Transport
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *  [
+ *      {
+ *            "__v": 0,
+ *            "active": true,
+ *            "departure": "564ceecea3300dfc3906f536",
+ *            "arrival": "564ceecea3300dfc3906f536",
+ *            "cost": 15426.3,
+ *            "departure_time": "1970-01-01T00:00:00.389Z",
+ *            "arrival_time": "2015-09-07T19:50:05.708Z",
+ *            "travel": "201500090700095000057008",
+ *            "baggages": "MEDIUM",
+ *            "confort": 1,
+ *            "_id": "564cf500bbb31f62475efc31"
+ *       }
+ *  ]
+ *
+ * @apiUse UserNotAuthorized
+ */
 router.get('/:id', controller.show);
 
 /**
@@ -72,7 +103,7 @@ router.get('/:id', controller.show);
   * @apiName InsertTransport
   * @apiGroup Transports
   *
-  * @apiUse ApiParamsCountry
+  * @apiUse ApiParamsTransport
   *
   * @apiSuccess {Object} Object response
   *
@@ -96,11 +127,11 @@ router.get('/:id', controller.show);
 router.post('/', controller.create);
 
 /**
-  * @api {put} /api/transports Substitute a transport
+  * @api {put} /api/transports/:id Substitute a transport
   * @apiName SubstituteTransport
   * @apiGroup Transports
   *
-  * @apiUse ApiParamsCountry
+  * @apiUse ApiParamsTransport
   *
   * @apiSuccess {Object} Object response
   *
@@ -115,11 +146,11 @@ router.post('/', controller.create);
 router.put('/:id', controller.update);
 
 /**
-  * @api {put} /api/transports Update a transport
+  * @api {put} /api/transports/:id Update a transport
   * @apiName UpdateTransport
   * @apiGroup Transports
   *
-  * @apiUse ApiParamsCountry
+  * @apiUse ApiParamsTransport
   *
   * @apiSuccess {Object} Object response
   *
