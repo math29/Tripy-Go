@@ -18,7 +18,7 @@ var router = express.Router();
 
 
 /**
- *  @apiDefine ApiParams
+ *  @apiDefine ApiParamsCountry
  *
  *
  * @apiParam {String} country_code   Country code abreviation
@@ -32,7 +32,7 @@ var router = express.Router();
 
 /**
  * @api {get} /api/countries Request list of all countries
- * @apiVersion 1.0.0
+ * @apiVersion 0.0.0
  * @apiName GetCountries
  * @apiGroup Countries
  *
@@ -90,11 +90,11 @@ router.get('/', auth.isAuthenticated(), controller.index);
 router.get('/:cat/:name', auth.isAuthenticated(), controller.showByName);
 
 /**
-  * @api {post} /api/countries Insert a country in database
+  * @api {post} /api/countries Insert a country
   * @apiName InsertCountry
   * @apiGroup Countries
   *
-  * @apiUse ApiParams
+  * @apiUse ApiParamsCountry
   *
   * @apiSuccess {Object} Object response
   *
@@ -115,11 +115,11 @@ router.get('/:cat/:name', auth.isAuthenticated(), controller.showByName);
 router.post('/', auth.hasRole('admin'), controller.create);
 
 /**
-  * @api {put} /api/countries Update a country in database
+  * @api {put} /api/countries Update a country
   * @apiName UpdateCountry
   * @apiGroup Countries
   *
-  * @apiUse ApiParams
+  * @apiUse ApiParamsCountry
   *
   * @apiSuccess {Object} Object response
   *
@@ -138,6 +138,22 @@ router.post('/', auth.hasRole('admin'), controller.create);
   *
   */
 router.put('/:id', auth.hasRole('admin'), controller.update);
+
+/**
+  * @api {delete} /api/countries/:id Delete a country
+  * @apiName DeleteCountry
+  * @apiGroup Countries
+  *
+  * @apiParam {Number} id   Id of the Country you want to delete
+  *
+  * @apiSuccess {Object} Object response
+  *
+  * @apiSuccessExample Success-Response:
+  *   HTTP/1.1 204 No Content:
+  *      {
+  *     }
+  *
+  */
 router.delete('/:id', auth.hasRole('admin'), controller.destroy);
 
 module.exports = router;
