@@ -34,6 +34,7 @@ var router = express.Router();
  * @apiParam (walking_time) {Date} end_date   	Date of the end of walking time from previous step to this transport - Only for Intern Transports
  * @apiParam {String} baggages	 				Size of baggages : SMALL/MEDIUM/LARGE - Only for external Transports
  * @apiParam {Number} confort	 				confort of the transport : 1 -> 5 - Only for external Transports
+ * @apiParam {String} type         Type of Transport (INTERN/EXTERN)
  */
 
 /**

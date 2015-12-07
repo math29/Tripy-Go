@@ -31,7 +31,8 @@ var TransportSchema = new Schema({
     end_date: Date
   },
   baggages: String, // Enum SMALL/MEDIUM/LARGE - Only for external Transports
-  confort: Number // 1->5 - Only for external Transports
+  confort: Number, // 1->5 - Only for external Transports
+  type: String
 });
 
 module.exports = mongoose.model('Transport', TransportSchema);
