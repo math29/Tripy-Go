@@ -36,6 +36,8 @@ var router = express.Router();
  * @apiParam {Collection} personal_interest			Number of travellers
  * @apiParam {String} region_idea					Number of travellers
  * @apiParam {Array} selectedHashtags				Number of travellers
+ * @apiParam {Location} departure            Departure Location
+ * @apiParam {Location} arrival             Arrival Location
  */
 
 /**
