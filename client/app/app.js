@@ -67,7 +67,7 @@ angular.module('wtcApp', [
       });
     });
   });
-  
+
   angular.module('d3', []);
   angular.module('wtcApp.directives', ['d3']);
   angular.module('wtcApp.controllers', []);

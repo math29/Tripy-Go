@@ -19,6 +19,7 @@
     "jsonwebtoken": "^5.4.1",
     "lodash": "~2.4.1",
     "method-override": "~1.0.0",
+    "mongodb": "^2.0.48",
     "mongoose": "~4.0.3",
     "morgan": "~1.0.0",
     "passport": "~0.2.0",
