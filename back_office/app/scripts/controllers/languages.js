@@ -12,6 +12,16 @@ angular.module('WTCBack')
     $scope.orderby='';
     $scope.orderOptions = ['+','-'];
     $scope.orderType = $scope.orderOptions[0];
+    $scope.languages = '{}';
+
+
+    function createDownloadURL(){
+      var blob = new Blob([ JSON.stringify($scope.languages) ], { type : 'application/json' });
+      if($scope.url){
+        $scope.url.revokeObjectURL()
+      }
+      $scope.url = (window.URL || window.webkitURL).createObjectURL( blob );
+    }
 
     $scope.edit = function(language){
       $scope.new_language = language;
@@ -23,6 +33,7 @@ angular.module('WTCBack')
       var res = $http.get('../api/language');
       res.success(function(data){
         $scope.languages = data;
+        createDownloadURL();
         $scope.keys = Object.keys(data[0]);
         $scope.keys.splice(0,1);
         $scope.keys.splice($scope.keys.length-1,1);

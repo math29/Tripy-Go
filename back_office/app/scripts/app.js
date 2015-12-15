@@ -42,7 +42,7 @@ angular
       }
     };
   })
-  .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider', '$httpProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,$httpProvider) {
+  .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider', '$httpProvider', '$compileProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,$httpProvider, $compileProvider) {
     $httpProvider.interceptors.push('authInterceptor');
 
     $ocLazyLoadProvider.config({
@@ -50,6 +50,8 @@ angular
       events:true,
     });
     $urlRouterProvider.otherwise('/dashboard/home');
+
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|blob):/);
 
     $stateProvider
       .state('dashboard', {

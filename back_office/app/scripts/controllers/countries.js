@@ -13,6 +13,15 @@ angular.module('WTCBack')
     $scope.orderOptions = ['+','-'];
     console.log($scope.orderOptions);
     $scope.orderType = $scope.orderOptions[0];
+    $scope.countries = '{}';
+
+    function createDownloadURL(){
+      var blob = new Blob([ JSON.stringify($scope.countries) ], { type : 'text/plain' });
+      if($scope.url){
+        $scope.url.revokeObjectURL()
+      }
+      $scope.url = (window.URL || window.webkitURL).createObjectURL( blob );
+     }
 
     $scope.edit = function(country){
       $scope.new_country = country;
@@ -24,6 +33,7 @@ angular.module('WTCBack')
       var res = $http.get('../api/countries');
       res.success(function(data){
         $scope.countries = data;
+        createDownloadURL();
         $scope.keys = Object.keys(data[0]);
         $scope.keys.splice(0,1);
         $scope.keys.splice($scope.keys.length-1,1);
