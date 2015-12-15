@@ -14,10 +14,7 @@ angular
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
-    'ngCookies',
-    'ngResource',
-    'ngSanitize',
-    'ngRoute'
+    'ngCookies'
 
   ])
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
@@ -132,9 +129,22 @@ angular
         templateUrl:'views/pages/blank.html',
         url:'/blank'
     })
-      .state('login',{
-        templateUrl:'views/pages/login.html',
-        url:'/login'
+    .state('login',{
+      templateUrl:'views/pages/login.html',
+      url:'/login',
+      controller:'LoginCtrl',
+      resolve: {
+        loadMyFile:function($ocLazyLoad){
+          return $ocLazyLoad.load({
+          name:'WTCBack',
+          files:[
+            'scripts/controllers/login.js',
+            'scripts/factories/auth.service.js',
+            'scripts/factories/user.service.js'
+          ]
+         })
+        }
+      }
     })
       .state('dashboard.chart',{
         templateUrl:'views/chart.html',
