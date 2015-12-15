@@ -16,6 +16,7 @@ module.exports = function(app) {
   app.use('/api/things', require('./api/thing'));
   app.use('/api/users', require('./api/user'));
   app.use('/api/countries', require('./api/country'));
+  app.use('/api/language', require('./api/language'));
   /* database info api */
   app.use('/api/back/db', require('./api/dbAPI'));
 

@@ -1,12 +1,12 @@
 'use strict';
 /**
  * @ngdoc function
- * @name sbAdminApp.controller:MongoCtrl
+ * @name WTCBack.controller:MongoCtrl
  * @description
  * # MongoCtrl
  * Controller for mongo informations
  */
-angular.module('sbAdminApp')
+angular.module('WTCBack')
   .controller('MongoCtrl', function($scope,$http) {
   /* get mongodb informations*/
   $scope.get = function(){

@@ -1,27 +1,57 @@
 'use strict';
 /**
  * @ngdoc overview
- * @name sbAdminApp
+ * @name WTCBack
  * @description
- * # sbAdminApp
+ * # WTCBack
  *
  * Main module of the application.
  */
 angular
-  .module('sbAdminApp', [
+  .module('WTCBack', [
     'ngResource',
     'oc.lazyLoad',
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
+    'ngCookies',
+    'ngResource',
+    'ngSanitize',
+    'ngRoute'
+
   ])
-  .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
+  .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
+    return {
+      // Add authorization token to headers
+      request: function (config) {
+        config.headers = config.headers || {};
+        if ($cookieStore.get('token')) {
+          config.headers.Authorization = 'Bearer ' + $cookieStore.get('token');
+        }
+        return config;
+      },
+
+      // Intercept 401s and redirect you to login
+      responseError: function(response) {
+        if(response.status === 401) {
+          $location.path('/login');
+          // remove any stale tokens
+          $cookieStore.remove('token');
+          return $q.reject(response);
+        }
+        else {
+          return $q.reject(response);
+        }
+      }
+    };
+  })
+  .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider', '$httpProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,$httpProvider) {
+    $httpProvider.interceptors.push('authInterceptor');
 
     $ocLazyLoadProvider.config({
       debug:false,
       events:true,
     });
-
     $urlRouterProvider.otherwise('/dashboard/home');
 
     $stateProvider
@@ -32,7 +62,7 @@ angular
             loadMyDirectives:function($ocLazyLoad){
                 return $ocLazyLoad.load(
                 {
-                    name:'sbAdminApp',
+                    name:'WTCBack',
                     files:[
                     'scripts/directives/header/header.js',
                     'scripts/directives/header/header-notification/header-notification.js',
@@ -82,7 +112,7 @@ angular
         resolve: {
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
-              name:'sbAdminApp',
+              name:'WTCBack',
               files:[
               'scripts/controllers/main.js',
               'scripts/directives/timeline/timeline.js',
@@ -120,26 +150,40 @@ angular
               ]
             }),
             $ocLazyLoad.load({
-                name:'sbAdminApp',
+                name:'WTCBack',
                 files:['scripts/controllers/chartContoller.js']
             })
           }
         }
     })
-      .state('dashboard.mongo',{
-        templateUrl:'views/mongo.html',
-        url:'/mongo',
-        controller: 'MongoCtrl',
+      .state('dashboard.countries', {
+        templateUrl: 'views/countries.html',
+        url: '/countries',
+        controller: 'CountryCtrl',
         resolve: {
-          loadMyFile:function($ocLazyLoad){
+          loadMyFile: function($ocLazyLoad){
             return $ocLazyLoad.load({
-              name: 'sbAdminApp',
-              files: ['scripts/controllers/mongo.js',
-              'scripts/directives/dashboard/stats/stats.js']
+              name: 'WTCBack',
+              files: ['scripts/controllers/countries.js',
+              'scripts/factories/country.service.js']
             })
           }
         }
-    })
+      })
+      .state('dashboard.languages', {
+              templateUrl: 'views/languages.html',
+              url: '/languages',
+              controller: 'LanguageCtrl',
+              resolve: {
+                loadMyFile: function($ocLazyLoad){
+                  return $ocLazyLoad.load({
+                    name: 'WTCBack',
+                    files: ['scripts/controllers/languages.js',
+                    'scripts/factories/languages.service.js']
+                  })
+                }
+              }
+            })
       .state('dashboard.panels-wells',{
           templateUrl:'views/ui-elements/panels-wells.html',
           url:'/panels-wells'
@@ -164,6 +208,17 @@ angular
        templateUrl:'views/ui-elements/grid.html',
        url:'/grid'
    })
-  }]);
+  }])
+.run(function ($rootScope, $location) {
+    // Redirect to login if route requires auth and you're not logged in
+    $rootScope.$on('$routeChangeStart', function (event, next) {
+      Auth.isLoggedInAsync(function(loggedIn) {
+        if (next.authenticate && !loggedIn) {
+          event.preventDefault();
+          $location.path('/login');
+        }
+      });
+    });
+  });
 
 
