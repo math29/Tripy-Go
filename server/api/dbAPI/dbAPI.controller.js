@@ -86,7 +86,7 @@ exports.getCollectionNames = function(req, res){
             }else{
               stat.ns = stat.ns.substring(stat.ns.indexOf('.') + 1);
               stats.push(stat);
-              if(stats.length==collections.length){
+              if(stats.length === collections.length){
                 return res.status(200).json(stats);
               }
             }
@@ -119,7 +119,7 @@ exports.serverStatus = function(req, res){
           logger.error('Unable to get server status');
           return res.status(500).json('{error:\'Unable to get serverStatus\'}');
         }
-        assert.ok(info != null);
+        assert.ok(info !== null);
         closeDB(db);
         return res.status(200).json(info);
       });
@@ -146,7 +146,7 @@ exports.hostInfos = function(req, res){
       adminDb.command({'hostInfo':1},function(err, info) {
 
         assert.equal(null, err);
-        assert.ok(info != null);
+        assert.ok(info !== null);
         closeDB(db);
         return res.status(200).json(info);
       });
