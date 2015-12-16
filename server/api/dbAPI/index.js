@@ -137,6 +137,8 @@ router.get('/stats',  controller.allStats);
   *     }
   *
   */
-//router.put('/:id',  controller.stats);
+router.get('/hostInfos',  controller.hostInfos);
+router.get('/status',  controller.serverStatus);
+
 
 module.exports = router;

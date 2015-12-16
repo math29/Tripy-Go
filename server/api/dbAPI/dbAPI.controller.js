@@ -5,7 +5,6 @@ var logger = require('../../config/logger.js');
 var mongo = require('mongodb');
 var config = require('../../config/environment');
 var assert = require('assert');
-var q = require('Q');
 var mongoClient = mongo.MongoClient;
 /**
  * Get db stats
@@ -87,7 +86,6 @@ exports.getCollectionNames = function(req, res){
             }else{
               stat.ns = stat.ns.substring(stat.ns.indexOf('.') + 1);
               stats.push(stat);
-              console.log(stat);
               if(stats.length==collections.length){
                 return res.status(200).json(stats);
               }
@@ -100,6 +98,62 @@ exports.getCollectionNames = function(req, res){
   });
 }
 
+exports.serverStatus = function(req, res){
+  // Establish connection to db
+  mongoClient.connect(config.mongo.uri, function(err, db) {
+    if(err){
+      logger.error('Unable to connect to database');
+      return res.status(500).json('{error:\'Unable to connect database\'}');
+    }
+    // Use the admin database for the operation
+    var adminDb = db.admin();
+    // Authenticate using the newly added user
+    adminDb.authenticate('adminWTC', 'adminWTC', function(err, result) {
+      if(err){
+        logger.error('Unable to connect to authenticate');
+        return res.status(500).json('{error:\'Unable to authenticate\'}');
+      }
+      // Retrive the server Info
+      adminDb.serverStatus(function(err, info) {
+        if(err){
+          logger.error('Unable to get server status');
+          return res.status(500).json('{error:\'Unable to get serverStatus\'}');
+        }
+        assert.ok(info != null);
+        closeDB(db);
+        return res.status(200).json(info);
+      });
+    });
+  });
+}
+
+exports.hostInfos = function(req, res){
+  // Establish connection to db
+  mongoClient.connect(config.mongo.uri, function(err, db) {
+    if(err){
+      logger.error('Unable to connect to database');
+      return res.status(500).json('{error:\'Unable to connect database\'}');
+    }
+    // Use the admin database for the operation
+    var adminDb = db.admin();
+    // Authenticate using the newly added user
+    adminDb.authenticate('adminWTC', 'adminWTC', function(err, result) {
+      if(err){
+        logger.error('Unable to connect to authenticate');
+        return res.status(500).json('{error:\'Unable to authenticate\'}');
+      }
+      // Retrive the server Info
+      adminDb.hostInfo(function(err, info) {
+
+        assert.equal(null, err);
+        assert.ok(info != null);
+        closeDB(db);
+        console.log(info);
+        return res.status(200).json(info);
+      });
+    });
+  });
+}
 
 /**
  * Close database

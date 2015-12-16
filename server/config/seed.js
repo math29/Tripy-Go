@@ -2554,3 +2554,4 @@ Country.find({}).remove(function(){
   			}
   );
 });
+
