@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Tables</h1>
+        <h1 class="page-header">Main information</h1>
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -14,7 +14,60 @@
 
 </div>
 <!-- /.row -->
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">Server information:</h1>
+  </div>
+  <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+  <div class="col-lg-4">
+    <div class="panel panel-danger">
+      <div class="panel-heading">
+        Host
+      </div>
+      <div class="panel-body">
+        Hostname: {{host.system.hostname}}<br/>
+        Time: {{host.system.currentTime}}<br/>
+        Memory size: {{host.system.memSizeMB}}<br/>
+        NumCores: {{host.system.numCores}}
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="panel panel-warning">
+      <div class="panel-heading">
+        OS
+      </div>
+      <div class="panel-body">
+        type: {{host.os.type}}<br/>
+        name: {{host.os.name}}
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        Status
+      </div>
+      <div class="panel-body">
+        Uptime: {{status.uptime}} s<br/>
+        Time: {{status.localTime}}<br/>
+        Connections: {{status.connections.current}}
+      </div>
+    </div>
+  </div>
+</div>
 
+
+
+
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">Tables</h1>
+  </div>
+  <!-- /.col-lg-12 -->
+</div>
 <div class="row">
   <div class="" ng-repeat="stat in stats">
     <div class="col-lg-3 col-md-6">

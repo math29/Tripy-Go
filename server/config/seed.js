@@ -7,7 +7,9 @@
 
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
-var Country = require('../api/country/country.model')
+var Country = require('../api/country/country.model');
+
+
 
 Thing.find({}).remove(function() {
   Thing.create({

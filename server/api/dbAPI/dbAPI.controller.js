@@ -108,7 +108,7 @@ exports.serverStatus = function(req, res){
     // Use the admin database for the operation
     var adminDb = db.admin();
     // Authenticate using the newly added user
-    adminDb.authenticate('adminWTC', 'adminWTC', function(err, result) {
+    adminDb.authenticate('WTCAdmin', 'WTCAdmin', function(err, result) {
       if(err){
         logger.error('Unable to connect to authenticate');
         return res.status(500).json('{error:\'Unable to authenticate\'}');
@@ -137,18 +137,17 @@ exports.hostInfos = function(req, res){
     // Use the admin database for the operation
     var adminDb = db.admin();
     // Authenticate using the newly added user
-    adminDb.authenticate('adminWTC', 'adminWTC', function(err, result) {
+    adminDb.authenticate('WTCAdmin', 'WTCAdmin', function(err, result) {
       if(err){
-        logger.error('Unable to connect to authenticate');
+        logger.error('Unable to connect to authenticate '+err);
         return res.status(500).json('{error:\'Unable to authenticate\'}');
       }
       // Retrive the server Info
-      adminDb.hostInfo(function(err, info) {
+      adminDb.command({'hostInfo':1},function(err, info) {
 
         assert.equal(null, err);
         assert.ok(info != null);
         closeDB(db);
-        console.log(info);
         return res.status(200).json(info);
       });
     });

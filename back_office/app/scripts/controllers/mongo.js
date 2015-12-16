@@ -41,6 +41,16 @@ angular.module('WTCBack')
     });
   }
 
+  $scope.status = function(){
+      var res = $http.get('/api/back/db/status');
+      res.success(function(data){
+        $scope.status = data;
+      });
+      res.error(function(data){
+        console.log('error: '+data);
+      });
+    }
+
   $scope.stats = function(){
       var res = $http.get('/api/back/db/stats');
       res.success(function(data){
@@ -60,6 +70,7 @@ angular.module('WTCBack')
     $scope.names();
     $scope.stats();
     $scope.host();
+    $scope.status();
 
     function avgSize(data){
       return Math.ceil(data)+'Kb'
