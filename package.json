@@ -6,7 +6,6 @@
     "title": "API to travel all around the world"
   },
   "dependencies": {
-    "async": "^1.5.0",
     "body-parser": "~1.5.0",
     "composable-middleware": "^0.3.0",
     "compression": "~1.0.1",
@@ -28,6 +27,7 @@
     "passport-google-oauth": "latest",
     "passport-local": "~0.1.6",
     "passport-twitter": "latest",
+    "q": "^1.4.1",
     "serve-favicon": "~2.0.1",
     "socket.io": "^1.0.6",
     "socket.io-client": "^1.0.6",

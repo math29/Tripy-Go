@@ -17,11 +17,13 @@ exports.stats = function(req, res) {
   mongoClient.connect(config.mongo.uri, function(err, db) {
     assert.equal(null, err);
     db.stats(1024, function(err, stats){
-        // delete db name info for security issues
-        delete stats.db;
-        return getCollectionStats(db, res);
-        //closeDB(db);
-        //return res.status(200).json(stats);
+      if(err){
+        logger.error(err);
+      }
+      // delete db name info for security issues
+      delete stats.db;
+      closeDB(db);
+      return res.status(200).json(stats);
     });
 
   });
@@ -31,21 +33,32 @@ exports.stats = function(req, res) {
  *
  * get the name of each collection
  *
- * @param db: database object
+ * @param req: request
+ * @param res: response
  */
-function getCollectionNames(db, callback){
-  db.collections(function(err, collections){
-    // if there is an error
+exports.getCollectionNames = function(req, res){
+  mongoClient.connect(config.mongo.uri, function(err, db){
     if(err){
-      logger.error("Can't get collections");
-      return null;
+      logger.error("Can't connect to database");
+      return res.status(500).json('{error:\'unable to connect database\'}');
+    }else{
+      db.collections(function(err, collections){
+        // if there is an error
+        if(err){
+          logger.error("Can't get collections");
+          return res.status(500).json('{error:\'cant get collections names\'}');
+        }
+        var names = [];
+        collections.forEach(function(collection){
+          names.push(collection.s.name);
+        });
+        var obj = {};
+        obj.names = names;
+        return res.status(200).json(obj);
+      });
     }
-    var names = [];
-    collections.forEach(function(collection){
-      names.push(collection.s.name);
-    });
-    return names;
   });
+
 }
 
 /**
@@ -54,25 +67,36 @@ function getCollectionNames(db, callback){
  * @param db: objet de database
  *
  */
-function getCollectionStats(db, res){
+ exports.allStats = function(req, res){
   var stats = [];
-  db.collections(function(err, collections){
-    // if there is an error
+  mongoClient.connect(config.mongo.uri, function(err, db){
     if(err){
-      logger.error("Can't get collections");
-      return null;
+      logger.error("Unable to connect database");
+      return res.status(500).json('{error:\'Unable to connect database\'}');
     }
+    db.collections(function(err, collections){
+      if(err){
+        logger.error("Can't get collections");
+        return res.status(500).json('{error:\'cant get collections\'}');
+      }else{
+        for(var i=0; i<collections.length; i++){
+          db.collection(collections[i].s.name).stats(function(err, stat){
+            if(err){
+              logger.error("Unable to get stats for "+collections[i].s.name+" collection "+err);
+            }else{
+              stats.push(stat);
+            }
 
-    collections.forEach(function(collection){
-      db.collection(collection.s.name).stats(function(err, stat){
-        if(err){
-          logger.log(err);
+          });
+
+
         }
-        stats.push(stat);
-      });
+        return res.status(200).json(stats);
+
+        //
+      }
     });
-    return res.status(200).json(stats);
-  });  
+  });
 }
 
 

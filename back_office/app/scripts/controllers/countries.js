@@ -21,7 +21,7 @@ angular.module('WTCBack')
         $scope.url.revokeObjectURL()
       }
       $scope.url = (window.URL || window.webkitURL).createObjectURL( blob );
-     }
+    }
 
     $scope.edit = function(country){
       $scope.new_country = country;

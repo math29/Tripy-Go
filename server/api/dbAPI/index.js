@@ -87,7 +87,7 @@ router.get('/',  controller.stats);
   *
   *
   */
-//router.get('/:cat/:name', controller.stats);
+router.get('/names', controller.getCollectionNames);
 
 /**
   * @api {post} /api/countries Insert a country in database
@@ -112,7 +112,7 @@ router.get('/',  controller.stats);
   *     }
   *
   */
-//router.post('/',  controller.stats);
+router.get('/stats',  controller.allStats);
 
 /**
   * @api {put} /api/countries Update a country in database

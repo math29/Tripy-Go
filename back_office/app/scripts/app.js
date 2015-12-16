@@ -183,19 +183,33 @@ angular
         }
       })
       .state('dashboard.languages', {
-              templateUrl: 'views/languages.html',
-              url: '/languages',
-              controller: 'LanguageCtrl',
-              resolve: {
-                loadMyFile: function($ocLazyLoad){
-                  return $ocLazyLoad.load({
-                    name: 'WTCBack',
-                    files: ['scripts/controllers/languages.js',
-                    'scripts/factories/languages.service.js']
-                  })
-                }
-              }
+        templateUrl: 'views/languages.html',
+        url: '/languages',
+        controller: 'LanguageCtrl',
+        resolve: {
+          loadMyFile: function($ocLazyLoad){
+            return $ocLazyLoad.load({
+            name: 'WTCBack',
+            files: ['scripts/controllers/languages.js',
+            'scripts/factories/languages.service.js']
             })
+          }
+        }
+      })
+      .state('dashboard.mongo',{
+        templateUrl:'views/mongo.html',
+        url:'/mongo',
+        controller:'MongoCtrl',
+        resolve: {
+          loadMyFile: function($ocLazyLoad){
+            return $ocLazyLoad.load({
+            name: 'WTCBack',
+            files: [
+              'scripts/controllers/mongo.js'
+          ]})
+         }
+        }
+      })
       .state('dashboard.panels-wells',{
           templateUrl:'views/ui-elements/panels-wells.html',
           url:'/panels-wells'
