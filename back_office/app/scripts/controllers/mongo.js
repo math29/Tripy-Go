@@ -25,7 +25,6 @@ angular.module('WTCBack')
     var res = $http.get('/api/back/db/names');
     res.success(function(data){
       $scope.names = data.names;
-      alert($scope.names);
     });
     res.error(function(data){
       console.log('error: '+data);
@@ -36,7 +35,10 @@ angular.module('WTCBack')
       var res = $http.get('/api/back/db/stats');
       res.success(function(data){
         $scope.stats = data;
-        alert($scope.stats);
+        for(var i=0; i<$scope.stats.length; i++){
+          $scope.stats[i].avgObjSize = avgSize($scope.stats[i].avgObjSize);
+          $scope.stats[i].size = sizeToMb($scope.stats[i].size)
+        }
       });
       res.error(function(data){
         console.log('error: '+data);
@@ -47,5 +49,13 @@ angular.module('WTCBack')
     $scope.get();
     $scope.names();
     $scope.stats();
+
+    function avgSize(data){
+      return Math.ceil(data)+'Kb'
+    }
+
+    function sizeToMb(data){
+      return Math.floor(data / 10000) + 'Mb'
+    }
   });
 

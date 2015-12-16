@@ -5,7 +5,7 @@ var logger = require('../../config/logger.js');
 var mongo = require('mongodb');
 var config = require('../../config/environment');
 var assert = require('assert');
-var async = require('async');
+var q = require('Q');
 var mongoClient = mongo.MongoClient;
 /**
  * Get db stats
@@ -54,6 +54,7 @@ exports.getCollectionNames = function(req, res){
         });
         var obj = {};
         obj.names = names;
+        closeDB(db);
         return res.status(200).json(obj);
       });
     }
@@ -84,16 +85,16 @@ exports.getCollectionNames = function(req, res){
             if(err){
               logger.error("Unable to get stats for "+collections[i].s.name+" collection "+err);
             }else{
+              stat.ns = stat.ns.substring(stat.ns.indexOf('.') + 1);
               stats.push(stat);
+              console.log(stat);
+              if(stats.length==collections.length){
+                return res.status(200).json(stats);
+              }
             }
 
           });
-
-
         }
-        return res.status(200).json(stats);
-
-        //
       }
     });
   });
