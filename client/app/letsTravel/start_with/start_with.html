@@ -7,6 +7,10 @@
 
 		<div class="row">
 			<form class="travel-form" ng-submit="addTrip()" name="travelForm">
+                <div class="form-group">
+                    <input type="text" ng-model="newTravel.name" class="form-control" aria-label="Titre de votre voyage" placeholder="Titre de votre voyage">
+                </div>
+
 				<div class="form-group">
 					<div class="input-group">
 						<span class="input-group-addon">€</span>
@@ -21,6 +25,19 @@
 						<input type="Number" ng-model="newTravel.nbTravellers" class="form-control" aria-label="Nombre de voyageurs" placeholder="Nombre de voyageurs">
 					</div>
 			    </div>
+
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
+                    <input type="text" class="form-control" ng-model="newTravel.departure" placeholder="Lieu de départ" googleplace/>
+                </div>
+
+                <hr>
+                <h4>Connaissez vous déjà votre destination ?</h4>
+
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
+                    <input type="text" class="form-control" ng-model="newTravel.arrival" placeholder="Destination" googleplace/>
+                </div>
 
                 <hr>
 

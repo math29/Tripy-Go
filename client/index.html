@@ -49,6 +49,7 @@
       ga('create', 'UA-XXXXX-X');
       ga('send', 'pageview');
     </script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
 
     <!--[if lt IE 9]>
     <script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -72,9 +73,7 @@
       <script src="socket.io-client/socket.io.js"></script>
     <!-- endbuild -->
 
-
         <!-- build:js({.tmp,client}) app/app.js -->
-
         <script src="app/app.js"></script>
           <!-- injector:js -->
           <script src="app/account/account.js"></script>
@@ -96,6 +95,7 @@
           <script src="components/auth/auth.service.js"></script>
           <script src="components/auth/user.service.js"></script>
           <script src="components/countries/country.service.js"></script>
+          <script src="components/googlePlaces/googlePlaces.directive.js"></script>
           <script src="components/modal/modal.service.js"></script>
           <script src="components/mongoose-error/mongoose-error.directive.js"></script>
           <script src="components/navbar/navbar.controller.js"></script>
