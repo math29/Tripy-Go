@@ -7,8 +7,6 @@ angular.module('wtcApp', [
   'ngRoute',
   'btford.socket-io',
   'ngAnimate',
-  'ui.bootstrap',
-  'ui.bootstrap',
   'uiGmapgoogle-maps',
   'wtcApp.directives',
   'wtcApp.controllers'

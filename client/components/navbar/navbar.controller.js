@@ -2,13 +2,6 @@
 
 angular.module('wtcApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth) {
-    $scope.menu = [{
-      'title': 'Home',
-      'link': '/'
-    },{
-      'title': 'Let\'s travel !',
-      'link': '/start_with'
-    }];
 
     $scope.isCollapsed = true;
     $scope.isLoggedIn = Auth.isLoggedIn;

@@ -45,7 +45,7 @@ jQuery(document).ready(function($) {
 				}
 			});	
 		}
-		
+
 		/* HOMEPAGE OFFER SLIDER */
 		if (jQuery("#offer1").length){
 			jQuery("#offer1").owlCarousel({
@@ -110,7 +110,7 @@ jQuery(document).ready(function($) {
 		}
 		
 		/* LAST MINUTE DEALS SLIDER */
-		
+
 		if (jQuery("#lastminute").length){
 			jQuery("#lastminute").owlCarousel({
 				loop:true,
@@ -225,37 +225,4 @@ $(function() {
 		$('.selectpicker').selectpicker({
 			style: 'custom-select-button'
 		});
-});
-
-/**********************************************************************
-		BEGIN: VIEW SWITCHER 
-***********************************************************************/
-$(document).ready(function () {  
-	"use strict";     
-	$('.view-switcher a').on('click',function(e) {
-		if ($(this).hasClass('switchgrid')) {
-			$('.switchable > div').removeClass('hotel-list-view').addClass('product-grid-view');     
-		}
-		else if($(this).hasClass('switchlist')) {
-			$('.switchable > div').removeClass('product-grid-view').addClass('hotel-list-view');       
-		}
-	});
-});
-/**********************************************************************
-		BEGIN: STYLESHEET SWITCHER 
-***********************************************************************/
-$('#color-switcher ul li').on('click', function(){
-	"use strict";	
-    var path = $(this).data('path');
-    $('#select-style').attr('href', path);
-});
-
-$('#stoggle').on('click', function(){
-	"use strict";	
-	var effect;
-	var direction;
-	var duration;
-	effect = 'slide';
-	duration = 400;
-    $('#color-switcher').toggle(effect, duration);
 });
