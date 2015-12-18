@@ -51,6 +51,7 @@ angular.module('WTCBack')
       var res = $http.post('../api/language', language);
       res.success(function(data) {
         $scope.message = data;
+        $scope.languages.push(language)
         if(typeof data.nModified !== 'undefined'){
            $scope.messages.push('Language '+language.name+' has been modified');
            scrollTo($window, 'languageForm');
