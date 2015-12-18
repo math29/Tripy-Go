@@ -13,6 +13,10 @@ angular.module('wtcApp')
       $location.path('/login');
     };
 
+    $scope.admin = function(){
+      window.location = '/back';
+    }
+
     $scope.isActive = function(route) {
       return route === $location.path();
     };

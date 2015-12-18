@@ -210,6 +210,25 @@ angular
          }
         }
       })
+      .state('dashboard.log',{
+        templateUrl: 'views/logs.html',
+        url:'/log',
+        controller: 'LogCtrl',
+        resolve: {
+          loadMyFile: function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name:'chart.js',
+              files:[
+                'bower_components/angular-chart.js/dist/angular-chart.min.js',
+                'bower_components/angular-chart.js/dist/angular-chart.css'
+              ]
+            }),$ocLazyLoad.load({
+              name: 'WTCBack',
+              files: ['scripts/controllers/logs.js']
+            })
+          }
+        }
+      })
       .state('dashboard.panels-wells',{
           templateUrl:'views/ui-elements/panels-wells.html',
           url:'/panels-wells'
