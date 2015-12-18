@@ -38,7 +38,6 @@ exports.index = function(req, res) {
 };
 
 exports.paginated = function(req, res) {
-  console.log(req.params);
   var find = {};
   if(req.params.level === 'debug' || req.params.level === 'info' || req.params.level == 'warn' || req.params.level== 'error'){
     find.level = req.params.level;
@@ -46,7 +45,6 @@ exports.paginated = function(req, res) {
   if(typeof req.params.message !== 'undefined'){
     find.message = {'$regex': req.params.message};
   }
-  console.log(find);
   Log.find(find)
   .sort({_id:1})
   .exec(

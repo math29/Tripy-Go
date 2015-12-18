@@ -18,7 +18,6 @@ angular.module('WTCBack')
 
     $scope.range = function(num){
       var array = new Array(num);
-      console.log('array length: '+array.length);
       return array;
     }
 
@@ -58,7 +57,7 @@ angular.module('WTCBack')
     $scope.delete = function(log) {
       var res = $http.delete('../api/back/log/'+log._id);
       res.success(function(data){
-        console.log('succes: '+data);
+        $scope.messages.push('Successfully removed Log entry '+log._id);
         angular.forEach($scope.logs, function(c, i) {
           if (c === log) {
             $scope.logs.splice(i, 1);
@@ -72,7 +71,6 @@ angular.module('WTCBack')
 
     $scope.scrollTo = function(id) {
           var anchor = document.getElementById(id);
-          console.log(anchor);
           //var container = angular.element(document.getElementById('scroll-container'));
           $window.container.scrollToElement(anchor, 0, 800);
     };
