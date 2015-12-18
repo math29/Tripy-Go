@@ -43,7 +43,17 @@
             <option ng-repeat="option in orderOptions">{{option}}</option>
           </select>
         </div>
+        <div class="col-sm-2">
+          <select class="form-control" ng-model="level" ng-change="get()">
+            <option value="All">All</option>
+            <option value="debug">Debug</option>
+            <option value="info">Info</option>
+            <option value="warn">Warn</option>
+            <option value="error">Error</option>
+          </select>
+        </div>
       </div>
+      <button ng-click="get(1)" class="btn btn-primary">Refresh</button>
     </div>
   </div>
 </div>

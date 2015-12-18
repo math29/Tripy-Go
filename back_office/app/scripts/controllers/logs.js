@@ -12,8 +12,9 @@ angular.module('WTCBack')
     $scope.orderOptions = ['+','-'];
     $scope.orderType = $scope.orderOptions[0];
     $scope.logs = '{}';
-
+    $scope.level = 'All';
     $scope.pagination = {maxPage:1};
+    $scope.query = '';
 
     $scope.range = function(num){
       var array = new Array(num);
@@ -23,15 +24,18 @@ angular.module('WTCBack')
 
     function createDownloadURL(){
       var blob = new Blob([ JSON.stringify($scope.logs) ], { type : 'application/json' });
-      /*if($scope.url){
-        $scope.url.revokeObjectURL()
-      }*/
+
       $scope.url = (window.URL || window.webkitURL).createObjectURL( blob );
     }
 
     $scope.get = function(page){
-
-      var res = $http.get('../api/back/log/'+page);
+      if(typeof page== 'undefined'){
+        page = 1;
+      }
+      if($scope.query.length > 0){
+        page = page + '/'+$scope.query;
+      }
+      var res = $http.get('../api/back/log/'+$scope.level+'/'+page);
       res.success(function(data){
         $scope.logs = data.logs;
         $scope.stats = data.stats;
@@ -44,6 +48,7 @@ angular.module('WTCBack')
           $scope.orderby = $scope.keys[1];
       });
       res.error(function(){
+        $scope.errors.push('error while getting logs');
         console.log('error while getting Logs');
       });
     };
