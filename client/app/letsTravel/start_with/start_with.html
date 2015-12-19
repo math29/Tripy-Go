@@ -1,6 +1,6 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="col-md-12">
+<!-- <div class="col-md-12">
 	<div class="container">
 		<h2>Donnez nous des renseignements sur vous et vos envies pour ce voyage !</h2>
 		<br />
@@ -26,18 +26,6 @@
 					</div>
 			    </div>
 
-                <div class="input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
-                    <input type="text" class="form-control" ng-model="newTravel.departure" placeholder="Lieu de départ" googleplace/>
-                </div>
-
-                <hr>
-                <h4>Connaissez vous déjà votre destination ?</h4>
-
-                <div class="input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
-                    <input type="text" class="form-control" ng-model="newTravel.arrival" placeholder="Destination" googleplace/>
-                </div>
 
                 <hr>
 
@@ -164,16 +152,294 @@
                 <pre>{{newTravel|json}}</pre>
             </form>
         </div>
-	</div>
+	</div>-->
 
 
   	<!-- <ul class="travels-list">
 	    <li ng-repeat="travel in travels">
 			<header>{{ travel.author.id }}</header>
 	    </li>
-  	</ul> -->
-</div>
+  	</ul> 
+</div>-->
 
-<script>
+<!-- <script>
     $('#searchlist').btsListFilter('#searchinputhashtag', {itemChild: 'span'});
-</script>
+</script> 
+ -->
+
+
+
+<div ng-controller="StartWithCtrl">
+    <div class="row">
+        <form class="travel-form" ng-submit="addTrip()" name="travelForm">
+            <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6">
+                <div class="passenger-detail">
+                    <h3 class="center">Let's Travel</h3>
+                    <div class="passenger-detail-body">
+
+                        <!-- <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
+                            <input type="text" class="form-control" ng-model="newTravel.departure" placeholder="Lieu de départ" googleplace/>
+                        </div>
+
+                        <hr> -->
+                        <h4>Connaissez vous déjà votre destination ?</h4>
+
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
+                            <input type="text" class="form-control" ng-model="newTravel.arrival" placeholder="Destination" googleplace/>
+                        </div>
+
+                        <div class="flight-list-v2">
+                            <br>
+                            <div class="form-group">
+                                <div class="row">
+
+
+                                    <div class="col-md-6 col-sm-6 search-col-padding">
+                                        <label>Departure</label>
+                                        <div class="input-group">
+                                            <input type="text" id="departure_date" name="departure_date" class="form-control" placeholder="DD/MM/YYYY" ng-model="newTravel.date_departure" ng-click="newTravel.month_departure = null">
+                                            <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 search-col-padding">
+                                        <label>Return</label>
+                                        <div class="input-group">
+                                            <input type="text" id="return_date" class="form-control" name="return_date" placeholder="DD/MM/YYYY" ng-model="newTravel.date_return" ng-click="newTravel.month_departure = null">
+                                            <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="payment-seperator clearfix"></div>
+                            <div class = "form-group">
+                                <div class="row">
+                                    <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 search-col-padding">
+                                        <label>Month Departure</label>
+                                        <div class="input-group">
+                                            <input type="text" id="month_date" class="form-control" name="month_date" placeholder="DD/MM/YYYY" ng-model="newTravel.month_departure" ng-click="newTravel.date_return = null; newTravel.date_departure = null">
+                                            <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="center">
+                            <button type="submit" value="submit">GO !</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+<!--     <div class="row booking-tab">
+        <div class="container clear-padding">
+            <ul class="nav nav-tabs">
+                <li class="active col-md-4 col-sm-4 col-xs-4"><a data-toggle="tab" ng-click="step = 1" class="text-center"><i class="fa fa-male"></i> <span>Group infos</span></a></li>
+                <li class="col-md-4 col-sm-4 col-xs-4"><a data-toggle="tab" ng-click="step = 2" class="text-center"><i class="fa fa-globe"></i> <span>Geographics infos</span></a></li>   
+                <li class="col-md-4 col-sm-4 col-xs-4"><a data-toggle="tab" ng-click="step = 3" class="text-center"><i class="fa fa-heart"></i> <span>Interest infos</span></a></li>
+            </ul> 
+        </div>
+    </div>
+    <div class="row booking-detail">
+        <div class="container clear-padding">
+            <form class="travel-form" ng-submit="addTrip()" name="travelForm" novalidate>
+
+                <div class="tab-pane" ng-show="step == 1">
+                    <div class="col-md-4 col-sm-4 booking-sidebar">
+                        <div class="sidebar-item">
+                            <h4><i class="fa fa-bookmark"></i>Fare Details</h4>
+                            <div class="sidebar-body">
+                                <table class="table">
+                                    <tr>
+                                        <td>Adult 1</td>
+                                        <td>$199</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Base Fare</td>
+                                        <td>$100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Service Fee</td>
+                                        <td>$50</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Airport Taxes</td>
+                                        <td>$20</td>
+                                    </tr>
+                                    <tr>
+                                        <td>You Pay</td>
+                                        <td class="total">$500</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="sidebar-item contact-box">
+                            <h4><i class="fa fa-phone"></i>Need Help?</h4>
+                            <div class="sidebar-body text-center">
+                                <p>Need Help? Call us or drop a message. Our agents will be in touch shortly.</p>
+                                <h2>+91 1234567890</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" ng-show="step == 2">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="passenger-detail">
+                            <h3>Geographics informations</h3>
+                            <div class="passenger-detail-body">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
+                                    <input type="text" class="form-control" ng-model="newTravel.departure" placeholder="Lieu de départ" googleplace/>
+                                </div>
+
+                                <hr>
+                                <h4>Connaissez vous déjà votre destination ?</h4>
+
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>
+                                    <input type="text" class="form-control" ng-model="newTravel.arrival" placeholder="Destination" googleplace/>
+                                </div>
+
+                                <button type="button" ng-click="step=3">NEXT <i class="fa fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" ng-show="step == 3">
+                    <div class="col-md-8 col-sm-8">
+                        <div class="passenger-detail">
+                            <h3>Interest informations</h3>
+                            <div class="passenger-detail-body">
+                                <div class="saved-card">
+                                    <form >
+                                        <label data-toggle="collapse" data-target="#saved-card-1"><input type="radio" name="card"> <span>Bank of America 1234 XXXX XXXX 1290</span></label>
+                                        <div id="saved-card-1" class="collapse">
+                                            <div class="col-md-4 col-sm-4">
+                                                <label>CVV</label>
+                                                <input type="password" required class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <label data-toggle="collapse" data-target="#saved-card-2"><input type="radio" name="card"> <span>State Bank of India 1234 XXXX XXXX 1290</span></label>
+                                        <div id="saved-card-2" class="collapse">
+                                            <div class="col-md-4 col-sm-4">
+                                                <label>CVV</label>
+                                                <input type="password" required class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div>
+                                            <button type="submit">CONFIRM BOOKING <i class="fa fa-chevron-right"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="payment-seperator clearfix"></div>
+                                <div class="add-new-card">
+                                    <h4>Add New Card</h4>
+                                    <form >
+                                        <div class="col-md-6 ol-sm-6">
+                                            <label>Card Type</label>
+                                            <select name="carttype" class="form-control">
+                                                <option>Credit Card</option>
+                                                <option>Debit Card</option>
+                                                <option>Gift Card</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 ol-sm-6">
+                                            <label>Card Number</label>
+                                            <input type="text" name="cardnumber" required class="form-control">
+                                        </div>
+                                        <div class="col-md-6 ol-sm-6">
+                                            <label>Card Expiry</label>
+                                            <select name="cardexpiry" class="form-control">
+                                                <option>Select</option>
+                                                <option>Dec 2015</option>
+                                                <option>Jan 2016</option>
+                                                <option>Feb 2016</option>
+                                                <option>Mar 2016</option>
+                                                <option>Apr 2016</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 ol-sm-6">
+                                            <label>CVV Number</label>
+                                            <input type="password" name="cvvnumber" class="form-control">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label><input type="checkbox" name="alert"> Save this card for future</label>
+                                        </div>
+                                        <div>
+                                            <button type="submit">CONFIRM BOOKING <i class="fa fa-chevron-right"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="payment-seperator clearfix"></div>
+                                <div class="paypal-pay">
+                                    <h4>Pay Using Paypal</h4>
+                                    <div class="col-md-2 col-sm-2 col-xs-4">
+                                        <i class="fa fa-paypal"></i>
+                                    </div>
+                                    <div class="col-md-10 col-sm-10 col-xs-8">
+                                        <a href="flight-booking.html#">CONFIRM BOOKING</a>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-5">
+                                            <label>Ajoutez des Hashtags </label>
+
+                                            <div class="input-group">
+                                                <input type="search" id="searchinputhashtag" class="form-control" placeholder="Search for...">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" type="button">Go!</button>
+                                                </span>
+                                            </div>
+                                            <br>
+
+                                            <div id="searchlist" class="list-group">
+                                                <a class="list-group-item" tooltip="{{ hashtag.info }}" ng-click="addHashtag(hashtag)"  ng-repeat="hashtag in allHashtags"><span>{{ hashtag.name }}</span></a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-offset-2 col-lg-5">
+                                            <label>Créez d'autres Hashtags</label>
+                                            <div class="form-group">
+                                                <input type="text" placeholder="Nom" class="form-control" ng-model="newHashtag.name">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" placeholder="Description" class="form-control" ng-model="newHashtag.info">
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-primary" ng-click="createHashtag()">Créer</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="submit">Let's Travel <i class="fa fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 booking-sidebar">
+                        <div class="sidebar-item">
+                            <h4><i class="fa fa-phone"></i>Need Help?</h4>
+                            <div class="sidebar-body text-center">
+                                <p>Need Help? Call us or drop a message. Our agents will be in touch shortly.</p>
+                                <h2>+91 1234567890</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <pre>{{newTravel|json}}</pre>
+        </div>
+    </div>
+</div> -->
+    <script src="assets/js/js.js"></script>

@@ -10,6 +10,7 @@ angular.module('wtcApp')
     })
 
     .controller('StartWithCtrl', function ($scope, $http, socket, Auth, $window) {
+        $scope.step = 1;
 
         $scope.newTravel = {
         	author: Auth.getCurrentUser(),
@@ -127,59 +128,11 @@ angular.module('wtcApp')
 
         /* ======== Datepicker Popup gesture ========== */
 
-        // Definition
-        $scope.open = function($event, select) {
-            switch(select){
-                case 'date_departure':
-                    $scope.status.date_departure = true;
-                    break;
-                case 'date_return':
-                    $scope.status.date_return = true;
-                    break;
-                case 'month_departure':
-                    $scope.status.month_departure = true;
-                    break;
-            }
-        };
-
         //Initilisation
         $scope.status = {
             date_departure: false,
             date_return: false,
             month_departure: false
-        };
-
-        var tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        var afterTomorrow = new Date();
-        afterTomorrow.setDate(tomorrow.getDate() + 2);
-
-        $scope.events =
-        [
-            {
-                date: tomorrow,
-                status: 'full'
-            },
-            {
-                date: afterTomorrow,
-                status: 'partially'
-            }
-        ];
-
-        $scope.getDayClass = function(date, mode) {
-            if (mode === 'day') {
-                var dayToCheck = new Date(date).setHours(0,0,0,0);
-
-                for (var i=0;i<$scope.events.length;i++){
-                    var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
-
-                    if (dayToCheck === currentDay) {
-                        return $scope.events[i].status;
-                    }
-                }
-            }
-
-            return '';
         };
 
     });

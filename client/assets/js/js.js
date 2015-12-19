@@ -18,7 +18,7 @@ $(window).load(function() {
 **********************************************************/
 jQuery(document).ready(function($) {
    "use strict";
-    if(jQuery().owlCarousel) { 
+    if(jQuery().owlCarousel) {
 		/* BLOG POST CAROUSEL */
 		if (jQuery("#post-list").length){
 			jQuery("#post-list").owlCarousel({
@@ -43,9 +43,9 @@ jQuery(document).ready(function($) {
 						loop:true
 					}
 				}
-			});	
+			});
 		}
-		
+
 		/* HOMEPAGE OFFER SLIDER */
 		if (jQuery("#offer1").length){
 			jQuery("#offer1").owlCarousel({
@@ -61,9 +61,9 @@ jQuery(document).ready(function($) {
 						loop:true
 					}
 				}
-			});	
+			});
 		}
-		
+
 		/* index-4.html FLIGHT OFFER SLIDER */
 		if (jQuery("#flightoffer").length){
 			jQuery("#flightoffer").owlCarousel({
@@ -79,9 +79,9 @@ jQuery(document).ready(function($) {
 						loop:true
 					}
 				}
-			});	
+			});
 		}
-		
+
 		/* ABOUT US PAGE PRTNERS SLIDER */
 		if (jQuery("#partner").length){
 			jQuery("#partner").owlCarousel({
@@ -106,11 +106,10 @@ jQuery(document).ready(function($) {
 						loop:true
 					}
 				}
-			});	
+			});
 		}
-		
+
 		/* LAST MINUTE DEALS SLIDER */
-		
 		if (jQuery("#lastminute").length){
 			jQuery("#lastminute").owlCarousel({
 				loop:true,
@@ -204,6 +203,7 @@ $(function() {
 		new WOW().init();
 		$( "#departure_date" ).datepicker({ minDate: -0, maxDate: "+3M" });
 		$( "#return_date" ).datepicker({ minDate: -0, maxDate: "+3M" });
+		$( "#month_date" ).datepicker({ minDate: -0, maxDate: "+3M" });
 		$( "#check_out" ).datepicker({ minDate: -0, maxDate: "+3M" });
 		$( "#check_in" ).datepicker({ minDate: -0, maxDate: "+3M" });
 		$( "#package_start" ).datepicker({ minDate: -0, maxDate: "+3M" });
@@ -222,40 +222,9 @@ $(function() {
 		$( "#hotel_child_count" ).spinner( {
 			min: 1
 		});
-		$('.selectpicker').selectpicker({
-			style: 'custom-select-button'
-		});
+		// $('.selectpicker').selectpicker({
+		// 	style: 'custom-select-button'
+		// });
 });
 
-/**********************************************************************
-		BEGIN: VIEW SWITCHER 
-***********************************************************************/
-$(document).ready(function () {  
-	"use strict";     
-	$('.view-switcher a').on('click',function(e) {
-		if ($(this).hasClass('switchgrid')) {
-			$('.switchable > div').removeClass('hotel-list-view').addClass('product-grid-view');     
-		}
-		else if($(this).hasClass('switchlist')) {
-			$('.switchable > div').removeClass('product-grid-view').addClass('hotel-list-view');       
-		}
-	});
-});
-/**********************************************************************
-		BEGIN: STYLESHEET SWITCHER 
-***********************************************************************/
-$('#color-switcher ul li').on('click', function(){
-	"use strict";	
-    var path = $(this).data('path');
-    $('#select-style').attr('href', path);
-});
-
-$('#stoggle').on('click', function(){
-	"use strict";	
-	var effect;
-	var direction;
-	var duration;
-	effect = 'slide';
-	duration = 400;
-    $('#color-switcher').toggle(effect, duration);
-});
+console.log("on arrive ici");

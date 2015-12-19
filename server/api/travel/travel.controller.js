@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Travel = require('./travel.model');
+var Loc = require('../location/location.model');
 
 // Get list of travels
 exports.index = function(req, res) {
@@ -20,14 +21,27 @@ exports.show = function(req, res) {
   });
 };
 
-// Creates a new travel in the DB.
-exports.create = function(req, res) {
-  // don't include the date_created, if a user specified it
+
+var save_travel = function(req, res) {
   delete req.body.date_created;
   Travel.create(req.body, function(err, travel) {
     if(err) { return handleError(res, err); }
     return res.status(201).json(travel);
   });
+};
+
+// Creates a new travel in the DB.
+exports.create = function(req, res) {
+  // don't include the date_created, if a user specified it
+  if(req.body.arrival){
+    Loc.create(req.body.arrival, function(err, loc) {
+      if(err) { return handleError(res, err); }
+      req.body.arrival = loc;
+      save_travel(req, res);
+    });
+  }else{
+    save_travel(req, res);
+  }
 };
 
 // Updates an existing travel in the DB.

@@ -19,10 +19,11 @@ angular.module('wtcApp')
                                 var location = results[0].geometry.location;
                                 model.$setViewValue({
                                     name: element.val(),
-                                    loc : {
-                                        lat : location.lat(),
-                                        lng : location.lng()
-                                    }
+                                    // loc : { lng : <longitude> , lat : <latitude> }
+                                    loc : [
+                                        Number(location.lat()),
+                                        Number(location.lng())
+                                    ]
                                 });
                             }
                         });
