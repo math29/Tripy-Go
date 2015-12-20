@@ -6,15 +6,54 @@
         <!-- /.col-lg-12 -->
     </div>
     <!-- /.row -->
-    <div class="row">
 
-        <stats number="6" comments="New comments!" colour="primary" type="comments" goto="#"></stats>
-        <stats number="12" comments="New tasks!" colour="primary" type="user" goto="#"></stats>
-        <stats number="18" comments="New orders!" colour="yellow" type="shopping-cart" goto="#"></stats>
-        <stats number="24" comments="Support tickets!" colour="red" type="support" goto="#"></stats>
+  <!-- Errors -->
+  <div  ng-repeat="error in errors" class="alert alert-danger" role="alert">
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span class="sr-only">Error:</span>
+    {{error}}
+    <button type="button" class="close" ng-click="errors.splice(errors.indexOf(error),1)" style="float: right;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  </div>
 
+  <!-- messages -->
+  <div  ng-repeat="message in messages" class="alert alert-success" role="alert">
+    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+    <span class="sr-only">Success:</span>
+    {{message}}
+    <button type="button" class="close" ng-click="messages.splice(messages.indexOf(message),1)" style="float: right;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+  </div>
+
+  <div class="row">
+
+        <stats number="0" comments="Timelines!" colour="primary" type="comments" goto="#"></stats>
+        <stats number="{{operations.length}}" comments="Opérations!" colour="primary" type="user" goto="#"></stats>
     </div>
 
+    <button class="btn btn-primary" ng-click="createOperation()" ng-show="operationEdit == null">Créer une opération</button>
+    <div class="row" ng-show="operationEdit != null">
+      <div class="col-lg-12">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <i class="fa fa-clock-o fa-fw"></i>Opération
+          </div>
+          <div class="panel-body">
+            <form role="form">
+              <div class="form-group">
+                <label class="control-label" for="title">Titre de l'opération</label>
+                <input type="text" class="form-control" id="title" ng-model="operationEdit.title">
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="content">Contenu de l'opération</label>
+                <input type="text" class="form-control" id="content" ng-model="operationEdit.content">
+              </div>
+              <button type="submit" class="btn btn-primary" ng-click="saveOperation(operationEdit)">Sauvegarder le conseil</button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- /.panel -->
     <div class="row">
         <div class="col-lg-8">
@@ -32,11 +71,14 @@
         <div class="col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-bell fa-fw"></i> Notifications Panel
+                    <i class="fa fa-bell fa-fw"></i> Opérations
                 </div>
-                <!-- /.panel-heading -->
-                <notifications></notifications>
-                <!-- /.panel-body -->
+                <div class="row" ng-repeat="operation in operations">
+                  <div class="col-lg-8"><i class="glyphicon glyphicon-exclamation-sign"></i>{{operation.title}}</div>
+                  <div class="col-lg-1"><a ng-click="editOperation(operation)" class="trash"><span class="glyphicon glyphicon-edit pull-right"></span></a></div>
+                  <div class="col-lg-1"><a ng-click="deleteOperation(operation)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a></div>
+
+                </div>
             </div>
             <!-- /.panel -->
 

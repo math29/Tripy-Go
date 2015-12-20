@@ -32,13 +32,13 @@ exports.create = function(req, res){
   /* Get parameters */
   var titre = req.params.title;
   var step = req.params.step;
-  var content = req.body.text;
+  var content = req.body.content;
   var operation = {type:'advice', title: titre, step: step, content: content};
   /* check that object is complete*/
   var errors = checkOperationObject(operation);
 
   /* if there isn't any error, we can start create it */
-  if(errors.errors.length==0){
+  if(errors.errors.length === 0){
     // create a new rate
     var rate = new Rate({score:0, raters:[]});
 
@@ -64,14 +64,26 @@ exports.create = function(req, res){
           });
           return res.status(500).json('{error:"can\'t create operation: '+err+'"}');
         }
-        return res.status(200).json(op);
+        return res.status(201).json(op);
       });
     });
   }else{
-    return res.status(500).json(errors);
+    return res.status(400).json(errors);
   }
 }
 
+exports.update = function(req, res){
+  var operation = {_id: req.params.id, title: req.params.title, step: req.params.step, content: req.body.text}
+  var mongoPeration = new Operation(operation);
+  Operation.findOneAndUpdate({_id:req.params.id}, operation, function(err, update){
+    if(err){
+      console.log(err);
+      return res.status(500).json('{error:"error"}');
+    }
+    console.log(update);
+    return res.status(200).json(update);
+  });
+}
 
 // Get a single operation
 exports.show = function(req, res) {

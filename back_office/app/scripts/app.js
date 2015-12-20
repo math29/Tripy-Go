@@ -131,6 +131,23 @@ angular
         templateUrl:'views/pages/blank.html',
         url:'/blank'
     })
+    .state('dashboard.timelines',{
+      templateUrl:'views/timelines.html',
+      url:'/timelines',
+      controller:'TimelinesMgr',
+      resolve: {
+        loadMyFile: function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            name:'WTCBack',
+            files:[
+          'scripts/controllers/timelinesCtrl.js',
+          'scripts/directives/timeline/timeline.js',
+          'scripts/directives/dashboard/stats/stats.js'
+          ]
+        })
+      }
+      }
+    })
     .state('login',{
       templateUrl:'views/pages/login.html',
       url:'/login',
