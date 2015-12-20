@@ -132,7 +132,6 @@ describe('API /api/operations', function() {
 
   it('should get a list of operations', function(done){
       operation.save().then(function(data){
-        console.log(data);
           request(app)
                 .get('/api/operations')
                 .set({'Authorization': 'Bearer '+tokenAdmin})
