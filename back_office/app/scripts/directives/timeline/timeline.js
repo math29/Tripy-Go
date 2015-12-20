@@ -12,5 +12,6 @@ angular.module('WTCBack')
         templateUrl:'scripts/directives/timeline/timeline.html',
         restrict: 'E',
         replace: true,
+
     }
   });

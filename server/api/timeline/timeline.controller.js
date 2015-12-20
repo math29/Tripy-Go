@@ -6,16 +6,28 @@ var Timeline = require('./timeline.model');
 var Operation = require('../operation/operation.model');
 var TAG = "TimelineController";
 
+// récupére la liste de toutes les timelines
 exports.index = function(req, res){
-  Timeline.find({}, function(err, timelines){
+  // récupére toutes les timelines et remplis les documents à l'intérieur
+  Timeline.find({}).populate('operations').exec(function(err, timelines){
     if(err){
       logger.error('Unable to get timelines');
       return res.status(400).json('{error: \'Unable to get timelines\'}');
     }
-    return res.status(200).json(timelines);
+    // remplis les votes pour chaque opération
+    var options = {path:'operations.rate', model:'Rate'};
+    Timeline.populate(timelines, options, function(err, result){
+        if(err){
+          return res.status(400).json('{errors:\'error\'}');
+        }
+        return res.status(200).json(result);
+
+    });
   });
 }
 
+
+// permet de créer une timeline
 exports.create = function(req, res){
   var timeline = {name: req.params.name, description: req.body.description, operations:[]}
   var errors = checkTimelineObject(timeline);
@@ -34,12 +46,13 @@ exports.create = function(req, res){
   }
 }
 
+// ajoute une opération à une timeline
 exports.addOperation = function(req, res){
   var operationId = req.params.operationId;
   var timelineId = req.params.timelineId;
   Operation.findOne({_id: operationId}, function(err, data){
       if(err){
-        console.log('operation not defined');
+        logger.error('L\'opération demandée n\'existe pas');
         return res.status(400).json('{error:\'Unable to find operation\'}');
       }else{
         Timeline.findOneAndUpdate({_id:timelineId, operations:{$nin: [operationId]}},{$push:{operations: operationId}},{safe: true, upsert: false}, function(err, doc){
@@ -59,6 +72,7 @@ exports.addOperation = function(req, res){
     });
 }
 
+// supprime une opération de la timeline
 exports.removeOperation = function(req, res){
   var operationId = req.params.operationId;
   var timelineId = req.params.timelineId;
@@ -78,8 +92,24 @@ exports.removeOperation = function(req, res){
 
 }
 
+// récupére une timeline
 exports.show = function(req, res){
-  return res.status(200).send();
+  Timeline.findOne({_id: req.params.id}).populate('operations').exec(function(err, timeline){
+    if(err){
+      logger.error('La Timeline '+req.params.id+' est introuvable');
+      return res.status(400).json('{error:\'Timeline introuvable\'}');
+    }
+
+    Timeline.populate(timeline, {path:'operations.rate', model:'Rate'}, function(err, result){
+      if(err){
+        logger.error('Impossible de remplir les votes');
+        return res.status(400).json('{error: \'Impossible de récupérer le vote associé\'}');
+      }
+
+      return res.status(200).json(result);
+    });
+
+  });
 }
 
 exports.destroy = function(req, res){

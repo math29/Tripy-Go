@@ -47,7 +47,7 @@ router.get('/', auth.hasRole('admin'), controller.index);
  *
  * @apiUse UserNotAuthorized
  */
-router.get('/:navigation', auth.isAuthenticated(), controller.show);
+router.get('/:id', auth.isAuthenticated(), controller.show);
 
 router.post('/:name', auth.hasRole('admin'), controller.create);
 
