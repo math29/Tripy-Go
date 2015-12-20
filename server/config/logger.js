@@ -1,7 +1,6 @@
 // requiert Winston pour logger
 var winston = require('winston');
 
-
 // On emet les erreurs
 winston.emitErrs = true;
 

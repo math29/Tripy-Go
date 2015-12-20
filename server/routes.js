@@ -18,6 +18,12 @@ module.exports = function(app) {
   app.use('/api/things', require('./api/thing'));
   app.use('/api/users', require('./api/user'));
   app.use('/api/countries', require('./api/country'));
+  app.use('/api/language', require('./api/language'));
+  app.use('/api/operations', require('./api/operation'));
+  app.use('/api/rate', require('./api/rate'));
+  /* database info api */
+  app.use('/api/back/db', require('./api/dbAPI'));
+  app.use('/api/back/log', require('./api/log'));
 
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')
