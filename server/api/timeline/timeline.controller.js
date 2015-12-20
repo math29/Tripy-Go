@@ -7,7 +7,13 @@ var Operation = require('../operation/operation.model');
 var TAG = "TimelineController";
 
 exports.index = function(req, res){
-  return res.status(200).send();
+  Timeline.find({}, function(err, timelines){
+    if(err){
+      logger.error('Unable to get timelines');
+      return res.status(400).json('{error: \'Unable to get timelines\'}');
+    }
+    return res.status(200).json(timelines);
+  });
 }
 
 exports.create = function(req, res){
