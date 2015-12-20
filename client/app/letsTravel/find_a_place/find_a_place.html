@@ -1,10 +1,4 @@
-<!-- <div class="col-md-12">
-This is the find_a_place view.
-<br>
-Le message : {{ message }}
-</div>
-
- -->
+<div ng-include="'components/reducted-navbar/navbar.html'"></div>
 
 <body>
 	<div id="map_canvas" ng-controller="FindAPlaceCtrl">
@@ -18,3 +12,17 @@ Le message : {{ message }}
 	    </div>
 	</div>
 </body>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		// Configure Height for Map show
+		var height = $("body").height();
+		var nav_height = 0;
+		if($("body").width() > 768){
+			nav_height = 50;
+		}else{
+			nav_height = 81;
+		}
+		$("#map_canvas").css({"height":(height-nav_height)+"px"});
+	});
+</script>

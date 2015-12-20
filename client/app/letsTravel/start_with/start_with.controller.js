@@ -8,9 +8,10 @@ angular.module('wtcApp')
             libraries: 'weather,geometry,visualization,places' // Required for SearchBox.
         });
     })
-
     .controller('StartWithCtrl', function ($scope, $http, socket, Auth, $window) {
-        $scope.step = 1;
+
+        // First focus of the MAP
+        $scope.map = {center: {latitude: 40.1451, longitude: -99.6680 }, zoom: 4 };
 
         $scope.newTravel = {
         	author: Auth.getCurrentUser(),

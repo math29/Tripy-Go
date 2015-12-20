@@ -34,7 +34,7 @@ angular.module('wtcApp')
 
         var travelID = $routeParams.travelID;
         console.log('Let\'s find this travel');
-        var travel = $http.delete('/api/travels/' + travelID);
+        var travel = $http.get('/api/travels/' + travelID);
         console.log(travel);
         $scope.message = 'L\'id est : ' + travelID;
     });

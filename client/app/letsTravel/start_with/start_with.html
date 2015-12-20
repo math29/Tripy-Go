@@ -1,179 +1,17 @@
-<div ng-include="'components/navbar/navbar.html'"></div>
-
-<!-- <div class="col-md-12">
-	<div class="container">
-		<h2>Donnez nous des renseignements sur vous et vos envies pour ce voyage !</h2>
-		<br />
-
-		<div class="row">
-			<form class="travel-form" ng-submit="addTrip()" name="travelForm">
-                <div class="form-group">
-                    <input type="text" ng-model="newTravel.name" class="form-control" aria-label="Titre de votre voyage" placeholder="Titre de votre voyage">
-                </div>
-
-				<div class="form-group">
-					<div class="input-group">
-						<span class="input-group-addon">€</span>
-						<input type="number" ng-model="newTravel.budget" class="form-control" aria-label="Budget pour votre voyage" placeholder="Budget pour votre voyage">
-						<span class="input-group-addon">.00</span>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="input-group">
-						<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-						<input type="Number" ng-model="newTravel.nbTravellers" class="form-control" aria-label="Nombre de voyageurs" placeholder="Nombre de voyageurs">
-					</div>
-			    </div>
-
-
-                <hr>
-
-			    <div class="form-group choice-type-dates">
-                    <div class="btn-group" role="group" aria-label="Type dates idea">
-                        <button type="button" class="btn btn-default" id="focus_dates" ng-click="newTravel.choose_by_dates = true; newTravel.choose_by_month = false">Dates précises</button>
-                        <button type="button" class="btn btn-default" id="focus_month" ng-click="newTravel.choose_by_month = true; newTravel.choose_by_dates = false">Mois</button>
-                    </div>
-			    </div>
-
-                <div class="form-group" ng-show="newTravel.choose_by_dates">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="input-group">
-                                <input type="date" class="form-control" datepicker-popup ng-model="newTravel.date_departure" is-open="status.date_departure" min-date="minDate" max-date="{{date | date:'2020-06-22'}}" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="open($event, 'date_departure')"><i class="glyphicon glyphicon-calendar"></i></button>
-                                </span>
-                            </p>
-                        </div>
-
-                        <div class="col-md-6">
-                            <p class="input-group">
-                                <input type="date" class="form-control" datepicker-popup ng-model="newTravel.date_return" is-open="status.date_return" min-date="minDate" max-date="{{date | date:'2020-06-22'}}" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="open($event, 'date_return')"><i class="glyphicon glyphicon-calendar"></i></button>
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class = "form-group" ng-show="newTravel.choose_by_month">
-                    <div class="row">
-                        <div class="col-md-offset-3 col-md-6">
-                            <p class="input-group">
-                                <input type="date" class="form-control" datepicker-popup ng-model="newTravel.month_departure" is-open="status.month_departure" min-date="minDate" max-date="{{date | date:'2020-06-22'}}" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="open($event, 'month_departure')"><i class="glyphicon glyphicon-calendar"></i></button>
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="form-group">
-                    <div class="row">
-                        <h4>Quels sont vos centres d'intérêts ?</h4>
-                        <div class="col-md-offset-1 col-md-11">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" ng-model="newTravel.personal_interest.playa" />
-                                    La plage
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-offset-1 col-md-11">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" ng-model="newTravel.personal_interest.mountain" />
-                                    La montagne
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="form-group">
-                    <div class="row">
-                        <h4>Gérez vos Hashtags</h4>
-                        <div class="col-lg-12">
-                            <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="selectedHashtag in newTravel.selectedHashtags">
-                                <li>
-                                    <a href="#" tooltip="{{selectedHashtag.info}}">
-                                        {{ selectedHashtag.name }}
-                                        <button type="button" class="close" ng-click="deSelectHashtag(selectedHashtag)">&times;</button>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-lg-5">
-                            <label>Ajoutez des Hashtags </label>
-
-                            <div class="input-group">
-                                <input type="search" id="searchinputhashtag" class="form-control" placeholder="Search for...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button">Go!</button>
-                                </span>
-                            </div>
-                            <br>
-
-                            <div id="searchlist" class="list-group">
-                                <a class="list-group-item" tooltip="{{ hashtag.info }}" ng-click="addHashtag(hashtag)"  ng-repeat="hashtag in allHashtags"><span>{{ hashtag.name }}</span></a>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-offset-2 col-lg-5">
-                            <label>Créez d'autres Hashtags</label>
-                            <div class="form-group">
-                                <input type="text" placeholder="Nom" class="form-control" ng-model="newHashtag.name">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" placeholder="Description" class="form-control" ng-model="newHashtag.info">
-                            </div>
-                            <div class="form-group">
-                                <button type="button" class="btn btn-primary" ng-click="createHashtag()">Créer</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                <input class="btn btn-primary" type="submit" value="Let's travel !">
-                </div>
-
-                <pre>{{newTravel|json}}</pre>
-            </form>
-        </div>
-	</div>-->
-
-
-  	<!-- <ul class="travels-list">
-	    <li ng-repeat="travel in travels">
-			<header>{{ travel.author.id }}</header>
-	    </li>
-  	</ul> 
-</div>-->
-
-<!-- <script>
-    $('#searchlist').btsListFilter('#searchinputhashtag', {itemChild: 'span'});
-</script> 
- -->
-
-
+<div id="nav-bar" ng-include="'components/reducted-navbar/navbar.html'"></div>
 
 <div ng-controller="StartWithCtrl">
+    <div id="map-background">
+        <div class="find_a_place-map">
+            <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options">
+            </ui-gmap-google-map>
+        </div>
+    </div>
+
     <div class="row">
         <form class="travel-form" ng-submit="addTrip()" name="travelForm">
             <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6">
-                <div class="passenger-detail">
+                <div class="passenger-detail" id="form-infos">
                     <h3 class="center">Let's Travel</h3>
                     <div class="passenger-detail-body">
 
@@ -234,7 +72,23 @@
             </div>
         </form>
     </div>
-    
+</div>
+
+<script src="assets/js/js.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        // Configure Height for Map show
+        var height = $("body").height();
+        var nav_height = 0;
+        if($("body").width() > 768){
+            nav_height = 50;
+        }else{
+            nav_height = 81;
+        }
+        $("#map-background").css({"height":(height-nav_height)+"px"});
+    });
+</script>
+
 <!--     <div class="row booking-tab">
         <div class="container clear-padding">
             <ul class="nav nav-tabs">
@@ -442,4 +296,170 @@
         </div>
     </div>
 </div> -->
-    <script src="assets/js/js.js"></script>
+
+<!-- <div class="col-md-12">
+    <div class="container">
+        <h2>Donnez nous des renseignements sur vous et vos envies pour ce voyage !</h2>
+        <br />
+
+        <div class="row">
+            <form class="travel-form" ng-submit="addTrip()" name="travelForm">
+                <div class="form-group">
+                    <input type="text" ng-model="newTravel.name" class="form-control" aria-label="Titre de votre voyage" placeholder="Titre de votre voyage">
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">€</span>
+                        <input type="number" ng-model="newTravel.budget" class="form-control" aria-label="Budget pour votre voyage" placeholder="Budget pour votre voyage">
+                        <span class="input-group-addon">.00</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                        <input type="Number" ng-model="newTravel.nbTravellers" class="form-control" aria-label="Nombre de voyageurs" placeholder="Nombre de voyageurs">
+                    </div>
+                </div>
+
+
+                <hr>
+
+                <div class="form-group choice-type-dates">
+                    <div class="btn-group" role="group" aria-label="Type dates idea">
+                        <button type="button" class="btn btn-default" id="focus_dates" ng-click="newTravel.choose_by_dates = true; newTravel.choose_by_month = false">Dates précises</button>
+                        <button type="button" class="btn btn-default" id="focus_month" ng-click="newTravel.choose_by_month = true; newTravel.choose_by_dates = false">Mois</button>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-show="newTravel.choose_by_dates">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="input-group">
+                                <input type="date" class="form-control" datepicker-popup ng-model="newTravel.date_departure" is-open="status.date_departure" min-date="minDate" max-date="{{date | date:'2020-06-22'}}" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open($event, 'date_departure')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <p class="input-group">
+                                <input type="date" class="form-control" datepicker-popup ng-model="newTravel.date_return" is-open="status.date_return" min-date="minDate" max-date="{{date | date:'2020-06-22'}}" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open($event, 'date_return')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class = "form-group" ng-show="newTravel.choose_by_month">
+                    <div class="row">
+                        <div class="col-md-offset-3 col-md-6">
+                            <p class="input-group">
+                                <input type="date" class="form-control" datepicker-popup ng-model="newTravel.month_departure" is-open="status.month_departure" min-date="minDate" max-date="{{date | date:'2020-06-22'}}" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open($event, 'month_departure')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="form-group">
+                    <div class="row">
+                        <h4>Quels sont vos centres d'intérêts ?</h4>
+                        <div class="col-md-offset-1 col-md-11">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="newTravel.personal_interest.playa" />
+                                    La plage
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-offset-1 col-md-11">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="newTravel.personal_interest.mountain" />
+                                    La montagne
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="form-group">
+                    <div class="row">
+                        <h4>Gérez vos Hashtags</h4>
+                        <div class="col-lg-12">
+                            <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="selectedHashtag in newTravel.selectedHashtags">
+                                <li>
+                                    <a href="#" tooltip="{{selectedHashtag.info}}">
+                                        {{ selectedHashtag.name }}
+                                        <button type="button" class="close" ng-click="deSelectHashtag(selectedHashtag)">&times;</button>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <label>Ajoutez des Hashtags </label>
+
+                            <div class="input-group">
+                                <input type="search" id="searchinputhashtag" class="form-control" placeholder="Search for...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                            </div>
+                            <br>
+
+                            <div id="searchlist" class="list-group">
+                                <a class="list-group-item" tooltip="{{ hashtag.info }}" ng-click="addHashtag(hashtag)"  ng-repeat="hashtag in allHashtags"><span>{{ hashtag.name }}</span></a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-offset-2 col-lg-5">
+                            <label>Créez d'autres Hashtags</label>
+                            <div class="form-group">
+                                <input type="text" placeholder="Nom" class="form-control" ng-model="newHashtag.name">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="Description" class="form-control" ng-model="newHashtag.info">
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary" ng-click="createHashtag()">Créer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                <input class="btn btn-primary" type="submit" value="Let's travel !">
+                </div>
+
+                <pre>{{newTravel|json}}</pre>
+            </form>
+        </div>
+    </div>-->
+
+
+    <!-- <ul class="travels-list">
+        <li ng-repeat="travel in travels">
+            <header>{{ travel.author.id }}</header>
+        </li>
+    </ul> 
+</div>-->
+
+<!-- <script>
+    $('#searchlist').btsListFilter('#searchinputhashtag', {itemChild: 'span'});
+</script> 
+ -->
