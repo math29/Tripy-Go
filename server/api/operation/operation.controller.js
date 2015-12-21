@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var logger = require('../../config/logger.js');
 var Operation = require('./operation.model');
+var Timeline = require('../timeline/timeline.model');
 var Rate = require('../rate/rate.model');
 var TAG = "OperationController";
 
@@ -64,6 +65,8 @@ exports.create = function(req, res){
           });
           return res.status(500).json('{error:"can\'t create operation: '+err+'"}');
         }
+        op.rate.score = 0;
+        op.rate.raters = [];
         return res.status(201).json(op);
       });
     });
@@ -112,7 +115,14 @@ exports.destroy = function(req, res) {
       if(err) {
         return handleError(res, err);
       }
-      logger.info('Operation was delete');
+      logger.info('Operation '+operation._id+'was delete');
+      var info = {operation: 'deleted'};
+      Timeline.update({},{$pull: {operations: {$in: [operation._id]}}}, function(err, doc){
+        if(err){
+          logger.error('error while remove operations from timelines: ',err);
+        }
+        logger.info('info: '+doc);
+      });
       return res.status(204).json('{success: \'No Content\'}');
     });
   });

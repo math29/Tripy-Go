@@ -69,11 +69,11 @@ angular.module('WTCBack')
     $scope.saveOperation = function(operation){
       var req = {
         method: 'PUT',
-        url: '../api/operations/'+operation.title+'/1',
+        url: '../api/operations/'+operation.title+'/'+$scope.timeline.operations.length,
         data: {content: operation.content}
       };
       if(operation._id !== undefined){
-        req.url = '../api/operations/'+operation._id+'/'+operation.title+'/1';
+        req.url = '../api/operations/'+operation._id+'/'+operation.title+'/'+$scope.timeline.operations.length;
         var res = $http(req).then(function(data){
         });
       }else{
@@ -81,9 +81,11 @@ angular.module('WTCBack')
         var res = $http(req).then(function(data){
           if(data.status === 201){
             $scope.operations.push(data.data);
+            $scope.timeline.operations.push(data.data);
             $scope.messages.push('Operation created');
             var nRes = $http.post('../api/timeline/add/'+$scope.timeline._id+'/'+data.data._id);
             nRes.success(function(data){
+              $scope.getTimelines();
               $scope.messages.push('Opération ajoutée à la timeline');
             });
             nRes.error(function(data){
@@ -99,11 +101,28 @@ angular.module('WTCBack')
       $scope.operationEdit = null;
     }
 
+    $scope.deleteOperationFromTimeline = function(timeline, operation){
+      $http.post('../api/timeline/remove/'+timeline._id+'/'+operation._id)
+      .then(function(data){
+        if(data.status == 202){
+          $scope.timeline=data.data;
+          $scope.messages.push('Opération supprimée de la timeline');
+        }else{
+          $scope.errors.push('Impossible de supprimer l\'opération de la timeline');
+        }
+      });
+    }
 
+    // supprime une opération en base
     $scope.deleteOperation = function(operation){
+
       $http.delete('../api/operations/'+operation._id).then(function(data){
         if(data.status === 204){
           $scope.messages.push('L\'opération à bien été supprimée');
+          console.log(getIndexOfOperation(operation, $scope.operations));
+          $scope.operations.splice(getIndexOfOperation(operation, $scope.operations), 1);
+          $scope.timeline.operations.splice(getIndexOfOperation(operation, $scope.operations), 1);
+          $scope.getTimelines();
         }else{
           $scope.errors.push('Impossible de supprimer l\'opération');
         }
@@ -116,4 +135,29 @@ angular.module('WTCBack')
 
     // get all operations
     $scope.operations();
+
+    function getIndexOfOperation(operation, list){
+      for(var i = 0; i< list.length; i++){
+        if(list[i]._id === operation._id){
+          return i;
+        }
+      }
+      return -1;
+    }
+
+    function getOperationInTimeline(operation){
+      var timelinesId = [];
+      // parcours l'ensble des opérations des timelines
+      for(var i = 0; i<$scope.timelines.length; i++){
+        var timeline = $scope.timelines[i];
+        for(var j=0; j<timeline.operations.length;j++){
+          if(operation._id === timeline.operations[j]){
+            timelinesId.push(timeline._id);
+            break;
+          }
+        }
+      }
+      console.log('ids: '+timelinesId);
+      return timelinesId;
+    }
   });

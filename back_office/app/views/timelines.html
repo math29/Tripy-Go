@@ -8,7 +8,7 @@
     <!-- /.row -->
 
   <!-- Errors -->
-  <div  ng-repeat="error in errors" class="alert alert-danger" role="alert">
+  <div  ng-repeat="error in errors track by $index" class="alert alert-danger" role="alert">
     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
     <span class="sr-only">Error:</span>
     {{error}}
@@ -16,7 +16,7 @@
   </div>
 
   <!-- messages -->
-  <div  ng-repeat="message in messages" class="alert alert-success" role="alert">
+  <div  ng-repeat="message in messages track by $index" class="alert alert-success" role="alert">
     <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
     <span class="sr-only">Success:</span>
     {{message}}
@@ -85,8 +85,9 @@
                 <div class="panel-heading">
                     <i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
                 </div>
+                {{timeline.description}}
                 <!-- /.panel-heading -->
-                <timeline operations="{{timeline.operations}}"></timeline>
+                <timeline></timeline>
                 <!-- /.panel-body -->
             </div>
             <!-- /.panel -->

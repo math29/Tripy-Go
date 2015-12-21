@@ -57,10 +57,8 @@ exports.addOperation = function(req, res){
       }else{
         Timeline.findOneAndUpdate({_id:timelineId, operations:{$nin: [operationId]}},{$push:{operations: operationId}},{safe: true, upsert: false}, function(err, doc){
           if(err){
-            console.log(err);
             return res.status(400).send('ERROR');
           }
-          console.log(doc);
           if(doc == null){
             return res.status(418).json('{error:\'Operation is already in timeline or timeline does not exist\'}');
           }else{
@@ -76,8 +74,8 @@ exports.addOperation = function(req, res){
 exports.removeOperation = function(req, res){
   var operationId = req.params.operationId;
   var timelineId = req.params.timelineId;
-
-  Timeline.findOneAndUpdate({_id:timelineId, operations:{$in: [operationId]}},{$pull:{operations: {$in : [operationId]}}},{safe: true, upsert: false}, function(err, doc){
+  logger.debug('timelineId: '+timelineId+' operationId: '+operationId);
+  Timeline.findOneAndUpdate({_id:timelineId},{$pull:{operations: {$in : [operationId]}}}).populate('operations').populate('operations.rate').exec(function(err, doc){
     if(err){
       console.log(err);
       return res.status(400).send('ERROR');
@@ -85,8 +83,10 @@ exports.removeOperation = function(req, res){
     if(doc == null){
       return res.status(418).json('{error:\'Operation is already in timeline or timeline does not exist\'}');
     }else{
-      doc.operations.pull(operationId);
+      // remove opération from list
+      doc.operations.splice(findOperationInList(operationId,doc.operations),1);
       return res.status(202).json(doc);
+
     }
   });
 
@@ -94,7 +94,7 @@ exports.removeOperation = function(req, res){
 
 // récupére une timeline
 exports.show = function(req, res){
-  Timeline.findOne({_id: req.params.id}).populate('operations').exec(function(err, timeline){
+  Timeline.findOne({_id: req.params.id}).populate('operations').populate('operations.root').exec(function(err, timeline){
     if(err){
       logger.error('La Timeline '+req.params.id+' est introuvable');
       return res.status(400).json('{error:\'Timeline introuvable\'}');
@@ -128,8 +128,25 @@ function checkTimelineObject(timeline){
   	errors.errors.push("Il manque le nom de la timeline");
   }
 
-
   return errors;
+}
+
+
+/**
+ * Find an operation in a list via the id
+ * return the index if exist, -1 else
+ *
+ * @param operationId id of opération to find
+ * @param list list in which you want to search opération
+ * @return index
+ */
+function findOperationInList(operationId, list){
+  for(var i=0; i<list.length; i++){
+    if(list[i]._id === operationId){
+      return i;
+    }
+  }
+  return -1;
 }
 
 /**
