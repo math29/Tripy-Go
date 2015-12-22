@@ -77,7 +77,7 @@ exports.removeOperation = function(req, res){
   logger.debug('timelineId: '+timelineId+' operationId: '+operationId);
   Timeline.findOneAndUpdate({_id:timelineId},{$pull:{operations: {$in : [operationId]}}}).populate('operations').populate('operations.rate').exec(function(err, doc){
     if(err){
-      console.log(err);
+      logger.error(err);
       return res.status(400).send('ERROR');
     }
     if(doc == null){

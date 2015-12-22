@@ -5,6 +5,7 @@
 'use strict';
 
 var config = require('./environment');
+var logger = require('./logger');
 
 // When the user disconnects.. perform this
 function onDisconnect(socket) {
@@ -43,7 +44,6 @@ module.exports = function (socketio) {
   // }));
 
   socketio.on('connection', function (socket) {
-    console.log('user connected');
     socket.address = socket.handshake.address !== null ?
             socket.handshake.address.address + ':' + socket.handshake.address.port :
             process.env.DOMAIN;
@@ -53,11 +53,11 @@ module.exports = function (socketio) {
     // Call onDisconnect.
     socket.on('disconnect', function () {
       onDisconnect(socket);
-      console.info('[%s] DISCONNECTED', socket.address);
+      logger.info('[%s] DISCONNECTED', socket.address);
     });
 
     // Call onConnect.
     onConnect(socket);
-    console.info('[%s] CONNECTED', socket.address);
+    logger.info('[%s] CONNECTED', socket.address);
   });
 };

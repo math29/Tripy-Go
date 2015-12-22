@@ -64,7 +64,7 @@ exports.create = function(req, res){
           logger.error('can\'t create operation');
           rate.remove(function(err, op){
             if(err){
-              console.log(err);
+              logger.error(err);
             }
           });
           return res.status(500).json('{error:"can\'t create operation: '+err+'"}');
@@ -98,10 +98,10 @@ exports.update = function(req, res){
   var mongoPeration = new Operation(operation);
   Operation.findOneAndUpdate({_id:req.params.id}, operation, function(err, update){
     if(err){
-      console.log(err);
+      logger.error(err);
       return res.status(500).json('{error:"error"}');
     }
-    console.log(update);
+    logger.debug(update);
     return res.status(200).json(update);
   });
 }

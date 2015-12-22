@@ -58,9 +58,8 @@ exports.vote = function(req, res){
       return res.status(500).send(err);
     }
     var userVotedLength = rate.raters.length;
-    console.log(userId);
     for(var i=0; i < userVotedLength; i++){
-      console.log(rate.raters[i]+' '+userId);
+      logger.debug(rate.raters[i]+' '+userId);
     }
     return res.status(200).json({'success': 'OK'});
   });
