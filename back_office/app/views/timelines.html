@@ -65,13 +65,32 @@
             <form role="form">
               <div class="form-group">
                 <label class="control-label" for="title">Titre de l'opération</label>
-                <input type="text" class="form-control" id="title" ng-model="operationEdit.title">
+                <input type="text" class="form-control" id="title" ng-model="operationEdit.title" required>
               </div>
               <div class="form-group">
                 <label class="control-label" for="content">Contenu de l'opération</label>
-                <input type="text" class="form-control" id="content" ng-model="operationEdit.content">
+                <input type="text" class="form-control" id="content" ng-model="operationEdit.content" required>
               </div>
-              <button type="submit" class="btn btn-primary" ng-click="saveOperation(operationEdit)">Sauvegarder le conseil</button>
+              <div class="panel panel-info">
+                <div class="panel-heading">Timelines</div>
+                <div class="panel-body">
+                  <table class="table table-bordered table-stripped col-lg-12">
+                    <thead>
+                      <tr><td class="col-lg-8">Nom de la timeline</td><td class="col-lg-2">Action</td></tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="timeline in timelines">
+                        <td>{{timeline.name}}</td>
+                        <td><a class="glyphicon glyphicon-plus" ng-hide="isTimelineOnOperation(timeline, operationEdit)" ng-click="addToTimeline(timeline)"></a>
+                          <a class="glyphicon glyphicon-minus" ng-click="removeFromTimeline(timeline)" ng-show="isTimelineOnOperation(timeline, operationEdit)"></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary" ng-show="operationEdit.title.length>0 && operationEdit.content.length>0" ng-click="saveOperation(operationEdit)">Sauvegarder le conseil</button>
             </form>
 
           </div>

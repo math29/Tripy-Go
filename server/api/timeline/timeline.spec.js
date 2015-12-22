@@ -93,6 +93,7 @@ describe('API /api/timeline', function() {
       .expect('Content-Type', /json/)
       .end(function(err, res){
         if(err)return done(err);
+        timeline._id = res.body._id;
         res.body.should.be.instanceof(Object);
         done();
       });
@@ -113,7 +114,7 @@ describe('API /api/timeline', function() {
 
   it('should add an operation to the timeline', function(done){
     request(app)
-      .post('/api/timeline/add/'+operation._id)
+      .post('/api/timeline/add/'+timeline._id+'/'+operation._id)
       .set({'Authorization' : 'Bearer '+tokenAdmin})
       .send()
       .expect(202)
@@ -125,6 +126,21 @@ describe('API /api/timeline', function() {
       });
 
   });
+
+  it('should remove an operation to the timeline', function(done){
+      request(app)
+        .post('/api/timeline/remove/'+timeline._id+'/'+operation._id)
+        .set({'Authorization' : 'Bearer '+tokenAdmin})
+        .send()
+        .expect(202)
+        .expect('Content-Type', /json/)
+        .end(function(err, res){
+          if(err) return done(err);
+          res.body.should.be.instanceof(Object);
+          done();
+        });
+
+    });
 
 });
 

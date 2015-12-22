@@ -34,8 +34,8 @@ var adminJS = {
 
 var fOperation = {
    title:'test',
-   step:1,
-   content:'contenu'
+   content:'contenu',
+   steps: []
  }
 
 var rate = new Rate({score:0});
@@ -43,7 +43,7 @@ var rate = new Rate({score:0});
  var operation = new Operation({
   type:'Advice',
   title:'test',
-  step:1,
+  steps:[],
   content:'contenu'
  });
 
@@ -89,13 +89,15 @@ describe('API /api/operations', function() {
 
   it('should add an operation', function(done){
     request(app)
-      .post('/api/operations/'+fOperation.title+'/'+fOperation.step)
+      .post('/api/operations/'+fOperation.title)
       .set({'Authorization': 'Bearer '+tokenAdmin})
       .send({'content':fOperation.content})
       .expect(201)
       .expect('Content-Type', /json/)
       .end(function(err, res){
-        if(err)return done(err);
+        if(err){
+        return done(err);
+        }
         res.body.should.be.instanceof(Object);
         done();
       });
@@ -103,7 +105,7 @@ describe('API /api/operations', function() {
 
   it("Simple users can't add operation", function(done){
     request(app)
-      .post('/api/operations/'+fOperation.title+'/'+fOperation.step)
+      .post('/api/operations/'+fOperation.title)
       .set({'Authorization': 'Bearer '+token})
       .send({content:fOperation})
       .expect(403)
@@ -117,7 +119,7 @@ describe('API /api/operations', function() {
   it('should get error message when required param is not present', function(done){
     fOperation.title ="";
     request(app)
-      .post('/api/operations/test/1')
+      .post('/api/operations/test')
       .set({'Authorization' : 'Bearer '+tokenAdmin})
       .send({})
       .expect(400)

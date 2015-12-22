@@ -32,9 +32,13 @@ exports.index = function(req, res) {
 exports.create = function(req, res){
   /* Get parameters */
   var titre = req.params.title;
-  var step = req.params.step;
   var content = req.body.content;
-  var operation = {type:'advice', title: titre, step: step, content: content};
+  var steps = req.body.steps;
+  if(steps === undefined){
+    steps = [];
+  }
+  var operation = {type:'advice', title: titre, content: content, steps: steps};
+  var timelines = [];
   /* check that object is complete*/
   var errors = checkOperationObject(operation);
 
@@ -67,7 +71,21 @@ exports.create = function(req, res){
         }
         op.rate.score = 0;
         op.rate.raters = [];
-        return res.status(201).json(op);
+        if(operation.steps.length > 0 ){
+          var stepsIds = [];
+          for(var i = 0; i < operation.steps.length; i++){
+            stepsIds.push(operation.steps[i].id);
+          }
+          Timeline.update({_id: {$in: stepsIds}}, {$push: {operations: op._id}}, function(err, data){
+            if(err){
+              return res.status(400).json('{error:\'Unable to add operation to timeline\'}');
+            }
+            return res.status(201).json(op);
+          });
+
+        }else{
+          return res.status(201).json(op);
+        }
       });
     });
   }else{
@@ -76,7 +94,7 @@ exports.create = function(req, res){
 }
 
 exports.update = function(req, res){
-  var operation = {_id: req.params.id, title: req.params.title, step: req.params.step, content: req.body.text}
+  var operation = {_id: req.params.id, title: req.params.title, content: req.body.content}
   var mongoPeration = new Operation(operation);
   Operation.findOneAndUpdate({_id:req.params.id}, operation, function(err, update){
     if(err){
@@ -140,9 +158,6 @@ function checkOperationObject(operation){
   }
   if(!isDefined(operation.title)){
   	errors.errors.push("Il manque le titre de l'opération");
-  }
-  if(!isDefined(operation.step)){
-    errors.errors.push("L'étape est incorrecte");
   }
   if(!isDefined(operation.content)){
   	errors.errors.push("Il manque le contenu de l'opération");

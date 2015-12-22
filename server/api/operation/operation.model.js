@@ -8,7 +8,7 @@ var logger = require('../../config/logger.js');
 var OperationSchema = new Schema({
   type: {type: String, required: true},
   title: {type: String, required: true},
-  step: {type: String, required: true},
+  steps: [{id: {type: String, required: true}, step: {type: Number, required: true}}],
   content: {type: String, required: true},
   rate: {type: mongoose.Schema.Types.ObjectId, ref: 'Rate'}
 });

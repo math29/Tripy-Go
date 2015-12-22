@@ -89,7 +89,7 @@ router.get('/:id', auth.isAuthenticated() , controller.show);
  *
  * @apiUse UserNotAuthorized
  */
-router.post('/:title/:step',  controller.create);
+router.post('/:title', auth.hasRole('admin'), controller.create);
 
 /**
  * @api {put} /api/operation/:id/:title/:step update an operation
@@ -116,7 +116,7 @@ router.post('/:title/:step',  controller.create);
  *
  * @apiUse UserNotAuthorized
  */
-router.put('/:id/:title/:step', auth.hasRole('admin'),controller.update);
+router.put('/:id/:title', auth.hasRole('admin'),controller.update);
 
 
 /**
