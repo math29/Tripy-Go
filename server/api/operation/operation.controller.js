@@ -44,50 +44,17 @@ exports.create = function(req, res){
 
   /* if there isn't any error, we can start create it */
   if(errors.errors.length === 0){
-    // create a new rate
-    var rate = new Rate({score:0, raters:[]});
-
-    /* save the rate in database*/
-    /*rate.save(function(err, saved){
+    /* save operation */
+    var mongoperation = new Operation(operation);
+    mongoperation.save(function(err, op){
+      /* if there is an error, delete  created rate */
       if(err){
-        logger.error('can\'t create rate');
-        return res.status(500).json('{error:"can\'t create rate"}');
-      }*/
-      /* set rate id in operation */
-      //operation.rate = saved._id;
+        logger.error('can\'t create operation');
+        return res.status(500).json('{error:"can\'t create operation: '+err+'"}');
+      }
 
-      /* save operation */
-      var mongoperation = new Operation(operation);
-      mongoperation.save(function(err, op){
-        /* if there is an error, delete  created rate */
-        if(err){
-          logger.error('can\'t create operation');
-          rate.remove(function(err, op){
-            if(err){
-              logger.error(err);
-            }
-          });
-          return res.status(500).json('{error:"can\'t create operation: '+err+'"}');
-        }
-        //op.rate.score = 0;
-        //op.rate.raters = [];
-        if(operation.steps.length > 0 ){
-          var stepsIds = [];
-          for(var i = 0; i < operation.steps.length; i++){
-            stepsIds.push(operation.steps[i].id);
-          }
-          Timeline.update({_id: {$in: stepsIds}}, {$push: {operations: op._id}}, function(err, data){
-            if(err){
-              return res.status(400).json('{error:\'Unable to add operation to timeline\'}');
-            }
-            return res.status(201).json(op);
-          });
-
-        }else{
-          return res.status(201).json(op);
-        }
-      });
-   // });
+      return res.status(201).json(op);
+    });
   }else{
     return res.status(400).json(errors);
   }

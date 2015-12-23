@@ -23,10 +23,26 @@ OperationSchema.pre('save', function(next){
     if(err){
       next(err);
     }
-    console.log(r);
     self.rate = r._id;
     next();
   });
+});
+
+OperationSchema.post('save', function(){
+  //si l'opération à des timelines associés
+  if(this.steps.length > 0 ){
+    var stepsIds = [];
+    // on met tous les ids de timelines dans le tibleau
+    for(var i = 0; i < this.steps.length; i++){
+      stepsIds.push(this.steps[i].id);
+    }
+    Timeline.update({_id: {$in: stepsIds}, operations: {$nin: [this._id]}}, {$push: {operations: this._id}}, function(err, data){
+      if(err){
+        logger.error(err);
+      }
+    });
+
+  }
 });
 
 // lorsque l'on supprime une opération, on supprime aussi le vote associé
