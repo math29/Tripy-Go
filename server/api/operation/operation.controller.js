@@ -121,15 +121,13 @@ exports.show = function(req, res) {
 };
 
 exports.destroy = function(req, res) {
-  Operation.remove({_id: req.params.id}, function(err, operation){
+  Operation.findOneAndRemove({_id: req.params.id}, function(err, operation){
     if(err){
       return handleError(res, err);
     }
-    if(operation.ok == 1){
-      return res.status(204).json('{success: \'No content\'}');
-    }else{
-      return res.status(400).json('{error: ’\Cannot be removed\'}')
-    }
+    operation.remove();
+    return res.status(204).json('{success: \'No content\'}');
+
   });
 };
 

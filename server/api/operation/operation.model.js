@@ -17,15 +17,15 @@ var OperationSchema = new Schema({
 
 
 // lorsque l'on supprime une opération, on supprime aussi le vote associé
-OperationSchema.post('remove', function(doc){
+OperationSchema.post('remove', function(){
   // suppression du vote associé
-  Rate.findByIdAndRemove(doc.rate, function(err, rate) {
+  Rate.findByIdAndRemove(this.rate, function(err, rate) {
     if(err) {
       logger.error('Could not delete rate', rate);
     }
   });
 
-  Timeline.update({},{$pull: {operations: {$in: [doc._id]}}}, function(err, doc){
+  Timeline.update({},{$pull: {operations: {$in: [this._id]}}}, function(err, doc){
     if(err){
       logger.error('error while remove operations from timelines: ',err);
     }
