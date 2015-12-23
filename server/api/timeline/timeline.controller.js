@@ -62,6 +62,13 @@ exports.addOperation = function(req, res){
           if(doc == null){
             return res.status(418).json('{error:\'Operation is already in timeline or timeline does not exist\'}');
           }else{
+            Operation.findOneAndUpdate({_id: operationId}, {$push:{steps: {step: doc.operations.length, timeline: timelineId}}},function(err, ope){
+              if(err){
+                logger.error(err);
+                return res.status(400).json('{error: \'Unable to add timeline to operation\'}');
+              }
+              return res.status(202).json(doc);
+            });
             doc.operations.push(operationId);
             return res.status(202).json(doc);
           }

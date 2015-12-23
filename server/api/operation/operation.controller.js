@@ -94,7 +94,7 @@ exports.create = function(req, res){
 }
 
 exports.update = function(req, res){
-  var operation = {_id: req.params.id, title: req.params.title, content: req.body.content}
+  var operation = {_id: req.params.id, title: req.params.title, content: req.body.content, steps: req.body.steps}
   var mongoPeration = new Operation(operation);
   Operation.findOneAndUpdate({_id:req.params.id}, operation, function(err, update){
     if(err){
@@ -121,28 +121,15 @@ exports.show = function(req, res) {
 };
 
 exports.destroy = function(req, res) {
-  Operation.findById(req.params.id, function (err, operation) {
-    if(err) {
+  Operation.remove({_id: req.params.id}, function(err, operation){
+    if(err){
       return handleError(res, err);
     }
-    if(!operation) {
-      logger.error('can\'t find Operation with id: '+req.params.id);
-      return res.status(404).send('Not Found');
+    if(operation.ok == 1){
+      return res.status(204).json('{success: \'No content\'}');
+    }else{
+      return res.status(400).json('{error: ’\Cannot be removed\'}')
     }
-    operation.remove(function(err) {
-      if(err) {
-        return handleError(res, err);
-      }
-      logger.info('Operation '+operation._id+'was delete');
-      var info = {operation: 'deleted'};
-      Timeline.update({},{$pull: {operations: {$in: [operation._id]}}}, function(err, doc){
-        if(err){
-          logger.error('error while remove operations from timelines: ',err);
-        }
-        logger.info('info: '+doc);
-      });
-      return res.status(204).json('{success: \'No Content\'}');
-    });
   });
 };
 

@@ -90,7 +90,10 @@
               </div>
               </div>
 
-              <button type="submit" class="btn btn-primary" ng-show="operationEdit.title.length>0 && operationEdit.content.length>0" ng-click="saveOperation(operationEdit)">Sauvegarder le conseil</button>
+              <div ng-show="operationEdit.title.length>0 && operationEdit.content.length>0">
+                <button type="submit" class="btn btn-primary" ng-click="saveOperation(operationEdit)">Sauvegarder le conseil</button>
+                <button type="submit" class="btn btn-danger" ng-click="operationEdit = null">Annuler</button>
+              </div>
             </form>
 
           </div>
