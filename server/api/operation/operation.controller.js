@@ -48,13 +48,13 @@ exports.create = function(req, res){
     var rate = new Rate({score:0, raters:[]});
 
     /* save the rate in database*/
-    rate.save(function(err, saved){
+    /*rate.save(function(err, saved){
       if(err){
         logger.error('can\'t create rate');
         return res.status(500).json('{error:"can\'t create rate"}');
-      }
+      }*/
       /* set rate id in operation */
-      operation.rate = saved._id;
+      //operation.rate = saved._id;
 
       /* save operation */
       var mongoperation = new Operation(operation);
@@ -69,8 +69,8 @@ exports.create = function(req, res){
           });
           return res.status(500).json('{error:"can\'t create operation: '+err+'"}');
         }
-        op.rate.score = 0;
-        op.rate.raters = [];
+        //op.rate.score = 0;
+        //op.rate.raters = [];
         if(operation.steps.length > 0 ){
           var stepsIds = [];
           for(var i = 0; i < operation.steps.length; i++){
@@ -87,11 +87,12 @@ exports.create = function(req, res){
           return res.status(201).json(op);
         }
       });
-    });
+   // });
   }else{
     return res.status(400).json(errors);
   }
 }
+
 
 exports.update = function(req, res){
   var operation = {_id: req.params.id, title: req.params.title, content: req.body.content, steps: req.body.steps}
@@ -105,6 +106,7 @@ exports.update = function(req, res){
     return res.status(200).json(update);
   });
 }
+
 
 // Get a single operation
 exports.show = function(req, res) {
@@ -120,6 +122,10 @@ exports.show = function(req, res) {
   });
 };
 
+
+/**
+ * Removed specified operation from database
+ */
 exports.destroy = function(req, res) {
   Operation.findOneAndRemove({_id: req.params.id}, function(err, operation){
     if(err){

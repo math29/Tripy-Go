@@ -15,6 +15,19 @@ var OperationSchema = new Schema({
 });
 
 
+// crée le vote associé à l'opération
+OperationSchema.pre('save', function(next){
+  var rate = new Rate({score: 0, raters:[]});
+  var self = this;
+  rate.save(function(err, r){
+    if(err){
+      next(err);
+    }
+    console.log(r);
+    self.rate = r._id;
+    next();
+  });
+});
 
 // lorsque l'on supprime une opération, on supprime aussi le vote associé
 OperationSchema.post('remove', function(){
