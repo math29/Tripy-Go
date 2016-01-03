@@ -16,8 +16,12 @@ angular.module('wtcApp')
         controller: 'SettingsCtrl',
         authenticate: true
       })
-      .when('/profile', {
+      .when('/profile/:step', {
         templateUrl: 'app/account/profile/profile.html',
         controller: 'ProfileCtrl'
+      })
+      .when('/profile/overview', {
+        templateUrl: 'app/account/overview/overview.html',
+        controller: 'OverviewCtrl'
       });
   });

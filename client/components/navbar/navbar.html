@@ -26,13 +26,13 @@
               </a>
             </div>
             <div ng-show="isLoggedIn()">
-              <a ng-class="{active: isActive('/profile')}" href="/profile" class="transition-effect">
+              <a ng-class="{active: isActive('/profile')}" href="/profile/1" class="transition-effect">
                 <img src="assets/images/user.jpg" alt="User icon">
                 Hi, {{ getCurrentUser().name }}
               </a>
-              <a ng-class="{active: isActive('/settings')}" href="/settings" class="transition-effect">
+              <!-- <a ng-class="{active: isActive('/settings')}" href="/settings" class="transition-effect">
                 <i class="fa fa-cog"></i>
-              </a>
+              </a> -->
               <a ng-class="{active: isActive('/logout')}" href="" ng-click="logout()" class="transition-effect">
                 <i class="fa fa-sign-out"></i>Sign Out
               </a>
@@ -74,7 +74,7 @@
                   <a ng-class="{active: isActive('/start_with')}" class="dropdown-toggle" href="/start_with" data-toggle="dropdown"><i class="fa fa-plane"></i> Let's travel !</a>
                 </li>
                 <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}" class="dropdown">
-                  <a ng-click="admin()" class="dropdown-toggle" data-toggle="dropdown">Admin</a>
+                  <a  class="dropdown-toggle" href="/back" data-toggle="dropdown">Admin</a>
                 </li>
               </ul>
             </div>

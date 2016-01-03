@@ -226,5 +226,3 @@ $(function() {
 		// 	style: 'custom-select-button'
 		// });
 });
-
-console.log("on arrive ici");
