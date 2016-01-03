@@ -4,6 +4,7 @@ angular.module('wtcApp')
   .controller('SettingsCtrl', function ($scope, User, Auth) {
     $scope.errors = {};
 
+    // Update Password Function
     $scope.changePassword = function(form) {
       $scope.submitted = true;
       if(form.$valid) {
@@ -18,6 +19,14 @@ angular.module('wtcApp')
         });
       }
 		};
+
+    // Update Personals infos Function
+    $scope.changePersonalInfos = function(form) {
+      $scope.submitted = true;
+      if(form.$valid){
+        
+      }
+    };
   })
   .directive("passwordVerify", function() {
    return {

@@ -39,14 +39,14 @@
 </div> -->
 
 <div ng-controller="SettingsCtrl">
-  <!-- <div class="col-md-6">
+  <div class="col-md-6">
     <div class="user-personal-info">
       <h4>Personal Information</h4>
       <div class="user-info-body">
-        <form >
+        <form class="form" name="personal_infos_form" ng-submit="changePersonalInfos(personal_infos_form)" novalidate>
           <div class="col-md-6 col-sm-6">
             <label>First Name</label>
-            <input type="text" name="fname" required placeholder="First Name" class="form-control">
+            <input type="text" name="fname" required placeholder="First Name" class="form-control" ng-model="user.oldPassword">
           </div>
           <div class="col-md-6 col-sm-6">
             <label>First Name</label>
@@ -138,7 +138,7 @@
         </form>
       </div>
     </div>
-  </div> -->
+  </div>
   <div class="col-md-6">
     <div class="user-change-password">
       <h4>Change Password</h4>
