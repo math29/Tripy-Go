@@ -99,7 +99,7 @@ function removeOperationFromTimeline(timelineId, operationId){
 }
 
 function addOperationToTimeline(timelineId, operationId){
-  Timeline.findOneAndUpdate({_id:diffSteps[i], operations:{$nin: [update._id]}},{$push:{operations: update._id}}, function(err, test){
+  Timeline.findOneAndUpdate({_id:timelineId, operations:{$nin: [operationId]}},{$push:{operations: operationId}}, function(err, test){
     if(err){
       logger.error(err);
     }
