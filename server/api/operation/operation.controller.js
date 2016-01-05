@@ -38,7 +38,6 @@ exports.create = function(req, res){
     steps = [];
   }
   var operation = {type:'advice', title: titre, content: content, steps: steps};
-  var timelines = [];
   /* check that object is complete*/
   var errors = checkOperationObject(operation);
 
@@ -60,10 +59,11 @@ exports.create = function(req, res){
   }
 }
 
-
+/**
+ * Update an operation and the timelines associated
+ */
 exports.update = function(req, res){
   var operation = {_id: req.params.id, title: req.params.title, content: req.body.content, steps: req.body.steps};
-  var mongoPeration = new Operation(operation);
   Operation.findOneAndUpdate({_id:req.params.id}, operation, function(err, update){
 
     if(err){
@@ -75,23 +75,35 @@ exports.update = function(req, res){
       var diffSteps = findDifferentSteps(update.steps, operation.steps);
       for(var i=0; i<diffSteps.length; i++){
         if(findIndexInArray(diffSteps[i], update.steps) !== -1){
-          Timeline.findOneAndUpdate({_id:diffSteps[i], operations:{$in: [update._id]}},{$pull:{operations: update._id}}, function(err, test){
-            if(err){
-              logger.error(err);
-            }
-          });
-
+          removeOperationFromTimeline(diffSteps[i], update._id);
         }else{
-          Timeline.findOneAndUpdate({_id:diffSteps[i], operations:{$nin: [update._id]}},{$push:{operations: update._id}}, function(err, test){
-            if(err){
-              logger.error(err);
-            }
-          });
+          addOperationToTimeline(diffSteps[i], update._id);
 
         }
       }
     }
     return res.status(200).json(update);
+  });
+}
+
+/**
+ * Remove an operation from timeline
+ */
+function removeOperationFromTimeline(timelineId, operationId){
+  Timeline.findOneAndUpdate({_id:timelineId, operations:{$in: [operationId]}},{$pull:{operations: operationId}}, function(err, test){
+    if(err){
+      logger.error(err);
+    }
+    logger.debug(test);
+  });
+}
+
+function addOperationToTimeline(timelineId, operationId){
+  Timeline.findOneAndUpdate({_id:diffSteps[i], operations:{$nin: [update._id]}},{$push:{operations: update._id}}, function(err, test){
+    if(err){
+      logger.error(err);
+    }
+    logger.debug(test);
   });
 }
 
