@@ -81,8 +81,10 @@ exports.addOperation = function(req, res){
 exports.removeOperation = function(req, res){
   var operationId = req.params.operationId;
   var timelineId = req.params.timelineId;
-  logger.debug('timelineId: '+timelineId+' operationId: '+operationId);
-  Timeline.findOneAndUpdate({_id:timelineId},{$pull:{operations: {$in : [operationId]}}}).populate('operations').populate('operations.rate').exec(function(err, doc){
+  Timeline.findOneAndUpdate({_id:timelineId},{$pull:{operations: {$in : [operationId]}}})
+    .populate('operations')
+    .populate('operations.rate')
+    .exec(function(err, doc){
     if(err){
       logger.error(err);
       return res.status(400).send('ERROR');
@@ -93,7 +95,6 @@ exports.removeOperation = function(req, res){
       // remove opération from list
       doc.operations.splice(findOperationInList(operationId,doc.operations),1);
       return res.status(202).json(doc);
-
     }
   });
 

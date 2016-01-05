@@ -1,6 +1,6 @@
 <div class="panel-body">
     <ul class="timeline">
-        <li ng-repeat="operation in timeline.operations" ng-class="{'timeline-inverted':$index%2==1}">
+        <li ng-repeat="operation in timelines[timelineIndex].operations" ng-class="{'timeline-inverted':$index%2==1}">
           <div
             <div class="timeline-badge"><i class="fa fa-check"></i>
             </div>
@@ -14,7 +14,7 @@
                   {{operation.content}}
                 </div>
               <div class="timeline-footer">
-                <a ng-click="" class="glyphicon glyphicon-menu-up"></a><a ng-click="" class="glyphicon glyphicon-menu-down"></a><a ng-click="deleteOperationFromTimeline(timeline, operation)" class="glyphicon glyphicon-remove"></a>
+                <a ng-click="" class="glyphicon glyphicon-menu-up"></a><a ng-click="" class="glyphicon glyphicon-menu-down"></a><a ng-click="deleteOperationFromTimeline(timelines[timelineIndex], operation)" class="glyphicon glyphicon-remove"></a>
               </div>
             </div>
         </li>

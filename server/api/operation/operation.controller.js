@@ -62,16 +62,99 @@ exports.create = function(req, res){
 
 
 exports.update = function(req, res){
-  var operation = {_id: req.params.id, title: req.params.title, content: req.body.content, steps: req.body.steps}
+  var operation = {_id: req.params.id, title: req.params.title, content: req.body.content, steps: req.body.steps};
   var mongoPeration = new Operation(operation);
   Operation.findOneAndUpdate({_id:req.params.id}, operation, function(err, update){
+
     if(err){
       logger.error(err);
       return res.status(500).json('{error:"error"}');
     }
-    logger.debug(update);
+    // si il n'y à pas le même nombre de steps entre l'obbjet de base et l'objet mis à jour
+    if(update.steps.length !== operation.steps){
+      var diffSteps = findDifferentSteps(update.steps, operation.steps);
+      console.log(diffSteps);
+      for(var i=0; i<diffSteps.length; i++){
+        if(findIndexInArray(diffSteps[i], update.steps) !== -1){
+          console.log('in a2');
+          Timeline.findOneAndUpdate({_id:diffSteps[i], operations:{$in: [update._id]}},{$pull:{operations: update._id}}, function(err, test){
+            if(err){
+              console.log(err);
+            }
+            console.log(test);
+          });
+
+        }else{
+          console.log('not in a2');
+
+          Timeline.findOneAndUpdate({_id:diffSteps[i], operations:{$nin: [update._id]}},{$push:{operations: update._id}}, function(err, test){
+            if(err){
+              logger.error(err);
+            }
+            console.log(test);
+          });
+
+        }
+      }
+    }
     return res.status(200).json(update);
   });
+}
+
+function findIndexInArray(id, array){
+  for(var i = 0; i< array.length; i++){
+    if(array[i].id === id){
+      return i;
+    }
+  }
+  return -1;
+}
+
+/**
+ * Function which returns the result of the subtraction method applied to
+ * sets (mathematical concept).
+ *
+ * @param a Array one
+ * @param b Array two
+ * @return An array containing the result
+ */
+function findDifferentSteps(a, b) {
+  var cla1 = [];
+  var cla2 = [];
+  for(var i = 0; i<a.length; i++){
+    cla1.push(a[i].id);
+  }
+  for(var j = 0; j<b.length; j++){
+    cla2.push(b[i].id);
+  }
+  console.log('diff');
+  console.log(cla1);
+  console.log(cla2);
+  return sym(cla1, cla2);
+}
+
+function sym() {
+
+  // Convert the argument object into a proper array
+  var args = Array.prototype.slice.call(arguments);
+
+  // Return the symmetric difference of 2 arrays
+  var getDiff = function(arr1, arr2) {
+
+    // Returns items in arr1 that don't exist in arr2
+    function filterFunction(arr1, arr2) {
+      return arr1.filter(function(item) {
+        return arr2.indexOf(item) === -1;
+      });
+    }
+
+    // Run filter function on each array against the other
+    return filterFunction(arr1, arr2)
+      .concat(filterFunction(arr2, arr1));
+  };
+
+  // Reduce all arguments getting the difference of them
+  return args.reduce(getDiff, []);
 }
 
 

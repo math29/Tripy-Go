@@ -7,13 +7,13 @@
  * Controller for timelines
  */
 angular.module('WTCBack')
-  .controller('TimelinesMgr', function($scope, $http) {
+  .controller('TimelinesMgr', function($scope, $http, socket) {
     $scope.errors = [];
     $scope.messages = [];
     $scope.operations = [];
     $scope.operationEdit = null;
     $scope.newTimeline = {};
-    $scope.timeline = null;
+    $scope.timelineIndex = -1;
     $scope.timelines = [];
     $scope.createTimeline = false;
 
@@ -21,10 +21,13 @@ angular.module('WTCBack')
       var res = $http.get('../api/timeline');
       res.success(function(data){
         $scope.timelines = data;
+        console.log("GET timelines");
+        socket.syncUpdates('timeline', $scope.timelines);
+
         if($scope.timelines.length == 0){
           $scope.createTimeline = true;
         }
-        $scope.timeline = $scope.timelines[0];
+        $scope.timelineIndex = 0;
       });
       res.error(function(data){
         $scope.errors.push(data.errors);
@@ -32,6 +35,10 @@ angular.module('WTCBack')
     }
 
     $scope.getTimelines();
+
+    function operationCb(event, item, array){
+      $scope.getTimelines();
+    }
 
     $scope.createThisTimeline = function(){
       var req = {
@@ -42,26 +49,35 @@ angular.module('WTCBack')
       var res = $http(req).then(function(data){
         if(data.status == 201){
           $scope.messages.push('Timeline créée avec succés');
-          $scope.timeline = data.data;
           $scope.createTimeline = null;
-          $scope.timelines.push(data.data);
         }else{
           $scope.errors.push('Impossible de créer la timeline');
         }
       });
     }
 
-    $scope.operations = function(){
+    /**
+     * Récupére l'ensemble des opérations
+     */
+    $scope.getOperations = function(){
       var res = $http.get('../api/operations/');
       res.success(function(data){
         $scope.operations = data;
+        // synchronisation des opérations via le socket
+        socket.syncUpdates('operation', $scope.operations, operationCb);
       });
       res.error(function(data){
         $scope.errors.push(data);
       });
-
     }
 
+
+
+    // Clean up listeners when the controller is destroyed
+    $scope.$on('$destroy', function () {
+      socket.unsyncUpdates('operation');
+      socket.unsyncUpdates('timeline');
+    });
     /**
      * Edition d'une opération
      *
@@ -71,31 +87,26 @@ angular.module('WTCBack')
       $scope.operationEdit = operation;
     }
 
+    /**
+     * Sauvegarde une opération en base de donnée
+     */
     $scope.saveOperation = function(operation){
+      // requête de base
       var req = {
         method: 'PUT',
         url: '../api/operations/'+operation.title,
         data: {content: operation.content, steps: operation.steps}
       };
+      // si l'opération posséde un ID, on la met à jour
       if(operation._id !== undefined){
         req.url = '../api/operations/'+operation._id+'/'+operation.title;
         var res = $http(req).then(function(data){
           console.log(data);
-          var nRes = $http.post('../api/timeline/add/'+$scope.timeline._id+'/'+data.data._id);
-            nRes.success(function(data){
-            $scope.getTimelines();
-            $scope.messages.push('Opération ajoutée à la timeline');
-          });
-          nRes.error(function(data){
-            $scope.errors.push('Impossible d\'ajouter l\'opération à la timeline');
-          });
         });
       }else{
         req.method = 'POST';
         var res = $http(req).then(function(data){
           if(data.status === 201){
-            $scope.operations.push(data.data);
-            $scope.timeline.operations.push(data.data);
             $scope.messages.push('Operation created');
           }else{
             $scope.errors.push(data.data.error);
@@ -106,11 +117,13 @@ angular.module('WTCBack')
       $scope.operationEdit = null;
     }
 
+    /**
+     * Supprime l'opération de la timeline
+     */
     $scope.deleteOperationFromTimeline = function(timeline, operation){
       $http.post('../api/timeline/remove/'+timeline._id+'/'+operation._id)
       .then(function(data){
         if(data.status == 202){
-          $scope.timeline=data.data;
           $scope.messages.push('Opération supprimée de la timeline');
         }else{
           $scope.errors.push('Impossible de supprimer l\'opération de la timeline');
@@ -125,9 +138,6 @@ angular.module('WTCBack')
         if(data.status === 204){
           $scope.messages.push('L\'opération à bien été supprimée');
           console.log(getIndexOfOperation(operation, $scope.operations));
-          $scope.operations.splice(getIndexOfOperation(operation, $scope.operations), 1);
-          $scope.timeline.operations.splice(getIndexOfOperation(operation, $scope.operations), 1);
-          $scope.getTimelines();
         }else{
           $scope.errors.push('Impossible de supprimer l\'opération');
         }
@@ -139,7 +149,7 @@ angular.module('WTCBack')
     }
 
     // get all operations
-    $scope.operations();
+    $scope.getOperations();
 
     function getIndexOfOperation(operation, list){
       for(var i = 0; i< list.length; i++){
@@ -162,7 +172,6 @@ angular.module('WTCBack')
           }
         }
       }
-      console.log('ids: '+timelinesId);
       return timelinesId;
     }
 
@@ -175,21 +184,24 @@ angular.module('WTCBack')
       if(!isTimelineOnOperation(timeline, $scope.operationEdit)){
         if($scope.operationEdit.steps === undefined){$scope.operationEdit.steps = [];}
         $scope.operationEdit.steps.push(tmline);
-        console.log($scope.operationEdit);
       }
     }
 
-    $scope.RemoveFromTimeline = function(timeline){
+    $scope.removeFromTimeline = function(timeline){
       var index = findTimelineInOperation(timeline, $scope.operationEdit);
+      console.log(timeline);
+      console.log($scope.operationEdit);
+      console.log(index);
       if(index != -1){
         $scope.operationEdit.steps.splice(index, 1);
       }
+      console.log("removed");
     }
 
     function findTimelineInOperation(timeline, operation){
       if(operation.steps !== undefined){
         for(var i = 0; i< operation.steps.length; i++){
-          if(operation.steps[i]._id === timeline._id){
+          if(operation.steps[i].id === timeline._id){
             return i;
           }
         }

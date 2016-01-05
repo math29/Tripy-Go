@@ -14,8 +14,8 @@ angular
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
-    'ngCookies'
-
+    'ngCookies',
+    'btford.socket-io'
   ])
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
     return {
@@ -142,9 +142,14 @@ angular
             files:[
           'scripts/controllers/timelinesCtrl.js',
           'scripts/directives/timeline/timeline.js',
-          'scripts/directives/dashboard/stats/stats.js'
-          ]
-        })
+          'scripts/directives/dashboard/stats/stats.js',
+          'scripts/factories/socket.service.js',
+          '../bower_components/angular-socket-io/socket.js',
+          '../socket.io-client/socket.io.js',
+          '../bower_components/angular-socket-io/socket.js',
+          '../bower_components/lodash/lodash.js'
+           ]
+        });
       }
       }
     })

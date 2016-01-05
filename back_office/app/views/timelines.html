@@ -92,8 +92,9 @@
 
               <div ng-show="operationEdit.title.length>0 && operationEdit.content.length>0">
                 <button type="submit" class="btn btn-primary" ng-click="saveOperation(operationEdit)">Sauvegarder le conseil</button>
-                <button type="submit" class="btn btn-danger" ng-click="operationEdit = null">Annuler</button>
               </div>
+              <button type="submit" class="btn btn-danger" ng-click="operationEdit = null">Annuler</button>
+
             </form>
 
           </div>
@@ -102,12 +103,12 @@
     </div>
     <!-- /.panel -->
     <div class="row">
-        <div class="col-lg-8" ng-show="timeline != null">
+        <div class="col-lg-8" ng-show="timelineIndex != -1">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
                 </div>
-                {{timeline.description}}
+                {{timelines[timelineIndex].description}}
                 <!-- /.panel-heading -->
                 <timeline></timeline>
                 <!-- /.panel-body -->
