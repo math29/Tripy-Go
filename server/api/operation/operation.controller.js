@@ -98,6 +98,9 @@ function removeOperationFromTimeline(timelineId, operationId){
   });
 }
 
+/**
+ * Add an operation to timeline Object
+ */
 function addOperationToTimeline(timelineId, operationId){
   Timeline.findOneAndUpdate({_id:timelineId, operations:{$nin: [operationId]}},{$push:{operations: operationId}}, function(err, test){
     if(err){

@@ -122,14 +122,21 @@ angular.module('WTCBack')
      * Supprime l'opération de la timeline
      */
     $scope.deleteOperationFromTimeline = function(timeline, operation){
-      $http.post('../api/timeline/remove/'+timeline._id+'/'+operation._id)
+      var index = findTimelineInOperation(timeline, operation);
+      if(index != -1){
+        operation.steps.splice(index, 1);
+      }
+      $scope.saveOperation(operation);
+      $scope.getOperations();
+
+      /*$http.post('../api/timeline/remove/'+timeline._id+'/'+operation._id)
       .then(function(data){
         if(data.status == 202){
           $scope.messages.push('Opération supprimée de la timeline');
         }else{
           $scope.errors.push('Impossible de supprimer l\'opération de la timeline');
         }
-      });
+      });*/
     }
 
     // supprime une opération en base
@@ -190,9 +197,6 @@ angular.module('WTCBack')
 
     $scope.removeFromTimeline = function(timeline){
       var index = findTimelineInOperation(timeline, $scope.operationEdit);
-      console.log(timeline);
-      console.log($scope.operationEdit);
-      console.log(index);
       if(index != -1){
         $scope.operationEdit.steps.splice(index, 1);
       }

@@ -120,6 +120,11 @@ exports.show = function(req, res){
   });
 }
 
+
+exports.upOperation = function(req, res){
+
+}
+
 exports.destroy = function(req, res){
   return res.status(200).send();
 }
