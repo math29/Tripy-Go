@@ -73,25 +73,19 @@ exports.update = function(req, res){
     // si il n'y à pas le même nombre de steps entre l'obbjet de base et l'objet mis à jour
     if(update.steps.length !== operation.steps){
       var diffSteps = findDifferentSteps(update.steps, operation.steps);
-      console.log(diffSteps);
       for(var i=0; i<diffSteps.length; i++){
         if(findIndexInArray(diffSteps[i], update.steps) !== -1){
-          console.log('in a2');
           Timeline.findOneAndUpdate({_id:diffSteps[i], operations:{$in: [update._id]}},{$pull:{operations: update._id}}, function(err, test){
             if(err){
-              console.log(err);
+              logger.error(err);
             }
-            console.log(test);
           });
 
         }else{
-          console.log('not in a2');
-
           Timeline.findOneAndUpdate({_id:diffSteps[i], operations:{$nin: [update._id]}},{$push:{operations: update._id}}, function(err, test){
             if(err){
               logger.error(err);
             }
-            console.log(test);
           });
 
         }
@@ -127,9 +121,6 @@ function findDifferentSteps(a, b) {
   for(var j = 0; j<b.length; j++){
     cla2.push(b[i].id);
   }
-  console.log('diff');
-  console.log(cla1);
-  console.log(cla2);
   return sym(cla1, cla2);
 }
 

@@ -115,6 +115,7 @@ angular.module('WTCBack')
         });
       }
       $scope.operationEdit = null;
+      $scope.getTimelines();
     }
 
     /**
