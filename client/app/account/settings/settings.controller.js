@@ -1,8 +1,10 @@
 'use strict';
 
 angular.module('wtcApp')
-  .controller('SettingsCtrl', function ($scope, User, Auth) {
+  .controller('SettingsCtrl', function ($scope, $http, User, Auth) {
     $scope.errors = {};
+    $scope.user_info_message = '';
+    $scope.user = Auth.getCurrentUser();
 
     // Update Password Function
     $scope.changePassword = function(form) {
@@ -24,7 +26,18 @@ angular.module('wtcApp')
     $scope.changePersonalInfos = function(form) {
       $scope.submitted = true;
       if(form.$valid){
-        
+        var $user_params = {
+          fname: $scope.user.fname
+        };
+
+        $http.put('/api/users/'+Auth.getCurrentUser()._id, $user_params).success(function() {
+            $scope.user_info_message = 'Infos successfully changed.';
+          // .catch( function() {
+          //   form.password.$setValidity('mongoose', false);
+          //   $scope.errors.other = 'Incorrect password';
+          //   $scope.message = '';
+          // });
+        });
       }
     };
   })

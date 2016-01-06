@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
@@ -92,6 +93,20 @@ exports.changePassword = function(req, res) {
   });
 };
 
+// Updates an existing user in the DB.
+exports.update = function(req, res) {
+  if(req.body._id) { delete req.body._id; }
+  User.findById(req.params.id, function (err, user) {
+    if (err) { return handleError(res, err); }
+    if(!user) { return res.status(404).send('Not Found'); }
+    var updated = _.merge(user, req.body);
+    updated.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.status(200).send("success");
+    });
+  });
+};
+
 /**
  * Get my info
  */
@@ -118,3 +133,7 @@ exports.me = function(req, res) {
 exports.authCallback = function(req, res) {
   res.redirect('/');
 };
+
+function handleError(res, err) {
+  return res.status(500).send(err);
+}

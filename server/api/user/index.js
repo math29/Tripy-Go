@@ -90,7 +90,7 @@ router.delete('/:id', auth.hasRole('admin'), controller.destroy);
 router.get('/me', auth.isAuthenticated(), controller.me);
 
 /**
-  * @api {get} /api/users/:id/password Change Password
+  * @api {put} /api/users/:id/password Change Password
   * @apiName PutChangePassWord
   * @apiGroup Users
   *
@@ -107,6 +107,25 @@ router.get('/me', auth.isAuthenticated(), controller.me);
   *
   */
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
+
+/**
+  * @api {put} /api/users/:id Substitute a user
+  * @apiName SubstituteUser
+  * @apiGroup Users
+  *
+  * @apiUse ApiParamsUser
+  *
+  * @apiSuccess {Object} Object response
+  *
+  * @apiSuccessExample Success-Response:
+  *   HTTP/1.1 201 Created:
+  *      {
+  *          "__v": 0,
+  *          "_id": "564cf49161e7bc8345166168"
+  *      }
+  *
+  */
+router.put('/:id', controller.update);
 
 /**
  * @api {get} /api/users/:id Get By Id
