@@ -20,7 +20,25 @@ exports.index = function(req, res){
         if(err){
           return res.status(400).json('{errors:\'error\'}');
         }
-        return res.status(200).json(result);
+        var result1 = JSON.parse(JSON.stringify(result));
+
+        // organisation des timelines avec les opération dans l'ordre croissant
+        for(var i = 0; i < result.length; i++){
+          var ops = [];
+          result1[i].operations = [];
+          for(var j = 0; j < result[i].operations.length; j++){
+            var s = findStepOperation(result[i]._id, result[i].operations[j]);
+
+            ops[s] = JSON.parse(JSON.stringify(result[i].operations[j]));
+
+            delete ops[s].steps;
+            ops[s].step = s;
+            result1[i].operations[j] = ops[s];
+          }
+          result[i].operations = null;
+          result1[i].operations = ops;
+        }
+        return res.status(200).json(result1);
 
     });
   });
@@ -120,9 +138,72 @@ exports.show = function(req, res){
   });
 }
 
+/**
+ * Déplace une opération dans la timeline selectionné,
+ * doit aussi déplacer l'ensemble des opérations de la timeline si nécessaire
+ */
+exports.moveOperation = function(req, res){
+  var side = -1;
+  // est-ce qu'on veut que l'opération ait lieu plus tôt?
+  if(req.params.side === 'down'){
+    side = 1;
+  }
+  var opId = req.params.opId;
+  var timelineId = req.params.timelineId;
+  Timeline.findOne({_id:req.params.timelineId}).populate('operations').exec(function(err, timeline){
+    if(err){
+      logger.error(err);
+    }
+    var step = -1;
+    var ops = [];
+    var secondOp = null;
 
-exports.upOperation = function(req, res){
+    for(var i = 0; i < timeline.operations.length; i++){
+      ops.push(timeline.operations[i]._id);
+      var opStep = findStepOperation(timeline._id, timeline.operations[i]);
+      if(step != -1){
+        console.log('here '+opStep+' '+step);
+        if(side == 1 && opStep == step+1){
+          secondOp = timeline.operations[i]._id;
+          break;
+        }else if(side == -1 && opStep == step-1){
+          secondOp = timeline.operations[i]._id;
+          break;
+        }
+      }
+      if(timeline.operations[i]._id == opId && step == -1){
+        // recherche de l'étape
+        step = opStep;
+        i=-1;
+      }
+    }
+     console.log('OP: '+opId+' second op: '+secondOp);
 
+    if(((side == -1 && step>0) || (side == 1 && step < timeline.operations.length)) && secondOp!= null ){
+      console.log('move');
+      Operation.update({_id:opId, "steps.id":timelineId}, {$inc:{"steps.$.step":side}}).exec(function(err, response){if(err){console.log(err);}console.log(response);});
+      Operation.update({_id:secondOp, "steps.id":timelineId}, {$inc:{"steps.$.step":-side}}).exec();
+    }else{
+      logger.error('Try to move an unmovable operation');
+    }
+
+    return res.status(200).json(timeline);
+  });
+
+}
+
+/**
+ * Trouve l'étape de l'opération dans la timeline associée
+ */
+function findStepOperation(timelineId, operation){
+  if(typeof operation.steps !== undefined){
+    for(var i = 0; i < operation.steps.length; i++){
+      if(String(operation.steps[i].id) == String(timelineId)){
+        return operation.steps[i].step;
+      }
+    }
+  }
+  return -1;
 }
 
 exports.destroy = function(req, res){

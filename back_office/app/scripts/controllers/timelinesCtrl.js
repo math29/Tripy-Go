@@ -121,22 +121,25 @@ angular.module('WTCBack')
     /**
      * Supprime l'opération de la timeline
      */
-    $scope.deleteOperationFromTimeline = function(timeline, operation){
-      var index = findTimelineInOperation(timeline, operation);
-      if(index != -1){
-        operation.steps.splice(index, 1);
-      }
-      $scope.saveOperation(operation);
-      $scope.getOperations();
-
-      /*$http.post('../api/timeline/remove/'+timeline._id+'/'+operation._id)
-      .then(function(data){
-        if(data.status == 202){
-          $scope.messages.push('Opération supprimée de la timeline');
-        }else{
-          $scope.errors.push('Impossible de supprimer l\'opération de la timeline');
+    $scope.deleteOperationFromTimeline = function(timeline, operationId){
+      var operation = null;
+      for(var i = 0; i < $scope.operations.length; i++){
+        if($scope.operations[i]._id == operationId){
+          operation = $scope.operations[i];
+          break;
         }
-      });*/
+      }
+      if(operation != null){
+        var index = findTimelineInOperation(timeline, operation);
+        if(index != -1){
+          operation.steps.splice(index, 1);
+        }
+        console.log(operation);
+        $scope.saveOperation(operation);
+        $scope.getOperations();
+      }else{
+        $scope.errors.push('L\'opération n\'éxiste pas');
+      }
     }
 
     // supprime une opération en base
@@ -216,6 +219,20 @@ angular.module('WTCBack')
 
     $scope.isTimelineOnOperation = function(timeline, operation){
       return isTimelineOnOperation(timeline, operation);
+    }
+
+    $scope.moveOperation = function(side, operationId, timelineId){
+      var s = "up";
+      if(side == -1){
+        s = "down";
+      }
+      var req = {
+        method: 'PUT',
+        url: '../api/timeline/'+s+'/'+timelineId+'/'+operationId
+      };
+      var res = $http(req).then(function(data){
+        $scope.getTimelines();
+              });
     }
 
     function isTimelineOnOperation(timeline, operation){
