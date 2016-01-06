@@ -36,7 +36,7 @@ OperationSchema.post('save', function(){
     for(var i = 0; i < this.steps.length; i++){
       stepsIds.push(this.steps[i].id);
     }
-    Timeline.update({_id: {$in: stepsIds}, operations: {$nin: [this._id]}}, {$push: {operations: this._id}}, function(err, data){
+    Timeline.update({_id: {$in: stepsIds}, operations: {$nin: [this._id]}}, {$push: {operations: this._id}}, function(err){
       if(err){
         logger.error(err);
       }

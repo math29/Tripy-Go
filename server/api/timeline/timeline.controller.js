@@ -80,7 +80,7 @@ exports.addOperation = function(req, res){
           if(doc == null){
             return res.status(418).json('{error:\'Operation is already in timeline or timeline does not exist\'}');
           }else{
-            Operation.findOneAndUpdate({_id: operationId}, {$push:{steps: {step: doc.operations.length, timeline: timelineId}}},function(err, ope){
+            Operation.findOneAndUpdate({_id: operationId}, {$push:{steps: {step: doc.operations.length, timeline: timelineId}}},function(err){
               if(err){
                 logger.error(err);
                 return res.status(400).json('{error: \'Unable to add timeline to operation\'}');
@@ -107,7 +107,7 @@ exports.removeOperation = function(req, res){
       logger.error(err);
       return res.status(400).send('ERROR');
     }
-    if(doc == null){
+    if(doc === null){
       return res.status(418).json('{error:\'Operation is already in timeline or timeline does not exist\'}');
     }else{
       // remove opération from list
@@ -162,26 +162,23 @@ exports.moveOperation = function(req, res){
       ops.push(timeline.operations[i]._id);
       var opStep = findStepOperation(timeline._id, timeline.operations[i]);
       if(step != -1){
-        console.log('here '+opStep+' '+step);
-        if(side == 1 && opStep == step+1){
+        if(side === 1 && opStep === step+1){
           secondOp = timeline.operations[i]._id;
           break;
-        }else if(side == -1 && opStep == step-1){
+        }else if(side === -1 && opStep === step-1){
           secondOp = timeline.operations[i]._id;
           break;
         }
       }
-      if(timeline.operations[i]._id == opId && step == -1){
+      if(timeline.operations[i]._id === opId && step === -1){
         // recherche de l'étape
         step = opStep;
         i=-1;
       }
     }
-     console.log('OP: '+opId+' second op: '+secondOp);
 
-    if(((side == -1 && step>0) || (side == 1 && step < timeline.operations.length)) && secondOp!= null ){
-      console.log('move');
-      Operation.update({_id:opId, "steps.id":timelineId}, {$inc:{"steps.$.step":side}}).exec(function(err, response){if(err){console.log(err);}console.log(response);});
+    if(((side === -1 && step>0) || (side === 1 && step < timeline.operations.length)) && secondOp!= null ){
+      Operation.update({_id:opId, "steps.id":timelineId}, {$inc:{"steps.$.step":side}}).exec();
       Operation.update({_id:secondOp, "steps.id":timelineId}, {$inc:{"steps.$.step":-side}}).exec();
     }else{
       logger.error('Try to move an unmovable operation');
