@@ -75,7 +75,7 @@ exports.update = function(req, res){
       var diffSteps = findDifferentSteps(update.steps, operation.steps);
       for(var i=0; i<diffSteps.length; i++){
         if(findIndexInArray(diffSteps[i], update.steps) !== -1){
-          removeOperationFromTimeline(diffSteps[i], update._id);
+          removeOperationFromTimeline(diffSteps[i], update);
         }else{
           addOperationToTimeline(diffSteps[i], update._id);
 
@@ -89,11 +89,19 @@ exports.update = function(req, res){
 /**
  * Remove an operation from timeline
  */
-function removeOperationFromTimeline(timelineId, operationId){
-  Timeline.findOneAndUpdate({_id:timelineId, operations:{$in: [operationId]}},{$pull:{operations: operationId}}, function(err, test){
+function removeOperationFromTimeline(timelineId, operation){
+  Timeline.findOneAndUpdate({_id:timelineId, operations:{$in: [operation._id]}},{$pull:{operations: operation._id}}, function(err, test){
     if(err){
       logger.error(err);
     }
+
+    // on décrémente l'ensemble des opérations qui suivent celle que l'on supprime de la timeline
+    for(var i = 0; i < operation.steps.length; i++){
+      if(operation.steps[i].id == timelineId){
+        Operation.update({"steps.id":timelineId, "steps.step": {$gt: operation.steps[i].step}},{$inc:{"steps.$.step":-1}},{multi: true}).exec();
+      }
+    }
+
     logger.debug(test);
   });
 }

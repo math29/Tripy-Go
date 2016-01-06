@@ -47,6 +47,7 @@ OperationSchema.post('save', function(){
 
 // lorsque l'on supprime une opération, on supprime aussi le vote associé
 OperationSchema.post('remove', function(){
+  var operation = this;
   // suppression du vote associé
   Rate.findByIdAndRemove(this.rate, function(err, rate) {
     if(err) {
@@ -54,12 +55,21 @@ OperationSchema.post('remove', function(){
     }
   });
 
+
   Timeline.update({},{$pull: {operations: {$in: [this._id]}}}, function(err, doc){
     if(err){
       logger.error('error while remove operations from timelines: ',err);
     }
+    decreaseSteps(operation);
   });
 });
 
 // on exporte le modéle
 module.exports = mongoose.model('Operation', OperationSchema);
+var Operation = mongoose.model('Operation', OperationSchema);
+
+function decreaseSteps(operation){
+  for(var i = 0; i < operation.steps.length; i++){
+    Operation.update({"steps.id":operation.steps[i].id, "steps.step": {$gt: operation.steps[i].step}},{$inc:{"steps.$.step":-1}},{multi: true}).exec();
+  }
+}

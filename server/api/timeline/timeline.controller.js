@@ -170,7 +170,7 @@ exports.moveOperation = function(req, res){
           break;
         }
       }
-      if(timeline.operations[i]._id === opId && step === -1){
+      if(timeline.operations[i]._id == opId && step === -1){
         // recherche de l'étape
         step = opStep;
         i=-1;
@@ -182,6 +182,8 @@ exports.moveOperation = function(req, res){
       Operation.update({_id:secondOp, "steps.id":timelineId}, {$inc:{"steps.$.step":-side}}).exec();
     }else{
       logger.error('Try to move an unmovable operation');
+      logger.error('secondOp: '+secondOp+' side: '+side+' step: '+step);
+
     }
 
     return res.status(200).json(timeline);
