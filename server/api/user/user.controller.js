@@ -129,6 +129,9 @@ exports.me = function(req, res) {
   });
 };
 
+/**
+ * Récupére l'ensemble des roles que l'administrateur peut assigner
+ */
 exports.getRoles = function(req, res){
   var roles = {roles: config.userRoles.slice(0, config.userRoles.indexOf(req.user.role)+1)};
   return res.status(200).json(roles);

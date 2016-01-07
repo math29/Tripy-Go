@@ -3,6 +3,8 @@
 angular.module('WTCBack')
   .controller('UsersCtrl', function ($scope, $http, $window) {
 
+    $scope.userEdit = null;
+
     function createDownloadURL(){
       var blob = new Blob([ JSON.stringify($scope.languages) ], { type : 'application/json' });
       if($scope.url){
@@ -11,6 +13,10 @@ angular.module('WTCBack')
       $scope.url = (window.URL || window.webkitURL).createObjectURL( blob );
     }
 
+    $scope.edit = function(user){
+      $scope.userEdit = user;
+      $scope.userEdit.oldRole = user.role;
+    }
 
     $scope.get = function(){
       var res = $http.get('../api/users/');
@@ -21,6 +27,18 @@ angular.module('WTCBack')
         console.log(data);
       });
     };
+
+    $scope.update_role = function(user){
+      var res = $http.put('../api/users/'+user._id+'/'+user.role);
+      res.success(function(data){
+        $scope.userEdit = null;
+      });
+      res.error(function(data){
+        console.log(data);
+        user.role = user.oldRole;
+        $scope.errors.push('Impossible de modifier le rôle de l\'utilisateur');
+      });
+    }
 
 
     $scope.getRoles = function(){
