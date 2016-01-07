@@ -204,6 +204,19 @@ angular
           }
         }
       })
+      .state('dashboard.users', {
+        templateUrl: 'views/users.html',
+        url:'/users',
+        controller: 'UsersCtrl',
+        resolve: {
+          loadMyFile: function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name: 'WTCBack',
+              files: ['scripts/controllers/users.js']
+            })
+          }
+        }
+      })
       .state('dashboard.languages', {
         templateUrl: 'views/languages.html',
         url: '/languages',
