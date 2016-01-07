@@ -63,28 +63,25 @@
           </div>
 
           <div class="col-md-12">
-            <!-- <div class="row"> -->
-              <div class="search-col-padding">
-                <label>Date de naissance</label>
-                <input type="text" id="departure_date" name="birthday" class="form-control" placeholder="DD/MM/YYYY" ng-model="user.birthday">
-              </div>
-            <!-- </div> -->
+            <div class="search-col-padding">
+              <label>Date de naissance</label>
+              <input type="text" id="departure_date" name="birthday" class="form-control" placeholder="DD/MM/YYYY" ng-model="user.birthday">
+            </div>
           </div>
 
           <div class="clearfix"></div>
 
           <div class="col-md-12">
             <label>Adresse</label>
-            <textarea placeholder="Rue - Voie - lieu dit" id="current-address" class="form-control" rows="5"></textarea>
+            <textarea placeholder="Rue - Voie - lieu dit" id="current-address" class="form-control" rows="5" ng-model="user.address"></textarea>
             <div class="col-md-6 col-sm-6 col-xs-6 clear-padding">
-              <input type="text" name="zip-code" class="form-control" placeholder="Zip Code">
+              <input type="text" name="zipcode" class="form-control" placeholder="Zip Code" ng-model="user.zipcode">
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
-              <input type="text" name="zip-code" class="form-control" placeholder="Ville">
+              <input type="text" name="city" class="form-control" placeholder="Ville" ng-model="user.city">
             </div>
             <div class="col-md-6 col-sm-6 clear-padding">
-              <select class="form-control" name="country">
-                <option>Pays</option>
+              <select class="form-control" name="country" ng-model="user.country">
                 <option>Australia</option>
                 <option>India</option>
                 <option>USA</option>
@@ -92,11 +89,10 @@
               </select>
             </div>
           </div>
-          <div class="col-md-12">
+          <div class="col-md-12 col-sm-12">
             <label>Télécharger Avatar</label>
             <input type="file" name="profile-pic" class="upload-pic">
           </div>
-          <div class="clearfix"></div>
           <div class="text-center">
             <p class="help-block">{{ user_info_message }}</p>
           </div>

@@ -27,7 +27,14 @@ angular.module('wtcApp')
       $scope.submitted = true;
       if(form.$valid){
         var $user_params = {
-          fname: $scope.user.fname
+          fname: $scope.user.fname,
+          name: $scope.user.name,
+          phone: $scope.user.phone,
+          birthday: $scope.user.birthday,
+          address: $scope.user.address,
+          zipcode: $scope.user.zipcode,
+          city: $scope.user.city,
+          country: $scope.user.country
         };
 
         $http.put('/api/users/'+Auth.getCurrentUser()._id, $user_params).success(function() {

@@ -23,9 +23,9 @@ var UserSchema = new Schema({
   phone: String,  // NEW
   birthday: Date, // NEW
   address: String,  // NEW
-  zipCode: Number,  // NEW
-  city: String  // NEW
-
+  zipcode: Number,  // NEW
+  city: String,  // NEW
+  country: String
 });
 
 /**
