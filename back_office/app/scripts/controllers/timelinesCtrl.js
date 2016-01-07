@@ -142,6 +142,13 @@ angular.module('WTCBack')
       }
     }
 
+    $scope.vote = function(rateId, side){
+      $http.post('../api/rate/vote/'+side+'/'+rateId).then(function(data){
+        console.log(data);
+      });
+
+    }
+
     // supprime une opération en base
     $scope.deleteOperation = function(operation){
 

@@ -6,8 +6,9 @@
             </div>
             <div class="timeline-panel">
                 <div class="timeline-heading">
-                    <h4 class="timeline-title">{{operation.title}}</h4>
-                    <p><small class="text-muted"><i class="fa fa-clock-o"></i> score: {{operation.rate.score}} / {{operation.rate.raters.length}}</small>
+                    <h4 class="timeline-title">{{operation.title}}</h4><i ng-click="vote(operation.rate._id, 'up')" class="fa fa-check"></i>
+                  <i ng-click="vote(operation.rate._id, 'down')" class="fa fa-check"></i>
+                    <p><small class="text-muted"><i class="fa fa-clock-o"></i> score: {{operation.rate.score}} / {{operation.rate.raters}}</small>
                     </p>
                 </div>
                 <div class="timeline-body">

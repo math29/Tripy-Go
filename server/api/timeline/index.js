@@ -54,7 +54,7 @@ router.post('/:name', auth.hasRole('admin'), controller.create);
 router.post('/add/:timelineId/:operationId',  auth.hasRole('admin'), controller.addOperation);
 router.post('/remove/:timelineId/:operationId',  auth.hasRole('admin'), controller.removeOperation);
 
-router.put('/:side/:timelineId/:opId', controller.moveOperation);
+router.put('/:side/:timelineId/:opId', auth.hasRole('admin'), controller.moveOperation);
 /**
   * @api {delete} /api/timeline/:id Delete a timeline
   * @apiName DeleteTimeline

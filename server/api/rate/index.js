@@ -17,32 +17,30 @@ var router = express.Router();
  */
 
 /**
- * @api {get} /api/back/operation Request list of all operations
+ * @api {get} /api/back/rate Request list of all rates
  * @apiVersion 1.0.0
- * @apiName GetOperations
- * @apiGroup Operations
+ * @apiName GetRates
+ * @apiGroup Rates
  *
- * @apiSuccess {Array} array of operations
+ * @apiSuccess {Array} array of rates
  *
  *
  * @apiSuccessExample Success-Response:
  *   HTTP/1.1 200 OK
  *  [
  *    {
- *      type:"Advice",
- *      title: "Test",
- *      step: 1,
- *      content: "#Title\n\tText"
+ *      score:2,
+ *      raters: ["568d6f9a3a4b87990fe2ee15", 568d6f9a3a4b87990fe2ee1c]
  *    },
  *    ...
  *  ]
  *
  * @apiUse UserNotAuthorized
  */
-router.get('/vote', controller.vote);
+router.get('/', auth.hasRole('admin'), controller.index);
 
 /**
- * @api {get} /api/back/operation/:id Request operations with specific ID
+ * @api {get} /api/back/rate/:id Request operations with specific ID
  * @apiVersion 1.0.0
  * @apiName GetOperation
  * @apiGroup Operations
@@ -53,18 +51,32 @@ router.get('/vote', controller.vote);
  * @apiSuccessExample Success-Response:
  *   HTTP/1.1 200 OK
  *    {
- *      type:"Advice",
- *      title: "Test",
- *      step: 1,
- *      content: "#Title\n\tText"
+ *      score:2,
+ *      raters: ["568d6f9a3a4b87990fe2ee15", 568d6f9a3a4b87990fe2ee1c]
  *    }
  *
  * @apiUse UserNotAuthorized
  */
-router.get('/:id', auth.hasRole('admin'), controller.show);
+router.get('/:id', auth.isAuthenticated(), controller.show);
 
-
-
+/**
+ * @api {post} /api/back/rate/vote/:side/:id Request operations with specific ID
+ * @apiVersion 1.0.0
+ * @apiName GetOperation
+ * @apiGroup Operations
+ *
+ * @apiSuccess {Object} operation
+ *
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *    {
+ *     'message':'OK'
+ *    }
+ *
+ * @apiUse UserNotAuthorized
+ */
+router.post('/vote/:side/:id', auth.isAuthenticated(), controller.vote);
 /**
  * @api {delete} /api/back/operation/:id delete operation with specific ID
  * @apiVersion 1.0.0

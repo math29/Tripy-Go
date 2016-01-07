@@ -15,6 +15,7 @@ var TAG = "OperationController";
  */
 exports.index = function(req, res) {
   Operation.find()
+  .populate('rate')
   .sort({_id:1})
   .exec(
     function (err, operations) {
@@ -71,7 +72,7 @@ exports.update = function(req, res){
       return res.status(500).json('{error:"error"}');
     }
     // si il n'y à pas le même nombre de steps entre l'obbjet de base et l'objet mis à jour
-    if(update.steps.length !== operation.steps){
+    if(update.steps.length !== operation.steps.length){
       var diffSteps = findDifferentSteps(update.steps, operation.steps);
       for(var i=0; i<diffSteps.length; i++){
         if(findIndexInArray(diffSteps[i], update.steps) !== -1){
@@ -142,7 +143,7 @@ function findDifferentSteps(a, b) {
     cla1.push(a[i].id);
   }
   for(var j = 0; j<b.length; j++){
-    cla2.push(b[i].id);
+    cla2.push(b[j].id);
   }
   return sym(cla1, cla2);
 }
