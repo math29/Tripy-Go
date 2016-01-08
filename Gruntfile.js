@@ -91,6 +91,7 @@ module.exports = function (grunt) {
       },
       livereload: {
         files: [
+          // front office
           '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.css',
           '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.html',
 
@@ -98,7 +99,13 @@ module.exports = function (grunt) {
 
           '!{.tmp,<%= yeoman.client %>}{app,components}/**/*.spec.js',
           '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js',
-          '<%= yeoman.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
+          '<%= yeoman.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}',
+
+          // back office
+          '<%= yeoman.back_office %>/app/**/*.css',
+          '<%= yeoman.back_office %>/app/views/**/*.html',
+
+          '<%= yeoman.back_office %>/app/scripts/**/*.js'
         ],
         options: {
           livereload: true

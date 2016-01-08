@@ -1,5 +1,5 @@
 {
-  "name": "WTC-BackOffice",
+  "name": "WTC-Back",
   "version": "0.0.0",
   "dependencies": {
     "angular": "1.2.16",
@@ -28,5 +28,5 @@
   "resolutions": {
     "bootstrap": "~3.1.1"
   },
-  "appPath": "app"
+  "appPath": "back_office"
 }
