@@ -39,7 +39,7 @@ exports.index = function(req, res) {
 
 exports.paginated = function(req, res) {
   var find = {};
-  if(req.params.level === 'debug' || req.params.level === 'info' || req.params.level == 'warn' || req.params.level== 'error'){
+  if(req.params.level === 'debug' || req.params.level === 'info' || req.params.level === 'warn' || req.params.level === 'error'){
     find.level = req.params.level;
   }
   if(typeof req.params.message !== 'undefined'){
@@ -73,13 +73,13 @@ exports.paginated = function(req, res) {
         length = logs.length;
       }
       if(length>0){
-        for(var i=0; i<length; i++){
-          var log = logs[i];
-          if(log.level === 'info'){
+        for(var j=0; j<length; j++){
+          var lo = logs[j];
+          if(lo.level === 'info'){
             stats.dataLocal[0]++;
-          }else if(log.level === 'warn'){
+          }else if(lo.level === 'warn'){
             stats.dataLocal[2]++;
-          }else if(log.level === 'error'){
+          }else if(lo.level === 'error'){
             stats.dataLocal[1]++;
           }
         }
@@ -100,7 +100,7 @@ exports.show = function(req, res) {
       logger.warn('%s: Could not found log with id: '+req.params.id, TAG);
       return res.status(404).send('Not Found');
     }
-    return res.json(language);
+    return res.json(log);
   });
 };
 
