@@ -60,7 +60,7 @@ module.exports = function (grunt) {
       bower: {
         files: ['bower.json', './back_office/bower.json'],
         tasks: ['wiredep']
-      }
+      },
       injectJS: {
         files: [
           '<%= yeoman.client %>/{app,components}/**/*.js',
