@@ -30,7 +30,10 @@ module.exports = function (grunt) {
     yeoman: {
       // configurable paths
       client: require('./bower.json').appPath || 'client',
-      dist: 'dist'
+      back_office: require('./back_office/bower.json').appPath || 'back_office',
+      dist: 'dist',
+      public: 'dist/public',
+      private: 'dist/private'
     },
     express: {
       options: {
