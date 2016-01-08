@@ -5047,7 +5047,7 @@ h5 {
 	font-weight: 600;
 }
 .user-notification {
-	margin: 40px 0px;
+	/*margin: 40px 0px;*/
 	background: #fff;
 }
 .user-notification .notification-body {

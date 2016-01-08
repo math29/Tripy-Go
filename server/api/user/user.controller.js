@@ -96,13 +96,22 @@ exports.changePassword = function(req, res) {
 // Updates an existing user in the DB.
 exports.update = function(req, res) {
   if(req.body._id) { delete req.body._id; }
-  User.findById(req.params.id, function (err, user) {
-    if (err) { return handleError(res, err); }
-    if(!user) { return res.status(404).send('Not Found'); }
+
+  User.findOne({
+    _id: req.params.id
+  }, '-salt -hashedPassword', function(err, user, next) { // don't ever give out the password or salt
+    if (err) {
+      logger.error("Could not ge user infos ME", user);
+      return next(err);
+    }
+    if (!user) {
+      logger.warn("User not auhenticated");
+      return res.status(401).send('Unauthorized');
+    }
     var updated = _.merge(user, req.body);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
-      return res.status(200).send("success");
+      res.json(user);
     });
   });
 };

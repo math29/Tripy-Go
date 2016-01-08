@@ -25,7 +25,8 @@ var UserSchema = new Schema({
   address: String,  // NEW
   zipcode: Number,  // NEW
   city: String,  // NEW
-  country: String
+  country: String,  // NEW
+  picture: String // NEW
 });
 
 /**

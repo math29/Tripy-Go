@@ -11,6 +11,7 @@ module.exports = function(app) {
 
   app.use('/auth', require('./auth'));
   // Insert routes below
+  app.use('/api/files', require('./api/file'));
   app.use('/api/locations', require('./api/location'));
   app.use('/api/transports', require('./api/transport'));
   app.use('/api/hashtags', require('./api/hashtag'));
