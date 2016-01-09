@@ -35,7 +35,7 @@ module.exports = function (grunt) {
       back_office: require('./back_office/bower.json').appPath || 'back_office',
       dist: 'dist',
       public: 'dist/public',
-      private: 'dist/private'
+      private: 'dist/back'
     },
     express: {
       options: {
@@ -257,11 +257,11 @@ module.exports = function (grunt) {
         src: '<%= yeoman.client %>/index.html',
         ignorePath: '<%= yeoman.client %>/',
         exclude: [/bootstrap-sass-official/, /bootstrap.js/, '/json3/', '/es5-shim/']
-      },
+      }/*,
       back_office: {
         src: '<%= yeoman.back_office %>/app/index.html',
         ignorePath: '<%= yeoman.back_office %>/app/'
-      }
+      }*/
     },
 
     // Renames files for browser caching purposes
@@ -275,9 +275,9 @@ module.exports = function (grunt) {
             '<%= yeoman.public %>/assets/fonts/*',
 
             //'<%= yeoman.private %>/{,*/}*.js',
-            '<%= yeoman.private %>/{,*/}*.css',
-            '<%= yeoman.private %>/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%= yeoman.private %>/assets/fonts/*'
+            //'<%= yeoman.private %>/{,*/}*.css',
+            //'<%= yeoman.private %>/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+            //'<%= yeoman.private %>/assets/fonts/*'
           ]
         }
       }
@@ -441,12 +441,7 @@ module.exports = function (grunt) {
           cwd: '<%= yeoman.back_office %>/app',
           dest: '<%= yeoman.private %>',
           src: [
-          '*.{ico,png,txt}',
-          '.htaccess',
-          'bower_components/**/*',
-          'assets/**/*',
-          'index.html'
-          ]
+'**/*'          ]
         }]
       },
       styles: {
@@ -717,7 +712,7 @@ module.exports = function (grunt) {
     'injector',
     'wiredep',
     'useminPrepare',
-    'useminPrepareBack',
+    //'useminPrepareBack',
     'autoprefixer',
     'ngtemplates',
     'concat',
@@ -727,8 +722,8 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
-    'usemin',
-    'useminBack'
+    'usemin'
+    //'useminBack'
   ]);
 
   grunt.registerTask('default', [
