@@ -7,16 +7,14 @@ angular.module('wtcApp', [
   'ngRoute',
   'btford.socket-io',
   'ngAnimate',
-  'uiGmapgoogle-maps',
-  'wtcApp.directives',
-  'wtcApp.controllers'
+  'uiGmapgoogle-maps'
 ])
 
   .config(function ($routeProvider, $locationProvider, $httpProvider, uiGmapGoogleMapApiProvider) {
     $routeProvider
       .otherwise({
-        redirectTo: '/'
-      });
+              redirectTo: '/'
+            });
 
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
@@ -66,6 +64,3 @@ angular.module('wtcApp', [
     });
   });
 
-  angular.module('d3', []);
-  angular.module('wtcApp.directives', ['d3']);
-  angular.module('wtcApp.controllers', []);

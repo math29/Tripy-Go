@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wtcApp')
-    .controller('MainCtrl', function ($scope, $http, socket) {
+    .controller('MainCtrl', function ($scope, $http, $window, socket) {
         $scope.myInterval = 5000;
         $scope.noWrapSlides = false;
         var slides = $scope.slides = [];
@@ -12,6 +12,10 @@ angular.module('wtcApp')
                 text: ['More','Extra','Lots of','Surplus'][slides.length % 4] + ' ' +
                 ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 4]
             });
+        };
+
+        $scope.goAdmin = function(){
+          $window.location = '/back';
         };
 
         for (var i=0; i<4; i++) {
