@@ -104,7 +104,6 @@ exports.changeRole = function(req, res) {
     if(err){
       logger.error(err);
     }
-    console.log(user);
     return res.status(200).json(user);
   });
 };

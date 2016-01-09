@@ -55,7 +55,7 @@ exports.paginated = function(req, res) {
         return handleError(res, err);
       }
       var stats = {labels:['info', 'error', 'warn'], data:[0,0,0], dataLocal:[0,0,0]};
-      var pagination = {current: req.params.page, maxPage: logs.length%50};
+      var pagination = {current: req.params.page, maxPage: Math.ceil(logs.length / 50)};
       for(var i = 0; i< logs.length; i++){
         var log = logs[i];
         if(log.level === 'info'){
