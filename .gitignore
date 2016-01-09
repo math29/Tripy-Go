@@ -3,6 +3,7 @@ node_modules
 public
 
 .tmp
+.tmpBack
 .idea
 
 client/bower_components
