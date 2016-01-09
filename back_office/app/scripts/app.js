@@ -144,10 +144,9 @@ angular
           'scripts/directives/timeline/timeline.js',
           'scripts/directives/dashboard/stats/stats.js',
           'scripts/factories/socket.service.js',
-          '../bower_components/angular-socket-io/socket.js',
-          '../socket.io-client/socket.io.js',
-          '../bower_components/angular-socket-io/socket.js',
-          '../bower_components/lodash/lodash.js'
+          'bower_components/angular-socket-io/socket.js',
+          'bower_components/angular-socket-io/socket.min.js',
+          'bower_components/lodash/lodash.js'
            ]
         });
       }

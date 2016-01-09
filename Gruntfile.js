@@ -473,7 +473,19 @@ module.exports = function (grunt) {
         }
       }
     },
-
+    // create logs dir
+    mkdir: {
+      log:{
+        options: {
+          mode: '0700',
+          create: ['logs']
+        }
+      }
+    },
+    // create log file
+    touch: {
+      src: ['logs/all-logs.log']
+    },
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
@@ -722,7 +734,9 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
-    'usemin'
+    'usemin',
+    'mkdir',
+    'touch'
     //'useminBack'
   ]);
 
