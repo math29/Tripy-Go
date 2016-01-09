@@ -13,6 +13,8 @@ module.exports = function (grunt) {
   require('jit-grunt')(grunt, {
     express: 'grunt-express-server',
     useminPrepare: 'grunt-usemin',
+    useminPrepareBack: 'grunt-usemin',
+    useminBack: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
     cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner',
@@ -156,7 +158,8 @@ module.exports = function (grunt) {
       all: [
         '<%= yeoman.client %>/{app,components}/**/*.js',
         '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
-        '!<%= yeoman.client %>/{app,components}/**/*.mock.js'
+        '!<%= yeoman.client %>/{app,components}/**/*.mock.js',
+        '<%= yeoman.back_office %>/app/scripts/**/*.js'
       ],
       test: {
         src: [
@@ -204,6 +207,12 @@ module.exports = function (grunt) {
           cwd: '.tmp/',
           src: '{,*/}*.css',
           dest: '.tmp/'
+        },
+        {
+          expand: true,
+          cwd: './tmp/styles/',
+          src: '{,*/}*.css',
+          dest: '.tmp/styles/'
         }]
       }
     },
@@ -248,6 +257,10 @@ module.exports = function (grunt) {
         src: '<%= yeoman.client %>/index.html',
         ignorePath: '<%= yeoman.client %>/',
         exclude: [/bootstrap-sass-official/, /bootstrap.js/, '/json3/', '/es5-shim/']
+      },
+      back_office: {
+        src: '<%= yeoman.back_office %>/app/index.html',
+        ignorePath: '<%= yeoman.back_office %>/app/'
       }
     },
 
@@ -256,10 +269,15 @@ module.exports = function (grunt) {
       dist: {
         files: {
           src: [
-            '<%= yeoman.dist %>/public/{,*/}*.js',
-            '<%= yeoman.dist %>/public/{,*/}*.css',
-            '<%= yeoman.dist %>/public/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%= yeoman.dist %>/public/assets/fonts/*'
+            '<%= yeoman.public %>/{,*/}*.js',
+            '<%= yeoman.public %>/{,*/}*.css',
+            '<%= yeoman.public %>/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+            '<%= yeoman.public %>/assets/fonts/*',
+
+            //'<%= yeoman.private %>/{,*/}*.js',
+            '<%= yeoman.private %>/{,*/}*.css',
+            '<%= yeoman.private %>/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+            '<%= yeoman.private %>/assets/fonts/*'
           ]
         }
       }
@@ -269,12 +287,19 @@ module.exports = function (grunt) {
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
     useminPrepare: {
-      html: ['<%= yeoman.client %>/index.html'],
+        html: ['<%= yeoman.client %>/index.html'],
+        options:{
+          dest: '<%= yeoman.public %>'
+        }
+      },
+    useminPrepareBack: {
+      html: '<%= yeoman.back_office %>/app/index.html',
       options: {
-        dest: '<%= yeoman.dist %>/public'
+        staging: '.tmpBack',
+        dest: '<%= yeoman.private %>'
       }
-    },
 
+    },
     // Performs rewrites based on rev and the useminPrepare configuration
     usemin: {
       html: ['<%= yeoman.dist %>/public/{,*/}*.html'],
@@ -293,7 +318,24 @@ module.exports = function (grunt) {
         }
       }
     },
-
+    // Performs rewrites based on rev and the useminPrepare configuration
+    useminBack: {
+      html: ['<%= yeoman.private %>/{,*/}*.html'],
+      css: ['<%= yeoman.private %>/{,*/}*.css'],
+      js: ['<%= yeoman.private %>/{,*/}*.js$', '!<%= yeoman.private %>/bower_components/*'],
+      options: {
+        assetsDirs: [
+          '<%= yeoman.private %>',
+          '<%= yeoman.private %>/assets/images'
+        ],
+        // This is so we update image references in our ng-templates
+        patterns: {
+          js: [
+            [/(assets\/images\/.*?\.(?:gif|jpeg|jpg|png|webp|svg))/gm, 'Update the JS to reference our revved images']
+          ]
+        }
+      }
+    },
     // The following *-min tasks produce minified files in the dist folder
     imagemin: {
       dist: {
@@ -372,7 +414,7 @@ module.exports = function (grunt) {
           expand: true,
           dot: true,
           cwd: '<%= yeoman.client %>',
-          dest: '<%= yeoman.dist %>/public',
+          dest: '<%= yeoman.public %>',
           src: [
             '*.{ico,png,txt}',
             '.htaccess',
@@ -383,7 +425,7 @@ module.exports = function (grunt) {
         }, {
           expand: true,
           cwd: '.tmp/images',
-          dest: '<%= yeoman.dist %>/public/assets/images',
+          dest: '<%= yeoman.public %>/assets/images',
           src: ['generated/*']
         }, {
           expand: true,
@@ -391,6 +433,19 @@ module.exports = function (grunt) {
           src: [
             'package.json',
             'server/**/*'
+          ]
+        },
+        {
+          expand: true,
+          dot: true,
+          cwd: '<%= yeoman.back_office %>/app',
+          dest: '<%= yeoman.private %>',
+          src: [
+          '*.{ico,png,txt}',
+          '.htaccess',
+          'bower_components/**/*',
+          'assets/**/*',
+          'index.html'
           ]
         }]
       },
@@ -644,12 +699,25 @@ module.exports = function (grunt) {
     ]);
   });
 
+  grunt.registerTask('useminPrepareBack', function () {
+      var useminPrepareBackConfig = grunt.config('useminPrepareBack');
+      grunt.config.set('useminPrepare', useminPrepareBackConfig);
+      grunt.task.run('useminPrepare');
+    });
+
+    grunt.registerTask('useminBack', function () {
+      var useminBackConfig = grunt.config('useminBack');
+      grunt.config.set('usemin', useminBackConfig);
+      grunt.task.run('usemin');
+    });
+
   grunt.registerTask('build', [
     'clean:dist',
     'concurrent:dist',
     'injector',
     'wiredep',
     'useminPrepare',
+    'useminPrepareBack',
     'autoprefixer',
     'ngtemplates',
     'concat',
@@ -659,7 +727,8 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
-    'usemin'
+    'usemin',
+    'useminBack'
   ]);
 
   grunt.registerTask('default', [
