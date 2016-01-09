@@ -19,14 +19,12 @@ exports.index = function(req, res) {
 
 // Get a single file
 exports.show = function(req, res) {
-  console.log(req.params.id);
   gfs.findOne({ _id: req.params.id}, function (err, file) {
-    if(file.length===0){
+    if(file == null || file.length===0){
       return res.status(400).send({
         message: 'File not found'
       });
     }
-    console.log(file.contentType);
     res.writeHead(200, {'Content-Type': file.contentType});
 
     var readstream = gfs.createReadStream({

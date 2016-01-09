@@ -22,16 +22,24 @@ var router = express.Router();
  *  @apiDefine ApiParamsUser
  *
  *
- * @apiParam {String} name   			Pseudo of the user
- * @apiParam {String} email   			Email of the user
- * @apiParam {String} role        		Role of the user
- * @apiParam {String} hashedPassword    Hashed Password
- * @apiParam {String} provider			Provider
- * @apiParam {String} salt				Password Salt
- * @apiParam {Collection} facebook		Facebook linked to the account
- * @apiParam {Collection} twitter		Twitter linked to the account
- * @apiParam {Collection} google		Google linked to the account
- * @apiParam {Collection} github		GitHub linked to the account
+ * @apiParam {String} name   			        Pseudo of the user
+ * @apiParam {String} email   			      Email of the user
+ * @apiParam {String} role        		    Role of the user
+ * @apiParam {String} hashedPassword      Hashed Password
+ * @apiParam {String} provider			      Provider
+ * @apiParam {String} salt				        Password Salt
+ * @apiParam {String} fname               First name of the user
+ * @apiParam {String} phone               Phone number of the user
+ * @apiParam {Date} birthday              Birthday date
+ * @apiParam {String} address             Address - Place
+ * @apiParam {Number} zipcode             Zip Code City
+ * @apiParam {String} city                City Name
+ * @apiParam {String} country             Country
+ * @apiParam {String} picture             File id of the avatar's user
+ * @apiParam {Collection} facebook		    Facebook linked to the account
+ * @apiParam {Collection} twitter		      Twitter linked to the account
+ * @apiParam {Collection} google		      Google linked to the account
+ * @apiParam {Collection} github		      GitHub linked to the account
  */
 
 /**
@@ -102,7 +110,7 @@ router.get('/me', auth.isAuthenticated(), controller.me);
   *   HTTP/1.1 Success-Response:
   *   [
   *    ...
-  *    ]
+  *   ]
   *
   *
   */
@@ -115,13 +123,12 @@ router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
   *
   * @apiUse ApiParamsUser
   *
-  * @apiSuccess {Object} Object response
+  * @apiSuccess {User} Modified User
   *
   * @apiSuccessExample Success-Response:
   *   HTTP/1.1 201 Created:
   *      {
-  *          "__v": 0,
-  *          "_id": "564cf49161e7bc8345166168"
+  *          ...
   *      }
   *
   */
