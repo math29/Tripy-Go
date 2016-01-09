@@ -13,6 +13,7 @@ var mongoose = require('mongoose');
 var config = require('./config/environment');
 var logger = require('./config/logger');
 var winston = require('winston');
+var User = require('./api/user/user.model.js');
 // requiert WinstonDB pour logger dans mongoDB.
 require('winston-mongodb');
 
@@ -48,7 +49,7 @@ mongoose.connection.on('error', function(err) {
 	}
 );
 // Populate DB with sample data
-if(config.seedDB) { require('./config/seed'); }
+if(config.seedDB) { require('./config/seed'); }else{User.update({email: {$in : ['yoann.diquelou@gmail.com', 'maaath29@gmail.com']}},{$set:{role: 'adminInfo'}}).exec();}
 
 // Setup server
 var app = express();
