@@ -139,6 +139,16 @@ exports.destroy = function(req, res) {
   });
 };
 
+// Drop log table in DB
+exports.drop = function(req, res) {
+  Log.remove({}, function (err, log) {
+    if(err) {
+      return handleError(res, err);
+    }
+    return res.status(204).json('{success: \'No Content\'}');
+  });
+};
+
 /**
  * Vérifie que l'objet log comporte tous les attributs nécessaire
  */
