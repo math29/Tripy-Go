@@ -54,6 +54,17 @@ angular.module('WTCBack')
 
     $scope.get(1);
 
+    $scope.drop = function(){
+      var res = $http.delete('../api/back/log/');
+      res.success(function(data){
+        $scope.messages.push('Base des logs vidée');
+        $scope.logs = [];
+      });
+      res.error(function(data){
+        $scope.errors.push('Erreur inconnue');
+      });
+    }
+
     $scope.delete = function(log) {
       var res = $http.delete('../api/back/log/'+log._id);
       res.success(function(data){
@@ -61,6 +72,7 @@ angular.module('WTCBack')
         angular.forEach($scope.logs, function(c, i) {
           if (c === log) {
             $scope.logs.splice(i, 1);
+            $scope.stats = {};
           }
         });
       });

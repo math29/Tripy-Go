@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 
 var RateSchema = new Schema({
   score: Number,
-  raters:[{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
+  raters:[{user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},action: Number}]
 });
 
 module.exports = mongoose.model('Rate', RateSchema);

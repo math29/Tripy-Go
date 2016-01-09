@@ -17,7 +17,7 @@ var router = express.Router();
  */
 
 /**
- * @api {get} /api/back/operation Request list of all operations
+ * @api {get} /api/operation Request list of all operations
  * @apiVersion 1.0.0
  * @apiName GetOperations
  * @apiGroup Operations
@@ -42,7 +42,8 @@ var router = express.Router();
 router.get('/', auth.hasRole('admin'), controller.index);
 
 /**
- * @api {get} /api/back/operation/:id Request operations with specific ID
+ * @api {get} /api/operation/:id Request operations with specific ID
+ * @apiParam{Number} id of operation
  * @apiVersion 1.0.0
  * @apiName GetOperation
  * @apiGroup Operations
@@ -61,13 +62,66 @@ router.get('/', auth.hasRole('admin'), controller.index);
  *
  * @apiUse UserNotAuthorized
  */
-router.get('/:id', auth.hasRole('admin'), controller.show);
-router.post('/:title/:step',  controller.create);
+router.get('/:id', auth.isAuthenticated() , controller.show);
 
+/**
+ * @api {post} /api/operation/:title/:step create an operation
+ * @apiParam {String} title  title of operation
+ * @apiParam {Number} step step of operation
+ * @apiParam {String} body  content of operation
+ * @apiVersion 1.0.0
+ * @apiName CreateOperation
+ * @apiGroup Operations
+ *
+ * @apiSuccess {Object} operation
+ *
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *    {
+ *      type:"Advice",
+ *      title: "Test",
+ *      step: 1,
+ *      content: "#Title\n\tText",
+ *      rate: 567876543
+ *      _id:56789854879
+ *    }
+ *
+ * @apiUse UserNotAuthorized
+ */
+router.post('/:title', auth.hasRole('admin'), controller.create);
+
+/**
+ * @api {put} /api/operation/:id/:title/:step update an operation
+ * @apiParam {Number} id of operation
+ * @apiParam {String} title  title of operation
+ * @apiParam {Number} step step of operation
+ * @apiParam {String} body  content of operation
+ * @apiVersion 1.0.0
+ * @apiName CreateOperation
+ * @apiGroup Operations
+ *
+ * @apiSuccess {Object} operation
+ *
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *    {
+ *      type:"Advice",
+ *      title: "Test",
+ *      step: 1,
+ *      content: "#Title\n\tText",
+ *      _id:56789854879
+ *    }
+ *
+ * @apiUse UserNotAuthorized
+ */
+router.put('/:id/:title', auth.hasRole('admin'),controller.update);
 
 
 /**
- * @api {delete} /api/back/operation/:id delete operation with specific ID
+ * @api {delete} /api/operation/:id delete operation with specific ID
+ * @apiParam {Number} id of operation
  * @apiVersion 1.0.0
  * @apiName DeleteOperation
  * @apiGroup Operations
@@ -76,11 +130,11 @@ router.post('/:title/:step',  controller.create);
  *
  *
  * @apiSuccessExample Success-Response:
- *   HTTP/1.1 200 OK
+ *   HTTP/1.1 204 No content
  *
  *
  * @apiUse UserNotAuthorized
  */
-router.delete('/:id', controller.destroy);
+router.delete('/:id', auth.hasRole('admin'),controller.destroy);
 
 module.exports = router;

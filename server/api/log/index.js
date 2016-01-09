@@ -82,9 +82,9 @@ router.get('/:level/:page/:message', auth.hasRole('admin'), controller.paginated
 
 
 /**
-  * @api {delete} /api/languages/:id Delete a language
-  * @apiName DeleteLanguage
-  * @apiGroup Languages
+  * @api {delete} /api/log/:id Delete a log entry
+  * @apiName DeleteLog
+  * @apiGroup Log
   *
   * @apiSuccess {Object} Object response
   *
@@ -95,5 +95,20 @@ router.get('/:level/:page/:message', auth.hasRole('admin'), controller.paginated
   *
   */
 router.delete('/:id', auth.hasRole('admin'), controller.destroy);
+
+/**
+  * @api {delete} /api/log/ Drop log table
+  * @apiName DropLogs
+  * @apiGroup Log
+  *
+  * @apiSuccess {Object} Object response
+  *
+  * @apiSuccessExample Success-Response:
+  *   HTTP/1.1 204 No Content:
+  *      {
+  *     }
+  *
+  */
+router.delete('/', auth.hasRole('adminInfo'), controller.drop);
 
 module.exports = router;

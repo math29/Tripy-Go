@@ -1,5 +1,5 @@
 {
-  "name": "WTC-BackOffice",
+  "name": "WTC-Back",
   "version": "0.0.0",
   "dependencies": {
     "angular": "1.2.16",
@@ -19,7 +19,10 @@
     "angular-toggle-switch": "~1.2.1",
     "metisMenu": "~1.1.3",
     "angular-chart.js": "~0.5.2",
-    "socket.io": "~1.3.7"
+    "socket.io": "~1.3.7",
+    "lodash": "~3.10.1",
+    "angular-socket-io": "~0.6.0",
+    "socket.io-client": "~1.4.3"
   },
   "devDependencies": {
     "angular-mocks": "1.2.16",
@@ -28,5 +31,5 @@
   "resolutions": {
     "bootstrap": "~3.1.1"
   },
-  "appPath": "app"
+  "appPath": "back_office"
 }

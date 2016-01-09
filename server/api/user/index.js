@@ -90,6 +90,23 @@ router.delete('/:id', auth.hasRole('admin'), controller.destroy);
 router.get('/me', auth.isAuthenticated(), controller.me);
 
 /**
+ * @api {get} /api/users/roles Get roles that this user can assign
+ * @apiVersion 0.0.0
+ * @apiName GetRoles
+ * @apiGroup Users
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *  {
+ *    	roles: ['guest','user','admin']
+ *  }
+ *
+ * @apiUse UserNotAuthorized
+ */
+router.get('/roles', auth.hasRole('admin'), controller.getRoles);
+
+
+/**
   * @api {get} /api/users/:id/password Change Password
   * @apiName PutChangePassWord
   * @apiGroup Users
@@ -156,5 +173,24 @@ router.get('/:id', auth.isAuthenticated(), controller.show);
   *
   */
 router.post('/', controller.create);
+
+
+/**
+  * @api {put} /api/users/:id/:role Update User role
+  * @apiName UpdateRole
+  * @apiGroup Users
+  *
+  *
+  * @apiSuccess {Object} Object response
+  *
+  * @apiSuccessExample Success-Response:
+  *   HTTP/1.1 201 Created:
+  *      {
+  *         "ok":1
+  *     }
+  *
+  */
+router.put('/:id/:role', auth.hasRole('admin'), controller.changeRole);
+
 
 module.exports = router;

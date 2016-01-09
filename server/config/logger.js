@@ -39,6 +39,15 @@ module.exports.stream = {
     }
 };
 
+function replaceAllQuotes(message){
+  var find = '"';
+  var re = new RegExp(find,'g');
+  if(message instanceof Object || message instanceof Array){
+    return message;
+  }
+  return message.replace(re, "'");
+}
+
 var logger_info_old = logger.info;
 var logger_error_old = logger.error;
 var logger_warn_old = logger.warn;
@@ -47,28 +56,28 @@ var logger_debug_old = logger.debug;
   logger.info = function(msg) {
     var fileAndLine = traceCaller(1);
     var newArgs = arguments
-    newArgs[0] = fileAndLine+": "+arguments[0];
+    newArgs[0] = fileAndLine+": "+replaceAllQuotes(arguments[0]);
     return logger_info_old.apply(this, newArgs);
   };
 
   logger.error = function(msg) {
     var fileAndLine = traceCaller(1);
     var newArgs = arguments
-    newArgs[0] = fileAndLine+": "+arguments[0];
+    newArgs[0] = fileAndLine+": "+replaceAllQuotes(arguments[0]);
     return logger_error_old.apply(this, newArgs);
   };
 
   logger.warn = function(msg) {
     var fileAndLine = traceCaller(1);
     var newArgs = arguments
-    newArgs[0] = fileAndLine+": "+arguments[0];
+    newArgs[0] = fileAndLine+": "+replaceAllQuotes(arguments[0]);
     return logger_warn_old.apply(this, newArgs);
   };
 
   logger.debug = function(msg) {
     var fileAndLine = traceCaller(1);
     var newArgs = arguments
-    newArgs[0] = fileAndLine+": "+arguments[0];
+    newArgs[0] = fileAndLine+": "+replaceAllQuotes(arguments[0]);
     return logger_debug_old.apply(this, newArgs);
   };
 
