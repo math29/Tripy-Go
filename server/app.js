@@ -19,7 +19,8 @@ require('winston-mongodb');
 // on ne transmet les logs que sur les environnement de développement et de production
 switch(process.env.NODE_ENV){
   case 'production':
-    //removeConsole(logger);
+    removeConsole(logger);
+    addMongoLog(logger, config.mongo.uri);
     break;
   case 'test':
     removeConsole(logger);
