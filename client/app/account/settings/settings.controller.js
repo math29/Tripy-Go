@@ -7,11 +7,7 @@ angular.module('wtcApp')
     $scope.photo_info_message = '';
     $scope.user = Auth.getCurrentUser();
 
-    if($scope.user.picture){
-      $scope.url_pic = "/api/files/" + $scope.user.picture + "?_ts=" + new Date().getTime();
-    }else{
-      $scope.url_pic = "/assets/images/user.png"
-    }
+    $scope.url_pic = Auth.getUserAvatar();
 
     // Update Password Function
     $scope.changePassword = function(form) {
