@@ -19,6 +19,7 @@ var session = require('express-session');
 var mongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');
 var logger = require('./logger');
+var busboyBodyParser = require('busboy-body-parser');
 
 
 module.exports = function(app) {
@@ -33,6 +34,7 @@ module.exports = function(app) {
   app.use(methodOverride());
   app.use(cookieParser());
   app.use(passport.initialize());
+  app.use(busboyBodyParser());
 
   // Persist sessions with mongoStore
   // We need to enable sessions for passport twitter because its an oauth 1.0 strategy
