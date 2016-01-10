@@ -39,106 +39,88 @@
 </div> -->
 
 <div ng-controller="SettingsCtrl">
-  <!-- <div class="col-md-6">
+  <div class="col-md-6">
     <div class="user-personal-info">
       <h4>Personal Information</h4>
       <div class="user-info-body">
-        <form >
+        <form class="form" name="personal_infos_form" ng-submit="changePersonalInfos(personal_infos_form)" novalidate>
           <div class="col-md-6 col-sm-6">
-            <label>First Name</label>
-            <input type="text" name="fname" required placeholder="First Name" class="form-control">
+            <label>Prénom</label>
+            <input type="text" name="fname" placeholder="First Name" class="form-control" ng-model="user.fname">
           </div>
           <div class="col-md-6 col-sm-6">
-            <label>First Name</label>
-            <input type="text" name="lname" required placeholder="Last Name" class="form-control">
+            <label>Nom</label>
+            <input type="text" name="lname" required placeholder="Last Name" class="form-control" ng-model="user.name">
           </div>
           <div class="clearfix"></div>
-          <div class="col-md-12">
+          <!-- <div class="col-md-12">
             <label>Email-ID</label>
             <input type="email" name="email" required placeholder="lenore@example.com" class="form-control">
-          </div>
+          </div> -->
           <div class="col-md-12">
-            <label>Contact Number</label>
-            <input type="text" name="contact" required class="form-control">
+            <label>Téléphone</label>
+            <input type="text" name="phone" placeholder="ex:+33631067282" class="form-control" ng-model="user.phone">
           </div>
+
           <div class="col-md-12">
-            <label>Date Of Birth</label>
-            <div class="clearfix"></div>
-            <div class="col-md-4 col-sm-4 col-xs-4 clear-padding">
-              <select class="form-control" name="day">
-                <option>Day</option>
-                <option>01</option>
-                <option>02</option>
-                <option>03</option>
-                <option>04</option>
-                <option>05</option>
-              </select>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-4">
-              <select class="form-control" name="month">
-                <option>Month</option>
-                <option>01</option>
-                <option>02</option>
-                <option>03</option>
-                <option>04</option>
-                <option>05</option>
-              </select>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-4 clear-padding">
-              <select class="form-control" name="year">
-                <option>Year</option>
-                <option>1990</option>
-                <option>1991</option>
-                <option>1992</option>
-                <option>1993</option>
-                <option>1994</option>
-              </select>
+            <div class="search-col-padding">
+              <label>Date de naissance</label>
+              <input type="text" id="departure_date" name="birthday" class="form-control" placeholder="DD/MM/YYYY" ng-model="user.birthday">
             </div>
           </div>
+
+          <div class="clearfix"></div>
+
           <div class="col-md-12">
-            <label>Current Address</label>
-            <textarea placeholder="Your Current Address" id="current-address" class="form-control" rows="5"></textarea>
+            <label>Adresse</label>
+            <textarea placeholder="Rue - Voie - lieu dit" id="current-address" class="form-control" rows="5" ng-model="user.address"></textarea>
             <div class="col-md-6 col-sm-6 col-xs-6 clear-padding">
-              <input type="text" name="zip-code" class="form-control" placeholder="Zip Code">
+              <input type="text" name="zipcode" class="form-control" placeholder="Zip Code" ng-model="user.zipcode">
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
-              <input type="text" name="zip-code" class="form-control" placeholder="City">
+              <input type="text" name="city" class="form-control" placeholder="Ville" ng-model="user.city">
             </div>
             <div class="col-md-6 col-sm-6 clear-padding">
-              <select class="form-control" name="country">
-                <option>Country</option>
+              <select class="form-control" name="country" ng-model="user.country">
                 <option>Australia</option>
                 <option>India</option>
                 <option>USA</option>
                 <option>UK</option>
               </select>
             </div>
-            <div class="col-md-6 col-sm-6">
-              <select class="form-control" name="state">
-                <option>State</option>
-                <option>CA</option>
-                <option>GA</option>
-                <option>NY</option>
-                <option>SA</option>
-                <option>WA</option>
-              </select>
-            </div>
-          </div>  
-          <div class="col-md-12">
-            <label>Upload Avatar</label>
-            <input type="file" name="profile-pic" class="upload-pic">
           </div>
-          <div class="clearfix"></div>
-          <div class="col-md-6 col-sm-6 col-xs-6 text-center">
-             <button type="submit">SAVE CHANGES</button>
+          <div class="text-center">
+            <p class="help-block">{{ user_info_message }}</p>
           </div>
           <div class="col-md-6 col-sm-6 col-xs-6 text-center">
-            <a href="#">CANCEL</a>
+             <button type="submit">SAUVEGARDER</button>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6 text-center">
+            <a href="#">ANNULER</a>
           </div>
         </form>
       </div>
     </div>
-  </div> -->
+  </div>
+  <div class="col-md-6">
+    <div class="user-personal-info">
+      <h4>Change Avatar</h4>
+      <div class="user-info-body">
+        <form class="form" name="personal_photo_form" novalidate>
+          <div class="col-md-12 col-sm-12 clear-padding text-center">
+            <img ng-src="{{ url_pic }}" alt="avatar"/>
+          </div>
+          <div class="col-md-12 col-sm-12">
+            <label>Télécharger Avatar</label>
+            <input type="file" name="filefield" class="upload-pic" onchange="angular.element(this).scope().changePersonalPhoto(this.files)">
+          </div>
+          <div class="text-center">
+            <p class="help-block">{{ photo_info_message }}</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
   <div class="col-md-6">
     <div class="user-change-password">
       <h4>Change Password</h4>
@@ -290,3 +272,5 @@
     </div> -->
   </div>
 </div>
+
+<script src="assets/js/js.js"></script>

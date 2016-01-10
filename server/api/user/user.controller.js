@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
@@ -92,6 +93,29 @@ exports.changePassword = function(req, res) {
   });
 };
 
+// Updates an existing user in the DB.
+exports.update = function(req, res) {
+  if(req.body._id) { delete req.body._id; }
+
+  User.findOne({
+    _id: req.params.id
+  }, '-salt -hashedPassword', function(err, user, next) { // don't ever give out the password or salt
+    if (err) {
+      logger.error("Could not ge user infos ME", user);
+      return next(err);
+    }
+    if (!user) {
+      logger.warn("User not auhenticated");
+      return res.status(401).send('Unauthorized');
+    }
+    var updated = _.merge(user, req.body);
+    updated.save(function (err) {
+      if (err) { return handleError(res, err); }
+      res.json(user);
+    });
+  });
+};
+
 /**
  * Change a users role
  */
@@ -142,3 +166,7 @@ exports.getRoles = function(req, res){
 exports.authCallback = function(req, res) {
   res.redirect('/');
 };
+
+function handleError(res, err) {
+  return res.status(500).send(err);
+}
