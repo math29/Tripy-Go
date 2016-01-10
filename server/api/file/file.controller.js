@@ -37,7 +37,6 @@ exports.show = function(req, res) {
         res.end();
     });
     readstream.on('error', function (err) {
-      console.log('An error occurred!', err);
       throw err;
     });
   });
