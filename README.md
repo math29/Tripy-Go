@@ -9,6 +9,9 @@ Pour cela rien de plus simple, il suffit de cloner le projet, d'installer [Mongo
 
     npm install
     bower install
+    cd back_office
+    bower install
+    cd ..
     npm install -g grunt-cli
 Et c'est fait.
 
@@ -19,7 +22,18 @@ Pas plus compliqué, vérifiez que votre base ``MongoDB`` est lancée, puis éx�
     grunt serve
 
 ça y est, votre serveur est lancé, et votre page devrais s'ouvrir dans votre navigateur favori.
+----
+## Compiler le bordel
 
+Éxecuter le script `compile.sh`, ce qui reviens à éxécuter les commandes suivantes:
+
+  npm install
+  bower install
+  cd back_office
+  bower install
+  cd ..
+  grunt build
+  
 ----
 ## Générer la documentation
 
@@ -155,3 +169,4 @@ pour lancer le container, rien de plus simple, après avoir installé `Docker`, 
 * 1-Novembre-2015 Ajout de l'intégration de Jenkins
 * 5-Novembre-2015 Ajout de la notice Sonar
 * 7-Novembre-2015 Ajout de la notice du logger
+* 10-Janvier-2016 Comment compiler le bousin
