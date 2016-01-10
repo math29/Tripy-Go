@@ -27,7 +27,7 @@
             </div>
             <div ng-show="isLoggedIn()">
               <a ng-class="{active: isActive('/profile')}" href="/profile/1" class="transition-effect">
-                <img src="assets/images/user.jpg" alt="User icon">
+                <img src="{{ url_pic }}" alt="User icon">
                 Hi, {{ getCurrentUser().name }}
               </a>
               <!-- <a ng-class="{active: isActive('/settings')}" href="/settings" class="transition-effect">
