@@ -55,7 +55,7 @@ exports.paginated = function(req, res) {
         return handleError(res, err);
       }
       var stats = {labels:['info', 'error', 'warn'], data:[0,0,0], dataLocal:[0,0,0]};
-      var pagination = {current: req.params.page, maxPage: logs.length%50};
+      var pagination = {current: req.params.page, maxPage: Math.ceil(logs.length / 50)};
       for(var i = 0; i< logs.length; i++){
         var log = logs[i];
         if(log.level === 'info'){
@@ -136,6 +136,16 @@ exports.destroy = function(req, res) {
       logger.info('Log was delete');
       return res.status(204).json('{success: \'No Content\'}');
     });
+  });
+};
+
+// Drop log table in DB
+exports.drop = function(req, res) {
+  Log.remove({}, function (err, log) {
+    if(err) {
+      return handleError(res, err);
+    }
+    return res.status(204).json('{success: \'No Content\'}');
   });
 };
 

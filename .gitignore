@@ -3,9 +3,11 @@ node_modules
 public
 
 .tmp
+.tmpBack
 .idea
 
 client/bower_components
+back_office/app/bower_components
 dist
 apidoc
 report

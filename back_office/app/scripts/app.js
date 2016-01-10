@@ -14,8 +14,8 @@ angular
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
-    'ngCookies'
-
+    'ngCookies',
+    'btford.socket-io'
   ])
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
     return {
@@ -131,6 +131,26 @@ angular
         templateUrl:'views/pages/blank.html',
         url:'/blank'
     })
+    .state('dashboard.timelines',{
+      templateUrl:'views/timelines.html',
+      url:'/timelines',
+      controller:'TimelinesMgr',
+      resolve: {
+        loadMyFile: function($ocLazyLoad){
+          return $ocLazyLoad.load({
+            name:'WTCBack',
+            files:[
+          'scripts/controllers/timelinesCtrl.js',
+          'scripts/directives/timeline/timeline.js',
+          'scripts/directives/dashboard/stats/stats.js',
+          'scripts/factories/socket.service.js',
+          'bower_components/socket.io-client/socket.io.js',
+          'bower_components/lodash/lodash.js'
+           ]
+        });
+      }
+      }
+    })
     .state('login',{
       templateUrl:'views/pages/login.html',
       url:'/login',
@@ -178,6 +198,19 @@ angular
               name: 'WTCBack',
               files: ['scripts/controllers/countries.js',
               'scripts/factories/country.service.js']
+            })
+          }
+        }
+      })
+      .state('dashboard.users', {
+        templateUrl: 'views/users.html',
+        url:'/users',
+        controller: 'UsersCtrl',
+        resolve: {
+          loadMyFile: function($ocLazyLoad){
+            return $ocLazyLoad.load({
+              name: 'WTCBack',
+              files: ['scripts/controllers/users.js']
             })
           }
         }

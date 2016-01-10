@@ -51,17 +51,19 @@ exports.destroy = function(req, res) {
 
 exports.vote = function(req, res){
   var rateId = req.params.id;
-  var userId = req.params.uId;
-  Rate.findById(rateId, function(err, rate){
+  var userId = req.user._id;
+  var side = req.params.side;
+  var sideValue = 1;
+  if(side === 'down'){
+    sideValue = -1;
+  }
+  var rateOb = {user: userId, action: sideValue};
+
+  Rate.findOneAndUpdate({_id: rateId, "raters.user" : {$nin: [userId]}},{$push:{raters: rateOb}, $inc:{score: sideValue}},function(err, result){
     if(err){
-      logger.error('Could not find rate', rate);
-      return res.status(500).send(err);
+      logger.error(err);
+      return res.status(500).json('{error:\'Unable to find rate\'}');
     }
-    var userVotedLength = rate.raters.length;
-    console.log(userId);
-    for(var i=0; i < userVotedLength; i++){
-      console.log(rate.raters[i]+' '+userId);
-    }
-    return res.status(200).json({'success': 'OK'});
+    return res.status(200).json(result);
   });
 }

@@ -49,7 +49,7 @@ exports.show = function (req, res, next) {
 
   User.findById(userId, function (err, user, next) {
     if (err) {
-      logger.error("Could not retrieve user", user);
+      logger.error("Could not retrieve user", userId);
       return next(err);
     }
     if (!user) return res.status(401).send('Unauthorized');
@@ -93,6 +93,22 @@ exports.changePassword = function(req, res) {
 };
 
 /**
+ * Change a users role
+ */
+exports.changeRole = function(req, res) {
+  var userId = req.params.id;
+  var userRole = req.params.role;
+
+
+  User.findOneAndUpdate({_id: userId},{$set:{role: userRole}}, function (err, user) {
+    if(err){
+      logger.error(err);
+    }
+    return res.status(200).json(user);
+  });
+};
+
+/**
  * Get my info
  */
 exports.me = function(req, res) {
@@ -111,6 +127,14 @@ exports.me = function(req, res) {
     res.json(user);
   });
 };
+
+/**
+ * Récupére l'ensemble des roles que l'administrateur peut assigner
+ */
+exports.getRoles = function(req, res){
+  var roles = {roles: config.userRoles.slice(0, config.userRoles.indexOf(req.user.role)+1)};
+  return res.status(200).json(roles);
+}
 
 /**
  * Authentication callback
