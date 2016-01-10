@@ -29,6 +29,7 @@
               <a ng-class="{active: isActive('/profile')}" href="/profile/1" class="transition-effect">
                 <img src="{{ url_pic }}" alt="User icon">
                 Hi, {{ getCurrentUser().name }}
+                {{ getCurrentUser().picture }}
               </a>
               <!-- <a ng-class="{active: isActive('/settings')}" href="/settings" class="transition-effect">
                 <i class="fa fa-cog"></i>
