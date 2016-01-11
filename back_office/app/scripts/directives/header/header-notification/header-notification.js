@@ -12,6 +12,9 @@ angular.module('WTCBack')
         templateUrl:'scripts/directives/header/header-notification/header-notification.html',
         restrict: 'E',
         replace: true,
+        controller: function($scope, Auth){
+          $scope.user = Auth.getCurrentUser();
+        }
     	}
 	});
 

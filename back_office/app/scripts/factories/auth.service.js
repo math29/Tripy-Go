@@ -133,7 +133,10 @@ angular.module('WTCBack')
        * @return {Boolean}
        */
       isAdmin: function() {
-        return currentUser.role === 'admin';
+        return currentUser.role === 'admin' || currentUser.role === 'adminInfo';
+      },
+      isAdminInfo: function(){
+        return currentUser.role === 'adminInfo';
       },
 
       /**

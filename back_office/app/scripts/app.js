@@ -66,7 +66,9 @@ angular
                     'scripts/directives/header/header.js',
                     'scripts/directives/header/header-notification/header-notification.js',
                     'scripts/directives/sidebar/sidebar.js',
-                    'scripts/directives/sidebar/sidebar-search/sidebar-search.js'
+                    'scripts/directives/sidebar/sidebar-search/sidebar-search.js',
+                    'scripts/factories/auth.service.js',
+                    'scripts/factories/user.service.js'
                     ]
                 }),
                 $ocLazyLoad.load(
