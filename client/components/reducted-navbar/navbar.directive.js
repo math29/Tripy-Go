@@ -12,18 +12,15 @@ angular.module('wtcApp')
         templateUrl:'components/reducted-navbar/navbar.html',
         restrict: 'E',
         replace: true,
-        scope: {},
+        scope: {
+          step: '=step'
+        },
         controller: function ($scope, $location, $window, Auth) {
           $scope.isCollapsed = true;
           $scope.isLoggedIn = Auth.isLoggedIn;
           $scope.isAdmin = Auth.isAdmin;
           $scope.getCurrentUser = Auth.getCurrentUser;
-
-          if($scope.getCurrentUser().picture){
-            $scope.url_pic = "/api/files/" + $scope.getCurrentUser().picture + "?_ts=" + new Date().getTime();
-          }else{
-            $scope.url_pic = "/assets/images/user.png"
-          }
+          $scope.url_pic = Auth.getUserAvatar();
 
           $scope.logout = function() {
             Auth.logout();
