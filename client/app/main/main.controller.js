@@ -15,9 +15,6 @@ angular.module('wtcApp')
         };
 
 
-    $scope.goAdmin = function(){
-              $window.location = '/back';
-            };
 
         for (var i=0; i<4; i++) {
             $scope.addSlide();

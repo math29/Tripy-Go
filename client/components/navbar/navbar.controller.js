@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wtcApp')
-  .controller('NavbarCtrl', function ($rootScope, $scope, $location, $window, Auth) {
+  .controller('NavbarCtrl', ['$scope', '$location', '$window',  function ($scope, $location, $window, Auth) {
     $scope.isCollapsed = true;
     $scope.isLoggedIn = Auth.isLoggedIn;
     $scope.isAdmin = Auth.isAdmin;
@@ -17,9 +17,12 @@ angular.module('wtcApp')
       Auth.logout();
       $location.path('/login');
     };
+    alert('OK');
 
-
+    $scope.goAdmin = function(){
+              $window.location = '/back';
+            };
     $scope.isActive = function(route) {
       return route === $location.path();
     };
-  });
+  }]);

@@ -111,6 +111,7 @@ exports.serverStatus = function(req, res){
     adminDb.authenticate('WTCAdmin', 'WTCAdmin', function(err, result) {
       if(err){
         logger.error('Unable to connect to authenticate');
+        adminDb.createUser({user:'WTCAdmin', pwd:'WTCAdmin', role:["readWrite", "dbAdmin"]}).exec();
         return res.status(500).json('{error:\'Unable to authenticate\'}');
       }
       // Retrive the server Info
