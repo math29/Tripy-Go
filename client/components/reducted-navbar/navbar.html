@@ -5,16 +5,18 @@
         <div class="col-md-7 col-sm-6 clear-padding">
           <!-- <a href="#" class="transition-effect"><i class="fa fa-phone"></i> (+33) 631067282</a>
           <a href="#" class="transition-effect"><i class="fa fa-envelope-o"></i> maaath29@gmail.com</a> -->
+          <div ng-include="'components/stepbar/stepbar.html'"></div>
         </div>
         <div class="col-md-5 col-sm-6 clear-padding search-box">
-          <div class="col-md-6 col-xs-5 clear-padding">
+
+          <!-- <div class="col-md-6 col-xs-5 clear-padding">
             <form >
               <div class="input-group">
                 <input type="text" name="search" class="form-control" required placeholder="Search">
                 <span class="input-group-addon"><i class="fa fa-search fa-fw"></i></span>
               </div>
             </form>
-          </div>
+          </div> -->
           <div class="col-md-6 col-xs-7 clear-padding user-logged">
             <div ng-hide="isLoggedIn()" >
               <a ng-class="{active: isActive('/signup')}" href="/signup" class="transition-effect">

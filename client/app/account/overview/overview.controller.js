@@ -6,9 +6,5 @@ angular.module('wtcApp')
     $scope.user = $scope.getCurrentUser();
 
     // AVATAR Gesture
-    if($scope.user.picture){
-    	$scope.url_pic = "/api/files/" + $scope.user.picture + "?_ts=" + new Date().getTime();
-    }else{
-    	$scope.url_pic = "/assets/images/user.png"
-    }
+    $scope.url_pic = Auth.getUserAvatar();
   });
