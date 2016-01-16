@@ -13,7 +13,7 @@ angular.module('wtcApp')
         restrict: 'E',
         replace: true,
         scope: {
-          step: '=step'
+          step: '='
         },
         controller: function ($scope, $location, $window, Auth) {
           $scope.isCollapsed = true;
