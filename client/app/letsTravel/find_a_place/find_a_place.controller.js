@@ -32,9 +32,6 @@ angular.module('wtcApp')
         // SearchBox allowing to research a place
         $scope.searchbox = { template:'searchbox.tpl.html', events:events};
 
-        var travelID = $routeParams.travelID;
-        console.log('Let\'s find this travel');
-        var travel = $http.get('/api/travels/' + travelID);
-        console.log(travel);
-        $scope.message = 'L\'id est : ' + travelID;
+        $scope.travelID = $routeParams.travelID;
+        $scope.travel = $http.get('/api/travels/' + $scope.travelID);
     });

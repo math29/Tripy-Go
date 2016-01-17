@@ -13,7 +13,8 @@ angular.module('wtcApp')
         restrict: 'E',
         replace: true,
         scope: {
-          step: '='
+          step: '=',
+          travelid: '='
         },
         controller: function ($scope, $location, $window) {
           $scope.isCollapsed = true;
