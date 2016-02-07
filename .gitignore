@@ -8,6 +8,7 @@ public
 
 client/bower_components
 back_office/app/bower_components
+back_office_A2/app/lib
 dist
 apidoc
 report

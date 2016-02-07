@@ -16,6 +16,7 @@ module.exports = function (grunt) {
     useminPrepareBack: 'grunt-usemin',
     useminBack: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
+    typescript: 'grunt-typescript',
     cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner',
     buildcontrol: 'grunt-build-control'
@@ -26,7 +27,22 @@ module.exports = function (grunt) {
 
   // Define the configuration for all the tasks
   grunt.initConfig({
-
+    typescript: {
+      base: {
+            src: ['typings/tsd.d.ts','back_office_A2/app/scripts/**/*.ts'],
+            dest: 'back_office_A2/app/scripts_js/',
+            options: {
+              module: 'system', //or commonjs
+              moduleResolution: "node",
+              emitDecoratorMetadata: true,
+              experimentalDecorators: true,
+              target: 'es5', //or es3
+              rootDir: '.',
+              sourceMap: true,
+              declaration: true
+            }
+          }
+    },
     // Project settings
     pkg: grunt.file.readJSON('package.json'),
     yeoman: {
@@ -91,7 +107,7 @@ module.exports = function (grunt) {
       gruntfile: {
         files: ['Gruntfile.js']
       },
-      livereload: {
+      liveread: {
         files: [
           // front office
           '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.css',
@@ -449,6 +465,16 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.client %>',
         dest: '.tmp/',
         src: ['{app,components}/**/*.css']
+      },
+      back_office: {
+        expand: true,
+        dest: './back_office_A2/app/lib',
+        cwd: 'node_modules',
+        src: [
+          'angular2/**/*',
+          'systemjs/**/*',
+          'rxjs/**/*'
+        ]
       }
     },
 
@@ -724,6 +750,8 @@ module.exports = function (grunt) {
     'injector',
     'wiredep',
     'useminPrepare',
+    'typescript',
+    'copy:back_office',
     //'useminPrepareBack',
     'autoprefixer',
     'ngtemplates',
