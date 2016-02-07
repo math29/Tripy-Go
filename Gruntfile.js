@@ -16,7 +16,7 @@ module.exports = function (grunt) {
     useminPrepareBack: 'grunt-usemin',
     useminBack: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
-    typescript: 'grunt-typescript',
+    ts: 'grunt-ts',
     cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner',
     buildcontrol: 'grunt-build-control'
@@ -27,21 +27,21 @@ module.exports = function (grunt) {
 
   // Define the configuration for all the tasks
   grunt.initConfig({
-    typescript: {
-      base: {
-            src: ['typings/tsd.d.ts','back_office_A2/app/scripts/**/*.ts'],
-            dest: 'back_office_A2/app/scripts_js/',
-            options: {
-              module: 'system', //or commonjs
-              moduleResolution: "node",
-              emitDecoratorMetadata: true,
-              experimentalDecorators: true,
-              target: 'es5', //or es3
-              rootDir: '.',
-              sourceMap: true,
-              declaration: true
-            }
-          }
+    ts: {
+      back_office: {
+        src: ["typings/tsd.d.ts", "back_office_A2/app/scripts/**/*.ts"],
+        outDir: "back_office_A2/app/scripts_js",
+        options:{
+          module:"system",
+          moduleResolution:"node",
+          experimentalDecorators: true,
+          target:'es5'
+        }
+
+      },
+      back_office_test: {
+        tsconfig:"./tsconfig.json"
+      }
     },
     // Project settings
     pkg: grunt.file.readJSON('package.json'),
@@ -471,7 +471,8 @@ module.exports = function (grunt) {
         dest: './back_office_A2/app/lib',
         cwd: 'node_modules',
         src: [
-          'angular2/**/*',
+          'angular2/bundles/*',
+          'reflect-metadata/Reflect.js',
           'systemjs/**/*',
           'rxjs/**/*'
         ]
@@ -750,7 +751,7 @@ module.exports = function (grunt) {
     'injector',
     'wiredep',
     'useminPrepare',
-    'typescript',
+    'ts',
     'copy:back_office',
     //'useminPrepareBack',
     'autoprefixer',
