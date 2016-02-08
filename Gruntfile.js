@@ -35,7 +35,11 @@ module.exports = function (grunt) {
           module:"system",
           moduleResolution:"node",
           experimentalDecorators: true,
-          target:'es5'
+          target:'ES5',
+          sourceMap: true,
+          emitDecoratorMetadata: true,
+          removeComments: false,
+          noImplicitAny: false
         }
 
       },

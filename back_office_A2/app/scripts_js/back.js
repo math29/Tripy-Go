@@ -25,7 +25,7 @@ System.register(['angular2/core', 'angular2/router'], function(exports_1) {
                 WTC_Back = __decorate([
                     core_1.Component({
                         selector: 'wtc-back',
-                        templateUrl: 'app/views/back.html',
+                        templateUrl: 'views/back.html',
                         providers: [],
                         directives: [router_1.ROUTER_DIRECTIVES],
                         pipes: []

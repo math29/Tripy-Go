@@ -3,7 +3,7 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
 
 @Component({
   selector: 'wtc-back',
-  templateUrl: 'app/views/back.html',
+  templateUrl: 'views/back.html',
   providers: [],
   directives: [ROUTER_DIRECTIVES],
   pipes: []
