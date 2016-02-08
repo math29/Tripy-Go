@@ -14,6 +14,8 @@
     "files": [
         "back_office_A2/app/scripts/app.ts",
         "back_office_A2/app/scripts/back.ts",
+        "back_office_A2/app/scripts/components/header/header.ts",
+        "back_office_A2/app/scripts/components/header/header_notification.ts",
         "typings/angular2/angular2.d.ts",
         "typings/tsd.d.ts"
     ],
