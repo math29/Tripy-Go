@@ -1,8 +1,9 @@
 <div id="wrapper">
 
         <!-- Navigation -->
-
-        <header></header>
+        <div *ngIf="me">
+          <header [user]="me"></header>
+        </div>
         <!-- /.navbar-top-links -->
 
 

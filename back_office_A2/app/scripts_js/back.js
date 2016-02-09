@@ -36,15 +36,22 @@ System.register(['angular2/core', './components/header/header', './components/lo
         execute: function() {
             WTC_Back = (function () {
                 function WTC_Back(_userService, _router) {
+                    var _this = this;
                     this._userService = _userService;
                     this._router = _router;
+                    this.lastRoute = 'home';
+                    _router.subscribe(function (val) {
+                        if (_this.lastRoute == 'login') {
+                            _this.getMe();
+                        }
+                        _this.lastRoute = val;
+                    });
                 }
                 WTC_Back.prototype.getMe = function () {
                     var _this = this;
                     this._userService.getMe().subscribe(function (me) {
                         _this.me = me;
-                        console.log("User");
-                        console.log(me);
+                        _this.me = JSON.parse(_this.me._body);
                     }, function (error) {
                         _this.errorMessage = error;
                         _this._router.navigate(['Login']);
@@ -63,7 +70,12 @@ System.register(['angular2/core', './components/header/header', './components/lo
                     }),
                     router_1.RouteConfig([
                         { path: '/login', name: 'Login', component: login_1.LoginCmp },
-                        { path: '/home', name: 'Home', component: home_1.HomeCmp, useAsDefault: true }
+                        { path: '/home', name: 'Home', component: home_1.HomeCmp, useAsDefault: true },
+                        { path: '/mongo', name: 'Mongo', component: home_1.HomeCmp },
+                        { path: '/countries', name: 'Countries', component: home_1.HomeCmp },
+                        { path: '/langues', name: 'Langues', component: home_1.HomeCmp },
+                        { path: '/logs', name: 'Logs', component: home_1.HomeCmp },
+                        { path: '/timelines', name: 'Timelines', component: home_1.HomeCmp }
                     ]), 
                     __metadata('design:paramtypes', [user_service_1.UserService, router_1.Router])
                 ], WTC_Back);
