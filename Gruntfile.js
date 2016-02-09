@@ -478,7 +478,8 @@ module.exports = function (grunt) {
           'angular2/bundles/*',
           'reflect-metadata/Reflect.js',
           'systemjs/**/*',
-          'rxjs/**/*'
+          'rxjs/**/*',
+          'ng2-cookies/**/*'
         ]
       }
     },

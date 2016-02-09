@@ -1,6 +1,7 @@
 <!doctype html>
 <html class="no-js">
 <head>
+  <base href="/back2/">
   <meta charset="utf-8">
   <title></title>
   <meta name="description" content="">
@@ -79,10 +80,14 @@
         },
         rxjs: {
           defaultExtension: 'js'
-        }
+        },
+        'ng2-cookies': {
+          defaultExtension:'js'
+          }
       },
       map: {
-        rxjs: 'lib/rxjs' // added this map section
+        rxjs: 'lib/rxjs',
+        'ng2-cookies': 'lib/ng2-cookies'
       }
     });
     System.import('./scripts_js/app.js').then(null, console.error.bind(console));
