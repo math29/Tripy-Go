@@ -18,8 +18,11 @@
         "back_office_A2/app/scripts/components/header/header_notification.ts",
         "back_office_A2/app/scripts/components/home/home.ts",
         "back_office_A2/app/scripts/components/login/login.ts",
+        "back_office_A2/app/scripts/components/mongo/mongo.ts",
         "back_office_A2/app/scripts/components/sidebar/sidebar.ts",
         "back_office_A2/app/scripts/components/sidebar/sidebar_element.ts",
+        "back_office_A2/app/scripts/components/utils/stats.ts",
+        "back_office_A2/app/scripts/services/mongo.service.ts",
         "back_office_A2/app/scripts/services/user.service.ts",
         "typings/angular2/angular2.d.ts",
         "typings/tsd.d.ts"

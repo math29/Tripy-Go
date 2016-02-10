@@ -1,16 +1,16 @@
 <div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">Main information</h1>
-    </div>
-    <!-- /.col-lg-12 -->
+  <div class="col-lg-12">
+    <h1 class="page-header">Main information</h1>
+  </div>
+  <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
-<div class="row">
+<div *ngIf="db_info" class="row">
 
-  <stats number="{{db_info.collections}}" comments="Collections" colour="primary" type="table" goto="dashboard.mongo"></stats>
-  <stats number="{{db_info.objects}}" comments="Objects" colour="primary" type="user" goto="dashboard.mongo"></stats>
-  <stats number="{{db_info.avgObjSize}}" comments="avgSize" colour="yellow" type="list" goto="dashboard.mongo"></stats>
-  <stats number="{{db_info.dataSize}}" comments="Data Size" colour="red" type="list" goto="dashboard.mongo"></stats>
+  <stats [number]="db_info.collections" comments="Collections" colour="primary" type="table"></stats>
+  <stats [number]="db_info.objects" comments="Objects" colour="primary" type="user"></stats>
+  <stats [number]="db_info.avgObjSize" comments="avgSize" colour="yellow" type="list"></stats>
+  <stats [number]="db_info.dataSize" comments="Data Size" colour="red" type="list"></stats>
 
 </div>
 <!-- /.row -->
@@ -26,7 +26,7 @@
       <div class="panel-heading">
         Host
       </div>
-      <div class="panel-body">
+      <div  *ngIf="host" class="panel-body">
         Hostname: {{host.system.hostname}}<br/>
         Time: {{host.system.currentTime}}<br/>
         Memory size: {{host.system.memSizeMB}}<br/>
@@ -34,7 +34,7 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-4">
+  <div  *ngIf="host" class="col-lg-4">
     <div class="panel panel-warning">
       <div class="panel-heading">
         OS
@@ -45,7 +45,7 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-4">
+  <div *ngIf="status" class="col-lg-4">
     <div class="panel panel-success">
       <div class="panel-heading">
         Status
@@ -68,8 +68,8 @@
   </div>
   <!-- /.col-lg-12 -->
 </div>
-<div class="row">
-  <div class="" ng-repeat="stat in stats">
+<div *ngIf="stat" class="row">
+  <div class="" *ngFor="#stat of stats">
     <div class="col-lg-3 col-md-6">
       <div class="panel panel-info">
         <div class="panel-heading">
@@ -81,7 +81,7 @@
           averageSize: {{stat.avgObjSize}}<br/>
           OK: {{stat.ok}}
         </div>
-        <a ui-sref="dashboard.{{stat.ns}}">
+        <a>
           <div class="panel-footer">
             <span class="pull-left">View Details</span>
             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

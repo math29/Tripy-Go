@@ -2,6 +2,7 @@ import {Component, OnInit} from 'angular2/core';
 import {HeaderCmp} from './components/header/header';
 import {LoginCmp} from './components/login/login';
 import {HomeCmp} from './components/home/home';
+import {MongoCmp} from './components/mongo/mongo';
 import {UserService} from './services/user.service';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
@@ -10,13 +11,13 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
   selector: 'wtc-back',
   templateUrl: 'views/dashboard/main.html',
   providers: [HTTP_PROVIDERS, UserService],
-  directives: [ROUTER_DIRECTIVES, HeaderCmp, LoginCmp],
+  directives: [ROUTER_DIRECTIVES, HeaderCmp, LoginCmp, MongoCmp],
   pipes: []
 })
 @RouteConfig([
   { path: '/login', name: 'Login', component: LoginCmp },
   { path: '/home', name:'Home', component: HomeCmp, useAsDefault: true},
-  { path: '/mongo', name: 'Mongo', component: HomeCmp},
+  { path: '/mongo', name: 'Mongo', component: MongoCmp},
   { path: '/countries', name: 'Countries', component: HomeCmp},
   { path: '/langues', name: 'Langues', component: HomeCmp},
   { path: '/logs', name: 'Logs', component: HomeCmp},
