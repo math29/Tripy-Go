@@ -9,8 +9,10 @@ export class UserService {
 
   constructor(private _http: Http) {}
 
+  /**
+   * Récupére les informations de l'utilisateur actuel
+   */
 	getMe(){
-	  console.log(Cookie.getCookie('token'));
 	  let headers = new Headers();
 	  headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
 	  headers.append('Content-Type', 'application/json');
@@ -18,12 +20,22 @@ export class UserService {
     return this._http.get('/api/users/me', options);
   }
 
+  /**
+   * Login de l'utilisateur
+   *
+   * @param user: objet utilisateur contenant le mot de passe et l'email de l'utilisateur
+   */
   login(user){
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     return this._http.post('/auth/local/', JSON.stringify(user), options);
   }
 
+  /**
+   * Logout de l'utilisateur
+   *
+   * supprime le cookie du navigateur
+   **/
   logout(){
     Cookie.deleteCookie('token');
   }

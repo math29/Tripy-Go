@@ -29,21 +29,6 @@ module.exports = function (grunt) {
   grunt.initConfig({
     ts: {
       back_office: {
-        src: ["typings/tsd.d.ts", "back_office_A2/app/scripts/**/*.ts"],
-        outDir: "back_office_A2/app/scripts_js",
-        options:{
-          module:"system",
-          moduleResolution:"node",
-          experimentalDecorators: true,
-          target:'ES5',
-          sourceMap: true,
-          emitDecoratorMetadata: true,
-          removeComments: false,
-          noImplicitAny: false
-        }
-
-      },
-      back_office_test: {
         tsconfig:"./tsconfig.json"
       }
     },
