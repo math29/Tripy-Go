@@ -23,31 +23,32 @@ export class LogService {
   }
 
   /**
-   * Récupére les informations Host de la DB
+   * Supprime un log de la base de donnée
    */
-	getLog(){
-    return this._http.get(this.base_url, this.getHeaders());
+	deleteLog(id: string){
+    return this._http.delete(this.base_url + id, this.getHeaders());
   }
 
   /**
-   * Récupére les informations de la DB
+   * Supprime l'ensemble des logs
    */
-  getDBInfo(){
-    return this._http.get(this.base_url, this.getHeaders());
+  dropLogs(){
+    return this._http.delete(this.base_url, this.getHeaders());
   }
 
   /**
-   * Récupére le status de la DB
+   * Récupère les logs par paquets de 50 par page
+   * la page 1 étant les derniers logs
    */
-  getDBStatus(){
-    return this._http.get(this.base_url + 'status', this.getHeaders());
+  getLogsByPage(page: number){
+    return this._http.get(this.base_url + page, this.getHeaders());
   }
 
   /**
-   * Récupère les stats de la DB
+   * Récupère l'ensemble des logs du serveur
    */
-  getDBStats(){
-    return this._http.get(this.base_url + 'stats', this.getHeaders());
+  getLogs(){
+    return this._http.get(this.base_url , this.getHeaders());
   }
 
   private handleError (error: Response) {
