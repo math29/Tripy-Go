@@ -40,7 +40,7 @@ export class LogService {
    * Récupère les logs par paquets de 50 par page
    * la page 1 étant les derniers logs
    */
-  getLogsByPage(page: number){
+  getLogsByPage(page: any){
     return this._http.get(this.base_url + page, this.getHeaders());
   }
 
