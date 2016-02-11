@@ -464,7 +464,9 @@ module.exports = function (grunt) {
           'reflect-metadata/Reflect.js',
           'systemjs/**/*',
           'rxjs/**/*',
-          'ng2-cookies/**/*'
+          'ng2-cookies/**/*',
+          'ng2-bootstrap/**/*',
+          'moment/**/*'
         ]
       }
     },
