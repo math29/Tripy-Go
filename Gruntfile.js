@@ -464,9 +464,15 @@ module.exports = function (grunt) {
           'reflect-metadata/Reflect.js',
           'systemjs/**/*',
           'rxjs/**/*',
-          'ng2-cookies/**/*',
-          'ng2-bootstrap/**/*',
-          'moment/**/*'
+          'ng2-cookies/**/*'
+        ]
+      },
+      back_office_compiled: {
+        expand: true,
+        dest: './back_office_A2/app/scripts_js',
+        cwd: './back_office_A2/app/scripts_js',
+        src: [
+          'back_office_A2/app/scripts/**/*'
         ]
       }
     },
@@ -736,6 +742,12 @@ module.exports = function (grunt) {
       grunt.config.set('usemin', useminBackConfig);
       grunt.task.run('usemin');
     });
+
+  grunt.registerTask('back_office', [
+    'copy:back_office',
+    'ts',
+    'copy:back_office_compiled'
+  ]);
 
   grunt.registerTask('build', [
     'clean:dist',

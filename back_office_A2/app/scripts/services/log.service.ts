@@ -25,14 +25,30 @@ export class LogService {
   /**
    * Récupére les informations Host de la DB
    */
-	get(page){
-    return this._http.get(this.base_url + page, this.getHeaders());
+	getLog(){
+    return this._http.get(this.base_url, this.getHeaders());
   }
 
-  drop(){
-    return this._http.post(this.base_url,null, this.getHeaders());
+  /**
+   * Récupére les informations de la DB
+   */
+  getDBInfo(){
+    return this._http.get(this.base_url, this.getHeaders());
   }
 
+  /**
+   * Récupére le status de la DB
+   */
+  getDBStatus(){
+    return this._http.get(this.base_url + 'status', this.getHeaders());
+  }
+
+  /**
+   * Récupère les stats de la DB
+   */
+  getDBStats(){
+    return this._http.get(this.base_url + 'stats', this.getHeaders());
+  }
 
   private handleError (error: Response) {
     // in a real world app, we may send the server to some remote logging infrastructure
