@@ -1,29 +1,32 @@
 import {Component} from 'angular2/core';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
-import {PAGINATION_PROVIDERS} from 'ng2-bootstrap/ng2-bootstrap';
+import {Response} from 'angular2/http';
+//import {PAGINATION_PROVIDERS} from 'ng2-bootstrap/ng2-bootstrap';
 import {LogService} from '../../services/log.service';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 @Component({
-  selector: 'home',
-  templateUrl: 'views/components/log/main.html',
+  selector: 'log',
+  templateUrl: 'views/components/logs/main.html',
   providers: [LogService],
-  directives: [ROUTER_DIRECTIVES, PAGINATION_PROVIDERS],
+  directives: [ROUTER_DIRECTIVES],
   pipes: []
 })
 export class LogCmp{
 
-    this.errors:any = [];
-    this.messages:any = [];
-    this.keys: string[] = [];
-    this.orderby: sring='';
-    this.orderOptions: string[] = ['+','-'];
-    this.orderType: string = this.orderOptions[0];
-    this.logs :string= '{}';
-    this.level:string = 'All';
-    this.pagination:any = {maxPage:1};
-    this.query = '';
-    this.url:any;
+    errors:any = [];
+    messages:any = [];
+    keys: string[] = [];
+    orderby: string ='';
+    orderOptions: string[] = ['+','-'];
+    orderType: string = this.orderOptions[0];
+    logs :any;
+    level:string = 'All';
+    pagination:any = {maxPage:1};
+    query = '';
+    url:any;
+    stats:any;
+    page: number = 1;
 
     constructor(private _logService: LogService){}
 
@@ -39,24 +42,26 @@ export class LogCmp{
     }
 
     get(){
-      var getQuery = page+'';
+      var getQuery = this.page+'';
       if(this.query.length > 0){
         getQuery = getQuery + '/' + this.query;
       }
-      _logService.getLogsByPage(getQuery)
-        .subscribe(response => {
-          var response = response;
-          response = response._body;
-          this.logs = response.logs;
-          this.stats = response.stats;
-          this.pagination = data.pagination;
-          createDownloadURL();
+      this._logService.getLogsByPage(this.level, getQuery)
+        .subscribe(getResponse => {
+          this.logs = getResponse;
+          this.logs = this.logs._body;
+                    console.log(this.logs);
+
+          this.stats = this.logs.stats;
+          this.pagination = this.logs.pagination;
+          this.logs = this.logs.logs;
+          this.createDownloadURL();
           this.keys = Object.keys(this.logs[0]);
-          this.keys.splice(this.key.length-1, 1);
-          this.selection = this.keys[1];
+          this.keys.splice(this.keys.length-1, 1);
           this.orderby = this.keys[1];
         },
         errors => {
+          console.log(errors);
           this.errors.push("Erreur lors de la récupération des logs");
         })
     }
@@ -76,7 +81,7 @@ export class LogCmp{
       this._logService.deleteLog(log._id)
         .subscribe(success => {
           this.messages.push('Log '+ log._id + ' supprimé avec succés');
-          for(var i = 0; i < this.logs.length){
+          for(var i = 0; i < this.logs.length; i++){
             if(this.logs[i]._id == log._id){
               this.logs.splice(i, 1);
             }
@@ -97,7 +102,7 @@ export class LogCmp{
     scrollTo(id) {
           var anchor = document.getElementById(id);
           //var container = angular.element(document.getElementById('scroll-container'));
-          window.container.scrollToElement(anchor, 0, 800);
+          //window.container.scrollToElement(anchor, 0, 800);
     };
 
     getClassFromInfo(log){

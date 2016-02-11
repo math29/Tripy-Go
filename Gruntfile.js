@@ -460,7 +460,7 @@ module.exports = function (grunt) {
         dest: './back_office_A2/app/lib',
         cwd: 'node_modules',
         src: [
-          'angular2/bundles/*',
+          'angular2/bundles/**/*',
           'reflect-metadata/Reflect.js',
           'systemjs/**/*',
           'rxjs/**/*',

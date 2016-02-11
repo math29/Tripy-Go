@@ -1,4 +1,4 @@
-System.register(['angular2/core', './components/header/header', './components/login/login', './components/home/home', './components/mongo/mongo', './services/user.service', 'angular2/http', 'angular2/router'], function(exports_1) {
+System.register(['angular2/core', './components/header/header', './components/login/login', './components/home/home', './components/mongo/mongo', './components/log/log', './services/user.service', 'angular2/http', 'angular2/router'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', './components/header/header', './components/lo
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, header_1, login_1, home_1, mongo_1, user_service_1, http_1, router_1;
+    var core_1, header_1, login_1, home_1, mongo_1, log_1, user_service_1, http_1, router_1;
     var WTC_Back;
     return {
         setters:[
@@ -26,6 +26,9 @@ System.register(['angular2/core', './components/header/header', './components/lo
             },
             function (mongo_1_1) {
                 mongo_1 = mongo_1_1;
+            },
+            function (log_1_1) {
+                log_1 = log_1_1;
             },
             function (user_service_1_1) {
                 user_service_1 = user_service_1_1;
@@ -68,7 +71,7 @@ System.register(['angular2/core', './components/header/header', './components/lo
                         selector: 'wtc-back',
                         templateUrl: 'views/dashboard/main.html',
                         providers: [http_1.HTTP_PROVIDERS, user_service_1.UserService],
-                        directives: [router_1.ROUTER_DIRECTIVES, header_1.HeaderCmp, login_1.LoginCmp, mongo_1.MongoCmp],
+                        directives: [router_1.ROUTER_DIRECTIVES, header_1.HeaderCmp, login_1.LoginCmp, mongo_1.MongoCmp, log_1.LogCmp],
                         pipes: []
                     }),
                     router_1.RouteConfig([
@@ -77,7 +80,7 @@ System.register(['angular2/core', './components/header/header', './components/lo
                         { path: '/mongo', name: 'Mongo', component: mongo_1.MongoCmp },
                         { path: '/countries', name: 'Countries', component: home_1.HomeCmp },
                         { path: '/langues', name: 'Langues', component: home_1.HomeCmp },
-                        { path: '/logs', name: 'Logs', component: home_1.HomeCmp },
+                        { path: '/logs', name: 'Logs', component: log_1.LogCmp },
                         { path: '/timelines', name: 'Timelines', component: home_1.HomeCmp }
                     ]), 
                     __metadata('design:paramtypes', [user_service_1.UserService, router_1.Router])

@@ -3,6 +3,7 @@ import {HeaderCmp} from './components/header/header';
 import {LoginCmp} from './components/login/login';
 import {HomeCmp} from './components/home/home';
 import {MongoCmp} from './components/mongo/mongo';
+import {LogCmp} from './components/log/log';
 import {UserService} from './services/user.service';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
@@ -11,7 +12,7 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
   selector: 'wtc-back',
   templateUrl: 'views/dashboard/main.html',
   providers: [HTTP_PROVIDERS, UserService],
-  directives: [ROUTER_DIRECTIVES, HeaderCmp, LoginCmp, MongoCmp],
+  directives: [ROUTER_DIRECTIVES, HeaderCmp, LoginCmp, MongoCmp, LogCmp],
   pipes: []
 })
 @RouteConfig([
@@ -20,7 +21,7 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
   { path: '/mongo', name: 'Mongo', component: MongoCmp},
   { path: '/countries', name: 'Countries', component: HomeCmp},
   { path: '/langues', name: 'Langues', component: HomeCmp},
-  { path: '/logs', name: 'Logs', component: HomeCmp},
+  { path: '/logs', name: 'Logs', component: LogCmp},
   { path: '/timelines', name: 'Timelines', component: HomeCmp}
 ])
 export class WTC_Back{
