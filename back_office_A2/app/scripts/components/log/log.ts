@@ -27,6 +27,7 @@ export class LogCmp{
     url:any;
     stats:any;
     page: number = 1;
+    temp: any;
 
     constructor(private _logService: LogService){}
 
@@ -48,13 +49,12 @@ export class LogCmp{
       }
       this._logService.getLogsByPage(this.level, getQuery)
         .subscribe(getResponse => {
-          this.logs = getResponse;
-          this.logs = this.logs._body;
-                    console.log(this.logs);
+          this.temp = getResponse;
+          this.temp = JSON.parse(this.temp._body);
 
-          this.stats = this.logs.stats;
-          this.pagination = this.logs.pagination;
-          this.logs = this.logs.logs;
+          this.stats = this.temp.stats;
+          this.pagination = this.temp.pagination;
+          this.logs = this.temp.logs;
           this.createDownloadURL();
           this.keys = Object.keys(this.logs[0]);
           this.keys.splice(this.keys.length-1, 1);
