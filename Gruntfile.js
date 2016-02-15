@@ -27,20 +27,21 @@ module.exports = function (grunt) {
 
   // Define the configuration for all the tasks
   grunt.initConfig({
-    ts: {
-      back_office: {
-        tsconfig:"./tsconfig.json"
-      }
-    },
     // Project settings
     pkg: grunt.file.readJSON('package.json'),
     yeoman: {
       // configurable paths
       client: require('./bower.json').appPath || 'client',
       back_office: require('./back_office/bower.json').appPath || 'back_office',
+      back_office_A2: './back_office_A2',
       dist: 'dist',
       public: 'dist/public',
       private: 'dist/back'
+    },
+    ts: {
+      back_office: {
+        tsconfig:"<%= yeoman.back_office_A2 %>/tsconfig.json"
+      }
     },
     express: {
       options: {

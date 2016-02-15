@@ -22,6 +22,13 @@ export class LogService {
       return options
   }
 
+  getHeader(){
+      let headers = new Headers();
+    	  headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
+        let options = new RequestOptions({ headers: headers });
+        return options
+    }
+
   /**
    * Supprime un log de la base de donnée
    */
@@ -33,7 +40,7 @@ export class LogService {
    * Supprime l'ensemble des logs
    */
   dropLogs(){
-    return this._http.delete(this.base_url, this.getHeaders());
+    return this._http.delete(this.base_url, this.getHeader());
   }
 
   /**

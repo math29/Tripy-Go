@@ -13,4 +13,6 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
 })
 export class HeaderCmp{
   public user: any;
+
+
 }

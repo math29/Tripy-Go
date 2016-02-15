@@ -1,13 +1,24 @@
 import {Injectable} from 'angular2/core';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {Http, Response, Headers, RequestOptions} from 'angular2/http';
-import {Observable}     from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
+import {UserSingleton} from '../singletons/user.singleton';
+import {Router} from 'angular2/router';
+import 'rxjs/add/operator/share';
+
 
 
 @Injectable()
-export class UserService {
+export class AuthService {
+  user:any;
+  userObservable$: Observable<any>;
+  _userObserver: any;
 
-  constructor(private _http: Http) {}
+  _token:string;
+
+  constructor(private _http: Http, private _router: Router) {
+    this.userObservable$ = new Observable(observer => this._userObserver = observer).share();
+  }
 
   /**
    * Récupére les informations de l'utilisateur actuel
@@ -17,7 +28,13 @@ export class UserService {
 	  headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
 	  headers.append('Content-Type', 'application/json');
     let options = new RequestOptions({ headers: headers });
-    return this._http.get('/api/users/me', options);
+    this._http.get('/api/users/me', options)
+      .subscribe(data => {
+        this.user = data;
+        this.user = this.user._body;
+        this.user = JSON.parse(this.user);
+        this._userObserver.next(this.user);
+    }, errors => console.log('Could not retrieve user'));
   }
 
   /**
@@ -37,13 +54,10 @@ export class UserService {
    * supprime le cookie du navigateur
    **/
   logout(){
+    UserSingleton.getInstance().setUser(null);
     Cookie.deleteCookie('token');
+    this._router.navigate( ['Login'] );
   }
 
-  private handleError (error: Response) {
-    // in a real world app, we may send the server to some remote logging infrastructure
-    // instead of just logging it to the console
-    console.error(error);
-    return Observable.throw(error.json().error || 'Server error');
-  }
+
 }

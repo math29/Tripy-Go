@@ -4,14 +4,15 @@ import {LoginCmp} from './components/login/login';
 import {HomeCmp} from './components/home/home';
 import {MongoCmp} from './components/mongo/mongo';
 import {LogCmp} from './components/log/log';
-import {UserService} from './services/user.service';
+import {AuthService} from './services/auth.service';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import {UserSingleton} from './singletons/user.singleton';
 
 @Component({
   selector: 'wtc-back',
   templateUrl: 'views/dashboard/main.html',
-  providers: [HTTP_PROVIDERS, UserService],
+  providers: [HTTP_PROVIDERS, AuthService],
   directives: [ROUTER_DIRECTIVES, HeaderCmp, LoginCmp, MongoCmp, LogCmp],
   pipes: []
 })
@@ -28,27 +29,22 @@ export class WTC_Back{
   lastRoute: string = 'home';
   me: any;
   errorMessage: any;
-  constructor(private _userService:UserService, private _router: Router){
+  userSingleton: UserSingleton;
+
+  constructor(private _authService:AuthService, private _router: Router){
+    this.userSingleton = UserSingleton.getInstance();
     _router.subscribe((val) => {
       if(this.lastRoute == 'login'){
-        this.getMe();
       }
       this.lastRoute = val;
     })
-  }
-
-  getMe() {
-    this._userService.getMe().subscribe(me => {
-      this.me = me;
-      this.me= JSON.parse(this.me._body);
-    },
-                                        error =>  {this.errorMessage = <any>error;
-                                        this._router.navigate( ['Login'] );
-                                        });
+    if(!this.me){
+        this._router.navigate( ['Login'] );
+    }
   }
 
   ngOnInit(){
-    this.getMe();
+    this.userSingleton.userObservable$.subscribe(updateUser => {this.me = updateUser;});
   }
 
 }
