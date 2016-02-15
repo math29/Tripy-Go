@@ -25,6 +25,7 @@
         "app/scripts/components/utils/stats.ts",
         "app/scripts/pipes/filter.ts",
         "app/scripts/pipes/orderby.ts",
+        "app/scripts/pipes/selectLevel.ts",
         "app/scripts/services/auth.service.ts",
         "app/scripts/services/log.service.ts",
         "app/scripts/services/mongo.service.ts",

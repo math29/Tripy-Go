@@ -5,6 +5,7 @@ import {Response} from 'angular2/http';
 import {LogService} from '../../services/log.service';
 import {OrderByPipe} from '../../pipes/orderby';
 import {FilterLogPipe} from '../../pipes/filter';
+import {SelectLevelPipe} from '../../pipes/selectLevel';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 @Component({
@@ -12,7 +13,7 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
   templateUrl: 'views/components/logs/main.html',
   providers: [LogService],
   directives: [ROUTER_DIRECTIVES],
-  pipes: [OrderByPipe, FilterLogPipe]
+  pipes: [OrderByPipe, FilterLogPipe, SelectLevelPipe]
 })
 export class LogCmp{
 
@@ -60,7 +61,7 @@ export class LogCmp{
           this.createDownloadURL();
           this.keys = Object.keys(this.logs[0]);
           this.keys.splice(this.keys.length-1, 1);
-          this.orderby = this.keys[1];
+          this.orderby = this.keys[0];
         },
         errors => {
           console.log(errors);
