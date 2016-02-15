@@ -3,6 +3,8 @@ import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {Response} from 'angular2/http';
 //import {PAGINATION_PROVIDERS} from 'ng2-bootstrap/ng2-bootstrap';
 import {LogService} from '../../services/log.service';
+import {OrderByPipe} from '../../pipes/orderby';
+import {FilterPipe} from '../../pipes/filter';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 @Component({
@@ -10,7 +12,7 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
   templateUrl: 'views/components/logs/main.html',
   providers: [LogService],
   directives: [ROUTER_DIRECTIVES],
-  pipes: []
+  pipes: [OrderByPipe, FilterPipe]
 })
 export class LogCmp{
 

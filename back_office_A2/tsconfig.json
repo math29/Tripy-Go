@@ -23,6 +23,8 @@
         "app/scripts/components/sidebar/sidebar.ts",
         "app/scripts/components/sidebar/sidebar_element.ts",
         "app/scripts/components/utils/stats.ts",
+        "app/scripts/pipes/filter.ts",
+        "app/scripts/pipes/orderby.ts",
         "app/scripts/services/auth.service.ts",
         "app/scripts/services/log.service.ts",
         "app/scripts/services/mongo.service.ts",
