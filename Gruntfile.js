@@ -465,7 +465,8 @@ module.exports = function (grunt) {
           'reflect-metadata/Reflect.js',
           'systemjs/**/*',
           'rxjs/**/*',
-          'ng2-cookies/**/*'
+          'ng2-cookies/**/*',
+          'ng2-charts/**/*'
         ]
       },
       back_office_compiled: {
@@ -475,6 +476,14 @@ module.exports = function (grunt) {
         src: [
           'back_office_A2/app/scripts/**/*'
         ]
+      },
+      back_office_inner: {
+        expand: true,
+        dest: './back_office_A2/app/scripts_js',
+        cwd: './back_office_A2/app/scripts_js/back_office_A2/app/scripts',
+        src: [
+         '**/*'
+         ]
       }
     },
 
@@ -747,7 +756,8 @@ module.exports = function (grunt) {
   grunt.registerTask('back_office', [
     'copy:back_office',
     'ts',
-    'copy:back_office_compiled'
+    'copy:back_office_compiled',
+    'copy:back_office_inner'
   ]);
 
   grunt.registerTask('build', [

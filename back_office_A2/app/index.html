@@ -58,6 +58,7 @@
   <!-- Custom CSS -->
 
   <!-- Custom Fonts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 
 
 </head>
@@ -80,11 +81,15 @@
         },
         'ng2-cookies': {
           defaultExtension:'js'
-          }
+          },
+        'ng2-charts': {
+          defaultExtension: 'js'
+        }
       },
       map: {
         rxjs: 'lib/rxjs',
-        'ng2-cookies': 'lib/ng2-cookies'
+        'ng2-cookies': 'lib/ng2-cookies',
+        'ng2-charts': 'lib/ng2-charts'
       }
     });
     System.import('./scripts_js/app.js').then(null, console.error.bind(console));

@@ -68,20 +68,20 @@
         <a class="btn btn-primary" download="logs.json" href="{{ url }}">Télécharger au format JSON</a>
       </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="stats">
       <div class="col-lg-6 col-sm-12" id="doughnut-chart">
         <div class="panel panel-default">
           <div class="panel-heading">Levels</div>
-          <div class="panel-body">
-            <canvas id="doughnut" class="chart chart-doughnut chart-xs" data="stats.data" labels="stats.labels" legend="true"></canvas>
+          <div class="panel-body" *ngIf="stats.data">
+            <base-chart id="doughnut" class="chart chart-doughnut chart-xs" chartType="Doughnut" [data]="stats.data" [labels]="stats.labels" [options]="chartOptions" [legend]="legend"></base-chart>
           </div>
         </div>
       </div>
       <div class="col-lg-6 col-sm-12" id="doughnut-chart">
         <div class="panel panel-default">
           <div class="panel-heading">Levels showed</div>
-          <div class="panel-body">
-            <canvas id="doughnut" class="chart chart-doughnut chart-xs" data="stats.dataLocal" labels="stats.labels" legend="true"></canvas>
+          <div class="panel-body" *ngIf="stats.dataLocal">
+            <base-chart id="doughnut1" class="chart chart-doughnut chart-xs" chartType="Doughnut" [data]="stats.dataLocal" [labels]="stats.labels" [options]="chartOptions" [legend]="legend"></base-chart>
           </div>
         </div>
       </div>

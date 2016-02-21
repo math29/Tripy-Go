@@ -6,13 +6,14 @@ import {LogService} from '../../services/log.service';
 import {OrderByPipe} from '../../pipes/orderby';
 import {FilterLogPipe} from '../../pipes/filter';
 import {SelectLevelPipe} from '../../pipes/selectLevel';
+import {CHART_DIRECTIVES} from 'ng2-charts/ng2-charts';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 @Component({
   selector: 'log',
   templateUrl: 'views/components/logs/main.html',
   providers: [LogService],
-  directives: [ROUTER_DIRECTIVES],
+  directives: [ROUTER_DIRECTIVES, CHART_DIRECTIVES],
   pipes: [OrderByPipe, FilterLogPipe, SelectLevelPipe]
 })
 export class LogCmp{
@@ -64,7 +65,7 @@ export class LogCmp{
           this.orderby = this.keys[0];
         },
         errors => {
-          console.log(errors);
+          //console.log(errors);
           this.errors.push("Erreur lors de la récupération des logs");
         })
     }
@@ -127,4 +128,12 @@ export class LogCmp{
 
       return valid;
     }
+
+    private chartOptions:any = {
+        animation: false,
+        responsive: false,
+        legend:true
+    };
+
+    private legend:boolean = true;
 }
