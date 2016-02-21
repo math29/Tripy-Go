@@ -1,0 +1,136 @@
+<div>
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">Timelines</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+  </div>
+  <!-- /.row -->
+
+  <!-- Errors -->
+  <div  *ngFor="#error of errors" class="alert alert-danger" role="alert">
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span class="sr-only">Error:</span>
+    {{error}}
+    <button type="button" class="close" (click)="errors.splice(errors.indexOf(error),1)" style="float: right;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  </div>
+
+  <!-- messages -->
+  <div  *ngFor="#message of messages" class="alert alert-success" role="alert">
+    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+    <span class="sr-only">Success:</span>
+    {{message}}
+    <button type="button" class="close" (click)="messages.splice(messages.indexOf(message),1)" style="float: right;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+  </div>
+
+  <div class="row" *ngIf="timelines && operations">
+
+    <stats number="{{timelines.length}}" comments="Timelines!" colour="primary" type="comments" goto="#"></stats>
+    <stats number="{{operations.length}}" comments="Opérations!" colour="primary" type="user" goto="#"></stats>
+  </div>
+
+  <button class="btn btn-primary" (click)="createOperation()" *ngIf="operationEdit == null">Créer une opération</button>
+  <button class="btn btn-primary" (ng-click)="createTimeline()" *ngIf="operationEdit == null">Créer une nouvelle timeline</button>
+  <div class="row" *ngIf="createTimelineValue">
+    <div class="col-lg-12">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <i class="fa fa-clock-o fa-fw"></i>Timeline
+        </div>
+        <div class="panel-body">
+          <form role="form">
+            <div class="form-group">
+              <label class="control-label" for="name">Nom de la timeline *</label>
+              <input type="text" class="form-control" id="name" [ngModel]="newTimeline.name">
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="description">Description de la timeline</label>
+              <input type="text" class="form-control" id="description" [ngModel]="newTimeline.description">
+            </div>
+            <button class="btn btn-primary" (click)="createThisTimeline()" *ngIf="operationEdit == null">Créer la timeline</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="operationEdit != null">
+    <div class="col-lg-12">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <i class="fa fa-clock-o fa-fw"></i>Opération
+        </div>
+        <div class="panel-body">
+          <form role="form">
+            <div class="form-group">
+              <label class="control-label" for="title">Titre de l'opération</label>
+              <input type="text" class="form-control" id="title" [ngModel]="operationEdit.title" required>
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="content">Contenu de l'opération</label>
+              <input type="text" class="form-control" id="content" [ngModel]="operationEdit.content" required>
+            </div>
+            <div class="panel panel-info">
+              <div class="panel-heading">Timelines</div>
+              <div class="panel-body">
+                <table class="table table-bordered table-stripped col-lg-12">
+                  <thead>
+                  <tr><td class="col-lg-8">Nom de la timeline</td><td class="col-lg-2">Action</td></tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="#timeline of timelines">
+                    <td>{{timeline.name}}</td>
+                    <td><a class="glyphicon glyphicon-plus" *ngIf="!isTimelineOnOperation(timeline, operationEdit)" (click)="addToTimeline(timeline)"></a>
+                      <a class="glyphicon glyphicon-minus" (click)="removeFromTimeline(timeline)" $ngIf="isTimelineOnOperation(timeline, operationEdit)"></a>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div >
+              <button *ngIf="operationEdit.title.length>0 && operationEdit.content.length>0" type="submit" class="btn btn-primary" (click)="saveOperation(operationEdit)">Sauvegarder le conseil</button>              <button type="submit" class="btn btn-danger" (click)="operationEdit = null">Annuler</button>
+
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.panel -->
+  <div class="row" *ngIf="timelines">
+    <div class="col-lg-8" ng-show="timelineIndex != -1">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
+        </div>
+        {{timelines[timelineIndex].description}}
+        <!-- /.panel-heading -->
+        <!--<timeline></timeline>-->
+        <!-- /.panel-body -->
+      </div>
+      <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-8 -->
+    <div class="col-lg-4" *ngIf="operations.length > 0">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-bell fa-fw"></i> Opérations
+        </div>
+        <div class="row" *ngFor="#operation of operations">
+          <div class="col-lg-9"><i class="glyphicon glyphicon-exclamation-sign"></i>{{operation.title}}</div>
+          <div class="col-lg-1"><a (click)="editOperation(operation)" class="trash"><span class="glyphicon glyphicon-edit pull-right"></span></a></div>
+          <div class="col-lg-1"><a (click)="deleteOperation(operation)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a></div>
+
+        </div>
+      </div>
+      <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-4 -->
+  </div>
+  <!-- /.row -->
+</div>

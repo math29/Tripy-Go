@@ -22,6 +22,7 @@
         "app/scripts/components/mongo/mongo.ts",
         "app/scripts/components/sidebar/sidebar.ts",
         "app/scripts/components/sidebar/sidebar_element.ts",
+        "app/scripts/components/timelines/timelines.ts",
         "app/scripts/components/utils/stats.ts",
         "app/scripts/pipes/filter.ts",
         "app/scripts/pipes/orderby.ts",
