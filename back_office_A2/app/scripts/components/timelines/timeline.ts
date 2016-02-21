@@ -3,6 +3,7 @@ import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {Response} from 'angular2/http';
 import {TimelineService} from '../../services/timelineService';
 import {OperationsService} from '../../services/operationsService';
+import {MarkdownPipe} from '../../pipes/marked';
 
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
@@ -11,7 +12,8 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
   templateUrl: 'views/components/utils/timeline.html',
   providers: [TimelineService, OperationsService],
   directives: [ROUTER_DIRECTIVES],
-  inputs: ['timelines', 'timelineIndex']
+  inputs: ['timelines', 'timelineIndex'],
+  pipes: [MarkdownPipe]
 })
 export class TimelineCmp{
   timelines: any;

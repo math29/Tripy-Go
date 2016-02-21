@@ -466,7 +466,8 @@ module.exports = function (grunt) {
           'systemjs/**/*',
           'rxjs/**/*',
           'ng2-cookies/**/*',
-          'ng2-charts/**/*'
+          'ng2-charts/**/*',
+          'marked/**/*'
         ]
       },
       back_office_compiled: {

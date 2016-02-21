@@ -24,6 +24,7 @@
     "gridfs-stream": "^1.1.1",
     "jsonwebtoken": "^5.4.1",
     "lodash": "~2.4.1",
+    "marked": "^0.3.5",
     "method-override": "~1.0.0",
     "mongodb": "^2.0.48",
     "mongoose": "~4.0.3",
@@ -108,7 +109,8 @@
     "supertest": "~0.11.0",
     "tape": "^4.2.1",
     "time-grunt": "~0.3.1",
-    "typescript": "1.7.5"
+    "typescript": "1.7.5",
+    "typings": "^0.6.8"
   },
   "engines": {
     "node": ">=0.10.0"

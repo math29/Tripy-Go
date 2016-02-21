@@ -26,6 +26,7 @@
         "app/scripts/components/timelines/timelines.ts",
         "app/scripts/components/utils/stats.ts",
         "app/scripts/pipes/filter.ts",
+        "app/scripts/pipes/marked.ts",
         "app/scripts/pipes/orderby.ts",
         "app/scripts/pipes/selectLevel.ts",
         "app/scripts/services/auth.service.ts",
@@ -35,6 +36,7 @@
         "app/scripts/services/timelineService.ts",
         "app/scripts/singletons/user.singleton.ts",
         "../typings/angular2/angular2.d.ts",
+        "../typings/marked/marked.d.ts",
         "../typings/moment/moment-node.d.ts",
         "../typings/moment/moment.d.ts",
         "../typings/tsd.d.ts"
