@@ -4,6 +4,7 @@ import {Response} from 'angular2/http';
 import {StatsCmp} from '../utils/stats';
 import {TimelineService} from '../../services/timelineService';
 import {OperationsService} from '../../services/operationsService';
+import {TimelineCmp} from './timeline';
 
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
@@ -11,7 +12,7 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
   selector: 'timelines',
   templateUrl: 'views/components/timelines/main.html',
   providers: [TimelineService, OperationsService],
-  directives: [ROUTER_DIRECTIVES, StatsCmp]
+  directives: [ROUTER_DIRECTIVES, StatsCmp, TimelineCmp]
 })
 export class TimelinesCmp{
     private errors: any;
@@ -22,6 +23,7 @@ export class TimelinesCmp{
     private timelines: any = null;
     private operations:any = null;
     private createTimeLineValue:boolean = false;
+    private timelineIndex: number = 0;
 
     constructor(private _timelineService: TimelineService, private _operationsService: OperationsService){}
 
@@ -29,7 +31,6 @@ export class TimelinesCmp{
       this._timelineService.getTimelines().subscribe(res => {
         this.timelines = res;
         this.timelines = JSON.parse(this.timelines._body);
-        console.log(this.timelines);
         }, error => {this.errors.push("Impossible de récupérer les timelines");});
     }
 

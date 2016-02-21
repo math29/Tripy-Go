@@ -1,0 +1,24 @@
+<div class="panel-body">
+  <ul class="timeline" *ngIf="timelines">
+    <li *ngFor="#operation of timelines[timelineIndex].operations; #i = index" [class]="getClass(i)">
+
+      <div class="timeline-badge"><i class="fa fa-check"></i>
+      </div>
+      <div class="timeline-panel">
+        <div class="timeline-heading">
+          <h4 class="timeline-title">{{operation.title}}</h4><i (click)="vote(operation.rate._id, 'up')" class="fa fa-check"></i>
+          <i (click)="vote(operation.rate._id, 'down')" class="fa fa-check"></i>
+          <p><small class="text-muted"><i class="fa fa-clock-o"></i> score: {{operation.rate.score}} / {{operation.rate.raters}}</small>
+          </p>
+        </div>
+        <div class="timeline-body">
+          {{operation.content}}
+        </div>
+        <div class="timeline-footer">
+          <a *ngIf="operation.step > 0" (click)="moveOperation(1, operation._id, timelines[timelineIndex]._id)" class="glyphicon glyphicon-menu-up"></a><a *ngIf="operation.step < timelines[timelineIndex].operations.length -1" (click)="moveOperation(-1, operation._id, timelines[timelineIndex]._id)" class="glyphicon glyphicon-menu-down"></a><a (click)="deleteOperationFromTimeline(timelines[timelineIndex], operation._id)" class="glyphicon glyphicon-remove"></a>
+        </div>
+      </div>
+    </li>
+
+  </ul>
+</div>
