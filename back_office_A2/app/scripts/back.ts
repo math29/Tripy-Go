@@ -3,6 +3,7 @@ import {HeaderCmp} from './components/header/header';
 import {LoginCmp} from './components/login/login';
 import {HomeCmp} from './components/home/home';
 import {MongoCmp} from './components/mongo/mongo';
+import {TimelinesCmp} from './components/timelines/timelines';
 import {LogCmp} from './components/log/log';
 import {AuthService} from './services/auth.service';
 import {HTTP_PROVIDERS} from 'angular2/http';
@@ -13,7 +14,7 @@ import {UserSingleton} from './singletons/user.singleton';
   selector: 'wtc-back',
   templateUrl: 'views/dashboard/main.html',
   providers: [HTTP_PROVIDERS, AuthService],
-  directives: [ROUTER_DIRECTIVES, HeaderCmp, LoginCmp, MongoCmp, LogCmp],
+  directives: [ROUTER_DIRECTIVES, HeaderCmp, LoginCmp, MongoCmp, LogCmp, TimelineCmp],
   pipes: []
 })
 @RouteConfig([
@@ -23,7 +24,7 @@ import {UserSingleton} from './singletons/user.singleton';
   { path: '/countries', name: 'Countries', component: HomeCmp},
   { path: '/langues', name: 'Langues', component: HomeCmp},
   { path: '/logs', name: 'Logs', component: LogCmp},
-  { path: '/timelines', name: 'Timelines', component: HomeCmp}
+  { path: '/timelines', name: 'Timelines', component: TimelineCmp}
 ])
 export class WTC_Back{
   lastRoute: string = 'home';
