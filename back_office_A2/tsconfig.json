@@ -30,6 +30,8 @@
         "app/scripts/services/auth.service.ts",
         "app/scripts/services/log.service.ts",
         "app/scripts/services/mongo.service.ts",
+        "app/scripts/services/operationsService.ts",
+        "app/scripts/services/timelineService.ts",
         "app/scripts/singletons/user.singleton.ts",
         "../typings/angular2/angular2.d.ts",
         "../typings/moment/moment-node.d.ts",

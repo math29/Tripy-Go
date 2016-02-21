@@ -103,7 +103,7 @@
   </div>
   <!-- /.panel -->
   <div class="row" *ngIf="timelines">
-    <div class="col-lg-8" ng-show="timelineIndex != -1">
+    <div class="col-lg-8" *ngIf="timelineIndex != -1">
       <div class="panel panel-default">
         <div class="panel-heading">
           <i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
