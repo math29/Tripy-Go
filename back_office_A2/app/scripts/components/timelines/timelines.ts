@@ -15,14 +15,13 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
   directives: [ROUTER_DIRECTIVES, StatsCmp, TimelineCmp]
 })
 export class TimelinesCmp{
-    private errors: any;
-    private messages: any;
+    private errors: any=[];
+    private messages: any=[];
 
     private operationEdit:any = null;
     private newTimeline:any;
     private timelines: any = null;
     private operations:any = null;
-    private createTimeLineValue:boolean = false;
     private timelineIndex: number = 0;
 
     constructor(private _timelineService: TimelineService, private _operationsService: OperationsService){}
@@ -31,7 +30,29 @@ export class TimelinesCmp{
       this._timelineService.getTimelines().subscribe(res => {
         this.timelines = res;
         this.timelines = JSON.parse(this.timelines._body);
+
+        // création d'une timeline si il n'en éxiste pas
+        if(this.timelines.length == 0){
+          this.createTimeline();
+        }
         }, error => {this.errors.push("Impossible de récupérer les timelines");});
+    }
+
+    /**
+     * Insertion d'une timeline via l'API
+     */
+    createTimelineAPI(){
+      this._timelineService.createTimeline(this.newTimeline)
+        .subscribe(res => {console.log(res);
+          if(res.status == 201){
+            this.messages.push('Timeline créée avec succès');
+            this.newTimeline = null;
+          }
+        }, errors => {this.errors.push('Impossible d\'insérer la timeline');})
+    }
+
+    createTimeline(){
+      this.newTimeline = {name:"",description:""};
     }
 
     getOperations(){
@@ -65,8 +86,6 @@ export class TimelinesCmp{
       }
       return -1;
     }
-
-    createTimeline(){}
 
     isTimelineOnOperation(timeline:any, operation:any){}
 
