@@ -65,11 +65,11 @@
           <form role="form">
             <div class="form-group">
               <label class="control-label" for="title">Titre de l'opération</label>
-              <input type="text" class="form-control" id="title" [ngModel]="operationEdit.title" required>
+              <input type="text" class="form-control" id="title" [(ngModel)]="operationEdit.title" required>
             </div>
             <div class="form-group">
               <label class="control-label" for="content">Contenu de l'opération</label>
-              <input type="text" class="form-control" id="content" [ngModel]="operationEdit.content" required>
+              <input type="text" class="form-control" id="content" [(ngModel)]="operationEdit.content" required>
             </div>
             <div class="panel panel-info">
               <div class="panel-heading">Timelines</div>
@@ -82,7 +82,7 @@
                   <tr *ngFor="#timeline of timelines">
                     <td>{{timeline.name}}</td>
                     <td><a class="glyphicon glyphicon-plus" *ngIf="!isTimelineOnOperation(timeline, operationEdit)" (click)="addToTimeline(timeline)"></a>
-                      <a class="glyphicon glyphicon-minus" (click)="removeFromTimeline(timeline)" $ngIf="isTimelineOnOperation(timeline, operationEdit)"></a>
+                      <a class="glyphicon glyphicon-minus" (click)="removeFromTimeline(timeline)" *ngIf="isTimelineOnOperation(timeline, operationEdit)"></a>
                     </td>
                   </tr>
                   </tbody>

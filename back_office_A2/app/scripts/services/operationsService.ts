@@ -2,6 +2,8 @@ import {Injectable} from 'angular2/core';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {Http, Response, Headers, RequestOptions} from 'angular2/http';
 import {Observable}     from 'rxjs/Observable';
+import 'rxjs/add/operator/map'
+
 
 
 @Injectable()
@@ -35,7 +37,23 @@ export class OperationsService {
    * Récupère les timelines
    */
   getOperations(){
-    return this._http.get(this.base_url, this.getHeaders());
+    return this._http.get(this.base_url, this.getHeaders())
+            .map(res => <any> res.json());
+  }
+
+  /**
+   * Sauvegarde une opération en base
+   */
+  saveOperation(operation:any){
+    let body = JSON.stringify({content: operation.content, steps: operation.steps});
+
+    // l'opération existe déjà
+    if(operation._id !== undefined){
+      return this._http.put(this.base_url + '/' + operation._id + '/' + operation.title, body, this.getHeaders());
+    }else{
+      return this._http.post(this.base_url + '/' + operation.title, body, this.getHeaders());
+    }
+
   }
 
 

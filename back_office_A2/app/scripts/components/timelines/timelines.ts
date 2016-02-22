@@ -6,6 +6,7 @@ import {TimelineService} from '../../services/timelineService';
 import {OperationsService} from '../../services/operationsService';
 import {TimelineCmp} from './timeline';
 
+
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 @Component({
@@ -56,9 +57,16 @@ export class TimelinesCmp{
     }
 
     getOperations(){
-      this._operationsService.getOperations().subscribe(res => {this.operations = res; this.operations = JSON.parse(this.operations._body);}, error => {this.errors.push("Impossible de récupérer les opérations");});
+      this._operationsService.getOperations()
+        .subscribe(
+          data => this.operations = data,
+          err => this.logError(err));
+        //.subscribe(res => {this.operations = res; this.operations = JSON.parse(this.operations._body);}, error => {this.errors.push("Impossible de récupérer les opérations");});
     }
 
+logError(err) {
+  console.error('There was an error: ' + err);
+}
     ngOnInit(){
       this.getOperations();
       this.getTimelines();
@@ -75,7 +83,7 @@ export class TimelinesCmp{
     }
 
     createOperation(){
-      this.operationEdit = {};
+      this.operationEdit = {title:"",content:""};
     }
 
     getIndexOfOperation(operation, list){
@@ -87,12 +95,28 @@ export class TimelinesCmp{
       return -1;
     }
 
+    editOperation(operation:any){
+      this.operationEdit = operation;
+    }
+
     isTimelineOnOperation(timeline:any, operation:any){}
 
     addToTimeline(operation:any){}
 
     createThisTimeline(){}
 
-    saveOperation(operation:any){}
+    saveOperation(operation:any){
+      this._operationsService.saveOperation(operation)
+        .subscribe(res => {
+          if(res.status == 201){
+            this.messages.push("L'opération à été créée");
+          }else if(res.status == 200){
+            this.messages.push("L'opération à été modifiée");
+          }
+        }, error => {
+          this.errors.push("Erreur lors de la modification/création de l'opération");
+        });
+        this.operationEdit = null;
+    }
 
 }
