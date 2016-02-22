@@ -8,10 +8,12 @@ public
 
 client/bower_components
 back_office/app/bower_components
+back_office_A2/app/bower_components
+back_office_A2/app/lib
 dist
 apidoc
 report
-logs
+./logs/
 
 /server/config/local.env.js
 npm-debug.log

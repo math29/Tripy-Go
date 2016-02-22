@@ -1,0 +1,18 @@
+<div id="wrapper">
+
+        <!-- Navigation -->
+        <div *ngIf="me">
+          <header [user]="me"></header>
+        </div>
+        <!-- /.navbar-top-links -->
+
+
+        <!-- /.navbar-static-side -->
+
+            <div id="page-wrapper" style="min-height: 561px;">
+
+                <router-outlet></router-outlet>
+
+            </div>
+            <!-- /#page-wrapper -->
+    </div>

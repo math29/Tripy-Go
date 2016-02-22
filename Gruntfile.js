@@ -16,6 +16,7 @@ module.exports = function (grunt) {
     useminPrepareBack: 'grunt-usemin',
     useminBack: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
+    ts: 'grunt-ts',
     cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner',
     buildcontrol: 'grunt-build-control'
@@ -26,16 +27,21 @@ module.exports = function (grunt) {
 
   // Define the configuration for all the tasks
   grunt.initConfig({
-
     // Project settings
     pkg: grunt.file.readJSON('package.json'),
     yeoman: {
       // configurable paths
       client: require('./bower.json').appPath || 'client',
       back_office: require('./back_office/bower.json').appPath || 'back_office',
+      back_office_A2: './back_office_A2',
       dist: 'dist',
       public: 'dist/public',
       private: 'dist/back'
+    },
+    ts: {
+      back_office: {
+        tsconfig:"<%= yeoman.back_office_A2 %>/tsconfig.json"
+      }
     },
     express: {
       options: {
@@ -91,7 +97,7 @@ module.exports = function (grunt) {
       gruntfile: {
         files: ['Gruntfile.js']
       },
-      livereload: {
+      liveread: {
         files: [
           // front office
           '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.css',
@@ -449,6 +455,36 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.client %>',
         dest: '.tmp/',
         src: ['{app,components}/**/*.css']
+      },
+      back_office: {
+        expand: true,
+        dest: './back_office_A2/app/lib',
+        cwd: 'node_modules',
+        src: [
+          'angular2/bundles/**/*',
+          'reflect-metadata/Reflect.js',
+          'systemjs/**/*',
+          'rxjs/**/*',
+          'ng2-cookies/**/*',
+          'ng2-charts/**/*',
+          'marked/**/*'
+        ]
+      },
+      back_office_compiled: {
+        expand: true,
+        dest: './back_office_A2/app/scripts_js',
+        cwd: './back_office_A2/app/scripts_js',
+        src: [
+          'back_office_A2/app/scripts/**/*'
+        ]
+      },
+      back_office_inner: {
+        expand: true,
+        dest: './back_office_A2/app/scripts_js',
+        cwd: './back_office_A2/app/scripts_js/back_office_A2/app/scripts',
+        src: [
+         '**/*'
+         ]
       }
     },
 
@@ -718,12 +754,21 @@ module.exports = function (grunt) {
       grunt.task.run('usemin');
     });
 
+  grunt.registerTask('back_office', [
+    'copy:back_office',
+    'ts',
+    'copy:back_office_compiled',
+    'copy:back_office_inner'
+  ]);
+
   grunt.registerTask('build', [
     'clean:dist',
     'concurrent:dist',
     'injector',
     'wiredep',
     'useminPrepare',
+    'ts',
+    'copy:back_office',
     //'useminPrepareBack',
     'autoprefixer',
     'ngtemplates',

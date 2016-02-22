@@ -1,0 +1,51 @@
+{
+    "compilerOptions": {
+        "outDir": "app/scripts_js",
+        "target": "es5",
+        "module": "system",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "removeComments": false,
+        "noImplicitAny": false,
+        "suppressImplicitAnyIndexErrors": true
+    },
+    "files": [
+        "app/scripts/app.ts",
+        "app/scripts/back.ts",
+        "app/scripts/components/header/header.ts",
+        "app/scripts/components/header/header_notification.ts",
+        "app/scripts/components/home/home.ts",
+        "app/scripts/components/log/log.ts",
+        "app/scripts/components/login/login.ts",
+        "app/scripts/components/mongo/mongo.ts",
+        "app/scripts/components/sidebar/sidebar.ts",
+        "app/scripts/components/sidebar/sidebar_element.ts",
+        "app/scripts/components/timelines/timeline.ts",
+        "app/scripts/components/timelines/timelines.ts",
+        "app/scripts/components/utils/stats.ts",
+        "app/scripts/pipes/filter.ts",
+        "app/scripts/pipes/marked.ts",
+        "app/scripts/pipes/orderby.ts",
+        "app/scripts/pipes/selectLevel.ts",
+        "app/scripts/services/auth.service.ts",
+        "app/scripts/services/log.service.ts",
+        "app/scripts/services/mongo.service.ts",
+        "app/scripts/services/operationsService.ts",
+        "app/scripts/services/timelineService.ts",
+        "app/scripts/singletons/user.singleton.ts",
+        "../typings/angular2/angular2.d.ts",
+        "../typings/marked/marked.d.ts",
+        "../typings/moment/moment-node.d.ts",
+        "../typings/moment/moment.d.ts",
+        "../typings/tsd.d.ts"
+    ],
+    "filesGlob": [
+        "app/scripts/**/*.ts",
+        "../typings/**/*.d.ts"
+    ],
+    "atom": {
+        "rewriteTsconfig": true
+    }
+}

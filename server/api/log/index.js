@@ -84,7 +84,7 @@ router.get('/:level/:page/:message', auth.hasRole('admin'), controller.paginated
 /**
   * @api {delete} /api/log/:id Delete a log entry
   * @apiName DeleteLog
-  * @apiGroup Log
+  * @apiGroup Logs
   *
   * @apiSuccess {Object} Object response
   *
@@ -99,7 +99,7 @@ router.delete('/:id', auth.hasRole('admin'), controller.destroy);
 /**
   * @api {delete} /api/log/ Drop log table
   * @apiName DropLogs
-  * @apiGroup Log
+  * @apiGroup Logs
   *
   * @apiSuccess {Object} Object response
   *

@@ -28,12 +28,18 @@ module.exports = function(app) {
   app.use('/api/back/log', require('./api/log'));
 
   // All undefined asset or api routes should return a 404
-  app.route('/:url(api|auth|components|app|bower_components|assets)/*')
+  app.route('/:url(api|auth|components|app|bower_components|assets|lib)/*')
    .get(errors[404]);
 
   // All other routes should redirect to the index.html
   app.route('/*')
     .get(function(req, res) {
-      res.sendFile(path.resolve(app.get('appPath') + '/index.html'));
+      console.log(req.url);
+      var p = app.get('appPath');;
+      /*if(req.url.indexOf("back2") > -1){
+        p = p + '/../back2/';
+      }
+      console.log(p);*/
+      res.sendFile(path.resolve(p + '/index.html'));
     });
 };
