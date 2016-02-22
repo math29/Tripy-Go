@@ -1,12 +1,10 @@
 import {Component} from 'angular2/core';
-import {
-	RouteConfig,
-	RouteParams,
-	Route,
-	ROUTER_DIRECTIVES,
-	Router
-} from 'angular2/router';
 
+import { RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
+import { Login } from './components/account/login/login';
+import { Main } from './components/main/main';
+
+import {LoggedInRouterOutlet} from './LoggedInOutlet';
 
 @Component({
   selector: 'front-office-a2-app',
@@ -15,13 +13,12 @@ import {
   directives: [ROUTER_DIRECTIVES],
   pipes: []
 })
+@RouteConfig([
+	// { path: '/', component: Start },
+	{ path: '/', component: Main, name: 'Home'},
+	{ path: '/login', component: Login, name: 'Login' },
+	// { path: '/signup', component: Signup, as: 'Signup' }
+])
 export class FrontOfficeA2App {
-  defaultMeaning: number = 42;
 
-  constructor(public router: Router) {
-  }
-
-  meaningOfLife(meaning) {
-    return `The meaning of life is ${meaning || this.defaultMeaning}`;
-  }
 }

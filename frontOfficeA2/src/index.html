@@ -33,7 +33,23 @@
 
     </head>
     <body class="load-full-screen">
-        <front-office-a2-app>Loading...</front-office-a2-app>
+        <!--[if lt IE 7]>
+          <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+        <front-office-a2-app>
+            <!-- BEGIN: PRELOADER -->
+            <div id="loader" class="load-full-screen">
+                <div class="loading-animation">
+                    <span><i class="fa fa-plane"></i></span>
+                    <span><i class="fa fa-bed"></i></span>
+                    <span><i class="fa fa-ship"></i></span>
+                    <span><i class="fa fa-suitcase"></i></span>
+                </div>
+            </div>
+            <!-- END: PRELOADER -->
+        </front-office-a2-app>
 
         <script src="vendor/systemjs/dist/system.src.js"></script>
         <script src="vendor/rxjs/bundles/Rx.js"></script>
@@ -46,7 +62,13 @@
                     app: {
                         format: 'register',
                         defaultExtension: 'js'
+                    },
+                    "angular2-jwt": {
+                        "defaultExtension": "js"
                     }
+                },
+                map: {
+                    "angular2-jwt": "../node_modules/angular2-jwt"
                 }
             });
             System.import('app.js').then(null, console.error.bind(console));
