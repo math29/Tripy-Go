@@ -8,8 +8,7 @@
         <meta name="author" content="m@th29">
         <title>Tripy-Go</title>
         <base href=".">
-        <script src="vendor/angular2/bundles/angular2-polyfills.js"></script>
-        {{content-for 'head'}}
+        <script src="lib/angular2/bundles/angular2-polyfills.js"></script>
         <link rel="icon" type="image/x-icon" href="favicon.ico">
 
         <!-- LOAD CSS LIBRARIES -->
@@ -51,15 +50,15 @@
             <!-- END: PRELOADER -->
         </front-office-a2-app>
 
-        <script src="vendor/systemjs/dist/system.src.js"></script>
-        <script src="vendor/rxjs/bundles/Rx.js"></script>
-        <script src="vendor/angular2/bundles/angular2.dev.js"></script>
-        <script src="vendor/angular2/bundles/http.dev.js"></script>
-        <script src="vendor/angular2/bundles/router.dev.js"></script>
+        <script src="lib/systemjs/dist/system.src.js"></script>
+        <script src="lib/rxjs/bundles/Rx.js"></script>
+        <script src="lib/angular2/bundles/angular2.dev.js"></script>
+        <script src="lib/angular2/bundles/http.dev.js"></script>
+        <script src="lib/angular2/bundles/router.dev.js"></script>
         <script>
             System.config({
                 packages: {
-                    app: {
+                    "dist/frontOfficeA2/src": {
                         format: 'register',
                         defaultExtension: 'js'
                     },
@@ -68,10 +67,10 @@
                     }
                 },
                 map: {
-                    "angular2-jwt": "../node_modules/angular2-jwt"
+                    "angular2-jwt": "lib/angular2-jwt"
                 }
             });
-            System.import('app.js').then(null, console.error.bind(console));
+            System.import('dist/frontOfficeA2/src/app.js').then(null, console.error.bind(console));
         </script>
 
         <!-- LOAD JS LIBRARIES -->

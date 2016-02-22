@@ -32,6 +32,7 @@ module.exports = function (grunt) {
     yeoman: {
       // configurable paths
       client: require('./bower.json').appPath || 'client',
+      front_office_A2: './frontOfficeA2/src',
       back_office: require('./back_office/bower.json').appPath || 'back_office',
       back_office_A2: './back_office_A2',
       dist: 'dist',
@@ -41,6 +42,9 @@ module.exports = function (grunt) {
     ts: {
       back_office: {
         tsconfig:"<%= yeoman.back_office_A2 %>/tsconfig.json"
+      },
+      front_office: {
+        tsconfig:"<%= yeoman.front_office_A2 %>/tsconfig.json"
       }
     },
     express: {
@@ -485,6 +489,18 @@ module.exports = function (grunt) {
         src: [
          '**/*'
          ]
+      },
+      front_office_lib: {
+        expand: true,
+        dest: './frontOfficeA2/src/lib',
+        cwd: './frontOfficeA2/node_modules',
+        src: [
+          'angular2/bundles/**/*',
+          'reflect-metadata/Reflect.js',
+          'systemjs/**/*',
+          'rxjs/**/*',
+          'angular2-jwt/*'
+        ]
       }
     },
 
@@ -759,6 +775,11 @@ module.exports = function (grunt) {
     'ts',
     'copy:back_office_compiled',
     'copy:back_office_inner'
+  ]);
+
+  grunt.registerTask('front_office', [
+    'copy:front_office_lib',
+    'ts:front_office'
   ]);
 
   grunt.registerTask('build', [

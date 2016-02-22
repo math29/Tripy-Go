@@ -5,6 +5,7 @@ public
 .tmp
 .tmpBack
 .idea
+.tscache/
 
 client/bower_components
 back_office/app/bower_components
@@ -14,6 +15,10 @@ dist
 apidoc
 report
 ./logs/
+typings/
 
 /server/config/local.env.js
 npm-debug.log
+
+# frontOfficeA2
+frontOfficeA2/src/lib/

@@ -61,6 +61,7 @@ module.exports = function(app) {
     app.use(express.static(path.join(config.root, '.tmp')));
     app.use(express.static(path.join(config.root, 'client')));
     app.set('appPath', path.join(config.root, 'client'));
+    app.use('/front', express.static(path.join(config.root, 'frontOfficeA2/src/')));
     app.use('/back',express.static(path.join(config.root, 'back_office/app/')));
     app.use('/back2', express.static(path.join(config.root, 'back_office_A2/app/')));
     if('test' !== env){

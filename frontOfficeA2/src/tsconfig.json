@@ -1,16 +1,31 @@
 {
-  "compilerOptions": {
-    "declaration": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "mapRoot": "",
-    "module": "system",
-    "moduleResolution": "node",
-    "noEmitOnError": true,
-    "noImplicitAny": false,
-    "rootDir": ".",
-    "sourceMap": true,
-    "sourceRoot": "/",
-    "target": "es5"
-  }
+    "compilerOptions": {
+        "declaration": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "mapRoot": "",
+        "module": "system",
+        "moduleResolution": "node",
+        "noEmitOnError": true,
+        "noImplicitAny": false,
+        "rootDir": ".",
+        "sourceMap": true,
+        "sourceRoot": "/",
+        "target": "es5",
+        "outDir": "dist"
+    },
+    "filesGlob": [
+        ".app/**/*.ts",
+        "app.ts",
+        "../../typings/**/*.d.ts"
+    ],
+    "atom": {
+        "rewriteTsconfig": true
+    },
+    "files": [
+        "app.ts",
+        "../../typings/angular2/angular2.d.ts",
+        "../../typings/marked/marked.d.ts",
+        "../../typings/tsd.d.ts"
+    ]
 }

@@ -26,18 +26,18 @@ export class Login {
 		let body = "email=" + email + "&password=" + password;
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/x-www-form-urlencoded');
-		console.log("the body : "+body);
+		// console.log("the body : "+body);
 		this.http.post('http://localhost:9000/auth/local', body, { headers: headers })
 			.subscribe(
-			response => {
-				localStorage.setItem('jwt', response.json().id_token);
-				this.router.parent.navigateByUrl('/');
-			},
-			error => {
-				// alert(JSON.stringify(error));
-				console.log(JSON.stringify(error));
-				// console.log(JSON.stringify(error));
-			}
+				response => {
+					localStorage.setItem('jwt', response.json().token);
+					this.router.parent.navigateByUrl('/');
+				},
+				error => {
+					// alert(JSON.stringify(error));
+					console.log(JSON.stringify(error));
+					// console.log(JSON.stringify(error));
+				}
 			);
 	}
 
