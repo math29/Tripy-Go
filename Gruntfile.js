@@ -44,7 +44,10 @@ module.exports = function (grunt) {
         tsconfig:"<%= yeoman.back_office_A2 %>/tsconfig.json"
       },
       front_office: {
-        tsconfig:"<%= yeoman.front_office_A2 %>/tsconfig.json"
+        tsconfig:"<%= yeoman.front_office_A2 %>/tsconfig.json",
+      },
+      watch: {
+        watch: "<%= yeoman.front_office_A2 %>"
       }
     },
     express: {
@@ -490,10 +493,29 @@ module.exports = function (grunt) {
          '**/*'
          ]
       },
+      front_office_base:{
+        expand: true,
+        dest: './frontOfficeA2/dist',
+        cwd: './frontOfficeA2/src',
+        src: [
+          // '*',
+          '**/*'
+        ]
+      },
+      front_office_vendor: {
+        expand: true,
+        dest: './frontOfficeA2/dist/vendor',
+        cwd: './client/bower_components',
+        src: [
+          'jquery/**/*',
+          'bootstrap/**/**/*',
+          'font-awesome/**/*'
+        ]
+      },
       front_office_lib: {
         expand: true,
-        dest: './frontOfficeA2/src/lib',
-        cwd: './frontOfficeA2/node_modules',
+        dest: './frontOfficeA2/dist/lib',
+        cwd: './node_modules',
         src: [
           'angular2/bundles/**/*',
           'reflect-metadata/Reflect.js',
@@ -778,7 +800,9 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('front_office', [
+    'copy:front_office_base',
     'copy:front_office_lib',
+    'copy:front_office_vendor',
     'ts:front_office'
   ]);
 

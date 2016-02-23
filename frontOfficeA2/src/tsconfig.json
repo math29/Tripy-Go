@@ -12,10 +12,10 @@
         "sourceMap": true,
         "sourceRoot": "/",
         "target": "es5",
-        "outDir": "dist"
+        "outDir": "../dist"
     },
     "filesGlob": [
-        ".app/**/*.ts",
+        "app/**/*.ts",
         "app.ts",
         "../../typings/**/*.d.ts"
     ],
@@ -23,8 +23,17 @@
         "rewriteTsconfig": true
     },
     "files": [
+        "app/LoggedInOutlet.ts",
+        "app/components/account/login/login.spec.ts",
+        "app/components/account/login/login.ts",
+        "app/components/main/main.spec.ts",
+        "app/components/main/main.ts",
+        "app/components/navigation/navbar/navbar.spec.ts",
+        "app/components/navigation/navbar/navbar.ts",
+        "app/front-office-a2.ts",
         "app.ts",
         "../../typings/angular2/angular2.d.ts",
+        "../../typings/jasmine/jasmine.d.ts",
         "../../typings/marked/marked.d.ts",
         "../../typings/tsd.d.ts"
     ]
