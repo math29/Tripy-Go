@@ -6,11 +6,14 @@ import { Main } from './components/main/main';
 
 import {LoggedInRouterOutlet} from './LoggedInOutlet';
 
+import { Header } from './components/header/header';
+import {CmptFooter} from './components/cmptFooter/cmptFooter'
+
 @Component({
   selector: 'front-office-a2-app',
   providers: [],
   templateUrl: 'app/front-office-a2.html',
-  directives: [ROUTER_DIRECTIVES],
+  directives: [ROUTER_DIRECTIVES, Header, CmptFooter],
   pipes: []
 })
 @RouteConfig([

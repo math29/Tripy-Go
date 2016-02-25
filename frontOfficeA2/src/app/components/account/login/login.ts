@@ -3,14 +3,12 @@ import {Router, RouterLink, ROUTER_DIRECTIVES} from 'angular2/router';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { Http, Headers } from 'angular2/http';
 
-import {Navbar} from '../../navigation/navbar/navbar';
-
 @Component({
   selector: 'login',
   templateUrl: 'app/components/account/login/login.html',
   styleUrls: ['app/components/account/login/login.css'],
   providers: [],
-  directives: [RouterLink, CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES, Navbar],
+  directives: [RouterLink, CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES],
   pipes: []
 })
 export class Login {
@@ -26,7 +24,6 @@ export class Login {
 		let body = "email=" + email + "&password=" + password;
 		let headers = new Headers();
 		headers.append('Content-Type', 'application/x-www-form-urlencoded');
-		// console.log("the body : "+body);
 		this.http.post('http://localhost:9000/auth/local', body, { headers: headers })
 			.subscribe(
 				response => {
@@ -36,7 +33,6 @@ export class Login {
 				error => {
 					// alert(JSON.stringify(error));
 					console.log(JSON.stringify(error));
-					// console.log(JSON.stringify(error));
 				}
 			);
 	}

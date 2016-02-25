@@ -45,9 +45,6 @@ module.exports = function (grunt) {
       },
       front_office: {
         tsconfig:"<%= yeoman.front_office_A2 %>/tsconfig.json",
-      },
-      watch: {
-        watch: "<%= yeoman.front_office_A2 %>"
       }
     },
     express: {
