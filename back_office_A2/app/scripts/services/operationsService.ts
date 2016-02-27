@@ -56,6 +56,15 @@ export class OperationsService {
 
   }
 
+  /**
+   * Supprime une opération de la base de donnée
+   *
+   * @param operation: Opération à supprimer
+   */
+  deleteOperation(operation:any){
+    return this._http.delete(this.base_url + '/' + operation._id, this.getHeader());
+  }
+
 
 
   private handleError (error: Response) {

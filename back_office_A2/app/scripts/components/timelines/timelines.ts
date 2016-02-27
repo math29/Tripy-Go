@@ -5,6 +5,7 @@ import {StatsCmp} from '../utils/stats';
 import {TimelineService} from '../../services/timelineService';
 import {OperationsService} from '../../services/operationsService';
 import {TimelineCmp} from './timeline';
+import {MarkdownPipe} from '../../pipes/marked';
 
 
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
@@ -13,7 +14,8 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
   selector: 'timelines',
   templateUrl: 'views/components/timelines/main.html',
   providers: [TimelineService, OperationsService],
-  directives: [ROUTER_DIRECTIVES, StatsCmp, TimelineCmp]
+  directives: [ROUTER_DIRECTIVES, StatsCmp, TimelineCmp],
+  pipes: [MarkdownPipe]
 })
 export class TimelinesCmp{
     private errors: any=[];
@@ -119,4 +121,22 @@ logError(err) {
         this.operationEdit = null;
     }
 
+
+    /**
+     * Supprime une opération de la base de données
+     *
+     * @param operation: Opération à supprimer
+     */
+    deleteOperation(operation: any){
+      this._operationsService.deleteOperation(operation)
+        .subscribe(
+          res => {
+            this.messages.push("L'opération à bien été supprimée");
+            let index = this.getIndexOfOperation(operation, this.operations);
+            if(index > -1){
+              this.operations.splice(index,1);
+            }
+          },
+          error => {this.errors.push("Impossible de supprimer l'opération")});
+    }
 }

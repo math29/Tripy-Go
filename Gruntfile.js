@@ -39,8 +39,24 @@ module.exports = function (grunt) {
       private: 'dist/back'
     },
     ts: {
-      back_office: {
+      /*back_office: {
         tsconfig:"<%= yeoman.back_office_A2 %>/tsconfig.json"
+      }*/
+      options:{
+        target: 'es5',
+        module: 'system',
+        moduleResolution: 'node',
+        sourceMap: true,
+        emitDecoratorMetadata: true,
+        experimentalDecorators: true,
+        removeComments: false,
+        noImplicitAny: false,
+        suppressImplicitAnyIndexErrors: true,
+        reference: './typings/tsd.d.ts'
+      },
+      back_office:{
+        src: 'back_office_A2/app/scripts/**/*.ts',
+        outDir: 'back_office_A2/app/scripts_js'
       }
     },
     express: {
@@ -93,6 +109,10 @@ module.exports = function (grunt) {
           '<%= yeoman.client %>/{app,components}/**/*.mock.js'
         ],
         tasks: ['newer:jshint:all', 'karma']
+      },
+      back_office: {
+        files: ['back_office_A2/app/**/*.ts'],
+        tasks: ['back_office']
       },
       gruntfile: {
         files: ['Gruntfile.js']
