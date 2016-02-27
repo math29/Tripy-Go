@@ -46,12 +46,11 @@ export class OperationsService {
    */
   saveOperation(operation:any){
     let body = JSON.stringify({content: operation.content, steps: operation.steps});
-
     // l'opération existe déjà
     if(operation._id !== undefined){
-      return this._http.put(this.base_url + '/' + operation._id + '/' + operation.title, body, this.getHeaders());
+      return this._http.put(this.base_url + operation._id + '/' + operation.title, body, this.getHeaders());
     }else{
-      return this._http.post(this.base_url + '/' + operation.title, body, this.getHeaders());
+      return this._http.post(this.base_url + operation.title, body, this.getHeaders());
     }
 
   }

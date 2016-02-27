@@ -62,13 +62,12 @@ export class TimelinesCmp{
       this._operationsService.getOperations()
         .subscribe(
           data => this.operations = data,
-          err => this.logError(err));
-        //.subscribe(res => {this.operations = res; this.operations = JSON.parse(this.operations._body);}, error => {this.errors.push("Impossible de récupérer les opérations");});
+          err => {this.logError(err);this.errors.push("Impossible de récupérer la liste des opérations.")});
     }
 
-logError(err) {
-  console.error('There was an error: ' + err);
-}
+    logError(err) {
+      console.error('There was an error: ' + err);
+    }
     ngOnInit(){
       this.getOperations();
       this.getTimelines();
@@ -115,10 +114,10 @@ logError(err) {
           }else if(res.status == 200){
             this.messages.push("L'opération à été modifiée");
           }
+          this.operationEdit = null;
         }, error => {
           this.errors.push("Erreur lors de la modification/création de l'opération");
         });
-        this.operationEdit = null;
     }
 
 
