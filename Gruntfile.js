@@ -130,10 +130,10 @@ module.exports = function (grunt) {
           '<%= yeoman.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}',
 
           // back office
-          '<%= yeoman.back_office %>/app/**/*.css',
-          '<%= yeoman.back_office %>/app/views/**/*.html',
+          '<%= yeoman.back_office_A2 %>/app/**/*.css',
+          '<%= yeoman.back_office_A2 %>/app/views/**/*.html',
 
-          '<%= yeoman.back_office %>/app/scripts/**/*.js'
+          '<%= yeoman.back_office_A2 %>/app/scripts_js/**/*.js'
         ],
         options: {
           livereload: true
@@ -487,7 +487,9 @@ module.exports = function (grunt) {
           'rxjs/**/*',
           'ng2-cookies/**/*',
           'ng2-charts/**/*',
-          'marked/**/*'
+          'marked/**/*',
+          'socket.io/**/*',
+          'font-awesome/**/*'
         ]
       },
       back_office_compiled: {
@@ -775,7 +777,6 @@ module.exports = function (grunt) {
     });
 
   grunt.registerTask('back_office', [
-    'copy:back_office',
     'ts',
     'copy:back_office_compiled',
     'copy:back_office_inner'

@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="styles/sb-admin-2.css">
   <link rel="stylesheet" href="styles/timeline.css">
   <link rel="stylesheet" href="bower_components/metisMenu/dist/metisMenu.min.css">
-  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css" type="text/css">
   <!-- endbuild -->
 
   <!-- build:js(.) scripts/vendor.js -->
@@ -40,7 +40,6 @@
   <script src="lib/angular2/bundles/angular2.dev.js"></script>
   <script src="lib/angular2/bundles/http.dev.js"></script>
   <script src="lib/angular2/bundles/router.dev.js"></script>
-
   <!-- build:js({.tmp,app}) scripts/scripts.js -->
   <script src="js/sb-admin-2.js"></script>
   <!-- endbuild -->
@@ -87,13 +86,17 @@
         },
         'marked':{
           defaultExtension: 'js'
+        },
+        'socket.io':{
+          defaultExtension: 'js'
         }
       },
       map: {
         rxjs: 'lib/rxjs',
         'ng2-cookies': 'lib/ng2-cookies',
         'ng2-charts': 'lib/ng2-charts',
-        'marked':'lib/marked/marked.min.js'
+        'marked':'lib/marked/marked.min.js',
+        'socket.io':'lib/socket.io'
       }
     });
     System.import('./scripts_js/app.js').then(null, console.error.bind(console));

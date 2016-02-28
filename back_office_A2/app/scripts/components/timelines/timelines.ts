@@ -7,6 +7,7 @@ import {OperationsService} from '../../services/operationsService';
 import {TimelineCmp} from './timeline';
 import {MarkdownPipe} from '../../pipes/marked';
 
+declare var io:any;
 
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
@@ -26,8 +27,11 @@ export class TimelinesCmp{
     private timelines: any = null;
     private operations:any = null;
     private timelineIndex: number = 0;
+    private socket:any;
 
-    constructor(private _timelineService: TimelineService, private _operationsService: OperationsService){}
+    constructor(private _timelineService: TimelineService, private _operationsService: OperationsService){
+      this.socket = io();
+    }
 
     getTimelines(){
       this._timelineService.getTimelines().subscribe(res => {
