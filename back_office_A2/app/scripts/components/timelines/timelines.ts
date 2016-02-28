@@ -1,3 +1,5 @@
+/// <reference path="../../../../typings/socket.io-client/socket.io-client.d.ts" />
+
 import {Component} from 'angular2/core';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {Response} from 'angular2/http';
@@ -7,9 +9,8 @@ import {OperationsService} from '../../services/operationsService';
 import {TimelineCmp} from './timeline';
 import {MarkdownPipe} from '../../pipes/marked';
 
-declare var io:any;
-
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import * as io from 'socket.io-client';
 
 @Component({
   selector: 'timelines',
@@ -30,7 +31,6 @@ export class TimelinesCmp{
     private socket:any;
 
     constructor(private _timelineService: TimelineService, private _operationsService: OperationsService){
-      this.socket = io();
     }
 
     getTimelines(){

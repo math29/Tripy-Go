@@ -131,7 +131,7 @@ module.exports = function (grunt) {
 
           // back office
           '<%= yeoman.back_office_A2 %>/app/**/*.css',
-          '<%= yeoman.back_office_A2 %>/app/views/**/*.html',
+          '<%= yeoman.back_office_A2 %>/app/**/*.html',
 
           '<%= yeoman.back_office_A2 %>/app/scripts_js/**/*.js'
         ],

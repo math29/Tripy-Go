@@ -36,10 +36,10 @@ module.exports = function(app) {
     .get(function(req, res) {
       console.log(req.url);
       var p = app.get('appPath');;
-      /*if(req.url.indexOf("back2") > -1){
-        p = p + '/../back2/';
+      if(req.url.indexOf("back2") > -1){
+        p = p + '/../back_office_A2/app';
       }
-      console.log(p);*/
+      console.log(p);
       res.sendFile(path.resolve(p + '/index.html'));
     });
 };
