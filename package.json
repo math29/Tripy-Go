@@ -120,8 +120,8 @@
     "start": "node server/app.js",
     "test": "grunt test",
     "update-webdriver": "node node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update",
-    "gendoc": "apidoc -i server/api -o apidoc/ -t node_modules/apidoc/template"
-    "postinstall" : "bower install && tsd install",
+    "gendoc": "apidoc -i server/api -o apidoc/ -t node_modules/apidoc/template",
+    "postinstall" : "bower install && tsd install"
 
   },
   "private": true

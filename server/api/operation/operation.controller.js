@@ -98,7 +98,7 @@ function removeOperationFromTimeline(timelineId, operation){
 
     // on décrémente l'ensemble des opérations qui suivent celle que l'on supprime de la timeline
     for(var i = 0; i < operation.steps.length; i++){
-      if(operation.steps[i].id == timelineId){
+      if(operation.steps[i].id === timelineId){
         Operation.update({"steps.id":timelineId, "steps.step": {$gt: operation.steps[i].step}},{$inc:{"steps.$.step":-1}},{multi: true}).exec();
       }
     }

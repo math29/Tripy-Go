@@ -1,6 +1,6 @@
-/// <reference path="../../../../typings/socket.io-client/socket.io-client.d.ts" />
+/// <reference path="../../../../../typings/socket.io-client/socket.io-client.d.ts" />
 
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {Response} from 'angular2/http';
 import {StatsCmp} from '../utils/stats';
@@ -31,6 +31,8 @@ export class TimelinesCmp{
     private socket:any;
 
     constructor(private _timelineService: TimelineService, private _operationsService: OperationsService){
+      let host = window.location.origin;
+      this.socket = io.connect(host);
     }
 
     getTimelines(){
@@ -42,6 +44,8 @@ export class TimelinesCmp{
         if(this.timelines.length == 0){
           this.createTimeline();
         }
+        this.socket.on('timeline',(data:any)=>alert(data));
+
         }, error => {this.errors.push("Impossible de récupérer les timelines");});
     }
 
@@ -67,6 +71,9 @@ export class TimelinesCmp{
         .subscribe(
           data => this.operations = data,
           err => {this.logError(err);this.errors.push("Impossible de récupérer la liste des opérations.")});
+      //this.socket.syncUpdates('operation', this.operations);
+        this.socket.on('operation',(data:any)=>alert(data));
+
     }
 
     logError(err) {

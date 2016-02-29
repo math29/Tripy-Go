@@ -57,7 +57,6 @@
   <!-- Custom CSS -->
 
   <!-- Custom Fonts -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 
 
 </head>
@@ -87,7 +86,7 @@
         'marked':{
           defaultExtension: 'js'
         },
-        'socket.io':{
+        'socket.io-client':{
           defaultExtension: 'js'
         }
       },
@@ -96,7 +95,7 @@
         'ng2-cookies': 'lib/ng2-cookies',
         'ng2-charts': 'lib/ng2-charts',
         'marked':'lib/marked/marked.min.js',
-        'socket.io':'lib/socket.io'
+        'socket.io-client':'lib/socket.io-client/socket.io.js'
       }
     });
     System.import('./scripts_js/app.js').then(null, console.error.bind(console));

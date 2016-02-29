@@ -488,7 +488,7 @@ module.exports = function (grunt) {
           'ng2-cookies/**/*',
           'ng2-charts/**/*',
           'marked/**/*',
-          'socket.io/**/*',
+          'socket.io-client/**/*',
           'font-awesome/**/*'
         ]
       },
