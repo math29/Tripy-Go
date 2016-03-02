@@ -5,6 +5,7 @@ import {HomeCmp} from './components/home/home';
 import {MongoCmp} from './components/mongo/mongo';
 import {TimelinesCmp} from './components/timelines/timelines';
 import {LogCmp} from './components/log/log';
+import {LanguageCmp} from './components/language/language';
 import {AuthService} from './services/auth.service';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
@@ -22,7 +23,7 @@ import {UserSingleton} from './singletons/user.singleton';
   { path: '/home', name:'Home', component: HomeCmp, useAsDefault: true},
   { path: '/mongo', name: 'Mongo', component: MongoCmp},
   { path: '/countries', name: 'Countries', component: HomeCmp},
-  { path: '/langues', name: 'Langues', component: HomeCmp},
+  { path: '/langues', name: 'Langues', component: LanguageCmp},
   { path: '/logs', name: 'Logs', component: LogCmp},
   { path: '/timelines', name: 'Timelines', component: TimelinesCmp}
 ])

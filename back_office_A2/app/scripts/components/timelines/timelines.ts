@@ -33,7 +33,6 @@ export class TimelinesCmp{
     constructor(private _timelineService: TimelineService, private _operationsService: OperationsService){
       let host = window.location.origin;
       this.socket = io.connect('',{path:'/socket.io-client'});
-      console.log(this.socket);
     }
 
     getTimelines(){
@@ -45,7 +44,8 @@ export class TimelinesCmp{
         if(this.timelines.length == 0){
           this.createTimeline();
         }
-        this.socket.on('timeline',(data:any)=>alert(data));
+        console.log(this.socket);
+        this.socket.on('timeline:save',(data:any)=>alert(data));
 
         }, error => {this.errors.push("Impossible de récupérer les timelines");});
     }
