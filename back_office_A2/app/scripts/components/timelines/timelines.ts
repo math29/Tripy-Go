@@ -32,7 +32,7 @@ export class TimelinesCmp{
 
     constructor(private _timelineService: TimelineService, private _operationsService: OperationsService){
       let host = window.location.origin;
-      this.socket = io.connect(host+'/socket.io-client');
+      this.socket = io.connect('',{path:'/socket.io-client'});
       console.log(this.socket);
     }
 

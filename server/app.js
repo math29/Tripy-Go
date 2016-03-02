@@ -56,7 +56,7 @@ var app = express();
 var server = require('http').createServer(app);
 var socketio = require('socket.io')(server, {
   serveClient: config.env !== 'production',
-  path: '/socket.io'
+  path: '/socket.io-client'
 });
 // fichiers de configurations
 require('./config/socketio')(socketio);
