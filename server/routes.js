@@ -19,7 +19,7 @@ module.exports = function(app) {
   app.use('/api/things', require('./api/thing'));
   app.use('/api/users', require('./api/user'));
   app.use('/api/countries', require('./api/country'));
-  app.use('/api/language', require('./api/language'));
+  app.use('/api/languages', require('./api/language'));
   app.use('/api/operations', require('./api/operation'));
   app.use('/api/rate', require('./api/rate'));
   app.use('/api/timeline', require('./api/timeline'));

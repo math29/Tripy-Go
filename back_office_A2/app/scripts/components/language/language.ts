@@ -60,7 +60,7 @@ export class LanguageCmp{
 
     getLanguages(){
       this._languageService.getLanguages()
-        .subscribe();
+        .subscribe(data => this.languages = data);
     }
 
     create(language:Language){
