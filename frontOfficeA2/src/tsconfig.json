@@ -26,6 +26,7 @@
         "app/LoggedInOutlet.ts",
         "app/components/account/login/login.spec.ts",
         "app/components/account/login/login.ts",
+        "app/components/account/signup/signup.ts",
         "app/components/cmptFooter/cmptFooter.ts",
         "app/components/header/header.ts",
         "app/components/main/main.spec.ts",
