@@ -16,25 +16,22 @@
             </form>
           </div>
           <div class="col-md-6 col-xs-7 clear-padding user-logged">
-          	<a href="" [routerLink]="['Login']">Login</a>
-            <!-- <div ng-hide="isLoggedIn()" >
-              <a ng-class="{active: isActive('/signup')}" href="/signup" class="transition-effect">
+            <div [hidden]="_authService.isLoggedIn()" >
+              <!-- <a ng-class="{active: isActive('/signup')}" href="/signup" class="transition-effect">
                 <i class="fa fa-register"></i>Sign up
-              </a>
+              </a> -->
 
-              <a ng-class="{active: isActive('/login')}" href="/login" class="transition-effect">
-                <i class="fa fa-sign-in"></i>Login
-              </a>
+              <a href="" [routerLink]="['Login']" class="transition-effect"><i class="fa fa-sign-in"></i> Login</a>
             </div>
-            <div ng-show="isLoggedIn()">
-              <a ng-class="{active: isActive('/profile')}" href="/profile/1" class="transition-effect">
+            <div [hidden]="!_authService.isLoggedIn()">
+              <!-- <a ng-class="{active: isActive('/profile')}" href="/profile/1" class="transition-effect">
                 <img src="{{ url_pic }}" alt="User icon">
                 Hi, {{ getCurrentUser().name }}
-              </a>
-              <a ng-class="{active: isActive('/logout')}" href="" ng-click="logout()" class="transition-effect">
+              </a>-->
+              <a href="" (click)="_authService.logout()" class="transition-effect">
                 <i class="fa fa-sign-out"></i>Sign Out
               </a>
-            </div> -->
+            </div>
           </div>
         </div>
       </div>
@@ -59,7 +56,7 @@
               </button>
 
               <!-- BEGIN: LOGO -->
-              <a class="navbar-brand logo" href="/">WTC</a>
+              <a class="navbar-brand logo" href="" [routerLink]="['Home']">WTC</a>
             </div>
 
             <!-- BEGIN: NAVIGATION -->

@@ -2,44 +2,31 @@ import {Component} from 'angular2/core';
 import {Router, RouterLink, ROUTER_DIRECTIVES} from 'angular2/router';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { Http, Headers } from 'angular2/http';
+import { AuthService } from '../../../tripy_go_lib/auth.service';
 
 @Component({
   selector: 'login',
   templateUrl: 'app/components/account/login/login.html',
   styleUrls: ['app/components/account/login/login.css'],
-  providers: [],
+  providers: [AuthService],
   directives: [RouterLink, CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES],
   pipes: []
 })
 export class Login {
-	user: any;
+	public user: any = { email: "", password: "" };
     errors: any;
+    response: any;
 
-	constructor(public router: Router, public http: Http) {
+	constructor(private _authService: AuthService, public _router: Router, public http: Http) {
 	}
 
-	login(event, email, password) {
-		event.preventDefault();
-		// let body = JSON.stringify({ email, password });
-		let body = "email=" + email + "&password=" + password;
-		let headers = new Headers();
-		headers.append('Content-Type', 'application/x-www-form-urlencoded');
-		this.http.post('http://localhost:9000/auth/local', body, { headers: headers })
-			.subscribe(
-				response => {
-					localStorage.setItem('jwt', response.json().token);
-					this.router.parent.navigateByUrl('/');
-				},
-				error => {
-					// alert(JSON.stringify(error));
-					console.log(JSON.stringify(error));
-				}
-			);
-	}
+	login(){
+		this._authService.login(this.user);
+	  }
 
 	signup(event) {
 		event.preventDefault();
-		this.router.parent.navigateByUrl('/signup');
+		this._router.parent.navigateByUrl('/signup');
 	}
 
 	// login(form) {

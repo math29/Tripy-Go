@@ -15,13 +15,15 @@ export class LoggedInRouterOutlet extends RouterOutlet {
 
     this.parentRouter = _parentRouter;
     this.publicRoutes = {
+      '': true,
       '/login': true,
       '/signup': true
     };
   }
 
   activate(instruction: ComponentInstruction) {
-    var url = this.parentRouter.lastNavigationAttempt;
+    let url = this.parentRouter.lastNavigationAttempt;
+    console.log(url);
     if (!this.publicRoutes[url] && !localStorage.getItem('jwt')) {
       // todo: redirect to Login, may be there a better way?
       this.parentRouter.navigateByUrl('/login');

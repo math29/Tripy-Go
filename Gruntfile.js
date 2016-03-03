@@ -73,6 +73,19 @@ module.exports = function (grunt) {
         files: ['bower.json', './back_office/bower.json'],
         tasks: ['wiredep']
       },
+      front_office: {
+        files: [
+          '<%= yeoman.front_office_A2 %>/app/**/*.ts',
+          // Front Office A2
+          '<%= yeoman.front_office_A2 %>/app/**/*.html',
+          '<%= yeoman.front_office_A2 %>/app/**/*.js',
+          '<%= yeoman.front_office_A2 %>/app/**/*.css'
+        ],
+        tasks: ['front_office'],
+        options: {
+          livereload: true
+        }
+      },
       injectJS: {
         files: [
           '<%= yeoman.client %>/{app,components}/**/*.js',
@@ -117,7 +130,7 @@ module.exports = function (grunt) {
           '<%= yeoman.back_office %>/app/**/*.css',
           '<%= yeoman.back_office %>/app/views/**/*.html',
 
-          '<%= yeoman.back_office %>/app/scripts/**/*.js'
+          '<%= yeoman.back_office %>/app/scripts/**/*.js',
         ],
         options: {
           livereload: true
@@ -490,6 +503,7 @@ module.exports = function (grunt) {
          '**/*'
          ]
       },
+      // FRONT OFFICE A2
       front_office_base:{
         expand: true,
         dest: './frontOfficeA2/dist',
@@ -519,6 +533,15 @@ module.exports = function (grunt) {
           'systemjs/**/*',
           'rxjs/**/*',
           'angular2-jwt/*'
+        ]
+      },
+      // TRIPY-GO LIBRAIRIES GLOBALES
+      tripy_go_lib: {
+        expand: true,
+        dest: '<%= yeoman.front_office_A2 %>/app/tripy_go_lib',
+        cwd: './tripyGo_Libs',
+        src: [
+          '**/*.ts'
         ]
       }
     },
@@ -715,6 +738,7 @@ module.exports = function (grunt) {
       'clean:server',
       'env:all',
       'concurrent:server',
+      'front_office',
       'injector',
       'wiredep',
       'autoprefixer',
@@ -797,6 +821,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('front_office', [
+    'copy:tripy_go_lib',
     'copy:front_office_base',
     'copy:front_office_lib',
     'copy:front_office_vendor',

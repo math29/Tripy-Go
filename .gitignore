@@ -6,6 +6,7 @@ public
 .tmpBack
 .idea
 .tscache/
+tscommand*
 
 client/bower_components
 back_office/app/bower_components
@@ -22,3 +23,4 @@ npm-debug.log
 
 # frontOfficeA2
 frontOfficeA2/src/lib/
+frontOfficeA2/src/app/tripy_go_lib/
