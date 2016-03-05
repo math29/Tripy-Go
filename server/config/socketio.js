@@ -27,6 +27,7 @@ function onConnect(socket) {
   require('../api/hashtag/hashtag.socket').register(socket);
   require('../api/travel/travel.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);
+  require('../api/language/language.socket').register(socket);
 }
 
 module.exports = function (socketio) {
