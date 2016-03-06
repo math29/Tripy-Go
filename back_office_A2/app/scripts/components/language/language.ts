@@ -14,7 +14,7 @@ import * as io from 'socket.io-client';
   templateUrl: 'views/components/language/main.html',
   providers: [LanguageService],
   directives: [ROUTER_DIRECTIVES],
-  pipes: [MarkdownPipe]
+  pipes: []
 })
 export class LanguageCmp{
     private errors: any=[];
@@ -41,6 +41,17 @@ export class LanguageCmp{
     }
     ngOnInit(){
       this.getLanguages();
+      // appelé lorsqu'un language est supprimé
+      this.socket.on('language:remove',
+        (data:any)=>{
+          for(let i = 0; i < this.languages.length; i++){
+            if(this.languages[i]._id == data._id){
+              this.languages.splice(i,1);
+              break;
+            }
+          }
+        });
+
     }
 
    textIsValid(text){
@@ -76,7 +87,7 @@ export class LanguageCmp{
             this.orderby = this.keys[1];
           }
           // set socket to listen languages saved
-          this.socket.on('language:save', (data:any)=>console.log(data));
+          this.socket.on('language:save', (data:any)=>this.languages.push(data));
         },
         errors => console.log(errors));
     }
@@ -87,7 +98,7 @@ export class LanguageCmp{
     }
 
     deleteLanguage(language:Language){
-
+      this._languageService.deleteLanguage(language).subscribe();
     }
 
 

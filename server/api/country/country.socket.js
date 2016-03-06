@@ -10,6 +10,9 @@ exports.register = function(socket) {
   Country.schema.post('save', function (doc) {
     onSave(socket, doc);
   });
+  Country.schema.post('update', function (doc) {
+      onSave(socket, doc);
+    });
   Country.schema.post('remove', function (doc) {
     onRemove(socket, doc);
   });
