@@ -1,4 +1,4 @@
-import {Injectable} from 'angular2/core';
+import {Injectable, EventEmitter} from 'angular2/core';
 import {Http, Response, Headers, RequestOptions} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 import {Router} from 'angular2/router';
@@ -10,6 +10,7 @@ import 'rxjs/add/operator/share';
 export class AuthService {
   user:any;
   _token:string;
+  errors: EventEmitter<any> = new EventEmitter();
 
   constructor(private _http: Http, private _router: Router) {
   }
@@ -22,7 +23,7 @@ export class AuthService {
 	  headers.append('Authorization', 'Bearer '+ localStorage.getItem('jwt'));
     headers.append('Content-Type', 'application/json');
     let options = new RequestOptions({ headers: headers });
-    this._http.get('/api/users/me', options)
+    return this._http.get('/api/users/me', options)
       .subscribe(data => {
         this.user = data;
         this.user = this.user._body;
@@ -82,7 +83,7 @@ export class AuthService {
   createUser(user) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this._http.post('/api/users', JSON.stringify(user), options)
+    this._http.post('/api/users', JSON.stringify(user), options)
       .subscribe(
         response => {
           localStorage.setItem('jwt', response.json().token);
@@ -90,9 +91,19 @@ export class AuthService {
           this._router.navigate(['Home']);
         },
         error => {
-          console.log(JSON.stringify(error));
+          this.errors.emit(error);
         }
       );
+    return this.errors;
+  }
+
+  /**
+   * Get Errors Promise
+   *
+   * @return {Promise}
+   */
+  getErrorsPromise(){
+    return this.errors;
   }
 
   /**

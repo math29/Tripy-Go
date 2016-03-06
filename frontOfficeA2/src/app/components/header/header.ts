@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core';
-import { ROUTER_DIRECTIVES, Router } from 'angular2/router';
+import { ROUTER_DIRECTIVES } from 'angular2/router';
 import { AuthService } from '../../tripy_go_lib/auth.service'
 
 @Component({
@@ -13,21 +13,6 @@ import { AuthService } from '../../tripy_go_lib/auth.service'
 export class Header {
 	user: any;
 
-	constructor(private _auth: AuthService, private _router: Router) {
-		console.log(_auth.getMe());
-	}
-
-	ngOnInit() {
-		// this._router.subscribe((val) => function(val){
-		// 	console.log(val);
-		// 	if (val == "" && this._authService.isLoggedIn()) {
-		// 		this.user = this._authService.getMe();
-		// 		console.log(this.user);
-		// 	}
-		// });
-		// if (this._authService.isLoggedIn()) {
-		// 	this.user = this._authService.getMe();
-		// 	console.log(this.user);
-		// }
+	constructor(private _auth: AuthService) {
 	}
 }
