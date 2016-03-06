@@ -738,6 +738,7 @@ module.exports = function (grunt) {
       'clean:server',
       'env:all',
       'concurrent:server',
+      'copy:tripy_go_lib',
       'front_office',
       'injector',
       'wiredep',

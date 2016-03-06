@@ -107,6 +107,18 @@ export class AuthService {
   }
 
   /**
+   * Avatar User Gesture
+   *
+   * @return Avatar URL
+   */
+  getUserAvatar() {
+    if (this.getMe().picture) {
+      return "/api/files/" + this.getMe().picture + "?_ts=" + new Date().getTime();
+    }
+    return "/assets/images/user.png";
+  }
+
+  /**
    * Logout de l'utilisateur
    *
    * supprime le cookie du navigateur
