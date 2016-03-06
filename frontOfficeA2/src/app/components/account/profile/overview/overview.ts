@@ -13,11 +13,9 @@ import { AuthService } from '../../../../tripy_go_lib/auth.service';
 	pipes: []
 })
 export class Overview {
-    avatarUrl: string;
+	user: any;
 
-	constructor(private _authService: AuthService) {
-		this.avatarUrl = _authService.getUserAvatar();
-		console.log("Avatar URL : ");
-		console.log(this.avatarUrl);
+	constructor(private _auth: AuthService) {
+		this.user = _auth.getMe();
 	}
 }

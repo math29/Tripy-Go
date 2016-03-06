@@ -28,7 +28,7 @@
             <div *ngIf="_auth.isLoggedIn()">
                <!-- ng-class="{active: isActive('/profile')}" -->
                <a href="" class="transition-effect" [routerLink]="['Profile']">
-                <!-- <img src="{{ url_pic }}" alt="User icon"> -->
+                <img [src]="_auth.getUserAvatar()" alt="User icon">
                 Hi, {{ _auth.getMe().name }}
               </a>
               <a href="" (click)="_auth.logout()" class="transition-effect">

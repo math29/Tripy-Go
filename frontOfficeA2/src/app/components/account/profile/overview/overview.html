@@ -2,18 +2,18 @@
 	<div class="col-md-8 col-sm-8">
 		<div class="brief-info">
 			<div class="col-md-2 col-sm-2 clear-padding">
-				<!-- <img [src]="{{ url_pic }}" alt="avatar"> -->
+				<img [src]="_auth.getUserAvatar()" alt="avatar">
 			</div>
 			<div class="col-md-10 col-sm-10">
 				<h3>{{ user.fname }} {{ user.name }}</h3>
 				<h5><i class="fa fa-envelope-o"></i>{{ user.email }}</h5>
-				<h5 ng-show="user.city && user.country"><i class="fa fa-globe"></i>{{ user.city }}, {{ user.country }}</h5>
+				<h5 *ngIf="user.city && user.country"><i class="fa fa-globe"></i>{{ user.city }}, {{ user.country }}</h5>
 			</div>
 			<div class="clearfix"></div>
 			<div class="col-md-6 col-sm-6">
-				<h5 ng-show="user.address"><i class="fa fa-map-marker"></i>{{ user.address }}</h5>
-				<h5 ng-show="user.phone"><i class="fa fa-phone"></i>{{ user.phone }}</h5>
-				<h5 ng-show="user.birthday"><i class="fa fa-birthday-cake"></i>{{ user.birthday.toString("MMMM yyyy") }}</h5>
+				<h5 *ngIf="user.address"><i class="fa fa-map-marker"></i>{{ user.address }}</h5>
+				<h5 *ngIf="user.phone"><i class="fa fa-phone"></i>{{ user.phone }}</h5>
+				<h5 *ngIf="user.birthday"><i class="fa fa-birthday-cake"></i>{{ user.birthday.toString("MMMM yyyy") }}</h5>
 			</div>
 			<div class="col-md-6 col-sm-6">
 				<h5><i class="fa fa-twitter"></i>xoxo</h5>
