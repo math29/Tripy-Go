@@ -15,9 +15,9 @@ export class AuthService {
   }
 
   /**
-   * Récupére les informations de l'utilisateur actuel
+   * Store les informations de l'utilisateur actuel dans le local storage
    */
-	getMe(){
+	storeMe(){
 	  let headers = new Headers();
 	  headers.append('Authorization', 'Bearer '+ localStorage.getItem('jwt'));
     headers.append('Content-Type', 'application/json');
@@ -27,9 +27,20 @@ export class AuthService {
         this.user = data;
         this.user = this.user._body;
         this.user = JSON.parse(this.user);
-        localStorage.setItem('jwt-local-user', this.user);
+        console.log(this.user);
+        localStorage.setItem('jwt-local-user', JSON.stringify(this.user));
     }, errors => console.log('Could not retrieve user'));
   }
+
+  /**
+   * Récupère l'utilisateur courant dans le local Storage
+   *
+   * @return {User}
+   */
+  getMe() {
+    return JSON.parse(localStorage.getItem('jwt-local-user'));
+  }
+
 
   /**
    * Login de l'utilisateur
@@ -43,7 +54,7 @@ export class AuthService {
       .subscribe(
           response => {
             localStorage.setItem('jwt', response.json().token);
-            this.getMe();
+            this.storeMe();
             this._router.navigate( ['Home'] );
           },
           error => {
@@ -53,17 +64,35 @@ export class AuthService {
   }
 
   /**
-   * Check if User connected
+   * Check if User is connected
    *
-   * Return User if connected
+   * Return True if connected, False Else
    */
   isLoggedIn() {
-    if (localStorage.getItem('jwt') && localStorage.getItem('jwt-local-user'))
-    {
-      return true;
-    }
-
+    if (localStorage.getItem('jwt') && localStorage.getItem('jwt-local-user')) return true;
     return false;
+  }
+
+  /**
+   * Create a new user
+   *
+   * @param  {Object}   user     - user info
+   * @return {Promise}
+   */
+  createUser(user) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this._http.post('/api/users', JSON.stringify(user), options)
+      .subscribe(
+        response => {
+          localStorage.setItem('jwt', response.json().token);
+          this.storeMe();
+          this._router.navigate(['Home']);
+        },
+        error => {
+          console.log(JSON.stringify(error));
+        }
+      );
   }
 
   /**

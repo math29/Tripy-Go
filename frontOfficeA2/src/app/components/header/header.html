@@ -16,7 +16,7 @@
             </form>
           </div>
           <div class="col-md-6 col-xs-7 clear-padding user-logged">
-            <div [hidden]="_authService.isLoggedIn()" >
+            <div *ngIf="!_auth.isLoggedIn()" >
               <a href="" [routerLink]="['Signup']" class="transition-effect">
                 <i class="fa fa-register"></i>Sign up
               </a>
@@ -25,12 +25,13 @@
                 <i class="fa fa-sign-in"></i> Login
               </a>
             </div>
-            <div [hidden]="!_authService.isLoggedIn()">
-              <!-- <a ng-class="{active: isActive('/profile')}" href="/profile/1" class="transition-effect">
-                <img src="{{ url_pic }}" alt="User icon">
-                Hi, {{ getCurrentUser().name }}
-              </a>-->
-              <a href="" (click)="_authService.logout()" class="transition-effect">
+            <div *ngIf="_auth.isLoggedIn()">
+               <!-- ng-class="{active: isActive('/profile')}" -->
+               <a href="#" class="transition-effect">
+                <!-- <img src="{{ url_pic }}" alt="User icon"> -->
+                Hi, {{ _auth.getMe().name }}
+              </a>
+              <a href="" (click)="_auth.logout()" class="transition-effect">
                 <i class="fa fa-sign-out"></i>Sign Out
               </a>
             </div>
