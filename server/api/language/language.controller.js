@@ -97,7 +97,7 @@ exports.update = function(req, res) {
     if(!language) {
       return res.status(404).send('Not Found');
     }
-
+    language.force = true;
     _.merge(language, req.body).save(function (err) {
       if (err) {
         return handleError(res, err);
@@ -106,7 +106,7 @@ exports.update = function(req, res) {
     });
   });
   }
-  return res.status(400).json(errors);
+  //return res.status(400).json(errors);
 
 };
 

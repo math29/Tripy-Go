@@ -78,7 +78,6 @@ export class LanguageCmp{
       this._languageService.getLanguages()
         .subscribe(data =>
         {
-          console.log(data);
           this.languages = data;
           if(this.languages.length > 0){
             this.keys = Object.keys(this.languages[0]);
@@ -87,14 +86,41 @@ export class LanguageCmp{
             this.orderby = this.keys[1];
           }
           // set socket to listen languages saved
-          this.socket.on('language:save', (data:any)=>this.languages.push(data));
+          this.socket.on('language:save', (data:any)=>{
+            let index = this.findLanguageIndex(data._id);
+            if(index > -1){
+              this.languages[index] = data;
+            }else{
+            this.languages.push(data);
+            }
+          });
         },
         errors => console.log(errors));
     }
 
+
+    /**
+     * Retourne l'index d'une langue dans la liste des langues
+     *
+     * @param id: id de la langue à trouver
+     *
+     * @return index: index de la langue ou -1 si non trouvée
+     */
+    findLanguageIndex(id:string):number{
+      for(let i = 0; i < this.languages.length; i++){
+        if(this.languages[i]._id == id){
+          return i;
+        }
+      }
+      return -1;
+    }
+
     create(language:Language){
       this._languageService.saveLanguage(language)
-        .subscribe(data => console.log(data), errors => console.log(errors));
+        .subscribe(data => {
+
+          this.new_language = null;
+        }, errors => console.log(errors));
     }
 
     deleteLanguage(language:Language){

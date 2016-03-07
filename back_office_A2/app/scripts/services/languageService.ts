@@ -49,7 +49,7 @@ export class LanguageService {
     let body = JSON.stringify({code: language.code, name: language.name, note: language.note});
     // l'opération existe déjà
     if(language._id !== undefined && language._id !== ""){
-      return this._http.put(this.base_url, body, this.getHeaders()).map(res => <any> res.json());
+      return this._http.put(this.base_url + language._id, body, this.getHeaders()).map(res => <any> res.json());
     }else{
       return this._http.post(this.base_url, body, this.getHeaders()).map(res => <any> res.json());
     }
