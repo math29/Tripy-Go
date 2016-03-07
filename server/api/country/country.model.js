@@ -15,5 +15,24 @@ var CountrySchema = new Schema({
 });
 
 
+var CountryModel = mongoose.model('Country', CountrySchema);
+/**
+ * Vérifie que le pays n'existe pas déjà
+ *
+ */
+CountrySchema.pre('save', function(next){
+  var self = this;
+  if(self.force){
+    delete self.force;
+    next();
+  }
+  CountryModel.find({name: self.name},function(err, docs){
+    if(!docs.length){
+      next();
+    }else{
+      next(new Error("Country exists!"));
+    }
+  });
+});
 
-module.exports = mongoose.model('Country', CountrySchema);
+module.exports = CountryModel;

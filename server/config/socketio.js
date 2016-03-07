@@ -28,6 +28,7 @@ function onConnect(socket) {
   require('../api/travel/travel.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);
   require('../api/language/language.socket').register(socket);
+  require('../api/country/country.socket').register(socket);
 }
 
 module.exports = function (socketio) {

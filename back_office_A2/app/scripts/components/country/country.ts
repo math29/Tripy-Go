@@ -76,7 +76,7 @@ export class CountryCmp{
       this.edit_country = country;
     }
 
-    initNewCountry(){
+    initCountry(){
       this.edit_country = new Country("","","","",0);
     }
 
@@ -124,8 +124,7 @@ export class CountryCmp{
     create(country:Country){
       this._countryService.saveCountry(country)
         .subscribe(data => {
-
-          this.edit_country = null;
+          this.edit_country = undefined;
         }, errors => console.log(errors));
     }
 

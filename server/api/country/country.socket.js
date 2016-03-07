@@ -19,9 +19,17 @@ exports.register = function(socket) {
 };
 
 function onSave(socket, doc) {
+  console.log('country save');
   socket.emit('country:save', doc);
 }
 
+/**
+ * Appelé lorsqu'un pays est supprimé de la base de données
+ *
+ * @param socket: socket utilisée
+ * @param doc: document supprimé
+ *
+ */
 function onRemove(socket, doc) {
   socket.emit('country:remove', doc);
 }
