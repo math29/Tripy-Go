@@ -26,7 +26,7 @@ CountrySchema.pre('save', function(next){
     delete self.force;
     next();
   }
-  CountryModel.find({name: self.name},function(err, docs){
+  CountryModel.find({country_name: self.name},function(err, docs){
     if(!docs.length){
       next();
     }else{

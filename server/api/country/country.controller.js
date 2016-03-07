@@ -64,8 +64,11 @@ exports.create = function(req, res) {
 
   // si il n'y à aucun message d'erreur, on ajoute le pays
 	if(errors.errors.length === 0){
-		Country.update({ country_name: { $eq: req.body.country_name}}, req.body, {upsert: true}, function(err, country) {
+		var country = new Country(req.body);
+		country.save(function(err){
+		//Country.update({ country_name: { $eq: req.body.country_name}}, req.body, {upsert: true}, function(err, country) {
 		if(err) {
+		  console.log(err);
 		  return handleError(res, err);
 		}
 		if(typeof country.upserted !== 'undefined'){
