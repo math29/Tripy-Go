@@ -5,32 +5,34 @@ import {NgForm} from 'angular2/common';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {Response} from 'angular2/http';
 import {LanguageService} from '../../services/languageService';
+import {CountryService} from '../../services/countryService';
 import {Language} from '../../classes/language';
+import {Country} from '../../classes/country';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {OrderByPipe} from '../../pipes/orderby';
 import * as io from 'socket.io-client';
 
 @Component({
-  selector: 'languages',
-  templateUrl: 'views/components/language/main.html',
-  providers: [LanguageService],
+  selector: 'countries',
+  templateUrl: 'views/components/country/main.html',
+  providers: [CountryService, LanguageService],
   directives: [ROUTER_DIRECTIVES],
   pipes: [OrderByPipe]
 })
-export class LanguageCmp{
+export class CountryCmp{
     private errors: any=[];
     private messages: any=[];
 
-    private new_language:Language;
+    private edit_country:Country;
     private keys:any;
     private orderby:string='';
     private orderOptions : string[] = ['+','-'];
     private orderType = this.orderOptions[0];
-    private languages: Language[];
+    private countries: Country[];
     private selection: any;
     private socket:any;
 
-    constructor(private _languageService: LanguageService){
+    constructor(private _countryService: CountryService, private _languageService: LanguageService){
       let host = window.location.origin;
       this.socket = io.connect('',{path:'/socket.io-client'});
     }
@@ -41,13 +43,13 @@ export class LanguageCmp{
       console.error('There was an error: ' + err);
     }
     ngOnInit(){
-      this.getLanguages();
+      this.getCountries();
       // appelé lorsqu'un language est supprimé
-      this.socket.on('language:remove',
+      this.socket.on('country:remove',
         (data:any)=>{
-          for(let i = 0; i < this.languages.length; i++){
-            if(this.languages[i]._id == data._id){
-              this.languages.splice(i,1);
+          for(let i = 0; i < this.countries.length; i++){
+            if(this.countries[i]._id == data._id){
+              this.countries.splice(i,1);
               break;
             }
           }
@@ -56,8 +58,8 @@ export class LanguageCmp{
     }
 
     ngOnDestroy(){
-      this.socket.removeAllListeners('language:remove');
-      this.socket.removeAllListeners('language:save');
+      this.socket.removeAllListeners('country:remove');
+      this.socket.removeAllListeners('country:save');
     }
 
    textIsValid(text){
@@ -70,33 +72,32 @@ export class LanguageCmp{
       return valid;
     }
 
-    edit(language:Language){
-      this.new_language = language;
+    edit(country:Country){
+      this.edit_country = country;
     }
 
-    initNewLanguage(){
-      this.new_language = new Language("","","");
+    initNewCountry(){
+      this.edit_country = new Country("","","","",0);
     }
 
-    getLanguages(){
-      this._languageService.getLanguages()
+    getCountries(){
+      this._countryService.getCountries()
         .subscribe(data =>
         {
-          this.languages = data;
-          if(this.languages.length > 0){
-            this.keys = Object.keys(this.languages[0]);
+          this.countries = data;
+          if(this.countries.length > 0){
+            this.keys = Object.keys(this.countries[0]);
             this.keys.splice(0,1);
             this.selection = this.keys[1];
             this.orderby = this.keys[1];
-            console.log(this.orderType+this.orderby);
           }
           // set socket to listen languages saved
-          this.socket.on('language:save', (data:any)=>{
-            let index = this.findLanguageIndex(data._id);
+          this.socket.on('country:save', (data:any)=>{
+            let index = this.findCountryIndex(data._id);
             if(index > -1){
-              this.languages[index] = data;
+              this.countries[index] = data;
             }else{
-            this.languages.push(data);
+            this.countries.push(data);
             }
           });
         },
@@ -105,31 +106,31 @@ export class LanguageCmp{
 
 
     /**
-     * Retourne l'index d'une langue dans la liste des langues
+     * Retourne l'index d'un pays dans la liste des pays
      *
-     * @param id: id de la langue à trouver
+     * @param id: id du pays à trouver
      *
-     * @return index: index de la langue ou -1 si non trouvée
+     * @return index: index du pays ou -1 si non trouvée
      */
-    findLanguageIndex(id:string):number{
-      for(let i = 0; i < this.languages.length; i++){
-        if(this.languages[i]._id == id){
+    findCountryIndex(id:string):number{
+      for(let i = 0; i < this.countries.length; i++){
+        if(this.countries[i]._id == id){
           return i;
         }
       }
       return -1;
     }
 
-    create(language:Language){
-      this._languageService.saveLanguage(language)
+    create(country:Country){
+      this._countryService.saveCountry(country)
         .subscribe(data => {
 
-          this.new_language = null;
+          this.edit_country = null;
         }, errors => console.log(errors));
     }
 
-    deleteLanguage(language:Language){
-      this._languageService.deleteLanguage(language).subscribe();
+    deleteCountry(country:Country){
+      this._countryService.deleteCountry(country).subscribe();
     }
 
 

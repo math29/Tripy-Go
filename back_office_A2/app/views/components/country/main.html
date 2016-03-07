@@ -1,0 +1,146 @@
+<!-- Errors -->
+<div  *ngFor="#error of errors" class="alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Error:</span>
+  {{error}}
+  <button type="button" class="close" (click)="errors.splice(errors.indexOf(error),1)" style="float: right;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+</div>
+
+<!-- messages -->
+<div  *ngFor="#message of messages" class="alert alert-success" role="alert">
+  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+  <span class="sr-only">Success:</span>
+  {{message}}
+  <button type="button" class="close" (click)="messages.splice(messages.indexOf(message),1)" style="float: right;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+</div>
+
+<p>The delete user and country index api routes are restricted to users with the 'admin' role.</p>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Options
+  </div>
+  <div class="panel-body">
+
+    <button class="btn" *ngIf="!edit_country" (click)="initCountry()"><i class="glyphicon glyphicon-plus"></i>Add a country</button>
+    <div id="countryForm" *ngIf="edit_country">
+      <form class="form-horizontal" role="form">
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="country_name">Country name:</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="country_name" [(ngModel)]="edit_country.country_name" placeholder="Enter country name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="country_code">Country code:</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="country_code" [(ngModel)]="edit_country.country_code" placeholder="Enter country code">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="currency_code">Currency_code: </label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="currency_code" [(ngModel)]="edit_country.currency_code" placeholder="Enter currency code">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="population">Population: </label>
+          <div class="col-sm-10">
+            <input type="number" class="form-control" id="population" [(ngModel)]="edit_country.population" placeholder="Enter number of inhabitants">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="capital">Capital: </label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="capital" [(ngModel)]="edit_country.capital" placeholder="Enter country capital">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="continent">Continent: </label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="continent" [(ngModel)]="edit_country.continent" placeholder="Enter country's continent">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="area">Area: </label>
+          <div class="col-sm-10">
+            <input type="number" class="form-control" id="area" [(ngModel)]="edit_country.area" placeholder="Enter country's area">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default" (click)="create(edit_country)">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="query">Serch by: </label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control " id="query" [(ngModel)]="query" placeholder="Search a country">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="orderby">Order by:</label>
+        <div class="col-sm-2">
+          <select class="form-control" id="orderby" [(ngModel)]="orderby">
+            <option *ngFor="#option of keys">{{option}}</option>
+          </select>
+        </div>
+        <div class="col-sm-2">
+          <select class="form-control" [(ngModel)]="orderType">
+            <option *ngFor="#option of orderOptions">{{option}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel panel-info">
+  <div class="panel-heading">
+    Infos
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-lg-12">
+        <a class="btn btn-primary" download="countries.json" href="{{ url }}">Télécharger au format JSON</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <table class="table table-striped table-bordered table-hover" role="grid">
+          <thead>
+          <tr role="row">
+            <th class="sorting">Country code</th>
+            <th class="sorting">Country name</th>
+            <th class="sorting">Capital</th>
+            <th class="sorting">Currency</th>
+            <th class="sorting">Continent</th>
+            <th class="sorting_asc">Area</th>
+            <th class="sorting">Population</th>
+            <th class="sorting" style="max-width: 100px">languages</th>
+          </tr>
+          </thead>
+          <tbody>
+          <!--  |filter:query |orderBy:orderType+orderby -->
+          <tr *ngFor="#country of countries" ng-class="getClassFromInfo(country)">
+            <td>{{country.country_code}}</td>
+            <td>{{country.country_name}}</td>
+            <td>{{country.capital}}</td>
+            <td>{{country.currency_code}}</td>
+            <td>{{country.continent}}</td>
+            <td>{{country.area}}</td>
+            <td>{{country.population}}</td>
+            <td style="max-width: 100px;">{{country.languages}}</td>
+            <td><a (click)="edit(country)" class="trash"><span class="glyphicon glyphicon-edit pull-right"></span></a></td>
+            <td><a (click)="delete(country)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

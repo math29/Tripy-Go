@@ -98,6 +98,7 @@ exports.update = function(req, res) {
     }
 
     _.merge(country, req.body).save(function (err) {
+
       if (err) {
         return handleError(res, err);
       }
@@ -105,7 +106,6 @@ exports.update = function(req, res) {
     });
   });
   }
-  return res.status(400).json(errors);
 
 };
 
