@@ -59,7 +59,7 @@ exports.getCollectionNames = function(req, res){
     }
   });
 
-}
+};
 
 /**
  * Récupére les statistiques de toutes les collections
@@ -96,7 +96,7 @@ exports.getCollectionNames = function(req, res){
       }
     });
   });
-}
+};
 
 exports.serverStatus = function(req, res){
   // Establish connection to db
@@ -126,7 +126,7 @@ exports.serverStatus = function(req, res){
       });
     });
   });
-}
+};
 
 exports.hostInfos = function(req, res){
   // Establish connection to db
@@ -153,7 +153,7 @@ exports.hostInfos = function(req, res){
       });
     });
   });
-}
+};
 
 /**
  * Close database

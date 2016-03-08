@@ -58,7 +58,7 @@ exports.create = function(req, res){
   }else{
     return res.status(400).json(errors);
   }
-}
+};
 
 /**
  * Update an operation and the timelines associated
@@ -85,7 +85,7 @@ exports.update = function(req, res){
     }
     return res.status(200).json(update);
   });
-}
+};
 
 /**
  * Remove an operation from timeline
@@ -206,7 +206,7 @@ exports.destroy = function(req, res) {
  * Vérifie que l'objet log comporte tous les attributs nécessaire
  */
 function checkOperationObject(operation){
-	var errors = {};
+  var errors = {};
 	errors.errors = [];
 
 	if(!isDefined(operation.type)){
