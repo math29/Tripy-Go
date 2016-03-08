@@ -31,6 +31,9 @@ export class CountryCmp{
     private countries: Country[];
     private selection: any;
     private socket:any;
+    private languages:any;
+
+    private continentList: string[] = ["Europe","Asia","Oceania","Amérique du Nord","Amérique du Sud","Artique","Antartique"];
 
     constructor(private _countryService: CountryService, private _languageService: LanguageService){
       let host = window.location.origin;
@@ -43,6 +46,7 @@ export class CountryCmp{
       console.error('There was an error: ' + err);
     }
     ngOnInit(){
+      this.getLanguages();
       this.getCountries();
       // appelé lorsqu'un language est supprimé
       this.socket.on('country:remove',
@@ -77,7 +81,8 @@ export class CountryCmp{
     }
 
     initCountry(){
-      this.edit_country = new Country("","","","",0);
+      this.edit_country = new Country("","","",this.continentList[0],0);
+      this.edit_country.continent = this.continentList[0];
     }
 
     getCountries(){
@@ -104,6 +109,13 @@ export class CountryCmp{
         errors => console.log(errors));
     }
 
+    /**
+     * Récupère les différents languages disponible en base de données
+     */
+     getLanguages(){
+      this._languageService.getLanguages()
+        .subscribe((data:any)=>this.languages = data, errors => this.errors.push(errors));
+     }
 
     /**
      * Retourne l'index d'un pays dans la liste des pays
