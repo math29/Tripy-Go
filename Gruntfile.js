@@ -32,8 +32,8 @@ module.exports = function (grunt) {
     yeoman: {
       // configurable paths
       client: require('./bower.json').appPath || 'client',
-      back_office: require('./back_office/bower.json').appPath || 'back_office',
-      back_office_A2: './back_office_A2',
+      //back_office: require('./back_office/bower.json').appPath || 'back_office',
+      back_office: './back_office',
       dist: 'dist',
       public: 'dist/public',
       private: 'dist/back'
@@ -55,8 +55,8 @@ module.exports = function (grunt) {
         reference: './typings/tsd.d.ts'
       },
       back_office:{
-        src: 'back_office_A2/app/scripts/**/*.ts',
-        outDir: 'back_office_A2/app/scripts_js'
+        src: '<%= yeaoman.back_office %>/app/scripts/**/*.ts',
+        outDir: '<%= yeaoman.back_office %>/app/scripts_js'
       }
     },
     express: {
@@ -82,7 +82,7 @@ module.exports = function (grunt) {
     },
     watch: {
       bower: {
-        files: ['bower.json', './back_office/bower.json'],
+        files: ['bower.json'],
         tasks: ['wiredep']
       },
       injectJS: {
@@ -111,7 +111,7 @@ module.exports = function (grunt) {
         tasks: ['newer:jshint:all', 'karma']
       },
       back_office: {
-        files: ['back_office_A2/app/**/*.ts'],
+        files: ['<%= yeaoman.back_office %>/app/**/*.ts'],
         tasks: ['back_office']
       },
       gruntfile: {
@@ -130,10 +130,10 @@ module.exports = function (grunt) {
           '<%= yeoman.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}',
 
           // back office
-          '<%= yeoman.back_office_A2 %>/app/**/*.css',
-          '<%= yeoman.back_office_A2 %>/app/**/*.html',
+          '<%= yeoman.back_office %>/app/**/*.css',
+          '<%= yeoman.back_office %>/app/**/*.html',
 
-          '<%= yeoman.back_office_A2 %>/app/scripts_js/**/*.js'
+          '<%= yeoman.back_office %>/app/scripts_js/**/*.js'
         ],
         options: {
           livereload: true
@@ -185,7 +185,6 @@ module.exports = function (grunt) {
         '<%= yeoman.client %>/{app,components}/**/*.js',
         '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
         '!<%= yeoman.client %>/{app,components}/**/*.mock.js',
-        '<%= yeoman.back_office %>/app/scripts/**/*.js'
       ],
       test: {
         src: [
@@ -283,11 +282,7 @@ module.exports = function (grunt) {
         src: '<%= yeoman.client %>/index.html',
         ignorePath: '<%= yeoman.client %>/',
         exclude: [/bootstrap-sass-official/, /bootstrap.js/, '/json3/', '/es5-shim/']
-      }/*,
-      back_office: {
-        src: '<%= yeoman.back_office %>/app/index.html',
-        ignorePath: '<%= yeoman.back_office %>/app/'
-      }*/
+      }
     },
 
     // Renames files for browser caching purposes
@@ -318,14 +313,6 @@ module.exports = function (grunt) {
           dest: '<%= yeoman.public %>'
         }
       },
-    useminPrepareBack: {
-      html: '<%= yeoman.back_office %>/app/index.html',
-      options: {
-        staging: '.tmpBack',
-        dest: '<%= yeoman.private %>'
-      }
-
-    },
     // Performs rewrites based on rev and the useminPrepare configuration
     usemin: {
       html: ['<%= yeoman.dist %>/public/{,*/}*.html'],
@@ -344,24 +331,7 @@ module.exports = function (grunt) {
         }
       }
     },
-    // Performs rewrites based on rev and the useminPrepare configuration
-    useminBack: {
-      html: ['<%= yeoman.private %>/{,*/}*.html'],
-      css: ['<%= yeoman.private %>/{,*/}*.css'],
-      js: ['<%= yeoman.private %>/{,*/}*.js$', '!<%= yeoman.private %>/bower_components/*'],
-      options: {
-        assetsDirs: [
-          '<%= yeoman.private %>',
-          '<%= yeoman.private %>/assets/images'
-        ],
-        // This is so we update image references in our ng-templates
-        patterns: {
-          js: [
-            [/(assets\/images\/.*?\.(?:gif|jpeg|jpg|png|webp|svg))/gm, 'Update the JS to reference our revved images']
-          ]
-        }
-      }
-    },
+
     // The following *-min tasks produce minified files in the dist folder
     imagemin: {
       dist: {
@@ -478,7 +448,7 @@ module.exports = function (grunt) {
       },
       back_office: {
         expand: true,
-        dest: './back_office_A2/app/lib',
+        dest: './<%= yeaoman.back_office %>/app/lib',
         cwd: 'node_modules',
         src: [
           'angular2/bundles/**/*',
@@ -495,16 +465,16 @@ module.exports = function (grunt) {
       },
       back_office_compiled: {
         expand: true,
-        dest: './back_office_A2/app/scripts_js',
-        cwd: './back_office_A2/app/scripts_js',
+        dest: './<%= yeaoman.back_office %>/app/scripts_js',
+        cwd: './<%= yeaoman.back_office %>/app/scripts_js',
         src: [
-          'back_office_A2/app/scripts/**/*'
+          '<%= yeaoman.back_office %>/app/scripts/**/*'
         ]
       },
       back_office_inner: {
         expand: true,
-        dest: './back_office_A2/app/scripts_js',
-        cwd: './back_office_A2/app/scripts_js/back_office_A2/app/scripts',
+        dest: './<%= yeaoman.back_office %>/app/scripts_js',
+        cwd: './<%= yeaoman.back_office %>/app/scripts_js/back_office_A2/app/scripts',
         src: [
          '**/*'
          ]
