@@ -3,7 +3,7 @@
 angular.module('wtcApp')
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/start_with', {
+      .when('/start_with/:travelID', {
         templateUrl: 'app/letsTravel/start_with/start_with.html',
         controller: 'StartWithCtrl',
         authenticate: true

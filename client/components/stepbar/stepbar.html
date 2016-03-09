@@ -1,0 +1,45 @@
+<div>
+    <div class="row smpl-step" style="border-bottom: 0;">
+        <div class="col-sm-3 col-xs-3 smpl-step-step" ng-class="step > 1 ? 'complete' : step == 1 ? 'active' : 'disabled' ">
+            <!-- <div class="text-center smpl-step-num">Step 1</div> -->
+            <div class="progress">
+                <div class="progress-bar"></div>
+            </div>
+            <a class="smpl-step-icon" href="/start_with/{{ travelid }}">
+                <i class="fa fa-user" ng-class="step > 0 ? 'black' : 'grey' " style="font-size: 20px; padding-left: 8px; padding-top: 3px;"></i>
+            </a>
+            <!-- <div class="smpl-step-info text-center">Registe User via control panel.</div> -->
+        </div>
+
+        <div class="col-sm-3 col-xs-3 smpl-step-step"  ng-class="step > 2 ? 'complete' : step == 2 ? 'active' : 'disabled'">
+            <!-- <div class="text-center smpl-step-num">Step 2</div> -->
+            <div class="progress">
+                <div class="progress-bar"></div>
+            </div>
+            <a class="smpl-step-icon" href="/find_a_place/{{ travelid }}">
+                <i class="fa fa-dollar" ng-class="step > 1 ? 'black' : 'grey' " style="font-size: 20px; padding-left: 10px; padding-top: 5px;"></i>
+            </a>
+            <!-- <div class="smpl-step-info text-center">Process Payment and fill out all required fields.</div> -->
+        </div>
+        <div class="col-sm-3 col-xs-3 smpl-step-step" ng-class="step > 3 ? 'complete' : step == 3 ? 'active' : 'disabled'">
+            <!-- <div class="text-center smpl-step-num">Step 3</div> -->
+            <div class="progress">
+                <div class="progress-bar"></div>
+            </div>
+            <a class="smpl-step-icon">
+                <i class="fa fa-repeat" ng-class="step > 2 ? 'black' : 'grey' " style="font-size: 20px; padding-left: 7px; padding-top: 5px;"></i>
+            </a>
+            <!-- <div class="smpl-step-info text-center">Confirm Data entered in step 2.</div> -->
+        </div>
+        <div class="col-sm-3 col-xs-3 smpl-step-step" ng-class="step > 4 ? 'complete' : step == 4 ? 'active' : 'disabled'">
+            <!-- <div class="text-center smpl-step-num">Step 4</div> -->
+            <div class="progress">
+                <div class="progress-bar"></div>
+            </div>
+            <a class="smpl-step-icon">
+                <i class="fa fa-download" ng-class="step > 3 ? 'black' : 'grey' " style="font-size: 20px; padding-left: 7px; padding-top: 4px;"></i>
+            </a>
+            <!-- <div class="smpl-step-info text-center">Download product after receiving confirmation email.</div> -->
+        </div>
+    </div>
+</div>

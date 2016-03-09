@@ -102,6 +102,18 @@ angular.module('wtcApp')
       },
 
       /**
+       * Gets all available info on authenticated user
+       *
+       * @return {Object} user
+       */
+       getUserAvatar: function(){
+        if(currentUser.picture){
+          return "/api/files/" + currentUser.picture + "?_ts=" + new Date().getTime();
+        }
+        return "/assets/images/user.png";
+       },
+
+      /**
        * Check if a user is logged in
        *
        * @return {Boolean}
@@ -133,7 +145,7 @@ angular.module('wtcApp')
        * @return {Boolean}
        */
       isAdmin: function() {
-        return currentUser.role === 'admin';
+        return currentUser.role === 'admin' || currentUser.role === 'adminInfo';
       },
 
       /**

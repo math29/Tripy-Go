@@ -1,0 +1,111 @@
+<!-- Errors -->
+<div  *ngFor="#error of errors" class="alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Error:</span>
+  {{error}}
+  <button type="button" class="close" (click)="errors.splice(errors.indexOf(error),1)" style="float: right;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+</div>
+
+<!-- messages -->
+<div  *ngFor="#message of messages" class="alert alert-success" role="alert">
+  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+  <span class="sr-only">Success:</span>
+  {{message}}
+  <button type="button" class="close" (click)="messages.splice(messages.indexOf(message),1)" style="float: right;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Options
+  </div>
+  <div class="panel-body">
+
+    <button class="btn" *ngIf="new_language == undefined"  (click)="initNewLanguage()"><i class="glyphicon glyphicon-plus"></i>Ajouter une langue</button>
+    <div id="languageForm" *ngIf="new_language != undefined">
+      <form class="form-horizontal" role="form" (ngSubmit)="create(new_language)">
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="name">Nom de la langue:</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="name" [(ngModel)]="new_language.name" placeholder="Entrez le nom de la langue">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="code">Code langue:</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="code" [(ngModel)]="new_language.code" placeholder="Entrez le code de la langue">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="note">Note sur le language: </label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="note" [(ngModel)]="new_language.note" placeholder="Une note sur la langue">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default" ><span *ngIf="!new_language._id">Créer</span><span *ngIf="new_language._id">Mettre à jour</span></button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="query">Rechercher par: </label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control " id="query" [(ngModel)]="query" placeholder="Rechercher une langue">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="orderby">Trier par:</label>
+        <div class="col-sm-2">
+          <select class="form-control" id="orderby" [(ngModel)]="orderby">
+            <option *ngFor="#option of keys">{{option}}</option>
+          </select>
+        </div>
+        <div class="col-sm-2">
+          <select class="form-control" [(ngModel)]="orderType">
+            <option *ngFor="#option of orderOptions">{{option}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel panel-info">
+  <div class="panel-heading">
+    Infos
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-lg-12">
+        <a class="btn btn-primary" download="languages.json" href="{{ url }}">Télécharger au format JSON</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <table class="table table-striped table-bordered table-hover" role="grid">
+          <thead>
+          <tr role="row">
+            <th class="sorting">Code langue</th>
+            <th class="sorting">Nom de la langue</th>
+            <th class="sorting">Note</th>
+          </tr>
+          </thead>
+          <tbody>
+          <!--<tr *ngFor="#language of languages |filter:query |orderBy:orderType+orderby" ng-class="getClassFromInfo(language)">-->
+          <tr *ngFor="#language of languages">
+            <td>{{language.code}}</td>
+            <td>{{language.name}}</td>
+            <td>{{language.note}}</td>
+            <td><a (click)="edit(language)" class="trash"><span class="glyphicon glyphicon-edit pull-right"></span></a></td>
+            <td><a (click)="deleteLanguage(language)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

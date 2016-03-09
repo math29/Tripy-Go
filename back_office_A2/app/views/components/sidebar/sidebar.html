@@ -1,0 +1,12 @@
+<div class="navbar-default sidebar" role="navigation">
+    <div class="sidebar-nav navbar-collapse">
+      <sidebar-search></sidebar-search>
+
+      <ul class="nav in" *ngFor="#item of items" id="side-menu">
+          <sidebar-element [item]="item"></sidebar-element>
+        </ul>
+    </div>
+</div>
+
+
+

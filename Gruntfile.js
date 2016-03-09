@@ -13,7 +13,10 @@ module.exports = function (grunt) {
   require('jit-grunt')(grunt, {
     express: 'grunt-express-server',
     useminPrepare: 'grunt-usemin',
+    useminPrepareBack: 'grunt-usemin',
+    useminBack: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
+    ts: 'grunt-ts',
     cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner',
     buildcontrol: 'grunt-build-control'
@@ -24,13 +27,37 @@ module.exports = function (grunt) {
 
   // Define the configuration for all the tasks
   grunt.initConfig({
-
     // Project settings
     pkg: grunt.file.readJSON('package.json'),
     yeoman: {
       // configurable paths
       client: require('./bower.json').appPath || 'client',
-      dist: 'dist'
+      back_office: require('./back_office/bower.json').appPath || 'back_office',
+      back_office_A2: './back_office_A2',
+      dist: 'dist',
+      public: 'dist/public',
+      private: 'dist/back'
+    },
+    ts: {
+      /*back_office: {
+        tsconfig:"<%= yeoman.back_office_A2 %>/tsconfig.json"
+      }*/
+      options:{
+        target: 'es5',
+        module: 'system',
+        moduleResolution: 'node',
+        sourceMap: true,
+        emitDecoratorMetadata: true,
+        experimentalDecorators: true,
+        removeComments: false,
+        noImplicitAny: false,
+        suppressImplicitAnyIndexErrors: true,
+        reference: './typings/tsd.d.ts'
+      },
+      back_office:{
+        src: 'back_office_A2/app/scripts/**/*.ts',
+        outDir: 'back_office_A2/app/scripts_js'
+      }
     },
     express: {
       options: {
@@ -54,6 +81,10 @@ module.exports = function (grunt) {
       }
     },
     watch: {
+      bower: {
+        files: ['bower.json', './back_office/bower.json'],
+        tasks: ['wiredep']
+      },
       injectJS: {
         files: [
           '<%= yeoman.client %>/{app,components}/**/*.js',
@@ -79,19 +110,30 @@ module.exports = function (grunt) {
         ],
         tasks: ['newer:jshint:all', 'karma']
       },
+      back_office: {
+        files: ['back_office_A2/app/**/*.ts'],
+        tasks: ['back_office']
+      },
       gruntfile: {
         files: ['Gruntfile.js']
       },
-      livereload: {
+      liveread: {
         files: [
+          // front office
           '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.css',
           '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.html',
-          
+
           '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.js',
-          
+
           '!{.tmp,<%= yeoman.client %>}{app,components}/**/*.spec.js',
           '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js',
-          '<%= yeoman.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
+          '<%= yeoman.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}',
+
+          // back office
+          '<%= yeoman.back_office_A2 %>/app/**/*.css',
+          '<%= yeoman.back_office_A2 %>/app/**/*.html',
+
+          '<%= yeoman.back_office_A2 %>/app/scripts_js/**/*.js'
         ],
         options: {
           livereload: true
@@ -101,19 +143,28 @@ module.exports = function (grunt) {
         files: [
           'server/**/*.{js,json}'
         ],
-        tasks: ['express:dev', 'wait'],
+        tasks: ['express:dev', 'apidoc', 'wait'],
         options: {
           livereload: true,
           nospawn: true //Without this option specified express won't be reloaded
         }
       }
     },
-
+    apidoc:{
+      myapp: {
+        src: "server/api/",
+        dest: "apidoc/",
+        template: "node_modules/apidoc/template"
+      },
+      options: {
+        livereload: true
+      }
+    },
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
       options: {
         jshintrc: '<%= yeoman.client %>/.jshintrc',
-        reporter: require('jshint-stylish')
+        reporter: require('jshint-stylish'),
       },
       server: {
         options: {
@@ -133,14 +184,25 @@ module.exports = function (grunt) {
       all: [
         '<%= yeoman.client %>/{app,components}/**/*.js',
         '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
-        '!<%= yeoman.client %>/{app,components}/**/*.mock.js'
+        '!<%= yeoman.client %>/{app,components}/**/*.mock.js',
+        '<%= yeoman.back_office %>/app/scripts/**/*.js'
       ],
       test: {
         src: [
           '<%= yeoman.client %>/{app,components}/**/*.spec.js',
           '<%= yeoman.client %>/{app,components}/**/*.mock.js'
         ]
-      }
+      },
+      jenkins: {
+        options: {
+            jshintrc: 'server/.jshintrc',
+            reporter: 'checkstyle',
+            reporterOutput: 'report/jshint.xml',
+        },
+        src: [ 'server/**/*.js',
+                '!server/**/*.spec.js'
+               ]
+    }
     },
 
     // Empties folders to start fresh
@@ -171,6 +233,12 @@ module.exports = function (grunt) {
           cwd: '.tmp/',
           src: '{,*/}*.css',
           dest: '.tmp/'
+        },
+        {
+          expand: true,
+          cwd: './tmp/styles/',
+          src: '{,*/}*.css',
+          dest: '.tmp/styles/'
         }]
       }
     },
@@ -215,7 +283,11 @@ module.exports = function (grunt) {
         src: '<%= yeoman.client %>/index.html',
         ignorePath: '<%= yeoman.client %>/',
         exclude: [/bootstrap-sass-official/, /bootstrap.js/, '/json3/', '/es5-shim/']
-      }
+      }/*,
+      back_office: {
+        src: '<%= yeoman.back_office %>/app/index.html',
+        ignorePath: '<%= yeoman.back_office %>/app/'
+      }*/
     },
 
     // Renames files for browser caching purposes
@@ -223,10 +295,15 @@ module.exports = function (grunt) {
       dist: {
         files: {
           src: [
-            '<%= yeoman.dist %>/public/{,*/}*.js',
-            '<%= yeoman.dist %>/public/{,*/}*.css',
-            '<%= yeoman.dist %>/public/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%= yeoman.dist %>/public/assets/fonts/*'
+            '<%= yeoman.public %>/{,*/}*.js',
+            '<%= yeoman.public %>/{,*/}*.css',
+            '<%= yeoman.public %>/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+            '<%= yeoman.public %>/assets/fonts/*',
+
+            //'<%= yeoman.private %>/{,*/}*.js',
+            //'<%= yeoman.private %>/{,*/}*.css',
+            //'<%= yeoman.private %>/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+            //'<%= yeoman.private %>/assets/fonts/*'
           ]
         }
       }
@@ -236,12 +313,19 @@ module.exports = function (grunt) {
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
     useminPrepare: {
-      html: ['<%= yeoman.client %>/index.html'],
+        html: ['<%= yeoman.client %>/index.html'],
+        options:{
+          dest: '<%= yeoman.public %>'
+        }
+      },
+    useminPrepareBack: {
+      html: '<%= yeoman.back_office %>/app/index.html',
       options: {
-        dest: '<%= yeoman.dist %>/public'
+        staging: '.tmpBack',
+        dest: '<%= yeoman.private %>'
       }
-    },
 
+    },
     // Performs rewrites based on rev and the useminPrepare configuration
     usemin: {
       html: ['<%= yeoman.dist %>/public/{,*/}*.html'],
@@ -260,7 +344,24 @@ module.exports = function (grunt) {
         }
       }
     },
-
+    // Performs rewrites based on rev and the useminPrepare configuration
+    useminBack: {
+      html: ['<%= yeoman.private %>/{,*/}*.html'],
+      css: ['<%= yeoman.private %>/{,*/}*.css'],
+      js: ['<%= yeoman.private %>/{,*/}*.js$', '!<%= yeoman.private %>/bower_components/*'],
+      options: {
+        assetsDirs: [
+          '<%= yeoman.private %>',
+          '<%= yeoman.private %>/assets/images'
+        ],
+        // This is so we update image references in our ng-templates
+        patterns: {
+          js: [
+            [/(assets\/images\/.*?\.(?:gif|jpeg|jpg|png|webp|svg))/gm, 'Update the JS to reference our revved images']
+          ]
+        }
+      }
+    },
     // The following *-min tasks produce minified files in the dist folder
     imagemin: {
       dist: {
@@ -339,19 +440,18 @@ module.exports = function (grunt) {
           expand: true,
           dot: true,
           cwd: '<%= yeoman.client %>',
-          dest: '<%= yeoman.dist %>/public',
+          dest: '<%= yeoman.public %>',
           src: [
             '*.{ico,png,txt}',
             '.htaccess',
             'bower_components/**/*',
-            'assets/images/{,*/}*.{webp}',
-            'assets/fonts/**/*',
+            'assets/**/*',
             'index.html'
           ]
         }, {
           expand: true,
           cwd: '.tmp/images',
-          dest: '<%= yeoman.dist %>/public/assets/images',
+          dest: '<%= yeoman.public %>/assets/images',
           src: ['generated/*']
         }, {
           expand: true,
@@ -360,6 +460,14 @@ module.exports = function (grunt) {
             'package.json',
             'server/**/*'
           ]
+        },
+        {
+          expand: true,
+          dot: true,
+          cwd: '<%= yeoman.back_office %>/app',
+          dest: '<%= yeoman.private %>',
+          src: [
+'**/*'          ]
         }]
       },
       styles: {
@@ -367,6 +475,39 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.client %>',
         dest: '.tmp/',
         src: ['{app,components}/**/*.css']
+      },
+      back_office: {
+        expand: true,
+        dest: './back_office_A2/app/lib',
+        cwd: 'node_modules',
+        src: [
+          'angular2/bundles/**/*',
+          'reflect-metadata/Reflect.js',
+          'systemjs/**/*',
+          'rxjs/**/*',
+          'ng2-cookies/**/*',
+          'ng2-charts/**/*',
+          'chart.js/**/*',
+          'marked/**/*',
+          'socket.io-client/**/*',
+          'font-awesome/**/*'
+        ]
+      },
+      back_office_compiled: {
+        expand: true,
+        dest: './back_office_A2/app/scripts_js',
+        cwd: './back_office_A2/app/scripts_js',
+        src: [
+          'back_office_A2/app/scripts/**/*'
+        ]
+      },
+      back_office_inner: {
+        expand: true,
+        dest: './back_office_A2/app/scripts_js',
+        cwd: './back_office_A2/app/scripts_js/back_office_A2/app/scripts',
+        src: [
+         '**/*'
+         ]
       }
     },
 
@@ -391,7 +532,19 @@ module.exports = function (grunt) {
         }
       }
     },
-
+    // create logs dir
+    mkdir: {
+      log:{
+        options: {
+          mode: '0700',
+          create: ['logs']
+        }
+      }
+    },
+    // create log file
+    touch: {
+      src: ['logs/all-logs.log']
+    },
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
@@ -408,8 +561,8 @@ module.exports = function (grunt) {
         }
       },
       dist: [
-        'imagemin',
-        'svgmin'
+        /*'imagemin',
+        'svgmin'*/
       ]
     },
 
@@ -422,10 +575,22 @@ module.exports = function (grunt) {
     },
 
     mochaTest: {
-      options: {
-        reporter: 'spec'
+      test: {
+        options: {
+          reporter: 'spec'
+        },
+        src: ['server/**/*.spec.js']
       },
-      src: ['server/**/*.spec.js']
+      jenkins: {
+        options: {
+          reporter: 'xunit',
+          require: 'should',
+          captureFile: './report/TESTxunit.xml',
+          quiet: false,
+          clearRequireCache: false
+        },
+        src: ['server/**/*.spec.js']
+      }
     },
 
     protractor: {
@@ -469,12 +634,12 @@ module.exports = function (grunt) {
         files: {
           '<%= yeoman.client %>/index.html': [
                [
-                 
+
                  '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.js',
-                 
-                 '!{.tmp,<%= yeoman.client %>}/app/app.js',               
+
+                 '!{.tmp,<%= yeoman.client %>}/app/app.js',
                  '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.spec.js',
-                 '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js'               
+                 '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js'
                ]
             ]
         }
@@ -518,7 +683,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('serve', function (target) {
     if (target === 'dist') {
-      return grunt.task.run(['build', 'env:all', 'env:prod', 'express:prod', 'wait', 'open', 'express-keepalive']);
+      return grunt.task.run(['build', 'env:all', 'env:prod', 'express:prod', 'wait',  'express-keepalive']);
     }
 
     if (target === 'debug') {
@@ -529,7 +694,8 @@ module.exports = function (grunt) {
         'injector',
         'wiredep',
         'autoprefixer',
-        'concurrent:debug'
+        'concurrent:debug',
+        'apidoc'
       ]);
     }
 
@@ -541,6 +707,7 @@ module.exports = function (grunt) {
       'wiredep',
       'autoprefixer',
       'express:dev',
+      'apidoc',
       'wait',
       'open',
       'watch'
@@ -557,10 +724,16 @@ module.exports = function (grunt) {
       return grunt.task.run([
         'env:all',
         'env:test',
-        'mochaTest'
+        'mochaTest',
       ]);
     }
-
+    else if(target === 'jenkins'){
+      return grunt.task.run([
+        'env:all',
+        'env:test',
+        'mochaTest:jenkins'
+        ])
+    }
     else if (target === 'client') {
       return grunt.task.run([
         'clean:server',
@@ -592,12 +765,33 @@ module.exports = function (grunt) {
     ]);
   });
 
+  grunt.registerTask('useminPrepareBack', function () {
+      var useminPrepareBackConfig = grunt.config('useminPrepareBack');
+      grunt.config.set('useminPrepare', useminPrepareBackConfig);
+      grunt.task.run('useminPrepare');
+    });
+
+    grunt.registerTask('useminBack', function () {
+      var useminBackConfig = grunt.config('useminBack');
+      grunt.config.set('usemin', useminBackConfig);
+      grunt.task.run('usemin');
+    });
+
+  grunt.registerTask('back_office', [
+    'ts',
+    'copy:back_office_compiled',
+    'copy:back_office_inner'
+  ]);
+
   grunt.registerTask('build', [
     'clean:dist',
     'concurrent:dist',
     'injector',
     'wiredep',
     'useminPrepare',
+    'ts',
+    'copy:back_office',
+    //'useminPrepareBack',
     'autoprefixer',
     'ngtemplates',
     'concat',
@@ -607,12 +801,16 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'rev',
-    'usemin'
+    'usemin',
+    'mkdir',
+    'touch'
+    //'useminBack'
   ]);
 
   grunt.registerTask('default', [
     'newer:jshint',
     'test',
-    'build'
+    'build',
+    'serve:dist'
   ]);
 };

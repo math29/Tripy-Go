@@ -5,21 +5,31 @@
 'use strict';
 
 var config = require('./environment');
+var logger = require('./logger');
 
 // When the user disconnects.. perform this
 function onDisconnect(socket) {
+  socket.emit('disconnected');
 }
 
 // When the user connects.. perform this
 function onConnect(socket) {
   // When the client emits 'info', this listens and executes
   socket.on('info', function (data) {
-    console.info('[%s] %s', socket.address, JSON.stringify(data, null, 2));
+    logger.info('[%s] %s', socket.address,JSON.stringify(data, null, 2));
   });
 
   // Insert sockets below
+  require('../api/timeline/timeline.socket').register(socket);
+  require('../api/operation/operation.socket').register(socket);
+  require('../api/location/location.socket').register(socket);
+  require('../api/transport/transport.socket').register(socket);
   require('../api/hashtag/hashtag.socket').register(socket);
   require('../api/travel/travel.socket').register(socket);
+
+  require('../api/thing/thing.socket').register(socket);
+  require('../api/language/language.socket').register(socket);
+  require('../api/country/country.socket').register(socket);
 }
 
 module.exports = function (socketio) {
@@ -48,11 +58,11 @@ module.exports = function (socketio) {
     // Call onDisconnect.
     socket.on('disconnect', function () {
       onDisconnect(socket);
-      console.info('[%s] DISCONNECTED', socket.address);
+      logger.info('[%s] DISCONNECTED', socket.address);
     });
 
     // Call onConnect.
     onConnect(socket);
-    console.info('[%s] CONNECTED', socket.address);
+    logger.info('[%s] CONNECTED', socket.address);
   });
 };

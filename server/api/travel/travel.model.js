@@ -27,7 +27,15 @@ var TravelSchema = new Schema({
   selectedHashtags: [{
     type: Schema.Types.ObjectId,
     ref: 'Hashtag'
-  }]
+  }],
+  departure: {
+    type: Schema.Types.ObjectId,
+    ref: 'Location'
+  },
+  arrival: {
+    type: Schema.Types.ObjectId,
+    ref: 'Location'
+  }
 });
 
 module.exports = mongoose.model('Travel', TravelSchema);

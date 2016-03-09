@@ -8,7 +8,7 @@ angular.module('wtcApp')
             libraries: 'weather,geometry,visualization,places' // Required for SearchBox.
         });
     })
-    .controller('FindAPlaceCtrl', function ($scope, $routeParams) {
+    .controller('FindAPlaceCtrl', function ($scope, $http, $routeParams) {
 
         // First focus of the MAP
         $scope.map = {center: {latitude: 40.1451, longitude: -99.6680 }, zoom: 4 };
@@ -21,8 +21,8 @@ angular.module('wtcApp')
                 var place = searchBox.getPlaces();
                 $scope.map = {
                     center: {
-                        "latitude": place[0].geometry.location.lat(),
-                        "longitude": place[0].geometry.location.lng()
+                        'latitude': place[0].geometry.location.lat(),
+                        'longitude': place[0].geometry.location.lng()
                     },
                     zoom: 13
                 };
@@ -32,6 +32,6 @@ angular.module('wtcApp')
         // SearchBox allowing to research a place
         $scope.searchbox = { template:'searchbox.tpl.html', events:events};
 
-        var travelID = $routeParams.travelID;
-        $scope.message = "L'id est : " + travelID;
+        $scope.travelID = $routeParams.travelID;
+        $scope.travel = $http.get('/api/travels/' + $scope.travelID);
     });

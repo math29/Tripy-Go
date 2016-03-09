@@ -5,21 +5,35 @@
     "angular": ">=1.2.*",
     "json3": "~3.3.1",
     "es5-shim": "~3.0.1",
-    "bootstrap": "~3.1.1",
+    "bootstrap": ">=3.3.4",
     "angular-resource": ">=1.2.*",
     "angular-cookies": ">=1.2.*",
     "angular-sanitize": ">=1.2.*",
     "angular-route": ">=1.2.*",
-    "angular-bootstrap": "~0.13.3",
     "font-awesome": ">=4.1.0",
     "lodash": "~3.10.1",
     "angular-socket-io": "~0.6.0",
     "angular-animate": "~1.4.5",
     "bootstrap-list-filter": "~0.2.2",
-    "angular-google-maps": "~2.1.5"
+    "angular-google-maps": "~2.1.5",
+    "socket.io-client": "~1.4.3"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",
     "angular-scenario": ">=1.2.*"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "less/bootstrap.less",
+        "dist/css/bootstrap.min.css",
+        "dist/css/bootstrap-theme.css",
+        "dist/js/bootstrap.min.js",
+        "dist/fonts/glyphicons-halflings-regular.eot",
+        "dist/fonts/glyphicons-halflings-regular.svg",
+        "dist/fonts/glyphicons-halflings-regular.ttf",
+        "dist/fonts/glyphicons-halflings-regular.woff"
+      ]
+    }
   }
 }

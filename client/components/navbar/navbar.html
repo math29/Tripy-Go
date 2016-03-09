@@ -1,32 +1,89 @@
-<div class="navbar navbar-default navbar-static-top" ng-controller="NavbarCtrl">
-  <div class="container">
-    <div class="navbar-header">
-      <button class="navbar-toggle" type="button" ng-click="isCollapsed = !isCollapsed">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a href="/" class="navbar-brand">wtc</a>
-    </div>
-    <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
-      <ul class="nav navbar-nav">
-        <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
-            <a ng-href="{{item.link}}">{{item.title}}</a>
-        </li>
-        <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
-      </ul>
+<div id="up">
+  <div class="row transparent-menu-top">
+    <div class="container clear-padding">
+      <div class="navbar-contact">
+        <div class="col-md-7 col-sm-6 clear-padding">
+          <a href="#" class="transition-effect"><i class="fa fa-phone"></i> (+33) 631067282</a>
+          <a href="#" class="transition-effect"><i class="fa fa-envelope-o"></i> maaath29@gmail.com</a>
+        </div>
+        <div class="col-md-5 col-sm-6 clear-padding search-box">
+          <div class="col-md-6 col-xs-5 clear-padding">
+            <form >
+              <div class="input-group">
+                <input type="text" name="search" class="form-control" required placeholder="Search">
+                <span class="input-group-addon"><i class="fa fa-search fa-fw"></i></span>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-6 col-xs-7 clear-padding user-logged">
+            <div ng-hide="isLoggedIn()" >
+              <a ng-class="{active: isActive('/signup')}" href="/signup" class="transition-effect">
+                <i class="fa fa-register"></i>Sign up
+              </a>
 
-      <ul class="nav navbar-nav navbar-right">
-        <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
-        <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
-        <li ng-show="isLoggedIn()">
-          <p class="navbar-text">Hello {{ getCurrentUser().name }}</p>
-        </li>
-        <li ng-show="isLoggedIn()" ng-class="{active: isActive('/profile')}"><a href="/profile"><i class="glyphicon glyphicon-user"></i></a></li>
-        <li ng-show="isLoggedIn()" ng-class="{active: isActive('/settings')}"><a href="/settings"><span class="glyphicon glyphicon-cog"></span></a></li>
-        <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout()">Logout</a></li>
-      </ul>
+              <a ng-class="{active: isActive('/login')}" href="/login" class="transition-effect">
+                <i class="fa fa-sign-in"></i>Login
+              </a>
+            </div>
+            <div ng-show="isLoggedIn()">
+              <a ng-class="{active: isActive('/profile')}" href="/profile/1" class="transition-effect">
+                <img src="{{ url_pic }}" alt="User icon">
+                Hi, {{ getCurrentUser().name }}
+              </a>
+              <!-- <a ng-class="{active: isActive('/settings')}" href="/settings" class="transition-effect">
+                <i class="fa fa-cog"></i>
+              </a> -->
+              <a ng-class="{active: isActive('/logout')}" href="" ng-click="logout()" class="transition-effect">
+                <i class="fa fa-sign-out"></i>Sign Out
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="row transparent-menu">
+    <div class="container clear-padding">
+      <!-- BEGIN: HEADER -->
+      <div class="navbar-wrapper">
+        <div class="navbar navbar-default" role="navigation">
+          <!-- BEGIN: NAV-CONTAINER -->
+          <div class="nav-container">
+            <div class="navbar-header">
+              <!-- BEGIN: TOGGLE BUTTON (RESPONSIVE)-->
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" ng-click="isCollapsed = !isCollapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <!-- BEGIN: LOGO -->
+              <a class="navbar-brand logo" href="/">WTC</a>
+            </div>
+
+            <!-- BEGIN: NAVIGATION -->
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                  <a ng-class="{active: isActive('/')}" class="dropdown-toggle" href="/" data-toggle="dropdown"><i class="fa fa-home"></i> HOME</a>
+                </li>
+                <li class="dropdown">
+                  <a ng-class="{active: isActive('/start_with')}" class="dropdown-toggle" href="/start_with/new" data-toggle="dropdown"><i class="fa fa-plane"></i> Let's travel !</a>
+                </li>
+                <li ng-show="isAdmin()"  ng-class="{active: isActive('/admin')}" ng-click="goAdmin()" class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown">Admin</a>
+                </li>
+              </ul>
+            </div>
+            <!-- END: NAVIGATION -->
+          </div>
+          <!--END: NAV-CONTAINER -->
+        </div>
+      </div>
+      <!-- END: HEADER -->
     </div>
   </div>
 </div>

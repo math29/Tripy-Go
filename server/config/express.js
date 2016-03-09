@@ -18,6 +18,9 @@ var passport = require('passport');
 var session = require('express-session');
 var mongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');
+var logger = require('./logger');
+var busboyBodyParser = require('busboy-body-parser');
+
 
 module.exports = function(app) {
   var env = app.get('env');
@@ -31,6 +34,7 @@ module.exports = function(app) {
   app.use(methodOverride());
   app.use(cookieParser());
   app.use(passport.initialize());
+  app.use(busboyBodyParser());
 
   // Persist sessions with mongoStore
   // We need to enable sessions for passport twitter because its an oauth 1.0 strategy
@@ -43,11 +47,12 @@ module.exports = function(app) {
       db: 'wtc'
     })
   }));
-  
+
   if ('production' === env) {
     app.use(favicon(path.join(config.root, 'public', 'favicon.ico')));
     app.use(express.static(path.join(config.root, 'public')));
     app.set('appPath', path.join(config.root, 'public'));
+    app.use('/back', express.static(path.join(config.root, 'back')));
     app.use(morgan('dev'));
   }
 
@@ -56,7 +61,12 @@ module.exports = function(app) {
     app.use(express.static(path.join(config.root, '.tmp')));
     app.use(express.static(path.join(config.root, 'client')));
     app.set('appPath', path.join(config.root, 'client'));
-    app.use(morgan('dev'));
+    app.use('/back',express.static(path.join(config.root, 'back_office/app/')));
+    app.use('/back2', express.static(path.join(config.root, 'back_office_A2/app/')));
+    if('test' !== env){
+      app.use('/doc', express.static(path.join(config.root, 'apidoc')));
+      app.use(require('morgan')({ "stream": logger.stream }));
+    }
     app.use(errorHandler()); // Error handler - has to be last
   }
 };
