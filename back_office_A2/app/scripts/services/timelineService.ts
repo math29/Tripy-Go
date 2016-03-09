@@ -38,8 +38,10 @@ export class TimelineService {
     return this._http.get(this.base_url, this.getHeaders());
   }
 
+  /**
+   * Requête de création de la timeline
+   */
   createTimeline(timeline:any){
-    console.log(timeline);
     return this._http.post(this.base_url + '/' + timeline.name, JSON.stringify({description:timeline.description}), this.getHeaders());
   }
 

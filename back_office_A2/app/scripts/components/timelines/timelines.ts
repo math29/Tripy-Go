@@ -44,8 +44,7 @@ export class TimelinesCmp{
         if(this.timelines.length == 0){
           this.createTimeline();
         }
-        console.log(this.socket);
-        this.socket.on('timeline:save',(data:any)=>alert(data));
+        this.socket.on('timeline:save',(data:any)=>console.log(data));
 
         }, error => {this.errors.push("Impossible de récupérer les timelines");});
     }
@@ -112,9 +111,63 @@ export class TimelinesCmp{
       this.operationEdit = operation;
     }
 
-    isTimelineOnOperation(timeline:any, operation:any){}
+    /**
+     * L'opération est elle déjà associée à la timeline?
+     *
+     * @param timeline  Timeline dans laquelle on recherche l'opération
+     * @param operation Opération à chercher
+     * @returns True si l'opération est associée à la timeline, False sinon
+     *
+     */
+    isTimelineOnOperation(timeline:any, operation:any){
+      if(operation !== null){
+        if(operation.steps !== undefined){
+          for(let i = 0; i < operation.steps.length; i++){
+            if(operation.steps[i].id === timeline._id){
+              return true;
+            }
+          }
+        }
+      }
+      return false;
+    }
 
-    addToTimeline(operation:any){}
+    /**
+     * Ajoute une opération à une timeline (Ne pas oublier de soumettre les informations)
+     *
+     * @param timeline  Timeline dans laquelle ajouter l'opération
+     */
+    addToTimeline(timeline:any){
+      let tmline = {id: timeline._id ,step:timeline.operations.length};
+      if(!this.isTimelineOnOperation(timeline, this.operationEdit)){
+        if(this.operationEdit.steps === undefined){
+          this.operationEdit.steps = [];
+        }
+        this.operationEdit.steps.push(tmline);
+      }
+    }
+
+    removeFromTimeline(timeline:any){
+      let index = this.findTimelineInOperation(timeline, this.operationEdit);
+      console.log(index);
+      if(index !== -1){
+        this.operationEdit.steps.splice(index, 1);
+      }
+      console.log('removed');
+      console.log(this.operationEdit);
+    }
+
+    findTimelineInOperation(timeline:any, operation: any){
+      if(operation.steps !== undefined){
+        for(let i = 0; i < operation.steps.length; i++){
+          if(operation.steps[i].id === timeline._id){
+            return i;
+          }
+        }
+      }
+
+      return -1;
+    }
 
     createThisTimeline(){}
 

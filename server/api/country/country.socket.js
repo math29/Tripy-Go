@@ -19,7 +19,6 @@ exports.register = function(socket) {
 };
 
 function onSave(socket, doc) {
-  console.log('country save');
   socket.emit('country:save', doc);
 }
 
