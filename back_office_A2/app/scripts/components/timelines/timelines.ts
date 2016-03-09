@@ -1,6 +1,6 @@
 /// <reference path="../../../../../typings/socket.io-client/socket.io-client.d.ts" />
 
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit, OnDestroy} from 'angular2/core';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {Response} from 'angular2/http';
 import {StatsCmp} from '../utils/stats';
@@ -49,6 +49,12 @@ export class TimelinesCmp{
         }, error => {this.errors.push("Impossible de récupérer les timelines");});
     }
 
+
+    ngOnDestroy(){
+      this.socket.removeAllListeners('operation:remove');
+      this.socket.removeAllListeners('operation:save');
+      this.socket.removeAllListeners('timeline:save');
+    }
     /**
      * Insertion d'une timeline via l'API
      */
@@ -72,7 +78,12 @@ export class TimelinesCmp{
           data => this.operations = data,
           err => {this.logError(err);this.errors.push("Impossible de récupérer la liste des opérations.")});
       //this.socket.syncUpdates('operation', this.operations);
-        this.socket.on('operation',(data:any)=>alert(data));
+        this.socket.on('operation:save',(data:any)=>{
+          console.log(data);
+        });
+        this.socket.on('operation:remove',(data:any)=>{
+                  console.log(data);
+                });
 
     }
 
