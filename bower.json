@@ -35,5 +35,8 @@
         "dist/fonts/glyphicons-halflings-regular.woff"
       ]
     }
+  },
+  "resolutions": {
+    "angular": ">=1.2.*"
   }
 }

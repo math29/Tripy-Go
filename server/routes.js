@@ -35,7 +35,7 @@ module.exports = function(app) {
   app.route('/*')
     .get(function(req, res) {
       var p = app.get('appPath');;
-      if(req.url.indexOf("back2") > -1){
+      if(req.url.indexOf("back") > -1){
         p = p + '/../back_office_A2/app';
       }
       res.sendFile(path.resolve(p + '/index.html'));
