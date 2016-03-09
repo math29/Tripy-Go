@@ -1,0 +1,127 @@
+{
+  "_args": [
+    [
+      "ng2-charts",
+      "/Users/Yoann/Documents/src/WTC"
+    ]
+  ],
+  "_from": "ng2-charts@latest",
+  "_id": "ng2-charts@1.0.0-beta.0",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/ng2-charts",
+  "_nodeVersion": "4.2.3",
+  "_npmUser": {
+    "email": "valorkin@gmail.com",
+    "name": "valorkin"
+  },
+  "_npmVersion": "3.5.2",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "ng2-charts",
+    "raw": "ng2-charts",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/ng2-charts/-/ng2-charts-1.0.0-beta.0.tgz",
+  "_shasum": "c9f7c6cedfba91f135ae8dbc7e0d465641105f8f",
+  "_shrinkwrap": null,
+  "_spec": "ng2-charts",
+  "_where": "/Users/Yoann/Documents/src/WTC",
+  "author": {
+    "email": "valorkin@gmail.com",
+    "name": "Dmitriy Shekhovtsov"
+  },
+  "bugs": {
+    "url": "https://github.com/valor-software/ng2-charts/issues"
+  },
+  "contributors": [
+    {
+      "name": "Dmitriy Shekhovtsov",
+      "email": "valorkin@gmail.com",
+      "url": "https://github.com/valorkin"
+    },
+    {
+      "name": "Soloviova Nataliya",
+      "email": "nataliya.soloviova@valor-software.com",
+      "url": "https://github.com/natali-abyss"
+    }
+  ],
+  "dependencies": {},
+  "description": "Reactive, responsive, beautiful charts for Angular2 based on Chart.js",
+  "devDependencies": {
+    "angular2": "2.0.0-beta.0",
+    "bootstrap": "3.3.6",
+    "chart.js": "1.0.2",
+    "clean-webpack-plugin": "0.1.5",
+    "compression-webpack-plugin": "0.2.0",
+    "es6-shim": "0.33.13",
+    "eslint": "1.10.3",
+    "exports-loader": "0.6.2",
+    "gulp": "3.9.0",
+    "gulp-clean": "0.3.1",
+    "gulp-eslint": "1.1.1",
+    "gulp-size": "2.0.0",
+    "gulp-tsc": "1.1.4",
+    "gulp-tslint": "4.2.2",
+    "html-loader": "0.4.0",
+    "markdown-loader": "0.1.7",
+    "marked": "0.3.5",
+    "ng2-bootstrap": "1.0.0-beta.2",
+    "pre-commit": "1.1.2",
+    "prismjs": "github:valorkin/prism",
+    "prismjs-loader": "0.0.2",
+    "raw-loader": "0.5.1",
+    "reflect-metadata": "0.1.2",
+    "require-dir": "0.3.0",
+    "rxjs": "5.0.0-beta.0",
+    "transfer-webpack-plugin": "0.1.4",
+    "ts-loader": "0.7.2",
+    "tslint": "3.2.1",
+    "typescript": "1.7.5",
+    "webpack": "1.12.10",
+    "webpack-dev-server": "1.14.0",
+    "zone.js": "0.5.10"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "c9f7c6cedfba91f135ae8dbc7e0d465641105f8f",
+    "tarball": "http://registry.npmjs.org/ng2-charts/-/ng2-charts-1.0.0-beta.0.tgz"
+  },
+  "gitHead": "f9dbc47d1acdbe2120e1e0fbd3463b5d503da92c",
+  "homepage": "https://github.com/valor-software/ng2-charts#readme",
+  "keywords": [
+    "angular2",
+    "angularjs",
+    "charts"
+  ],
+  "license": "MIT",
+  "main": "ng2-charts.js",
+  "maintainers": [
+    {
+      "name": "valorkin",
+      "email": "valorkin@gmail.com"
+    }
+  ],
+  "name": "ng2-charts",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/valor-software/ng2-charts.git"
+  },
+  "scripts": {
+    "deploy": "NODE_ENV=production webpack -p --progress --color --optimize-minimize --optimize-dedupe --optimize-occurence-order",
+    "prepublish": "gulp clean && tsc",
+    "server": "webpack-dev-server --hot --inline --colors --display-error-details --display-cached",
+    "start": "npm run server",
+    "test": "gulp lint"
+  },
+  "typings": "ng2-charts.d.ts",
+  "version": "1.0.0-beta.0"
+}
