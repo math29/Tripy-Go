@@ -33,15 +33,13 @@ module.exports = function (grunt) {
       // configurable paths
       client: require('./bower.json').appPath || 'client',
       //back_office: require('./back_office/bower.json').appPath || 'back_office',
-      back_office: './back_office',
+      front_office_A2: './frontOfficeA2/src',
+      back_office: './back_office_A2',
       dist: 'dist',
       public: 'dist/public',
       private: 'dist/back'
     },
     ts: {
-      /*back_office: {
-        tsconfig:"<%= yeoman.back_office_A2 %>/tsconfig.json"
-      }*/
       options:{
         target: 'es5',
         module: 'system',
@@ -57,6 +55,9 @@ module.exports = function (grunt) {
       back_office:{
         src: '<%= yeaoman.back_office %>/app/scripts/**/*.ts',
         outDir: '<%= yeaoman.back_office %>/app/scripts_js'
+      },
+      front_office: {
+        tsconfig:"<%= yeoman.front_office_A2 %>/tsconfig.json",
       }
     },
     express: {
@@ -84,6 +85,19 @@ module.exports = function (grunt) {
       bower: {
         files: ['bower.json'],
         tasks: ['wiredep']
+      },
+      front_office: {
+        files: [
+          '<%= yeoman.front_office_A2 %>/app/**/*.ts',
+          // Front Office A2
+          '<%= yeoman.front_office_A2 %>/app/**/*.html',
+          '<%= yeoman.front_office_A2 %>/app/**/*.js',
+          '<%= yeoman.front_office_A2 %>/app/**/*.css'
+        ],
+        tasks: ['front_office'],
+        options: {
+          livereload: true
+        }
       },
       injectJS: {
         files: [
@@ -134,6 +148,7 @@ module.exports = function (grunt) {
           '<%= yeoman.back_office %>/app/**/*.html',
 
           '<%= yeoman.back_office %>/app/scripts_js/**/*.js'
+
         ],
         options: {
           livereload: true
@@ -478,6 +493,47 @@ module.exports = function (grunt) {
         src: [
          '**/*'
          ]
+      },
+      // FRONT OFFICE A2
+      front_office_base:{
+        expand: true,
+        dest: './frontOfficeA2/dist',
+        cwd: './frontOfficeA2/src',
+        src: [
+          // '*',
+          '**/*'
+        ]
+      },
+      front_office_vendor: {
+        expand: true,
+        dest: './frontOfficeA2/dist/vendor',
+        cwd: './client/bower_components',
+        src: [
+          'jquery/**/*',
+          'bootstrap/**/**/*',
+          'font-awesome/**/*'
+        ]
+      },
+      front_office_lib: {
+        expand: true,
+        dest: './frontOfficeA2/dist/lib',
+        cwd: './node_modules',
+        src: [
+          'angular2/bundles/**/*',
+          'reflect-metadata/Reflect.js',
+          'systemjs/**/*',
+          'rxjs/**/*',
+          'angular2-jwt/*'
+        ]
+      },
+      // TRIPY-GO LIBRAIRIES GLOBALES
+      tripy_go_lib: {
+        expand: true,
+        dest: '<%= yeoman.front_office_A2 %>/app/tripy_go_lib',
+        cwd: './tripyGo_Libs',
+        src: [
+          '**/*.ts'
+        ]
       }
     },
 
@@ -673,6 +729,8 @@ module.exports = function (grunt) {
       'clean:server',
       'env:all',
       'concurrent:server',
+      'copy:tripy_go_lib',
+      'front_office',
       'injector',
       'wiredep',
       'autoprefixer',
@@ -751,6 +809,14 @@ module.exports = function (grunt) {
     'ts',
     'copy:back_office_compiled',
     'copy:back_office_inner'
+  ]);
+
+  grunt.registerTask('front_office', [
+    'copy:tripy_go_lib',
+    'copy:front_office_base',
+    'copy:front_office_lib',
+    'copy:front_office_vendor',
+    'ts:front_office'
   ]);
 
   grunt.registerTask('build', [

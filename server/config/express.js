@@ -61,7 +61,8 @@ module.exports = function(app) {
     app.use(express.static(path.join(config.root, '.tmp')));
     app.use(express.static(path.join(config.root, 'client')));
     app.set('appPath', path.join(config.root, 'client'));
-    app.use('/back', express.static(path.join(config.root, 'back_office_A2/app/')));
+    app.use('/front', express.static(path.join(config.root, 'frontOfficeA2/dist/')));
+    app.use('/back',express.static(path.join(config.root, 'back_office/app/')));
     if('test' !== env){
       app.use('/doc', express.static(path.join(config.root, 'apidoc')));
       app.use(require('morgan')({ "stream": logger.stream }));
