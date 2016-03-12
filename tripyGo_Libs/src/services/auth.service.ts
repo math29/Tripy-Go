@@ -10,15 +10,18 @@ import 'rxjs/add/operator/share';
 export class AuthService {
   user:any;
   _token:string;
+  userObservable$: Observable<any>;
+  _userObserver: any;
   errors: EventEmitter<any> = new EventEmitter();
 
   constructor(private _http: Http, private _router: Router) {
+    this.userObservable$ = new Observable(observer => this._userObserver = observer).share();
   }
 
   /**
    * Store les informations de l'utilisateur actuel dans le local storage
    */
-	storeMe(){
+	storeMe():any{
 	  let headers = new Headers();
 	  headers.append('Authorization', 'Bearer '+ localStorage.getItem('jwt'));
     headers.append('Content-Type', 'application/json');
@@ -30,6 +33,7 @@ export class AuthService {
         this.user = JSON.parse(this.user);
         console.log(this.user);
         localStorage.setItem('jwt-local-user', JSON.stringify(this.user));
+        this._userObserver.next(this.user);
     }, errors => console.log('Could not retrieve user'));
   }
 
@@ -38,7 +42,7 @@ export class AuthService {
    *
    * @return {User}
    */
-  getMe() {
+  getMe():any{
     return JSON.parse(localStorage.getItem('jwt-local-user'));
   }
 
@@ -48,7 +52,7 @@ export class AuthService {
    *
    * @param user: objet utilisateur contenant le mot de passe et l'email de l'utilisateur
    */
-  login(user){
+  login(user):any{
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     return this._http.post('/auth/local/', JSON.stringify(user), options)
@@ -69,7 +73,7 @@ export class AuthService {
    *
    * Return True if connected, False Else
    */
-  isLoggedIn() {
+  isLoggedIn():boolean {
     if (localStorage.getItem('jwt') && localStorage.getItem('jwt-local-user')) return true;
     return false;
   }
@@ -80,7 +84,7 @@ export class AuthService {
    * @param  {Object}   user     - user info
    * @return {Promise}
    */
-  createUser(user) {
+  createUser(user):any {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     this._http.post('/api/users', JSON.stringify(user), options)
@@ -102,7 +106,7 @@ export class AuthService {
    *
    * @return {Promise}
    */
-  getErrorsPromise(){
+  getErrorsPromise():any{
     return this.errors;
   }
 
@@ -111,7 +115,7 @@ export class AuthService {
    *
    * @return Avatar URL
    */
-  getUserAvatar() {
+  getUserAvatar() :string{
     if (this.getMe().picture) {
       return "/api/files/" + this.getMe().picture + "?_ts=" + new Date().getTime();
     }
@@ -123,7 +127,7 @@ export class AuthService {
    *
    * supprime le cookie du navigateur
    **/
-  logout(){
+  logout():void{
     localStorage.clear();
     this._router.navigate( ['Login'] );
   }
