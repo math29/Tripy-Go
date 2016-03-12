@@ -13,6 +13,15 @@
     },
     "jasmine/jasmine.d.ts": {
       "commit": "dade4414712ce84e3c63393f1aae407e9e7e6af7"
+    },
+    "moment/moment.d.ts": {
+      "commit": "3a86e056dc018541d82dd74639fca18ba8d605da"
+    },
+    "moment/moment-node.d.ts": {
+      "commit": "3a86e056dc018541d82dd74639fca18ba8d605da"
+    },
+    "jquery/jquery.d.ts": {
+      "commit": "0144ad5a74053f2292424847259c4c8e1d0fecaa"
     }
   }
 }

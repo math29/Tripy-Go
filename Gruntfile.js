@@ -76,6 +76,7 @@ module.exports = function (grunt) {
       front_office: {
         files: [
           '<%= yeoman.front_office_A2 %>/app/**/*.ts',
+          '<%= yeoman.front_office_A2 %>/*.html',
           // Front Office A2
           '<%= yeoman.front_office_A2 %>/app/**/*.html',
           '<%= yeoman.front_office_A2 %>/app/**/*.js',
@@ -532,7 +533,9 @@ module.exports = function (grunt) {
           'reflect-metadata/Reflect.js',
           'systemjs/**/*',
           'rxjs/**/*',
-          'angular2-jwt/*'
+          'angular2-jwt/*',
+          'ng2-bootstrap/**/*',
+          'moment/**/*'
         ]
       },
       // TRIPY-GO LIBRAIRIES GLOBALES
