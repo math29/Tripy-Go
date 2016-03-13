@@ -1,14 +1,14 @@
 import {Component, OnInit} from 'angular2/core';
-import {AuthService} from '../../services/auth.service';
-import {UserSingleton} from '../../singletons/user.singleton';
-import {Cookie} from 'ng2-cookies/ng2-cookies';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import {AuthService} from '../../tripy-lib/services/auth.service';
+
 
 @Component({
   selector: 'login',
   templateUrl: 'views/pages/login.html',
-  providers: [AuthService],
-  directives: [ROUTER_DIRECTIVES],
+  providers: [],
+  directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES, CORE_DIRECTIVES, RouterLink],
   pipes: []
 })
 export class LoginCmp{
@@ -18,22 +18,11 @@ export class LoginCmp{
 
   constructor(private _authService:AuthService, private _router: Router){}
 
-  showData(){
-    this._authService.login(this.user)
-      .subscribe(response => {
-        this.response = response;
-        if(this.response.status == 200){
-          Cookie.setCookie('token',JSON.parse(this.response._body).token);
-          let cookie = Cookie.getCookie('token');
-          this._authService.getMe();
-          this._router.navigate( ['Home'] );
-        }
-      }, errors => this.errors = <any>errors);
+  /**
+   * Used to login the user
+   */
+  login(){
+    this._authService.login(this.user);
   }
 
-   ngOnInit(){
-      this._authService.userObservable$
-        .subscribe(updateUser => {this.user = updateUser;
-        UserSingleton.getInstance().setUser(this.user);});
-    }
 }

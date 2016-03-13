@@ -44,6 +44,7 @@
     ],
     "filesGlob": [
         "app/scripts/**/*.ts",
+        "app/lib/tripy-lib/**/*.d.ts",
         "../typings/**/*.d.ts"
     ],
     "atom": {

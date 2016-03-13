@@ -37,10 +37,14 @@
         "app/front-office-a2.ts",
         "app/services/user.singleton.ts",
         "app/tripy_go_lib/auth.service.ts",
+        "app/tripy_go_lib/services/auth.service.ts",
         "app.ts",
         "../../typings/angular2/angular2.d.ts",
         "../../typings/jasmine/jasmine.d.ts",
         "../../typings/marked/marked.d.ts",
+        "../../typings/moment/moment-node.d.ts",
+        "../../typings/moment/moment.d.ts",
+        "../../typings/socket.io-client/socket.io-client.d.ts",
         "../../typings/tsd.d.ts"
     ]
 }

@@ -89,6 +89,12 @@
         },
         'socket.io-client':{
           defaultExtension: 'js'
+        },
+        'angular2-jwt': {
+          'defaultExtension': 'js'
+        },
+        'trypy-lib': {
+          'defaultExtension': 'js'
         }
       },
       map: {
@@ -96,7 +102,8 @@
         'ng2-cookies': 'lib/ng2-cookies',
         'ng2-charts': 'lib/ng2-charts',
         'marked':'lib/marked/marked.min.js',
-        'socket.io-client':'lib/socket.io-client/socket.io.js'
+        'socket.io-client':'lib/socket.io-client/socket.io.js',
+        'angular2-jwt': 'lib/angular2-jwt'
       }
     });
     System.import('./scripts_js/app.js').then(null, console.error.bind(console));

@@ -7,16 +7,19 @@ import {TimelinesCmp} from './components/timelines/timelines';
 import {LogCmp} from './components/log/log';
 import {CountryCmp} from './components/country/country';
 import {LanguageCmp} from './components/language/language';
-import {AuthService} from './services/auth.service';
+import {AuthService} from './tripy-lib/services/auth.service';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {UserSingleton} from './singletons/user.singleton';
 
+import {LoggedInRouterOutlet} from './LoggedInOutlet';
+
+
 @Component({
   selector: 'wtc-back',
   templateUrl: 'views/dashboard/main.html',
-  providers: [HTTP_PROVIDERS, AuthService],
-  directives: [ROUTER_DIRECTIVES, HeaderCmp, LoginCmp, MongoCmp, LogCmp, TimelinesCmp, CountryCmp],
+  providers: [HTTP_PROVIDERS],
+  directives: [ROUTER_DIRECTIVES, HeaderCmp, LoginCmp, MongoCmp, LogCmp, TimelinesCmp, CountryCmp, LoggedInRouterOutlet],
   pipes: []
 })
 @RouteConfig([
@@ -28,26 +31,16 @@ import {UserSingleton} from './singletons/user.singleton';
   { path: '/logs', name: 'Logs', component: LogCmp},
   { path: '/timelines', name: 'Timelines', component: TimelinesCmp}
 ])
-export class WTC_Back{
-  lastRoute: string = 'home';
+export class Tripy_Back{
   me: any;
   errorMessage: any;
-  userSingleton: UserSingleton;
 
   constructor(private _authService:AuthService, private _router: Router){
-    this.userSingleton = UserSingleton.getInstance();
-    _router.subscribe((val) => {
-      if(this.lastRoute == 'login'){
-      }
-      this.lastRoute = val;
-    })
-    if(!this.me){
-        this._router.navigate( ['Login'] );
-    }
   }
 
   ngOnInit(){
-    this.userSingleton.userObservable$.subscribe(updateUser => {this.me = updateUser;});
+    this._authService.checkJWTValid();
+    this._authService.userObservable$.subscribe(updateUser => {console.log('update');this.me = updateUser;});
   }
 
 }

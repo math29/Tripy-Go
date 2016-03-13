@@ -7,7 +7,7 @@
                 </div>
                 <div class="panel-body">
                   <p *ngIf="errors" class="help-block">{{ errors.other }}</p>
-                    <form role="form" name="form" ng-submit="login(form)">
+                    <form role="form" name="form" (submit)="login()" novalidate>
                         <fieldset>
                             <div class="form-group">
                                 <input class="form-control" placeholder="E-mail" name="email" [(ngModel)]="user.email" type="email" autofocus>
@@ -15,8 +15,9 @@
                             <div class="form-group">
                                 <input class="form-control" placeholder="Password" name="user.password" [(ngModel)]="user.password" type="password" value="">
                             </div>
+                          {{user | json }}
                             <!-- Change this to a button or input when using this as a form -->
-                            <button class="btn btn-lg btn-success btn-block" (click)="showData()" type="submit">Login</button>
+                            <button class="btn btn-lg btn-success btn-block" type="submit">Login</button>
                         </fieldset>
                     </form>
                 </div>

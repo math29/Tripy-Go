@@ -1,11 +1,11 @@
 import {Component} from 'angular2/core';
-import {AuthService} from '../../services/auth.service';
+import {AuthService} from '../../tripy-lib/services/auth.service';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 @Component({
   selector: 'header-notification',
   templateUrl: 'views/components/header/header-notification.html',
-  providers: [AuthService],
+  providers: [],
   directives: [ROUTER_DIRECTIVES],
   pipes: [],
   inputs: ["user"]

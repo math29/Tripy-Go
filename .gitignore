@@ -9,13 +9,12 @@ public
 tscommand*
 
 client/bower_components
-back_office/app/bower_components
-back_office/app/lib
+
 dist
 apidoc
 report
-./logs/
-typings/
+logs
+typings
 
 /server/config/local.env.js
 npm-debug.log
@@ -23,3 +22,9 @@ npm-debug.log
 # frontOfficeA2
 frontOfficeA2/src/lib/
 frontOfficeA2/src/app/tripy_go_lib/
+
+# Back office
+back_office/app/bower_components
+back_office/app/lib
+back_office/app/scripts/tripy-lib
+back_office/app/scripts_js

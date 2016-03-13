@@ -32,9 +32,9 @@ module.exports = function (grunt) {
     yeoman: {
       // configurable paths
       client: require('./bower.json').appPath || 'client',
-      //back_office: require('./back_office/bower.json').appPath || 'back_office',
       front_office_A2: './frontOfficeA2/src',
-      back_office: './back_office_A2',
+      back_office: 'back_office',
+      lib:'tripyGo_Libs',
       dist: 'dist',
       public: 'dist/public',
       private: 'dist/back'
@@ -53,8 +53,8 @@ module.exports = function (grunt) {
         reference: './typings/tsd.d.ts'
       },
       back_office:{
-        src: '<%= yeaoman.back_office %>/app/scripts/**/*.ts',
-        outDir: '<%= yeaoman.back_office %>/app/scripts_js'
+        src: '<%= yeoman.back_office %>/app/scripts/**/*.ts',
+        outDir: '<%= yeoman.back_office %>/app/scripts_js'
       },
       front_office: {
         tsconfig:"<%= yeoman.front_office_A2 %>/tsconfig.json",
@@ -125,7 +125,7 @@ module.exports = function (grunt) {
         tasks: ['newer:jshint:all', 'karma']
       },
       back_office: {
-        files: ['<%= yeaoman.back_office %>/app/**/*.ts'],
+        files: ['<%= yeoman.back_office %>/app/**/*.ts'],
         tasks: ['back_office']
       },
       gruntfile: {
@@ -461,9 +461,9 @@ module.exports = function (grunt) {
         dest: '.tmp/',
         src: ['{app,components}/**/*.css']
       },
-      back_office: {
+      back_office_lib: {
         expand: true,
-        dest: './<%= yeaoman.back_office %>/app/lib',
+        dest: './<%= yeoman.back_office %>/app/lib',
         cwd: 'node_modules',
         src: [
           'angular2/bundles/**/*',
@@ -475,21 +475,30 @@ module.exports = function (grunt) {
           'chart.js/**/*',
           'marked/**/*',
           'socket.io-client/**/*',
-          'font-awesome/**/*'
+          'font-awesome/**/*',
+          'angular2-jwt/**/*'
+        ]
+      },
+      tripy_go_lib_back: {
+        expand: true,
+        dest: '<%= yeoman.back_office %>/app/scripts/tripy-lib',
+        cwd: './<%= yeoman.lib %>',
+        src: [
+          '**/*'
         ]
       },
       back_office_compiled: {
         expand: true,
-        dest: './<%= yeaoman.back_office %>/app/scripts_js',
-        cwd: './<%= yeaoman.back_office %>/app/scripts_js',
+        dest: './<%= yeoman.back_office %>/app/scripts_js',
+        cwd: './<%= yeoman.back_office %>/app/scripts_js',
         src: [
-          '<%= yeaoman.back_office %>/app/scripts/**/*'
+          '<%= yeoman.back_office %>/app/scripts/**/*'
         ]
       },
       back_office_inner: {
         expand: true,
-        dest: './<%= yeaoman.back_office %>/app/scripts_js',
-        cwd: './<%= yeaoman.back_office %>/app/scripts_js/back_office_A2/app/scripts',
+        dest: './<%= yeoman.back_office %>/app/scripts_js',
+        cwd: './<%= yeoman.back_office %>/app/scripts_js/back_office/app/scripts',
         src: [
          '**/*'
          ]
@@ -806,6 +815,8 @@ module.exports = function (grunt) {
     });
 
   grunt.registerTask('back_office', [
+    'copy:back_office_lib',
+    'copy:tripy_go_lib_back',
     'ts',
     'copy:back_office_compiled',
     'copy:back_office_inner'
@@ -842,6 +853,8 @@ module.exports = function (grunt) {
     'touch'
     //'useminBack'
   ]);
+
+
 
   grunt.registerTask('default', [
     'newer:jshint',
