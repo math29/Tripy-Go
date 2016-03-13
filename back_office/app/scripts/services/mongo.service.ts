@@ -1,5 +1,5 @@
 import {Injectable} from 'angular2/core';
-import {Cookie} from 'ng2-cookies/ng2-cookies';
+import {AuthService} from '../tripy-lib/services/auth.service';
 import {Http, Response, Headers, RequestOptions} from 'angular2/http';
 import {Observable}     from 'rxjs/Observable';
 
@@ -8,16 +8,14 @@ import {Observable}     from 'rxjs/Observable';
 export class MongoService {
 
   public base_url = '/api/back/db/';
-  constructor(private _http: Http) {}
+  constructor(private _http: Http, private _authService: AuthService) {}
 
   /**
    * Récupére le cookie d'autorisation, puis crée le header qui permet
    * d'effectuer une requête
    */
   getHeaders(){
-    let headers = new Headers();
-  	  headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
-  	  headers.append('Content-Type', 'application/json');
+    let headers = this._authService.getBearerHeaders();
       let options = new RequestOptions({ headers: headers });
       return options
   }

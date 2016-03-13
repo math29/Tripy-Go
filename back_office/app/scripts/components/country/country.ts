@@ -2,7 +2,7 @@
 
 import {Component, OnInit, OnDestroy} from 'angular2/core';
 import {NgForm} from 'angular2/common';
-import {Cookie} from 'ng2-cookies/ng2-cookies';
+import {AuthService} from '../../tripy-lib/services/auth.service';
 import {Response} from 'angular2/http';
 import {LanguageService} from '../../services/languageService';
 import {CountryService} from '../../services/countryService';

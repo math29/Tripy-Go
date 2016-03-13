@@ -1,5 +1,5 @@
 import {Injectable} from 'angular2/core';
-import {Cookie} from 'ng2-cookies/ng2-cookies';
+import {AuthService} from '../tripy-lib/services/auth.service';
 import {Http, Response, Headers, RequestOptions} from 'angular2/http';
 import {Observable}     from 'rxjs/Observable';
 import {Country} from '../classes/country';
@@ -11,7 +11,7 @@ import 'rxjs/add/operator/map'
 export class CountryService {
 
   public base_url = '/api/countries/';
-  constructor(private _http: Http) {}
+  constructor(private _http: Http, private _authService:AuthService) {}
 
   /**
    * Récupére le cookie d'autorisation, puis crée le header qui permet
@@ -19,15 +19,14 @@ export class CountryService {
    */
   getHeaders(){
     let headers = new Headers();
-  	  headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
-  	  headers.append('Content-Type', 'application/json');
+  	  //headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
       let options = new RequestOptions({ headers: headers });
       return options
   }
 
   getHeader(){
       let headers = new Headers();
-    	  headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
+    	  //headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
         let options = new RequestOptions({ headers: headers });
         return options
     }
@@ -38,7 +37,9 @@ export class CountryService {
    * Récupère les timelines
    */
   getCountries(){
-    return this._http.get(this.base_url, this.getHeaders())
+    let headers = this._authService.getBearerHeaders();
+    let options = new RequestOptions({ headers: headers });
+    return this._http.get(this.base_url, options)
             .map(res => <any> res.json());
   }
 
@@ -46,11 +47,13 @@ export class CountryService {
    * Sauvegarde une opération en base
    */
   saveCountry(country:Country){
+    let headers = this._authService.getBearerHeaders();
+    let options = new RequestOptions({ headers: headers });
     //let body = JSON.stringify({code: language.code, name: language.name, note: language.note});
     let body = JSON.stringify(country);
     // l'opération existe déjà
     if(country._id !== undefined && country._id !== ""){
-      return this._http.put(this.base_url + country._id, body, this.getHeaders()).map(res => <any> res.json());
+      return this._http.put(this.base_url + country._id, body, options).map(res => <any> res.json());
     }else{
       return this._http.post(this.base_url, body, this.getHeaders()).map(res => <any> res.json());
     }
@@ -62,7 +65,9 @@ export class CountryService {
    * @param operation: Opération à supprimer
    */
   deleteCountry(country:Country){
-    return this._http.delete(this.base_url + '/' + country._id, this.getHeader());
+    let headers = this._authService.getBearerHeaders();
+    let options = new RequestOptions({ headers: headers });
+    return this._http.delete(this.base_url + '/' + country._id, options);
   }
 
 
