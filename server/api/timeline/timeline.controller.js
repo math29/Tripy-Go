@@ -77,7 +77,7 @@ exports.addOperation = function(req, res){
           if(err){
             return res.status(400).send('ERROR');
           }
-          if(doc == null){
+          if(doc === null){
             return res.status(418).json('{error:\'Operation is already in timeline or timeline does not exist\'}');
           }else{
             Operation.findOneAndUpdate({_id: operationId}, {$push:{steps: {step: doc.operations.length, timeline: timelineId}}},function(err){
@@ -161,7 +161,7 @@ exports.moveOperation = function(req, res){
     for(var i = 0; i < timeline.operations.length; i++){
       ops.push(timeline.operations[i]._id);
       var opStep = findStepOperation(timeline._id, timeline.operations[i]);
-      if(step != -1){
+      if(step !== -1){
         if(side === 1 && opStep === step+1){
           secondOp = timeline.operations[i]._id;
           break;
@@ -170,14 +170,14 @@ exports.moveOperation = function(req, res){
           break;
         }
       }
-      if(timeline.operations[i]._id == opId && step === -1){
+      if(timeline.operations[i]._id === opId && step === -1){
         // recherche de l'étape
         step = opStep;
         i=-1;
       }
     }
 
-    if(((side === -1 && step>0) || (side === 1 && step < timeline.operations.length)) && secondOp!= null ){
+    if(((side === -1 && step>0) || (side === 1 && step < timeline.operations.length)) && secondOp!== null ){
       Operation.update({_id:opId, "steps.id":timelineId}, {$inc:{"steps.$.step":side}}).exec();
       Operation.update({_id:secondOp, "steps.id":timelineId}, {$inc:{"steps.$.step":-side}}).exec();
     }else{
@@ -197,7 +197,7 @@ exports.moveOperation = function(req, res){
 function findStepOperation(timelineId, operation){
   if(typeof operation.steps !== undefined){
     for(var i = 0; i < operation.steps.length; i++){
-      if(String(operation.steps[i].id) == String(timelineId)){
+      if(String(operation.steps[i].id) === String(timelineId)){
         return operation.steps[i].step;
       }
     }

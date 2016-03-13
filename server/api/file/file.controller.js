@@ -11,7 +11,7 @@ var gfs = new Grid(mongoose.connection.db);
 
 // Get list of files
 exports.index = function(req, res) {
-  File.find(function (err, files) {
+  gfs.find(function (err, files) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(files);
   });
@@ -20,7 +20,7 @@ exports.index = function(req, res) {
 // Get a single file
 exports.show = function(req, res) {
   gfs.findOne({ _id: req.params.id}, function (err, file) {
-    if(file == null || file.length===0){
+    if(file === null || file.length===0){
       return res.status(400).send({
         message: 'File not found'
       });
@@ -65,7 +65,7 @@ exports.create = function(req, res) {
 // Updates an existing file in the DB.
 exports.update = function(req, res) {
   if(req.body._id) { delete req.body._id; }
-  File.findById(req.params.id, function (err, file) {
+  gfs.findById(req.params.id, function (err, file) {
     if (err) { return handleError(res, err); }
     if(!file) { return res.status(404).send('Not Found'); }
     var updated = _.merge(file, req.body);
@@ -78,7 +78,7 @@ exports.update = function(req, res) {
 
 // Deletes a file from the DB.
 exports.destroy = function(req, res) {
-  File.findById(req.params.id, function (err, file) {
+  gfs.findById(req.params.id, function (err, file) {
     if(err) { return handleError(res, err); }
     if(!file) { return res.status(404).send('Not Found'); }
     file.remove(function(err) {

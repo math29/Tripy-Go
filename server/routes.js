@@ -34,7 +34,7 @@ module.exports = function(app) {
   // All other routes should redirect to the index.html
   app.route('/*')
     .get(function(req, res) {
-      var p = app.get('appPath');;
+      var p = app.get('appPath');
       if(req.url.indexOf("back") > -1){
         p = p + '/../back_office/app';
       }
