@@ -13,7 +13,7 @@ client/bower_components
 dist
 apidoc
 report
-logs
+logs/
 typings
 
 /server/config/local.env.js
