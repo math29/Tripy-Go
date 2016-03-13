@@ -12,7 +12,4 @@ var TransportTypeSchema = new Schema({
   img: String
 });
 
-// chaque nom de type de transport est unique
-//TransportTypeSchema.index({ name: 1, unique: true }); // schema level
-
 module.exports = mongoose.model('TransportType', TransportTypeSchema);
