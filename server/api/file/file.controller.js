@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-var mongoose = require('mongoose'),
+var mongoose = require('mongoose');
 var Grid = require('gridfs-stream');
 Grid.mongo = mongoose.mongo;
 var gfs = new Grid(mongoose.connection.db);
