@@ -2,8 +2,6 @@
 
 var _ = require('lodash');
 var mongoose = require('mongoose'),
-    _ = require('lodash');
-
 var Grid = require('gridfs-stream');
 Grid.mongo = mongoose.mongo;
 var gfs = new Grid(mongoose.connection.db);
@@ -12,7 +10,9 @@ var gfs = new Grid(mongoose.connection.db);
 // Get list of files
 exports.index = function(req, res) {
   gfs.find(function (err, files) {
-    if(err) { return handleError(res, err); }
+    if(err) {
+      return handleError(res, err);
+    }
     return res.status(200).json(files);
   });
 };
@@ -64,13 +64,21 @@ exports.create = function(req, res) {
 
 // Updates an existing file in the DB.
 exports.update = function(req, res) {
-  if(req.body._id) { delete req.body._id; }
+  if(req.body._id) {
+    delete req.body._id;
+  }
   gfs.findById(req.params.id, function (err, file) {
-    if (err) { return handleError(res, err); }
-    if(!file) { return res.status(404).send('Not Found'); }
+    if (err) {
+      return handleError(res, err);
+    }
+    if(!file) {
+      return res.status(404).send('Not Found');
+    }
     var updated = _.merge(file, req.body);
     updated.save(function (err) {
-      if (err) { return handleError(res, err); }
+      if (err) {
+        return handleError(res, err);
+      }
       return res.status(200).json(file);
     });
   });
@@ -79,10 +87,16 @@ exports.update = function(req, res) {
 // Deletes a file from the DB.
 exports.destroy = function(req, res) {
   gfs.findById(req.params.id, function (err, file) {
-    if(err) { return handleError(res, err); }
-    if(!file) { return res.status(404).send('Not Found'); }
+    if(err) {
+      return handleError(res, err);
+     }
+    if(!file) {
+      return res.status(404).send('Not Found');
+    }
     file.remove(function(err) {
-      if(err) { return handleError(res, err); }
+      if(err) {
+        return handleError(res, err);
+      }
       return res.status(204).send('No Content');
     });
   });

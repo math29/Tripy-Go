@@ -63,9 +63,8 @@ exports.create = function(req, res) {
 
   // si il n'y à aucun message d'erreur, on ajoute le pays
   if(errors.errors.length === 0){
-	  var language = new Language(req.body);
+    var language = new Language(req.body);
 	  language.save(function(err){
-		//Language.update({ name: { $eq: req.body.name}}, req.body, {upsert: true}, function(err, language) {
 		if(err) {
 		  return res.status(202).json('{error: \'La langue existe déjà\'}');
 		}
@@ -106,7 +105,6 @@ exports.update = function(req, res) {
     });
   });
   }
-  //return res.status(400).json(errors);
 
 };
 

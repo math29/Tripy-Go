@@ -66,9 +66,8 @@ exports.create = function(req, res) {
 	if(errors.errors.length === 0){
 		var country = new Country(req.body);
 		country.save(function(err){
-		//Country.update({ country_name: { $eq: req.body.country_name}}, req.body, {upsert: true}, function(err, country) {
 		if(err) {
-		  console.log(err);
+		  logger.error(err);
 		  return handleError(res, err);
 		}
 		if(typeof country.upserted !== 'undefined'){
