@@ -1,37 +1,34 @@
-<!-- BEGIN: SEARCH SECTION -->
 <section>
   <div class="row start-with single-search">
     <div class="container clear-padding">
       <div class="col-md-12 clear-padding search-section">
         <h2 class="text-center">FIND YOUR PERFECT ESCAPE</h2>
-        <!-- START: HOTEL SEARCH -->
           <div role="tabpanel" class="tab-pane" id="hotel">
-            <form >
+            <form (ngSubmit)="startWithSubmit()"  [ngFormModel]="startForm">
               <div class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-3 search-col-padding">
                 <label>Point départ</label>
                 <div class="input-group">
-                  <input type="text" name="dep-city" class="form-control" required placeholder="E.g. New York">
+                  <input type="text" class="form-control" ngControl="departure"/>
                   <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
                 </div>
               </div>
               <div class="col-md-3 col-sm-3 search-col-padding">
                 <label>Destination</label>
                 <div class="input-group">
-                  <input type="text" name="des-city" class="form-control" required placeholder="E.g. London">
+                  <input type="text" class="form-control" ngControl="arrival">
                   <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
                 </div>
               </div>
               <div class="col-md-3 col-sm-3 search-col-padding">
                 <label>Date départ</label>
                 <div class="input-group">
-                  <!-- <datepicker name="dep_date" [(ngModel)]="date" class="form-control" showWeeks="true"></datepicker> -->
-                  <input type="text" name="dep_date" id="depart_date" class="form-control" placeholder="MM/DD/YYYY">
+                  <input type="text" class="form-control depart_date" ngControl="date">
                   <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
                 </div>
               </div>
               <div class="clearfix"></div>
               <div class="col-md-12 text-center search-col-padding">
-                <button type="submit" class="search-button btn transition-effect">Let's GO !</button>
+                <button type="submit" class="search-button btn transition-effect" [disabled]="!startForm.valid">Let's GO !</button>
               </div>
               <div class="clearfix"></div>
               <a href="#how-it-work">
@@ -41,16 +38,11 @@
               </a>
             </form>
           </div>
-          <!-- END: HOTEL SEARCH -->
         </div>
     </div>
   </div>
 </section>
-<!-- END: SEARCH SECTION -->
 
-
-
-<!-- BEGIN: HOW IT WORK -->
 <section id="how-it-work">
     <div class="row work-row">
       <div class="container">
@@ -83,9 +75,7 @@
       </div>
     </div>
 </section>
-<!--END: HOW IT WORK -->
 
-<!-- BEGIN: TOP DESTINATION SECTION -->
 <section id="advice-row">
   <div class="row top-advice">
     <div class="container">
@@ -112,4 +102,3 @@
     </div>
   </div>
 </section>
-<!-- END: TOP DESTINATION SECTION -->
