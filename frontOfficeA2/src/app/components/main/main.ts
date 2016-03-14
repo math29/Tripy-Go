@@ -4,6 +4,8 @@
 import {Component, ElementRef, AfterViewInit} from 'angular2/core';
 import { DATEPICKER_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
 import { FormBuilder, ControlGroup, Validators, Control } from 'angular2/common';
+import {Http, Headers, RequestOptions} from 'angular2/http';
+import { AuthService } from '../../tripy_go_lib/auth.service';
 
 declare var jQuery: JQueryStatic;
 
@@ -11,7 +13,7 @@ declare var jQuery: JQueryStatic;
   selector: 'main',
   templateUrl: 'app/components/main/main.html',
   styleUrls: ['app/components/main/main.css'],
-  providers: [FormBuilder],
+  providers: [FormBuilder, AuthService],
   directives: [DATEPICKER_DIRECTIVES],
   pipes: []
 })
@@ -19,22 +21,38 @@ export class Main implements AfterViewInit {
 	startForm: ControlGroup;
     departure: Control;
     arrival: Control;
-    date: Control;
+    date_departure: Control;
 
-	constructor(private el: ElementRef, fb: FormBuilder) {
+	constructor(private el: ElementRef, fb: FormBuilder, private _http: Http, private _auth: AuthService) {
 		this.departure = fb.control('');
 		this.arrival = fb.control('');
-		this.date = fb.control('');
+		this.date_departure = fb.control('');
 
 		this.startForm = fb.group({
 			departure: this.departure,
 			arrival: this.arrival,
-			date: this.date
+			date_departure: this.date_departure
 		});
     }
 
     startWithSubmit() {
-		console.log(this.startForm.value);
+		// console.log(this._auth.getToken());
+		if (this.startForm.valid){
+			let headers = new Headers({
+				'Content-Type': 'application/json',
+				'Authorization': 'bearer ' + this._auth.getToken()
+			});
+			let options = new RequestOptions({ headers: headers });
+			this._http.post('/api/travels', JSON.stringify(this.startForm.value), options)
+				.subscribe(
+				response => {
+					console.log(response);
+				},
+				error => {
+					console.log(JSON.stringify(error));
+				}
+				);
+		}
 	}
 
 	ngAfterViewInit() {
@@ -52,7 +70,7 @@ export class Main implements AfterViewInit {
 					.data()
 					.datepicker;
 				let date = new Date(datepicker.selectedYear, datepicker.selectedMonth, datepicker.selectedDay);
-				_this.date.updateValue(date);
+				_this.date_departure.updateValue(date);
 			})
 	}
 }
