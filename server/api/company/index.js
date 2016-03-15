@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-var controller = require('./transportType.controller');
+var controller = require('./company.controller');
 var auth = require('../../auth/auth.service');
 
 var router = express.Router();
@@ -18,29 +18,29 @@ var router = express.Router();
 
 
 /**
- *  @apiDefine ApiParamsTransportType
+ *  @apiDefine ApiParamsCompany
  *
  *
- * @apiParam {String} name  Name given by the user to the transportType
- * @apiParam {String} img   Img given by the user to th transportType
+ * @apiParam {String} name  Name given by the user to the Company
+ * @apiParam {String} img   Img given by the user to th Company
  *
  */
 
 /**
- * @api {get} /api/transporttype/ Request list of all transports
+ * @api {get} /api/company/ Request list of all companies
  * @apiVersion 0.0.0
- * @apiName GetTransportTypes
- * @apiGroup TransportType
+ * @apiName GetCompanies
+ * @apiGroup Company
  *
- * @apiSuccess {Array} array of Transports
+ * @apiSuccess {Array} array of Companies
  *
  * @apiSuccessExample Success-Response:
  *   HTTP/1.1 200 OK
  *  [
  *      {
  *            "__v": 0,
- *            "name": "Voiture",
- *            "img": "http://tripy-go.fr/img/car.png",
+ *            "name": "Air France",
+ *            "img": "http://air-france.fr/img/logo.png",
  *            "_id": "564cf500bbb31f62475efc31"
  *       }, ...
  *  ]
@@ -50,21 +50,21 @@ var router = express.Router();
 router.get('/', controller.index);
 
 /**
- * @api {get} /api/transporttype/:id Get By Id
+ * @api {get} /api/company/:id Get By Id
  * @apiVersion 0.0.0
- * @apiName GetTransportsById
- * @apiGroup TransportType
+ * @apiName GetCompanyById
+ * @apiGroup Company
  *
  * @apiParam {Number} id  Id of the target transport type
  *
- * @apiSuccess {Transport} Transport
+ * @apiSuccess {Company} Company
  *
  * @apiSuccessExample Success-Response:
  *   HTTP/1.1 200 OK
  *      {
  *            "__v": 0,
- *            "name":"Car",
- *            "img":"http://tripy-lib.fr/img/car.png
+ *            "name":"Air France",
+ *            "img":"http://air-frnace.fr/img/logo.png",
  *            "_id": "564cf500bbb31f62475efc31"
  *       }
  *
@@ -73,9 +73,9 @@ router.get('/', controller.index);
 router.get('/:id', controller.show);
 
 /**
-  * @api {post} /api/transportType/:name/ Insert a transportType
-  * @apiName InsertTransportType
-  * @apiGroup TransportType
+  * @api {post} /api/company/:name/ Insert a transportType
+  * @apiName InsertCompany
+  * @apiGroup Company
   * @apiPermission admin
   * @apiHeader {Authorization} access-key Users unique access-key.
   *
@@ -87,8 +87,8 @@ router.get('/:id', controller.show);
   *   HTTP/1.1 201 Created:
   *      {
   *            "__v": 0,
-  *            "name": "Car",
-  *            "img": "http://tripy-go/img/car.png",
+  *            "name": "Air france",
+  *            "img": "http://air-france.fr/img/logo.png",
   *            "_id": "564cf500bbb31f62475efc31"
   *       }
   *
@@ -96,11 +96,11 @@ router.get('/:id', controller.show);
 router.post('/:name', auth.hasRole('admin'),controller.create);
 
 /**
-  * @api {put} /api/transports/:id Substitute a transportType
-  * @apiName SubstituteTransport
-  * @apiGroup Transports
+  * @api {put} /api/company/:id Substitute a transportType
+  * @apiName SubstituteCompany
+  * @apiGroup Company
   *
-  * @apiUse ApiParamsTransport
+  * @apiUse ApiParamsCompany
   *
   * @apiSuccess {Object} Object response
   *
@@ -115,9 +115,9 @@ router.post('/:name', auth.hasRole('admin'),controller.create);
 router.put('/:id', auth.hasRole('admin'),controller.update);
 
 /**
-  * @api {delete} /api/transports/:id Delete a transport
-  * @apiName DeleteTransport
-  * @apiGroup Transports
+  * @api {delete} /api/company/:id Delete a company
+  * @apiName DeleteCompany
+  * @apiGroup Company
   *
   * @apiSuccess {Object} Object response
   *
