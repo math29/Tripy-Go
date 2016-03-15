@@ -124,10 +124,10 @@ module.exports = function (grunt) {
         ],
         tasks: ['newer:jshint:all', 'karma']
       },
-      back_office: {
-        files: ['<%= yeoman.back_office %>/app/**/*.ts'],
-        tasks: ['back_office']
-      },
+      //back_office: {
+      //  files: ['<%= yeoman.back_office %>/app/**/*.ts'],
+      //  tasks: ['back_office']
+      //},
       gruntfile: {
         files: ['Gruntfile.js']
       },
@@ -195,17 +195,17 @@ module.exports = function (grunt) {
           jshintrc: 'server/.jshintrc-spec'
         },
         src: ['server/**/*.spec.js']
-      },
-      all: [
-        '<%= yeoman.client %>/{app,components}/**/*.js',
-        '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
-        '!<%= yeoman.client %>/{app,components}/**/*.mock.js',
-      ],
-      test: {
-        src: [
-          '<%= yeoman.client %>/{app,components}/**/*.spec.js',
-          '<%= yeoman.client %>/{app,components}/**/*.mock.js'
-        ]
+      //},
+      //all: [
+      //  '<%= yeoman.client %>/{app,components}/**/*.js',
+      //  '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
+      //  '!<%= yeoman.client %>/{app,components}/**/*.mock.js',
+      //],
+      //test: {
+      //  src: [
+      //    '<%= yeoman.client %>/{app,components}/**/*.spec.js',
+      //    '<%= yeoman.client %>/{app,components}/**/*.mock.js'
+      //  ]
       },
       jenkins: {
         options: {

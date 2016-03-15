@@ -109,7 +109,7 @@ describe('API /api/countries', function() {
                   .post('/api/countries')
                   .set({'Authorization': 'Bearer '+tokenAdmin})
                   .send(fCountry)
-                  .expect(202)
+                  .expect(201)
                   .expect('Content-Type', /json/)
                   .end(function(err, res){
                     if(err)return done(err);

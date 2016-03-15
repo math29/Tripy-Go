@@ -18,14 +18,14 @@ export class CountryService {
    * d'effectuer une requête
    */
   getHeaders(){
-    let headers = new Headers();
+    let headers = this._authService.getBearerHeaders();
   	  //headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
       let options = new RequestOptions({ headers: headers });
       return options
   }
 
   getHeader(){
-      let headers = new Headers();
+      let headers = this._authService.getBearerHeaders();
     	  //headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
         let options = new RequestOptions({ headers: headers });
         return options
@@ -55,7 +55,7 @@ export class CountryService {
     if(country._id !== undefined && country._id !== ""){
       return this._http.put(this.base_url + country._id, body, options).map(res => <any> res.json());
     }else{
-      return this._http.post(this.base_url, body, this.getHeaders()).map(res => <any> res.json());
+      return this._http.post(this.base_url, body, options).map(res => <any> res.json());
     }
   }
 

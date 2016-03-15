@@ -57,7 +57,7 @@ exports.showByName = function(req, res) {
 // Creates a new country in the DB.
 exports.create = function(req, res) {
 
-  var statusCode = 202;
+  var statusCode = 201;
 
   //verrification de l'objet country
   var errors = checkCountryObject(req.body);
@@ -70,9 +70,7 @@ exports.create = function(req, res) {
 		  logger.error(err);
 		  return handleError(res, err);
 		}
-		if(typeof country.upserted !== 'undefined'){
-		  statusCode = 201;
-		}
+
 		return res.status(statusCode).json(country);
 		});
 

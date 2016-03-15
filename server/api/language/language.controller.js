@@ -56,7 +56,7 @@ exports.showByName = function(req, res) {
 
 // Creates a new country in the DB.
 exports.create = function(req, res) {
-  var statusCode = 202;
+  var statusCode = 201;
 
   //verrification de l'objet country
   var errors = checkLanguageObject(req.body);
@@ -67,9 +67,6 @@ exports.create = function(req, res) {
 	  language.save(function(err){
 		if(err) {
 		  return res.status(202).json('{error: \'La langue existe déjà\'}');
-		}
-		if(typeof language.upserted !== 'undefined'){
-		  statusCode = 201;
 		}
 		return res.status(statusCode).json(language);
 		});

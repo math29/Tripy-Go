@@ -21,7 +21,7 @@ exports.index = function(req, res) {
         logger.error('%s: Can\'t index companies: '+1, TAG);
         return handleError(res, err);
       }
-    return res.status(200).json(conpanies);
+    return res.status(200).json(companies);
   });
 };
 
@@ -47,7 +47,7 @@ exports.showByName = function(req, res) {
     if(err) {
       return handleError(res, err);
     }
-    if(!country) {
+    if(!company) {
       return res.status(404).send('Not Found');
     }
     return res.json(company);

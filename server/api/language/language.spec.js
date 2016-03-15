@@ -62,7 +62,7 @@ adminUser.save(function(){
   });
 });
 
-describe('API /api/language', function() {
+describe('API /api/languages', function() {
 
   before(function(done) {
     // Clear users before testing
@@ -79,7 +79,7 @@ describe('API /api/language', function() {
 
   it('should add a language', function(done){
     request(app)
-      .post('/api/language')
+      .post('/api/languages')
       .set({'Authorization': 'Bearer '+tokenAdmin})
       .send(fLanguage)
       .expect(201)
@@ -94,7 +94,7 @@ describe('API /api/language', function() {
   it("shouldn't add the language", function(done){
     language.save().then(function(){
                 request(app)
-                  .post('/api/language')
+                  .post('/api/languages')
                   .set({'Authorization': 'Bearer '+tokenAdmin})
                   .send(fLanguage)
                   .expect(202)
@@ -110,7 +110,7 @@ describe('API /api/language', function() {
 
   it("Simple users can't add language", function(done){
     request(app)
-      .post('/api/language')
+      .post('/api/languages')
       .set({'Authorization': 'Bearer '+token})
       .send(fLanguage)
       .expect(403)
@@ -124,7 +124,7 @@ describe('API /api/language', function() {
   it('should get error message when required param is not present', function(done){
     fLanguage.name ="";
     request(app)
-      .post('/api/language')
+      .post('/api/languages')
       .set({'Authorization' : 'Bearer '+tokenAdmin})
       .send(fLanguage)
       .expect(400)
@@ -140,7 +140,7 @@ describe('API /api/language', function() {
   it('should get a list of languages', function(done){
     language.save().then(function(){
     request(app)
-          .get('/api/language')
+          .get('/api/languages')
           .set({'Authorization': 'Bearer '+tokenAdmin})
           .expect(200)
           .expect('Content-Type', /json/)
@@ -155,7 +155,7 @@ describe('API /api/language', function() {
 
   it('should respond with Unauthorized', function(done) {
     request(app)
-      .get('/api/language')
+      .get('/api/languages')
       .set({'Authorization': 'Bearer '+token})
       .expect(403)
       .expect('Content-Type', 'text/html; charset=utf-8')

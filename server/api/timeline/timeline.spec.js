@@ -115,7 +115,7 @@ describe('API /api/timeline', function() {
   it('should add an operation to the timeline', function(done){
     request(app)
       .post('/api/timeline/add/'+timeline._id+'/'+operation._id)
-      .set({'Authorization' : 'Bearer '+tokenAdmin})
+      .set({'Authorization': 'Bearer '+tokenAdmin})
       .send()
       .expect(202)
       .expect('Content-Type', /json/)
@@ -124,7 +124,6 @@ describe('API /api/timeline', function() {
         res.body.should.be.instanceof(Object);
         done();
       });
-
   });
 
   it('should remove an operation to the timeline', function(done){

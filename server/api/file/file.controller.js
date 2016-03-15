@@ -9,7 +9,7 @@ var gfs = new Grid(mongoose.connection.db);
 
 // Get list of files
 exports.index = function(req, res) {
-  gfs.find(function (err, files) {
+  gfs.files.find(function (err, files) {
     if(err) {
       return handleError(res, err);
     }
