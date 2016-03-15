@@ -92,7 +92,7 @@ router.get('/:id', controller.show);
   *       }
   *
   */
-router.post('/:name', controller.create);
+router.post('/:name', auth.hasRole('admin'),controller.create);
 
 /**
   * @api {put} /api/transports/:id Substitute a transportType
@@ -111,7 +111,7 @@ router.post('/:name', controller.create);
   *      }
   *
   */
-router.put('/:id', controller.update);
+router.put('/:id', auth.hasRole('admin'),controller.update);
 
 /**
   * @api {delete} /api/transports/:id Delete a transport
@@ -126,6 +126,6 @@ router.put('/:id', controller.update);
   *     }
   *
   */
-router.delete('/:id', controller.destroy);
+router.delete('/:id', auth.hasRole('admin'),controller.destroy);
 
 module.exports = router;
