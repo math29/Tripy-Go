@@ -5,8 +5,11 @@ var mongoose = require('mongoose'),
 
 
 var TransportSchema = new Schema({
-  name: String,
-  active: Boolean,
+  type: {
+    type: Schema.Types.ObjectId,
+    ref: 'TransportType'
+  },
+  distance: Number,
   departure: {
     type: Schema.Types.ObjectId,
     ref: 'Location'
@@ -15,24 +18,9 @@ var TransportSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Location'
   },
+  class: String,
   cost: Number,
-  duration: {
-    start_date: Date,
-    end_date: Date
-  },
   departure_time: Date,
-  arrival_time: Date,
-  travel: {
-    type: Schema.Types.ObjectId,
-    ref: 'Travel'
-  },
-  walking_time: { // Only for Intern Transports
-    start_date: Date,
-    end_date: Date
-  },
-  baggages: String, // Enum SMALL/MEDIUM/LARGE - Only for external Transports
-  confort: Number, // 1->5 - Only for external Transports
-  type: String
 });
 
 module.exports = mongoose.model('Transport', TransportSchema);
