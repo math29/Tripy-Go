@@ -47,7 +47,7 @@ var router = express.Router();
  *
  * @apiUse UserNotAuthorized
  */
-router.get('/', controller.index);
+router.get('/', auth.hasRole('admin'),controller.index);
 
 /**
  * @api {get} /api/company/:id Get By Id
@@ -70,7 +70,7 @@ router.get('/', controller.index);
  *
  * @apiUse UserNotAuthorized
  */
-router.get('/:id', controller.show);
+router.get('/:id', auth.isAuthenticated(),controller.show);
 
 /**
   * @api {post} /api/company/:name/ Insert a transportType
