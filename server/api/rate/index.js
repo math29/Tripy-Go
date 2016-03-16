@@ -30,7 +30,8 @@ var router = express.Router();
  *  [
  *    {
  *      score:2,
- *      raters: ["568d6f9a3a4b87990fe2ee15", 568d6f9a3a4b87990fe2ee1c]
+ *      raters: ["568d6f9a3a4b87990fe2ee15", 568d6f9a3a4b87990fe2ee1c],
+ *      type: 'Number'
  *    },
  *    ...
  *  ]
@@ -42,17 +43,18 @@ router.get('/', auth.hasRole('admin'), controller.index);
 /**
  * @api {get} /api/back/rate/:id Request operations with specific ID
  * @apiVersion 1.0.0
- * @apiName GetOperation
- * @apiGroup Operations
+ * @apiName GetRate
+ * @apiGroup Rates
  *
- * @apiSuccess {Object} operation
+ * @apiSuccess {Object} rate
  *
  *
  * @apiSuccessExample Success-Response:
  *   HTTP/1.1 200 OK
  *    {
  *      score:2,
- *      raters: ["568d6f9a3a4b87990fe2ee15", 568d6f9a3a4b87990fe2ee1c]
+ *      raters: ["568d6f9a3a4b87990fe2ee15", 568d6f9a3a4b87990fe2ee1c],
+ *      type: 'Number'
  *    }
  *
  * @apiUse UserNotAuthorized
@@ -60,12 +62,15 @@ router.get('/', auth.hasRole('admin'), controller.index);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 
 /**
- * @api {post} /api/back/rate/vote/:side/:id Request operations with specific ID
+ * @api {post} /api/back/rate/vote/:side/:id Vote for a rate with specific ID
+ * @apiParam {Any} side  sens ("up","down") du vote si le vote est de type pile, ou nombre d'étoiles si le vote est de type Stars
+ * @apiParam {String} id  id du vote
  * @apiVersion 1.0.0
  * @apiName GetOperation
- * @apiGroup Operations
+ * @apiGroup Rates
+
  *
- * @apiSuccess {Object} operation
+ * @apiSuccess {Object} rate
  *
  *
  * @apiSuccessExample Success-Response:
@@ -78,12 +83,12 @@ router.get('/:id', auth.isAuthenticated(), controller.show);
  */
 router.post('/vote/:side/:id', auth.isAuthenticated(), controller.vote);
 /**
- * @api {delete} /api/back/operation/:id delete operation with specific ID
+ * @api {delete} /api/back/rate/:id delete rate with specific ID
  * @apiVersion 1.0.0
- * @apiName DeleteOperation
- * @apiGroup Operations
+ * @apiName DeleteRate
+ * @apiGroup Rates
  *
- * @apiSuccess {Object} operation
+ * @apiSuccess {Object} rate
  *
  *
  * @apiSuccessExample Success-Response:

@@ -2,6 +2,7 @@
 
 var Rate = require('./rate.model.js');
 var logger = require('../../config/logger');
+var typeChecker = require('../../utils/checkObjects');
 
 
 /**
