@@ -88,6 +88,22 @@ export class AuthService {
     return false;
   }
 
+  isAdminInfo():boolean{
+    if(localStorage.getItem('jwt') && localStorage.getItem('jwt-local-user') && JSON.parse(localStorage.getItem('jwt-local-user')).role === 'adminInfo'){
+      return true;
+    }
+    return false;
+  }
+
+  isAdmin():boolean {
+    if(localStorage.getItem('jwt')
+      && localStorage.getItem('jwt-local-user')
+      && (JSON.parse(localStorage.getItem('jwt-local-user')).role == 'admin' || JSON.parse(localStorage.getItem('jwt-local-user')).role === 'adminInfo')){
+      return true;
+    }
+    return false;
+  }
+
   /**
    * Create a new user
    *
