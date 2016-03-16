@@ -17,7 +17,7 @@ var OperationSchema = new Schema({
 
 // crée le vote associé à l'opération
 OperationSchema.pre('save', function(next){
-  var rate = new Rate({score: 0, raters:[]});
+  var rate = new Rate({score: 0, raters:[], type:'Stack'});
   var self = this;
   rate.save(function(err, r){
     if(err){

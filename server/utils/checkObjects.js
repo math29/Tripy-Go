@@ -7,8 +7,5 @@
  * @return true if object is number, false otherwise
  */
 exports.isNumber = function(object){
-  if(typeof object == "number"){
-    return true;
-  }
-  return false;
+  return !isNaN(object);
 }

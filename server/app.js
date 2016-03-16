@@ -50,7 +50,9 @@ mongoose.connection.on('error', function(err) {
 );
 // Populate DB with sample data
 if(config.seedDB) { require('./config/seed'); }else{User.update({email: {$in : ['yoann.diquelou@gmail.com', 'maaath29@gmail.com']}},{$set:{role: 'adminInfo'}}).exec();}
-
+if(config.rdo){
+  require('./rdo/rates');
+}
 // Setup server
 var app = express();
 var server = require('http').createServer(app);
