@@ -9,8 +9,7 @@
         "experimentalDecorators": true,
         "removeComments": false,
         "noImplicitAny": false,
-        "suppressImplicitAnyIndexErrors": true,
-        "watch": "app/scripts"
+        "suppressImplicitAnyIndexErrors": true
     },
     "files": [
         "app/scripts/app.ts",

@@ -2,7 +2,22 @@
 
 var Rate = require('./rate.model.js');
 var logger = require('../../config/logger');
+var TypeChecker = require('../../utils/checkObjects');
 
+/*
+db.rates.aggregate([
+    {
+        $unwind:"$raters"
+    },
+    {
+        $group:
+        {
+            _id:"$_id",
+            scores: {$avg:"$raters.action"}
+        }
+    }
+    ])
+*/
 
 /**
  * Get list of rates
@@ -54,12 +69,19 @@ exports.vote = function(req, res){
   var userId = req.user._id;
   var side = req.params.side;
   var sideValue = 1;
-  if(side === 'down'){
-    sideValue = -1;
+  var rateType = "Stack";
+  if(TypeChecker.isNumber(side)){
+      logger.info("Is Number, use stars");
+      sideValue = side;
+      rateType = "Stars";
+  }else{
+    if(side === 'down'){
+      sideValue = -1;
+    }
   }
   var rateOb = {user: userId, action: sideValue};
 
-  Rate.findOneAndUpdate({_id: rateId, "raters.user" : {$nin: [userId]}},{$push:{raters: rateOb}, $inc:{score: sideValue}},function(err, result){
+  Rate.findOneAndUpdate({_id: rateId, type: rateType, "raters.user" : {$nin: [userId]}},{$push:{raters: rateOb}, $inc:{score: sideValue}},function(err, result){
     if(err){
       logger.error(err);
       return res.status(500).json('{error:\'Unable to find rate\'}');

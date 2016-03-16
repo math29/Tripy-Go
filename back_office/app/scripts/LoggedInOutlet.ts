@@ -11,7 +11,6 @@ export class LoggedInRouterOutlet extends RouterOutlet {
   constructor(_elementRef: ElementRef, _loader: DynamicComponentLoader,
               _parentRouter: Router, @Attribute('name') nameAttr: string) {
     super(_elementRef, _loader, _parentRouter, nameAttr);
-    console.log('h,gfhd');
     this.parentRouter = _parentRouter;
     this.publicRoutes = {
       '': true,

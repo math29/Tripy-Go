@@ -8,5 +8,7 @@ module.exports = {
     uri: 'mongodb://localhost/wtc-dev'
   },
 
-  seedDB: true
+  seedDB: true,
+  // reprise de données
+  rdo: true
 };

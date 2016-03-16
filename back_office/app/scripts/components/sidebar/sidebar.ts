@@ -1,6 +1,7 @@
 import {Component, OnInit} from 'angular2/core';
 import {Item, SidebarElementCmp} from './sidebar_element';
 import {UserSingleton} from '../../singletons/user.singleton';
+import {AuthService} from '../../tripy-lib/services/auth.service';
 import {Location, RouteConfig, RouterLink, Router,Route,  ROUTER_DIRECTIVES} from 'angular2/router';
 
 @Component({
@@ -15,7 +16,7 @@ export class SidebarCmp{
   public items: Item[] = [];
   userSingleton: UserSingleton;
 
-  constructor(private router: Router){
+  constructor(private router: Router, private _authService:AuthService){
     this.userSingleton = UserSingleton.getInstance();
   }
 
@@ -24,6 +25,14 @@ export class SidebarCmp{
     this.userSingleton.userObservable$.subscribe(updateUser => {this.user = updateUser; this.updateItems()});
     this.updateItems();
 
+  }
+
+  isAdmin(){
+    return this._authService.isAdmin();
+  }
+
+  isAdminInfo(){
+    return this._authService.isAdminInfo();
   }
 
   updateItems(){
@@ -40,7 +49,7 @@ export class SidebarCmp{
       this.items.push(countries);
       this.items.push(langues);
       this.items.push(timelines);
-      if(UserSingleton.getInstance().isAdminInfo()){
+      if(this.isAdminInfo()){
         this.items.push(mongo);
         this.items.push(logs);
       }

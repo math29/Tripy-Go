@@ -40,7 +40,7 @@ export class Tripy_Back{
 
   ngOnInit(){
     this._authService.checkJWTValid();
-    this._authService.userObservable$.subscribe(updateUser => {console.log('update');this.me = updateUser;});
+    this._authService.userObservable$.subscribe(updateUser => {this.me = updateUser;});
   }
 
 }
