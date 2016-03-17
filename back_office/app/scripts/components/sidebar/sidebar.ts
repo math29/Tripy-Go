@@ -37,6 +37,7 @@ export class SidebarCmp{
 
   updateItems(){
       let dashboard: Item = {"route":"Home", "icon":"fa-dashboard", "content":"Dashboard"};
+      let users: Item = {"route":"Users", "icon":"fa-users", "content":"Users"};
       let mongo: Item = {"route":"Mongo", "icon":"fa-database", "content":"Mongo stats"};
       let countries: Item = {"route":"Countries", "icon":"fa-table","content":"Pays"};
       let langues:Item = {"route":"Langues","icon":"fa-table","content":"Langues"};
@@ -49,6 +50,7 @@ export class SidebarCmp{
       this.items.push(countries);
       this.items.push(langues);
       this.items.push(timelines);
+      this.items.push(users);
       if(this.isAdminInfo()){
         this.items.push(mongo);
         this.items.push(logs);

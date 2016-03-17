@@ -124,10 +124,10 @@ module.exports = function (grunt) {
         ],
         tasks: ['newer:jshint:all', 'karma']
       },
-      //back_office: {
-      //  files: ['<%= yeoman.back_office %>/app/**/*.ts'],
-      //  tasks: ['back_office']
-      //},
+      back_office: {
+        files: ['<%= yeoman.back_office %>/app/scripts/**/*.ts'],
+        tasks: ['back_office']
+      },
       gruntfile: {
         files: ['Gruntfile.js']
       },
@@ -838,7 +838,6 @@ module.exports = function (grunt) {
     'useminPrepare',
     'ts',
     'copy:back_office',
-    //'useminPrepareBack',
     'autoprefixer',
     'ngtemplates',
     'concat',

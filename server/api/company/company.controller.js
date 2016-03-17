@@ -63,7 +63,7 @@ exports.create = function(req, res) {
   var errors = checkCompanyObject(req.body);
 
   // si il n'y à aucun message d'erreur, on ajoute le pays
-	if(errors.errors.length === 0){
+  if(errors.errors.length === 0){
 		var company = new Company(req.body);
 		company.save(function(err){
 		if(err) {
