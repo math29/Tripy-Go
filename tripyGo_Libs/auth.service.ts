@@ -28,7 +28,6 @@ export class AuthService {
         this.user = data;
         this.user = this.user._body;
         this.user = JSON.parse(this.user);
-        console.log(this.user);
         localStorage.setItem('jwt-local-user', JSON.stringify(this.user));
     }, errors => console.log('Could not retrieve user'));
   }

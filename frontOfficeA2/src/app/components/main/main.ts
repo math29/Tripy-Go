@@ -5,6 +5,7 @@ import {Component, ElementRef, AfterViewInit, OnInit, EventEmitter } from 'angul
 import { DATEPICKER_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
 import { FormBuilder, ControlGroup, Validators, Control } from 'angular2/common';
 import { Http, Headers, RequestOptions } from 'angular2/http';
+import { Router } from 'angular2/router';
 import { AuthService } from '../../tripy_go_lib/auth.service';
 
 import 'rxjs/add/operator/map';
@@ -33,7 +34,7 @@ export class Main implements AfterViewInit, OnInit {
 
 	googleApiKey: String = "AIzaSyCbbSgj5Sk0_eiC9TAIbr2Un_trdaUOuwY";
 
-	constructor(private el: ElementRef, fb: FormBuilder, private _http: Http, private _auth: AuthService) {
+	constructor(private el: ElementRef, fb: FormBuilder, private _http: Http, private _auth: AuthService, private _router: Router) {
 		this.departure = fb.control('');
 		this.arrival = fb.control('');
 		this.date_departure = fb.control('');
@@ -87,6 +88,7 @@ export class Main implements AfterViewInit, OnInit {
 		return emitter;
     }
 
+    // Fonction Called on form "Let's Started" Submit
     startWithSubmit() {
 		this.startPreSubmit()
 			.subscribe(res => {
@@ -106,9 +108,11 @@ export class Main implements AfterViewInit, OnInit {
 					let options = new RequestOptions({ headers: headers });
 					console.log(data)
 					this._http.post('/api/travels', JSON.stringify(data), options)
+						.map(res => res.json())
+						.map(res => res._id)
 						.subscribe(
 							response => {
-								console.log(response);
+								this._router.navigate(['ListingPropositions', { id: response }]);
 							},
 							error => {
 								console.log(JSON.stringify(error));
