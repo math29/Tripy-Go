@@ -461,6 +461,14 @@ module.exports = function (grunt) {
         dest: '.tmp/',
         src: ['{app,components}/**/*.css']
       },
+      back_office_lib_bower: {
+        expand: true,
+        dest: './<%= yeoman.back_office %>/app/lib',
+        cwd: 'client/bower_components',
+        src: [
+          'bootstrap-iconpicker/**/*'
+        ]
+      },
       back_office_lib: {
         expand: true,
         dest: './<%= yeoman.back_office %>/app/lib',
@@ -816,8 +824,9 @@ module.exports = function (grunt) {
 
   grunt.registerTask('back_office', [
     'copy:back_office_lib',
+    'copy:back_office_lib_bower',
     'copy:tripy_go_lib_back',
-    'ts',
+    'ts:back_office',
     'copy:back_office_compiled',
     'copy:back_office_inner'
   ]);

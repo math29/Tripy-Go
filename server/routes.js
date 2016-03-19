@@ -26,7 +26,7 @@ module.exports = function(app) {
   /* database info api */
   app.use('/api/back/db', require('./api/dbAPI'));
   app.use('/api/back/log', require('./api/log'));
-  app.use('/api/transporttype', require('./api/transportType'));
+  app.use('/api/transportType', require('./api/transportType'));
   app.use('/api/company', require('./api/company'));
 
   // All undefined asset or api routes should return a 404

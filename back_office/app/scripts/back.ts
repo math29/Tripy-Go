@@ -9,6 +9,7 @@ import {CountryCmp} from './components/country/country';
 import {LanguageCmp} from './components/language/language';
 import {UsersCmp} from './components/users/user';
 import {AuthService} from './tripy-lib/services/auth.service';
+import {TransportTypeCmp} from './components/transportType/transportType';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {UserSingleton} from './singletons/user.singleton';
@@ -31,6 +32,7 @@ import {LoggedInRouterOutlet} from './LoggedInOutlet';
   { path: '/langues', name: 'Langues', component: LanguageCmp},
   { path: '/logs', name: 'Logs', component: LogCmp},
   { path: '/timelines', name: 'Timelines', component: TimelinesCmp},
+  { path: '/transportTypes', name: 'TransportTypes', component: TransportTypeCmp},
   { path: '/users', name:'Users', component: UsersCmp}
 ])
 export class Tripy_Back{

@@ -41,7 +41,6 @@ export class AuthService {
         this.user = data;
         this.user = this.user._body;
         this.user = JSON.parse(this.user);
-        console.log(this.user);
         localStorage.setItem('jwt-local-user', JSON.stringify(this.user));
         this._userObserver.next(this.user);
     }, errors => console.log('Could not retrieve user'));
@@ -160,9 +159,7 @@ export class AuthService {
   }
 
   checkJWTValid():void {
-    console.log("checkJWTValid");
     if(this.isLoggedIn()){
-      console.log("User is logged");
       let headers = this.getBearerHeaders();
       let options = new RequestOptions({ headers: headers });
       this._http.get('/api/users/me', options)
@@ -170,7 +167,6 @@ export class AuthService {
           this.user = data;
           this.user = this.user._body;
           this.user = JSON.parse(this.user);
-          console.log(this.user);
           this._userObserver.next(this.user);
       }, errors => {
         console.log('Could not retrieve user');
