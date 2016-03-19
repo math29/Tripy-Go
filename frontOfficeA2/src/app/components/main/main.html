@@ -8,21 +8,21 @@
               <div class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-3 search-col-padding">
                 <label>Point départ</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" ngControl="departure"/>
+                  <input type="text" id="input-departure" class="form-control" ngControl="departure"/>
                   <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
                 </div>
               </div>
               <div class="col-md-3 col-sm-3 search-col-padding">
                 <label>Destination</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" ngControl="arrival">
+                  <input type="text" id="input-arrival" class="form-control" ngControl="arrival">
                   <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
                 </div>
               </div>
               <div class="col-md-3 col-sm-3 search-col-padding">
                 <label>Date départ</label>
                 <div class="input-group">
-                  <input type="text" class="form-control depart_date" ngControl="date_departure">
+                  <input type="text" class="form-control depart_date" ngControl="date_departure" (click)="updateDateModel()">
                   <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
                 </div>
               </div>

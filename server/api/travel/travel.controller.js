@@ -34,10 +34,15 @@ var save_travel = function(req, res) {
 exports.create = function(req, res) {
   // don't include the date_created, if a user specified it
   if(req.body.arrival){
-    Loc.create(req.body.arrival, function(err, loc) {
+    // Create Location given in Post Request
+    Loc.create(req.body.arrival, function(err, arrival_loc) {
       if(err) { return handleError(res, err); }
-      req.body.arrival = loc;
-      save_travel(req, res);
+      req.body.arrival = arrival_loc;
+      Loc.create(req.body.departure, function(err, departure_loc) {
+        if(err) { return handleError(res, err); }
+        req.body.departure = departure_loc;
+        save_travel(req, res);
+      });
     });
   }else{
     save_travel(req, res);
