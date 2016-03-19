@@ -29,6 +29,7 @@
         "app/components/account/profile/overview/overview.ts",
         "app/components/account/profile/profile.ts",
         "app/components/account/profile/settings/settings.ts",
+        "app/components/account/profile/travels/profile_travels.ts",
         "app/components/account/signup/signup.ts",
         "app/components/cmptFooter/cmptFooter.ts",
         "app/components/header/header.ts",

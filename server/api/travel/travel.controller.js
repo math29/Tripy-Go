@@ -32,19 +32,28 @@ var save_travel = function(req, res) {
 
 // Creates a new travel in the DB.
 exports.create = function(req, res) {
+  var nbAsyncRequests = 0;
   // don't include the date_created, if a user specified it
   if(req.body.arrival){
+    nbAsyncRequests++;
     // Create Location given in Post Request
     Loc.create(req.body.arrival, function(err, arrival_loc) {
       if(err) { return handleError(res, err); }
       req.body.arrival = arrival_loc;
-      Loc.create(req.body.departure, function(err, departure_loc) {
-        if(err) { return handleError(res, err); }
-        req.body.departure = departure_loc;
-        save_travel(req, res);
-      });
+      nbAsyncRequests--;
+      if(!nbAsyncRequests) save_travel(req, res);
     });
-  }else{
+  }
+  if(req.body.departure){
+    nbAsyncRequests++;
+    Loc.create(req.body.departure, function(err, departure_loc) {
+      if(err) { return handleError(res, err); }
+      req.body.departure = departure_loc;
+      nbAsyncRequests--;
+      if(!nbAsyncRequests) save_travel(req, res);
+    });
+  }
+  if(!nbAsyncRequests){
     save_travel(req, res);
   }
 };

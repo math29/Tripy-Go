@@ -93,8 +93,6 @@ export class Main implements AfterViewInit, OnInit {
 		this.startPreSubmit()
 			.subscribe(res => {
 				if (this.startForm.valid && res == 0) {
-					console.log(this.departure.value);
-					console.log(this.arrival.value);
 					// Add User if connected - Null else
 					let data = this.startForm.value;
 					if (this._auth.isAuthed()) data.author = this._auth.getMe();
@@ -106,7 +104,6 @@ export class Main implements AfterViewInit, OnInit {
 						'Authorization': 'Bearer ' + this._auth.getToken()
 					});
 					let options = new RequestOptions({ headers: headers });
-					console.log(data)
 					this._http.post('/api/travels', JSON.stringify(data), options)
 						.map(res => res.json())
 						.map(res => res._id)
@@ -122,12 +119,14 @@ export class Main implements AfterViewInit, OnInit {
 			});
 	}
 
+	// Initialization With JQuery Datepicker
 	ngAfterViewInit() {
 		jQuery(this.el.nativeElement)
 			.find('.depart_date')
 			.datepicker({ minDate: -0, maxDate: "+3M" });
 	}
 
+	// Initialization Inputs with Google autocomplete API
 	ngOnInit() {
 		let _this = this;
         let input_departure: any = document.getElementById('input-departure');
