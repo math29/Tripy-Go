@@ -6,13 +6,15 @@ import {Response} from 'angular2/http';
 import {UserService} from '../../services/userService';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {OrderByPipe} from '../../pipes/orderby';
+//import {ModalCmp} from '../../tripy-lib/components/modal/modal';
+import {StarsRateCmp} from '../../tripy-lib/components/rate/starsRate';
 import * as io from 'socket.io-client';
 
 @Component({
   selector: 'languages',
   templateUrl: 'views/components/users/main.html',
   providers: [UserService],
-  directives: [ROUTER_DIRECTIVES],
+  directives: [ROUTER_DIRECTIVES, StarsRateCmp],
   pipes: [OrderByPipe]
 })
 export class UsersCmp{
