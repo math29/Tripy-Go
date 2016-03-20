@@ -63,6 +63,7 @@
         "app/lib/tripy-lib/src/services/auth.service.d.ts",
         "../typings/angular2/angular2.d.ts",
         "../typings/jasmine/jasmine.d.ts",
+        "../typings/jquery/jquery.d.ts",
         "../typings/marked/marked.d.ts",
         "../typings/moment/moment-node.d.ts",
         "../typings/moment/moment.d.ts",

@@ -52,30 +52,26 @@ export class TransportTypeCmp{
         });
     }
 
-    ngAfterViewInit() {
-		/*let a:any = jQuery(this.el.nativeElement)
-			.find('#typeIcon');
-    console.log(a);
-    a.iconpicker();
-    a.iconpicker();*/
-    console.log('HERE');
-	}
-
 
 
     initNewTransportType(){
       this.typeEdit = {name:"",img:""};
-      let millisecondsToWait = 250;
-      let test:any = this.typeEdit;
+
 
       // must wait because before, component does not exist
-      setTimeout(function() {
-      let iconPicker:any = $('#typeIcon').iconpicker({icon:'car',iconset: 'fontawesome'})
-      iconPicker.on('change', function(e){
-            test.img = e.icon;
-          });
-      }, millisecondsToWait);
+      this.initIconPicker();
 
+    }
+
+    initIconPicker(){
+      let millisecondsToWait = 250;
+      let test:any = this.typeEdit;
+      setTimeout(function() {
+      let iconPicker:any = $('#typeIcon').iconpicker({icon:test.img,iconset: 'fontawesome'})
+        iconPicker.on('change', function(e){
+            test.img = e.icon;
+        });
+      }, millisecondsToWait);
     }
 
     ngOnDestroy(){
@@ -95,11 +91,13 @@ export class TransportTypeCmp{
 
     edit(type:any){
       this.typeEdit = type;
+
+      this.initIconPicker();
     }
 
     saveTransportType(transportType: any){
       this._transportTypeService.saveTransportType(transportType)
-        .subscribe(data => this.messages.push("Moyen de transport sauvegardé"),
+        .subscribe(data => {this.messages.push("Moyen de transport sauvegardé"); this.typeEdit = null;},
         errors => this.errors.push("Impossible de sauvegarder le moyen de transport"));
     }
 
@@ -115,7 +113,7 @@ export class TransportTypeCmp{
             this.orderby = this.keys[1];
           }
           // set socket to listen languages saved
-          this.socket.on('user:save', (data:any)=>{
+          this.socket.on('transportType:save', (data:any)=>{
             let index = this.findTransportIndex(data._id);
             if(index > -1){
               this.transportTypes[index] = data;
