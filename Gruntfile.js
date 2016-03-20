@@ -33,6 +33,7 @@ module.exports = function (grunt) {
       // configurable paths
       client: require('./bower.json').appPath || 'client',
       front_office_A2: './frontOfficeA2/src',
+      front_office_dist: './frontOfficeA2/dist',
       back_office: 'back_office',
       lib:'tripyGo_Libs',
       dist: 'dist',
@@ -425,15 +426,17 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           dot: true,
-          cwd: '<%= yeoman.front_office_A2 %>',
+          cwd: '<%= yeoman.front_office_dist %>',
           dest: '<%= yeoman.public %>',
           src: [
             '*.{ico,png,txt}',
             '.htaccess',
-            'lib/**/*',
-            'vendor/**/*',
-            'bower_components/**/*',
+            'app/**/*',
             'assets/**/*',
+            'lib/**/*',
+            'node_modules/**/*',
+            'vendor/**/*',
+            'frontOfficeA2/**/*',
             'index.html'
           ]
         }, {
