@@ -52,16 +52,16 @@ module.exports = function(app) {
     app.use(favicon(path.join(config.root, 'public', 'favicon.ico')));
     app.use(express.static(path.join(config.root, 'public')));
     app.set('appPath', path.join(config.root, 'public'));
-    app.use('/back', express.static(path.join(config.root, 'back_office_A2/app/')));
+    app.use('/back', express.static(path.join(config.root, 'back_office/app/')));
     app.use(morgan('dev'));
   }
 
   if ('development' === env || 'test' === env) {
     app.use(require('connect-livereload')());
     app.use(express.static(path.join(config.root, '.tmp')));
-    app.use(express.static(path.join(config.root, 'client')));
-    app.set('appPath', path.join(config.root, 'client'));
-    app.use('/front', express.static(path.join(config.root, 'frontOfficeA2/dist/')));
+    app.use('/front',express.static(path.join(config.root, 'client')));
+    app.set('/front', path.join(config.root, 'client'));
+    app.use( express.static(path.join(config.root, 'frontOfficeA2/dist/')));
     app.use('/back',express.static(path.join(config.root, 'back_office/app/')));
     if('test' !== env){
       app.use('/doc', express.static(path.join(config.root, 'apidoc')));

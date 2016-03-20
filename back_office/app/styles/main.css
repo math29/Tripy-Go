@@ -23,11 +23,22 @@ body {
   padding-bottom: 19px;
 }
 
+/*.navbar{
+  background-color: #f2676b;
+}
+
+.navbar li a:hover{
+  background-color: #f19c4f;
+}*/
+
+
 /* Custom page footer */
 .footer {
   padding-top: 19px;
   color: #777;
   border-top: 1px solid #e5e5e5;
+  background-color: #f2676b;
+
 }
 
 /* Customize container */
