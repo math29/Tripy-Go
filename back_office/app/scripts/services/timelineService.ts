@@ -40,6 +40,10 @@ export class TimelineService {
     return this._http.post(this.base_url + '/' + timeline.name, JSON.stringify({description:timeline.description}), this.getHeaders());
   }
 
+  moveOperation(timelineId: string, operationId: string, side: string){
+    return this._http.put(this.base_url + side + '/' + timelineId + '/' +operationId, null, this.getHeaders())
+  }
+
   private handleError (error: Response) {
     // in a real world app, we may send the server to some remote logging infrastructure
     // instead of just logging it to the console

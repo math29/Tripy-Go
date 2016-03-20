@@ -44,7 +44,7 @@ export class TimelinesCmp{
         if(this.timelines.length == 0){
           this.createTimeline();
         }
-        this.socket.on('timeline:save',(data:any)=>console.log(data));
+        this.socket.on('timeline:save',(data:any)=>console.log('timeline :'+data));
 
         }, error => {this.errors.push("Impossible de récupérer les timelines");});
     }
@@ -79,12 +79,22 @@ export class TimelinesCmp{
           err => {this.logError(err);this.errors.push("Impossible de récupérer la liste des opérations.")});
       //this.socket.syncUpdates('operation', this.operations);
         this.socket.on('operation:save',(data:any)=>{
-          console.log(data);
+          console.log('operation: '+data);
         });
         this.socket.on('operation:remove',(data:any)=>{
-                  console.log(data);
+                  console.log('remove operation: '+data);
                 });
 
+    }
+
+    onUpdate(response: any){
+      if(response.type === 'message'){
+        this.messages.push(response.message);
+        this.getTimelines();
+        this.getOperations();
+      }else if(response.type === 'error'){
+        this.errors.push(response.message);
+      }
     }
 
     logError(err) {

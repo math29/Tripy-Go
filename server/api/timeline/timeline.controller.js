@@ -148,7 +148,9 @@ exports.moveOperation = function(req, res){
   if(req.params.side === 'down'){
     side = 1;
   }
+  // Id de l'opération
   var opId = req.params.opId;
+  // Id de la timeline
   var timelineId = req.params.timelineId;
   Timeline.findOne({_id:req.params.timelineId}).populate('operations').exec(function(err, timeline){
     if(err){
@@ -158,25 +160,34 @@ exports.moveOperation = function(req, res){
     var ops = [];
     var secondOp = null;
 
+    // on parcours l'ensemble des opérations
     for(var i = 0; i < timeline.operations.length; i++){
+      // on ajoute l'id de l'opération à ops
       ops.push(timeline.operations[i]._id);
+      // on cherche l'étape de l'opération
       var opStep = findStepOperation(timeline._id, timeline.operations[i]);
+
+      // si l'opération n'est pas trouvée
       if(step !== -1){
+        // si on veut faire descendre l'opération et l'étape de l'opération est celle d'en dessous
         if(side === 1 && opStep === step+1){
           secondOp = timeline.operations[i]._id;
           break;
-        }else if(side === -1 && opStep === step-1){
+        }
+        // si on veut faire monter l'opération et l'étape de l'opération est celle d'au dessus
+        else if(side === -1 && opStep === step-1){
           secondOp = timeline.operations[i]._id;
           break;
         }
       }
-      if(timeline.operations[i]._id === opId && step === -1){
+      // si c'est l'opération recherchée et que l'étape n'est pas trouvée
+      if(String(timeline.operations[i]._id) === opId && step === -1){
         // recherche de l'étape
         step = opStep;
         i=-1;
       }
     }
-
+    logger.info("Side: "+side+" step: "+step+" operation: "+opId);
     if(((side === -1 && step>0) || (side === 1 && step < timeline.operations.length)) && secondOp!== null ){
       Operation.update({_id:opId, "steps.id":timelineId}, {$inc:{"steps.$.step":side}}).exec();
       Operation.update({_id:secondOp, "steps.id":timelineId}, {$inc:{"steps.$.step":-side}}).exec();

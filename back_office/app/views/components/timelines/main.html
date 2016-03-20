@@ -116,7 +116,7 @@
         </div>
         {{timelines[timelineIndex].description}}
         <!-- /.panel-heading -->
-        <timeline [timelines]="timelines" [timelineIndex]="timelineIndex"></timeline>
+        <timeline [timelines]="timelines" [timelineIndex]="timelineIndex" [operations]="operations" (onUpdate)="onUpdate($event)"></timeline>
         <!-- /.panel-body -->
       </div>
       <!-- /.panel -->
