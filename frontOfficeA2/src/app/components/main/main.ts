@@ -6,7 +6,7 @@ import { DATEPICKER_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
 import { FormBuilder, ControlGroup, Validators, Control } from 'angular2/common';
 import { Http, Headers, RequestOptions } from 'angular2/http';
 import { Router } from 'angular2/router';
-import { AuthService } from '../../tripy_go_lib/auth.service';
+import { AuthService } from '../../tripy_go_lib/services/auth.service';
 
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';

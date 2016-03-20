@@ -159,9 +159,7 @@ export class AuthService {
   }
 
   checkJWTValid():void {
-    console.log("checkJWTValid");
     if(this.isLoggedIn()){
-      console.log("User is logged");
       let headers = this.getBearerHeaders();
       let options = new RequestOptions({ headers: headers });
       this._http.get('/api/users/me', options)
