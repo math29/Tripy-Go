@@ -115,6 +115,44 @@ router.get('/', controller.index);
 router.get('/:id', controller.show);
 
 /**
+ * @api {get} /api/travels/user/:id Get By User Id
+ * @apiVersion 0.0.0
+ * @apiName GetTravelsByUserId
+ * @apiGroup Travels
+ *
+ * @apiParam {Number} id  Id of the user target
+ *
+ * @apiSuccess {Travels} Travels
+ *
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 200 OK
+ *  [
+ *      {
+ *          "_id": "5612bb652e5ef4a40f41acc4",
+ *          "author": "5612bad22e5ef4a40f41acc3",
+ *          "date_departure": null,
+ *          "date_return": null,
+ *          "month_departure": null,
+ *          "choose_by_dates": false,
+ *          "choose_by_month": false,
+ *          "budget": 2000000,
+ *          "nbTravellers": 15,
+ *          "__v": 0,
+ *          "selectedHashtags": [],
+ *          "region_idea": "",
+ *          "personal_interest": {
+ *              "mountain": false,
+ *              "playa": false
+ *          },
+ *          "date_created": "2015-10-05T18:03:17.925Z"
+ *      }
+ *  ]
+ *
+ * @apiUse UserNotAuthorized
+ */
+router.get('/user/:id', controller.get_by_user_id);
+
+/**
   * @api {post} /api/travels Post travel
   * @apiName InsertTravel
   * @apiGroup Travels

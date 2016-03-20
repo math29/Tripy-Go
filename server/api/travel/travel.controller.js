@@ -22,6 +22,16 @@ exports.show = function(req, res) {
   });
 };
 
+exports.get_by_user_id = function(req, res) {
+  User.findById(req.params.id, function(err, user){
+    Travel.find({'_id':{$in: user.travels}},
+      function (err, travels) {
+        if(err) { return handleError(res, err); }
+        return res.status(200).json(travels);
+      });
+  });
+};
+
 
 var save_travel = function(req, res) {
   delete req.body.date_created;
