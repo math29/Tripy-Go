@@ -21,7 +21,13 @@
       "commit": "3a86e056dc018541d82dd74639fca18ba8d605da"
     },
     "jquery/jquery.d.ts": {
-      "commit": "0144ad5a74053f2292424847259c4c8e1d0fecaa"
+      "commit": "6766ed1d0faf02ede9e2edf2e66bbb2388c825ec"
+    },
+    "jquery.ui.datetimepicker/jquery.ui.datetimepicker.d.ts": {
+      "commit": "6766ed1d0faf02ede9e2edf2e66bbb2388c825ec"
+    },
+    "jqueryui/jqueryui.d.ts": {
+      "commit": "6766ed1d0faf02ede9e2edf2e66bbb2388c825ec"
     }
   }
 }
