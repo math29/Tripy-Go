@@ -16,7 +16,6 @@ bootstrap(FrontOfficeA2App, [
 	FORM_PROVIDERS,
     ROUTER_PROVIDERS,
     HTTP_PROVIDERS,
-    provide(LocationStrategy, { useClass: HashLocationStrategy }),
     provide(AuthHttp, {
 		useFactory: (http) => {
 			return new AuthHttp(new AuthConfig({
