@@ -1,62 +1,54 @@
-<div class="row">
-    <div id="room-gallery" class="carousel slide bg-slider" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#room-gallery" data-slide-to="0" class="active"></li>
-            <li data-target="#room-gallery" data-slide-to="1"></li>
-            <li data-target="#room-gallery" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner" role="listbox">
-            <div class="item active">
-              <img src="assets/images/hotel-slide.jpg" alt="Cruise">
-              <div class="carousel-caption">
-                <div class="wrapper">
-                  <h2><span>World Travel Community</span></h2>
-                  <h4>La nouvelle communautée de voyage</h4>
-                  <a href="index-3.html#">VIEW DETAILS</a>
+<section>
+  <div class="row start-with single-search">
+    <div class="container clear-padding">
+      <div class="col-md-12 clear-padding search-section">
+        <h2 class="text-center">FIND YOUR PERFECT ESCAPE</h2>
+          <div role="tabpanel" class="tab-pane" id="hotel">
+            <form (ngSubmit)="startWithSubmit()"  [ngFormModel]="startForm">
+              <div class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-3 search-col-padding">
+                <label>Point départ</label>
+                <div class="input-group">
+                  <input type="text" id="input-departure" class="form-control" ngControl="departure"/>
+                  <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
                 </div>
               </div>
-            </div>
-
-            <div class="item">
-              <img src="assets/images/hotel-slide1.jpg" alt="Cruise">
-              <div class="carousel-caption">
-                <div class="wrapper">
-                  <h2><span>World Travel Community</span></h2>
-                  <h4>La nouvelle communautée de voyage</h4>
-                  <a href="index-3.html#">VIEW DETAILS</a>
+              <div class="col-md-3 col-sm-3 search-col-padding">
+                <label>Destination</label>
+                <div class="input-group">
+                  <input type="text" id="input-arrival" class="form-control" ngControl="arrival">
+                  <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
                 </div>
               </div>
-            </div>
-            <div class="item">
-              <img src="assets/images/hotel-slide2.jpg" alt="Cruise">
-              <div class="carousel-caption">
-                <div class="wrapper">
-                  <h2><span>World Travel Community</span></h2>
-                  <h4>La nouvelle communautée de voyage</h4>
-                  <a href="index-3.html#">VIEW DETAILS</a>
+              <div class="col-md-3 col-sm-3 search-col-padding">
+                <label>Date départ</label>
+                <div class="input-group">
+                  <input type="text" class="form-control depart_date" ngControl="date_departure" (click)="updateDateModel()">
+                  <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
                 </div>
               </div>
-            </div>
+              <div class="clearfix"></div>
+              <div class="col-md-12 text-center search-col-padding">
+                <button type="submit" class="search-button btn transition-effect" [disabled]="!startForm.valid">Let's GO !</button>
+              </div>
+              <div class="clearfix"></div>
+              <a href="#how-it-work">
+                <p class="more-infos">
+                  En savoir plus
+                </p>
+              </a>
+            </form>
+          </div>
         </div>
-        <a class="left carousel-control" href="#room-gallery" role="button" data-slide="prev">
-            <span class="fa fa-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#room-gallery" role="button" data-slide="next">
-            <span class="fa fa-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
     </div>
-</div>
-<!-- END: SEARCH SECTION -->
+  </div>
+</section>
 
-<!-- BEGIN: HOW IT WORK -->
 <section id="how-it-work">
     <div class="row work-row">
       <div class="container">
         <div class="section-title text-center">
-          <h2>HOW IT WORKS?</h2>
-          <h4>SEARCH - SELECT - BOOK</h4>
+          <h2>Organiser son voyage</h2>
+          <h4>DESTINATION - TRANSPORT - HEBERGEMENT</h4>
           <div class="space"></div>
           <p>
             Grâce à notre agent de voyage virtuel et à nos algorithmes de recherche ultra-performents,<br>
@@ -65,22 +57,48 @@
         </div>
         <div class="work-step">
           <div class="col-md-4 col-sm-4 first-step text-center">
-            <i class="fa fa-search"></i>
-            <h5>SEARCH</h5>
+            <i class="fa fa-globe"></i>
+            <h5>Trouver sa destination</h5>
             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
           </div>
           <div class="col-md-4 col-sm-4 second-step text-center">
-            <i class="fa fa-heart-o"></i>
-            <h5>SELECT</h5>
+            <i class="fa fa-plane"></i>
+            <h5>Réserver son transport</h5>
             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
           </div>
           <div class="col-md-4 col-sm-4 third-step text-center">
-            <i class="fa fa-shopping-cart"></i>
-            <h5>BOOK</h5>
+            <i class="fa fa-home"></i>
+            <h5>Réserver son hébergement</h5>
             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
           </div>
         </div>
       </div>
     </div>
 </section>
-<!--END: HOW IT WORK -->
+
+<section id="advice-row">
+  <div class="row top-advice">
+    <div class="container">
+      <div class="section-title text-center">
+        <h2>Profitez de conseils pertinents</h2>
+        <h4>COMMUNAUTEE - AGENT VIRTUEL</h4>
+        <div class="space"></div>
+        <p>
+          Fini de se dire "A, si j'avais sû !". Découvrez toutes les possibilités que vous réserve l'organisation de vacances en ligne !
+        </p>
+      </div>
+      <div class="work-step">
+        <div class="col-md-6 col-sm-6 first-step text-center">
+          <i><img class="community" src="assets/fonts/communication.svg"></i>
+          <h5>La communautée</h5>
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+        </div>
+        <div class="col-md-6 col-sm-6 second-step text-center">
+          <i><img class="virtual-agent" src="assets/fonts/virtualAgent.svg"></i>
+          <h5>L'agent de voyage virtuel</h5>
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

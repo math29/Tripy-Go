@@ -12,6 +12,10 @@ var UserSchema = new Schema({
     type: String,
     default: 'user'
   },
+  travels: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Travel'
+  }],
   hashedPassword: String,
   provider: String,
   salt: String,

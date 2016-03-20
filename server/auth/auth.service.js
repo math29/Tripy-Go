@@ -26,6 +26,7 @@ function isAuthenticated() {
     })
     // Attach user to request
     .use(function(req, res, next) {
+      console.log(req.user);
       User.findById(req.user._id, function (err, user) {
         if (err){
           logger.error('Could not attach user to request', user);

@@ -1,0 +1,64 @@
+/**
+*
+* Author: Mathieu ALLAIN
+* Description: Stylesheet main page
+*
+**/
+
+/*********************************************************
+	TABLE OF CONTENTS
+	1. START WITH CONTENT
+	2. ADVICE SECTION CONTENT
+**********************************************************/
+
+/*********************************************************
+			1. START WITH CONTENT
+**********************************************************/
+.start-with {
+	background: url('assets/images/departure.jpg');
+	background-attachment: fixed;
+}
+
+.more-infos{
+	text-decoration: underline;
+	font-weight: bold;
+	color: #f9676b;
+	text-align: center;
+	padding-top: 15px;
+}
+
+
+/*********************************************************
+			2. ADVICE SECTION CONTENT
+**********************************************************/
+
+.top-advice {
+	padding: 60px 0px;
+	color: #fff;
+}
+
+.top-advice .work-step i ,
+.top-advice .work-step .first-step:after,
+.top-advice .work-step .second-step:before{
+	background: #00adef !important;
+}
+
+.top-advice .work-step .second-step:after,
+.top-advice .work-step .third-step:before {
+	display: none;
+}
+
+#advice-row {
+	background: url('assets/images/advice-section.jpg');
+	background-attachment: fixed;
+}
+
+.virtual-agent{
+	height: 35px;
+	width: 40px;
+}
+
+.community{
+	height: 35px;
+	width: 40px;
+}

@@ -28,8 +28,9 @@
 
         <link href="assets/css/light.css" rel="stylesheet" media="screen">
 
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800,700,600' rel='stylesheet' type='text/css'>
+        <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800,700,600' rel='stylesheet' type='text/css'> -->
 
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?&libraries=places&language=fr-FR"></script>
     </head>
     <body class="load-full-screen">
         <!--[if lt IE 7]>
@@ -64,17 +65,27 @@
                     },
                     "angular2-jwt": {
                         "defaultExtension": "js"
+                    },
+                    "ng2-bootstrap": {
+                        "defaultExtension": "js"
                     }
                 },
                 map: {
-                    "angular2-jwt": "lib/angular2-jwt"
+                    "angular2-jwt": "lib/angular2-jwt",
+                    "ng2-bootstrap": "lib/ng2-bootstrap",
+                    "moment": 'lib/moment/moment.js'
                 }
             });
             System.import('frontOfficeA2/src/app.js').then(null, console.error.bind(console));
         </script>
 
         <!-- LOAD JS LIBRARIES -->
+        <script src="assets/js/respond.js"></script>
         <script src="vendor/jquery/dist/jquery.js"></script>
+        <script src="assets/plugins/owl.carousel.min.js"></script>
         <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="assets/js/jquery-ui.min.js"></script>
+        <!-- <script src="assets/js/bootstrap-select.min.js"></script> -->
+        <script src="assets/plugins/wow.min.js"></script>
     </body>
 </html>

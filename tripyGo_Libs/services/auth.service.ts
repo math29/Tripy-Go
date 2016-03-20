@@ -41,7 +41,6 @@ export class AuthService {
         this.user = data;
         this.user = this.user._body;
         this.user = JSON.parse(this.user);
-        console.log(this.user);
         localStorage.setItem('jwt-local-user', JSON.stringify(this.user));
         this._userObserver.next(this.user);
     }, errors => console.log('Could not retrieve user'));
@@ -179,5 +178,23 @@ export class AuthService {
     }
   }
 
+  parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(atob(base64));
+  }
 
+  getToken() {
+    return localStorage['jwt'];
+  }
+
+  isAuthed() {
+    var token = this.getToken();
+    if (token) {
+      var params = this.parseJwt(token);
+      return Math.round(new Date().getTime() / 1000) <= params.exp;
+    } else {
+      return false;
+    }
+  }
 }

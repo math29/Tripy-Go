@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var Travel = require('./travel.model');
 var Loc = require('../location/location.model');
+var User = require('../user/user.model');
 
 // Get list of travels
 exports.index = function(req, res) {
@@ -21,25 +22,56 @@ exports.show = function(req, res) {
   });
 };
 
+exports.get_by_user_id = function(req, res) {
+  User.findById(req.params.id, function(err, user){
+    Travel.find({'_id':{$in: user.travels}},
+      function (err, travels) {
+        if(err) { return handleError(res, err); }
+        return res.status(200).json(travels);
+      });
+  });
+};
+
 
 var save_travel = function(req, res) {
   delete req.body.date_created;
   Travel.create(req.body, function(err, travel) {
     if(err) { return handleError(res, err); }
+    if(travel.author){
+      User.update(
+        {_id: travel.author},
+        { $push: {travels: travel}},
+        function(err, affected, resp) {
+        })
+    }
     return res.status(201).json(travel);
   });
 };
 
 // Creates a new travel in the DB.
 exports.create = function(req, res) {
+  var nbAsyncRequests = 0;
   // don't include the date_created, if a user specified it
   if(req.body.arrival){
-    Loc.create(req.body.arrival, function(err, loc) {
+    nbAsyncRequests++;
+    // Create Location given in Post Request
+    Loc.create(req.body.arrival, function(err, arrival_loc) {
       if(err) { return handleError(res, err); }
-      req.body.arrival = loc;
-      save_travel(req, res);
+      req.body.arrival = arrival_loc;
+      nbAsyncRequests--;
+      if(!nbAsyncRequests) save_travel(req, res);
     });
-  }else{
+  }
+  if(req.body.departure){
+    nbAsyncRequests++;
+    Loc.create(req.body.departure, function(err, departure_loc) {
+      if(err) { return handleError(res, err); }
+      req.body.departure = departure_loc;
+      nbAsyncRequests--;
+      if(!nbAsyncRequests) save_travel(req, res);
+    });
+  }
+  if(!nbAsyncRequests){
     save_travel(req, res);
   }
 };

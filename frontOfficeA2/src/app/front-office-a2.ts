@@ -5,6 +5,7 @@ import { Login } from './components/account/login/login';
 import { Signup } from './components/account/signup/signup';
 import { Main } from './components/main/main';
 import { Profile } from './components/account/profile/profile';
+import { ListingPropositions } from './components/transport/listingPropositions/listingPropositions';
 
 import {LoggedInRouterOutlet} from './LoggedInOutlet';
 
@@ -24,7 +25,8 @@ import {CmptFooter} from './components/cmptFooter/cmptFooter'
 	{ path: '/', component: Main, name: 'Home'},
 	{ path: '/login', component: Login, name: 'Login' },
 	{ path: '/signup', component: Signup, as: 'Signup' },
-	{ path: '/profile', component: Profile, as: 'Profile' }
+	{ path: '/profile', component: Profile, as: 'Profile' },
+	{ path: '/transport/listing/:id', component: ListingPropositions, as: 'ListingPropositions' }
 ])
 export class FrontOfficeA2App {
 
