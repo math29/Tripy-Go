@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var Travel = require('./travel.model');
 var Loc = require('../location/location.model');
+var User = require('../user/user.model');
 
 // Get list of travels
 exports.index = function(req, res) {
@@ -26,6 +27,13 @@ var save_travel = function(req, res) {
   delete req.body.date_created;
   Travel.create(req.body, function(err, travel) {
     if(err) { return handleError(res, err); }
+    if(travel.author){
+      User.update(
+        {_id: travel.author},
+        { $push: {travels: travel}},
+        function(err, affected, resp) {
+        })
+    }
     return res.status(201).json(travel);
   });
 };
