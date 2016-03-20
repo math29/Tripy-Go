@@ -425,11 +425,13 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           dot: true,
-          cwd: '<%= yeoman.client %>',
+          cwd: '<%= yeoman.front_office_A2 %>',
           dest: '<%= yeoman.public %>',
           src: [
             '*.{ico,png,txt}',
             '.htaccess',
+            'lib/**/*',
+            'vendor/**/*',
             'bower_components/**/*',
             'assets/**/*',
             'index.html'
@@ -839,19 +841,19 @@ module.exports = function (grunt) {
     'injector',
     'wiredep',
     'useminPrepare',
-    'ts',
-    'copy:back_office',
+    'front_office',
+    'back_office',
     //'useminPrepareBack',
     'autoprefixer',
     'ngtemplates',
     'concat',
     'ngAnnotate',
     'copy:dist',
-    'cdnify',
+    /*'cdnify',
     'cssmin',
     'uglify',
     'rev',
-    'usemin',
+    'usemin',*/
     'mkdir',
     'touch'
     //'useminBack'

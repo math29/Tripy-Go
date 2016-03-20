@@ -93,7 +93,7 @@ function removeConsole(log){
  */
 function addMongoLog(log, database){
   log.add(winston.transports.MongoDB,{
-    level: 'info',
+    level: 'warn',
     db: database
    });
    log.info("add MongoDB output to output");

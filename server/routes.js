@@ -38,7 +38,11 @@ module.exports = function(app) {
     .get(function(req, res) {
       var p = app.get('appPath');
       if(req.url.indexOf("back") > -1){
-        p = p + '/../back_office/app';
+        if(process.env.NODE_ENV === 'production'){
+          p = p + '../back/app'
+        }else{
+          p = p + '/../back_office/app';
+        }
       }
       res.sendFile(path.resolve(p + '/index.html'));
     });
