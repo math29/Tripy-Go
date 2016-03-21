@@ -3,21 +3,7 @@
 var Rate = require('./rate.model.js');
 var logger = require('../../config/logger');
 var TypeChecker = require('../../utils/checkObjects');
-
-/*
-db.rates.aggregate([
-    {
-        $unwind:"$raters"
-    },
-    {
-        $group:
-        {
-            _id:"$_id",
-            scores: {$avg:"$raters.action"}
-        }
-    }
-    ])
-*/
+var mongoose = require('mongoose');
 
 /**
  * Get list of rates
@@ -46,8 +32,57 @@ exports.show = function (req, res, next) {
       return next(err);
     }
     if (!rate) return res.status(401).send('Unauthorized');
-    res.json(rate);
+    if(rate.type === 'Stars'){
+      console.log('Id: '+rateId);
+      Rate.aggregate(
+        [
+          {$match: {_id: mongoose.Types.ObjectId(rateId)}}
+          ,
+          {$unwind: '$raters'},
+          {$group: {
+            '_id': '$raters.action',
+            'count':{$sum: 1}
+          }},
+          {$sort: {'_id':-1}},
+          {
+            $group: {
+              '_id':rateId,
+              'stars': {$push: {'count': '$count', 'value': '$_id'}},
+              'count':{$sum: '$count'}
+            }
+          }
+        ], function(err, result){
+          if(err) return res.status(500).send(err);
+          console.log('result: '+result + 'err: '+err);
+          res.json(result);
+        }
+      );
+    }else{
+      res.json(rate);
+
+    }
   });
+
+  /*db.getCollection('rates').aggregate([
+    {$match:{'_id':ObjectId("56e9504f47b2f14db28a3363")}},
+    {$unwind: "$raters"},
+    {$group: {
+        "_id":"$raters.action",
+        "count":{$sum:1}
+        }
+    },
+    {
+        $sort: {_id:-1}
+    },
+    {
+        $group:{
+            _id:"0",
+            "stars":{$push:{"count": "$count", "value":"$_id"}},
+            "count":{$sum:"$count"},
+            }
+
+     }]
+   )*/
 };
 
 /**
