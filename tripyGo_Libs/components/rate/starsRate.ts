@@ -1,22 +1,23 @@
 import {Component, OnInit, OnDestroy} from 'angular2/core';
 import {Response} from 'angular2/http';
+import {RateService} from './rate.service';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 @Component({
   selector: 'stars-rate',
   template: `
 
-            <div class="well well-sm">
+            <div class="well well-sm" *ngIf="rate">
                 <div class="row">
                     <div class="col-xs-12 col-md-6 text-center">
                         <h1 class="rating-num">{{rate.score | number:'1.1-2'}}</h1>
                         <div class="rating">
+                            <span *ngFor="#i of range()">
+                              <span *ngIf="i==1" class="glyphicon glyphicon-star"></span>
+                              <span *ngIf="i==0" class="glyphicon glyphicon-star-empty"></span>
+                            </span>
 
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star-empty"></span>
+                            
                         </div>
                         <div>
                             <span class="glyphicon glyphicon-user"></span>{{rate.count}} votants
@@ -51,9 +52,9 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
 '.progress-bar { text-align: left; }',
 '.rating-desc .col-md-3 {padding-right: 0px;}',
 '.sr-only { margin-left: 5px;overflow: visible;clip: auto; }'],
-  providers: [],
+  providers: [RateService],
   directives: [ROUTER_DIRECTIVES],
-  inputs: ['rate']
+  inputs: ['rateId']
 })
 export class StarsRateCmp{
   private idUp:string;
@@ -61,6 +62,7 @@ export class StarsRateCmp{
   private globalRate: number = 4.0;
   private userNumber: number = 10;
   private rate:any;
+  private rateId:string;
   private starsRange: any[] = [{
     star: 5,
     value: 80,
@@ -88,24 +90,28 @@ export class StarsRateCmp{
   }
 ];
 
-/*range(){
+range(){
   var r = Array();
   var i = 0;
   while(i < 5){
-    if(i < this.rate.score-1){
+    if(i < this.rate.score){
       r[i] = 1;
     }else{
       r[i]=0;
     }
+    i++;
   }
   return r;
-}*/
+}
 
-constructor(){
+constructor(private _rateService:RateService){
 }
 
 ngOnInit(){
-  console.log(this.rate);
+  this._rateService.getRate(this.rateId).subscribe(
+    data => this.rate = data,
+    errors => console.log(errors)
+  )
 }
 
 ngOnDestroy(){

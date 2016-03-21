@@ -13,7 +13,7 @@ import {StarsRateCmp} from '../../tripy-lib/components/rate/starsRate';
   pipes: []
 })
 export class HomeCmp{
-  rate:any;
+  rate:any = '56e9504f47b2f14db28a3363';
 
   constructor(private _http:Http, private _authService: AuthService){//this.getRate();
   }
@@ -27,10 +27,5 @@ export class HomeCmp{
   	  //headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
       let options = new RequestOptions({ headers: headers });
       return options
-  }
-
-  getRate(){
-    this._http.get('/api/rate/56e9504f47b2f14db28a3363', this.getHeaders())
-            .map(res => <any> res.json()).subscribe(data => this.rate = data, error => console.log('error'));
   }
 }

@@ -38,6 +38,7 @@
         "app/services/user.singleton.ts",
         "app/tripy_go_lib/auth.service.ts",
         "app/tripy_go_lib/components/modal/modal.ts",
+        "app/tripy_go_lib/components/rate/rate.service.ts",
         "app/tripy_go_lib/components/rate/stackRate.ts",
         "app/tripy_go_lib/components/rate/starsRate.ts",
         "app/tripy_go_lib/services/auth.service.ts",
