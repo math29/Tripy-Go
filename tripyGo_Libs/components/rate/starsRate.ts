@@ -9,8 +9,9 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
             <div class="well well-sm">
                 <div class="row">
                     <div class="col-xs-12 col-md-6 text-center">
-                        <h1 class="rating-num">{{globalRate | number:'1.1-2'}}</h1>
+                        <h1 class="rating-num">{{rate.score | number:'1.1-2'}}</h1>
                         <div class="rating">
+
                             <span class="glyphicon glyphicon-star"></span>
                             <span class="glyphicon glyphicon-star"></span>
                             <span class="glyphicon glyphicon-star"></span>
@@ -18,11 +19,11 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
                             <span class="glyphicon glyphicon-star-empty"></span>
                         </div>
                         <div>
-                            <span class="glyphicon glyphicon-user"></span>{{userNumber}} votants
+                            <span class="glyphicon glyphicon-user"></span>{{rate.count}} votants
                         </div>
                     </div>
                     <div class="col-xs-12 col-md-6" >
-                        <div class="row rating-desc" *ngFor="#star of starsRange">
+                        <div class="row rating-desc" *ngFor="#star of rate.stars">
                             <div class="col-xs-3 col-md-3 text-right">
                                 <span class="glyphicon glyphicon-star"></span>{{star.star}}
                             </div>
@@ -30,7 +31,7 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-{{star.class}}" role="progressbar" aria-valuenow="20"
                                         aria-valuemin="0" aria-valuemax="100" style="width: {{star.value}}%">
-                                        <span class="sr-only">{{star.value}}%</span>
+                                        <span class="sr-only">{{star.value | number:'2.1-2'}}%</span>
                                     </div>
                                 </div>
                             </div>
@@ -52,14 +53,16 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
 '.sr-only { margin-left: 5px;overflow: visible;clip: auto; }'],
   providers: [],
   directives: [ROUTER_DIRECTIVES],
+  inputs: ['rate']
 })
 export class StarsRateCmp{
   private idUp:string;
   private idDown:string;
   private globalRate: number = 4.0;
   private userNumber: number = 10;
+  private rate:any;
   private starsRange: any[] = [{
-    star: 4,
+    star: 5,
     value: 80,
     class: 'success'
   },
@@ -85,10 +88,24 @@ export class StarsRateCmp{
   }
 ];
 
+/*range(){
+  var r = Array();
+  var i = 0;
+  while(i < 5){
+    if(i < this.rate.score-1){
+      r[i] = 1;
+    }else{
+      r[i]=0;
+    }
+  }
+  return r;
+}*/
+
 constructor(){
 }
 
 ngOnInit(){
+  console.log(this.rate);
 }
 
 ngOnDestroy(){
