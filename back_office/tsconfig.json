@@ -31,6 +31,8 @@
         "app/scripts/components/sidebar/sidebar.ts",
         "app/scripts/components/timelines/timeline.ts",
         "app/scripts/components/timelines/timelines.ts",
+        "app/scripts/components/transports/transport.ts",
+        "app/scripts/components/transports/transportMap.ts",
         "app/scripts/components/transportType/transportType.ts",
         "app/scripts/components/users/user.ts",
         "app/scripts/components/utils/stats.ts",
