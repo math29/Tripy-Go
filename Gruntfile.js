@@ -127,7 +127,7 @@ module.exports = function (grunt) {
         tasks: ['newer:jshint:all', 'karma']
       },
       back_office: {
-        files: ['<%= yeoman.back_office %>/app/**/*.ts'],
+        files: ['<%= yeoman.back_office %>/app/scripts/**/*.ts'],
         tasks: ['back_office']
       },
       gruntfile: {
@@ -467,6 +467,14 @@ module.exports = function (grunt) {
         dest: '.tmp/',
         src: ['{app,components}/**/*.css']
       },
+      back_office_lib_bower: {
+        expand: true,
+        dest: './<%= yeoman.back_office %>/app/lib',
+        cwd: 'client/bower_components',
+        src: [
+          'bootstrap-iconpicker/**/*'
+        ]
+      },
       back_office_lib: {
         expand: true,
         dest: './<%= yeoman.back_office %>/app/lib',
@@ -735,7 +743,7 @@ module.exports = function (grunt) {
         'env:all',
         'concurrent:server',
         'injector',
-        'wiredep',
+        // 'wiredep',
         'autoprefixer',
         'concurrent:debug',
         'apidoc'
@@ -749,7 +757,7 @@ module.exports = function (grunt) {
       'copy:tripy_go_lib',
       'front_office',
       'injector',
-      'wiredep',
+      // 'wiredep',
       'autoprefixer',
       'express:dev',
       'apidoc',
@@ -824,8 +832,9 @@ module.exports = function (grunt) {
 
   grunt.registerTask('back_office', [
     'copy:back_office_lib',
+    'copy:back_office_lib_bower',
     'copy:tripy_go_lib_back',
-    'ts',
+    'ts:back_office',
     'copy:back_office_compiled',
     'copy:back_office_inner'
   ]);
@@ -842,11 +851,10 @@ module.exports = function (grunt) {
     'clean:dist',
     'concurrent:dist',
     'injector',
-    'wiredep',
+    // 'wiredep',
     'useminPrepare',
     'front_office',
     'back_office',
-    //'useminPrepareBack',
     'autoprefixer',
     'ngtemplates',
     'concat',

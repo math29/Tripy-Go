@@ -49,6 +49,7 @@ User.find({}).remove(function() {
     provider: 'local',
     role: 'adminInfo',
     email: 'admin@info.com',
+    name: 'Admin Info',
     password: 'admin'
   }, function() {
       console.log('finished populating users');
@@ -2561,4 +2562,3 @@ Country.find({}).remove(function(){
   			}
   );
 });
-
