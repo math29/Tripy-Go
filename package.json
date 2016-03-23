@@ -15,6 +15,7 @@
     "compression": "~1.0.1",
     "connect-mongo": "^0.8.1",
     "cookie-parser": "~1.0.1",
+    "d3": "^3.5.16",
     "ejs": "~0.8.4",
     "errorhandler": "~1.0.0",
     "es6-promise": "^3.0.2",
