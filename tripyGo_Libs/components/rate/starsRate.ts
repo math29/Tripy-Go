@@ -13,11 +13,11 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
                         <h1 class="rating-num">{{rate.score | number:'1.1-2'}}</h1>
                         <div class="rating">
                             <span *ngFor="#i of range()">
-                              <span *ngIf="i==1" class="glyphicon glyphicon-star"></span>
-                              <span *ngIf="i==0" class="glyphicon glyphicon-star-empty"></span>
+                              <span *ngIf="i==1" class="glyphicon glyphicon-star star"></span>
+                              <span *ngIf="i==0" class="glyphicon glyphicon-star-empty star"></span>
                             </span>
 
-                            
+
                         </div>
                         <div>
                             <span class="glyphicon glyphicon-user"></span>{{rate.count}} votants
@@ -51,7 +51,8 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
 '.progress { margin-bottom: 5px;}',
 '.progress-bar { text-align: left; }',
 '.rating-desc .col-md-3 {padding-right: 0px;}',
-'.sr-only { margin-left: 5px;overflow: visible;clip: auto; }'],
+'.sr-only { margin-left: 5px;overflow: visible;clip: auto; }',
+'.star {color: #f2676b}'],
   providers: [RateService],
   directives: [ROUTER_DIRECTIVES],
   inputs: ['rateId']
