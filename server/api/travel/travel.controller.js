@@ -2,7 +2,6 @@
 
 var _ = require('lodash');
 var Travel = require('./travel.model');
-var Loc = require('../location/location.model');
 var User = require('../user/user.model');
 
 // Get list of travels
@@ -50,30 +49,7 @@ var save_travel = function(req, res) {
 
 // Creates a new travel in the DB.
 exports.create = function(req, res) {
-  var nbAsyncRequests = 0;
-  // don't include the date_created, if a user specified it
-  if(req.body.arrival){
-    nbAsyncRequests++;
-    // Create Location given in Post Request
-    Loc.create(req.body.arrival, function(err, arrival_loc) {
-      if(err) { return handleError(res, err); }
-      req.body.arrival = arrival_loc;
-      nbAsyncRequests--;
-      if(!nbAsyncRequests) save_travel(req, res);
-    });
-  }
-  if(req.body.departure){
-    nbAsyncRequests++;
-    Loc.create(req.body.departure, function(err, departure_loc) {
-      if(err) { return handleError(res, err); }
-      req.body.departure = departure_loc;
-      nbAsyncRequests--;
-      if(!nbAsyncRequests) save_travel(req, res);
-    });
-  }
-  if(!nbAsyncRequests){
-    save_travel(req, res);
-  }
+  save_travel(req, res);
 };
 
 // Updates an existing travel in the DB.

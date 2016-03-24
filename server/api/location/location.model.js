@@ -5,6 +5,10 @@ var mongoose = require('mongoose'),
 
 var LocationSchema = new Schema({
   name: String,
+  country: {
+    type: Schema.Types.ObjectId,
+    ref: 'Country'
+  },
   loc: {
     type: [Number],  // [<longitude>, <latitude>]
     index: '2d'      // create the geospatial index

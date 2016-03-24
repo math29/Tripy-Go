@@ -28,9 +28,17 @@ export class Main implements AfterViewInit, OnInit {
     departure: Control;
     arrival: Control;
     date_departure: Control;
+    date_return: Control;
 
 	departure_place: any;
 	arrival_place: any;
+
+	travelRequest: any;
+
+	// Options Available
+	options: RequestOptions;
+	options_auth: RequestOptions;
+	options_post: RequestOptions;
 
 	googleApiKey: String = "AIzaSyCbbSgj5Sk0_eiC9TAIbr2Un_trdaUOuwY";
 
@@ -38,91 +46,217 @@ export class Main implements AfterViewInit, OnInit {
 		this.departure = fb.control('');
 		this.arrival = fb.control('');
 		this.date_departure = fb.control('');
+		this.date_return = fb.control('');
 
 		this.startForm = fb.group({
 			departure: this.departure,
 			arrival: this.arrival,
-			date_departure: this.date_departure
+			date_departure: this.date_departure,
+			date_return: this.date_return
 		});
-    }
 
-    // Simultaneous requests to Googe GeoCode API to get some informations on selected places
-    // Use Observable system to indicate if the two requests are ended
-    startPreSubmit(): Observable<any> {
-		let emitter = new EventEmitter();
-		let nbReqs = 2;
 		let headers = new Headers({
 		});
-		let options = new RequestOptions({ headers: headers });
+		this.options = new RequestOptions({ headers: headers });
 
-		this._http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + this.departure.value + '&key=' + this.googleApiKey, options)
-			.map(res => res.json())
-			.map(res => res.results[0].geometry.location)
-			.subscribe(response => {
-					this.departure.updateValue(
-						{
-							name: this.departure.value,
-							loc: [response.lat, response.lng]
-						}
-					);
-					nbReqs--;
-					emitter.emit(nbReqs);
-				}
-			);
+		let headers_post = new Headers({
+			'Content-Type': 'application/json'
+		});
+		this.options_post = new RequestOptions({ headers: headers_post });
 
-		this._http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + this.arrival.value + '&key=' + this.googleApiKey, options)
-			.map(res => res.json())
-			.map(res => res.results[0].geometry.location)
-			.subscribe(response => {
-					this.arrival.updateValue(
-						{
-							name: this.arrival.value,
-							loc: [response.lat, response.lng]
-						}
-					);
-					nbReqs--;
-					emitter.emit(nbReqs);
-				}
-			);
-
-		return emitter;
+		let headers_auth = new Headers({
+			'Content-Type': 'application/json',
+			'Authorization': 'Bearer ' + this._auth.getToken()
+		});
+		this.options_post = new RequestOptions({ headers: headers_auth });
     }
 
     // Fonction Called on form "Let's Started" Submit
     startWithSubmit() {
-		this.startPreSubmit()
-			.subscribe(res => {
-				if (this.startForm.valid && res == 0) {
-					// Add User if connected - Null else
-					let data = this.startForm.value;
-					if (this._auth.isAuthed()) data.author = this._auth.getMe();
-					else data.author = null;
+		if (this.startForm.valid) {
+			// Add User if connected - Null else
+			this.travelRequest = this.startForm.value;
+			if (this._auth.isAuthed()) this.travelRequest.author = this._auth.getMe();
+			else this.travelRequest.author = null;
 
-					// Post new Travel
-					let headers = new Headers({
-						'Content-Type': 'application/json',
-						'Authorization': 'Bearer ' + this._auth.getToken()
-					});
-					let options = new RequestOptions({ headers: headers });
-					this._http.post('/api/travels', JSON.stringify(data), options)
-						.map(res => res.json())
-						.map(res => res._id)
-						.subscribe(
-							response => {
-								this._router.navigate(['ListingPropositions', { id: response }]);
-							},
-							error => {
-								console.log(JSON.stringify(error));
-							}
+			// Update and format DatePickers Departure and return
+			let r_datepicker = jQuery(this.el.nativeElement)
+				.find('.return_date')
+				.data()
+				.datepicker;
+			let r_date = new Date(r_datepicker.selectedYear, r_datepicker.selectedMonth, r_datepicker.selectedDay);
+			this.travelRequest.date_return = r_date;
+
+			let d_datepicker = jQuery(this.el.nativeElement)
+				.find('.depart_date')
+				.data()
+				.datepicker;
+			let d_date = new Date(d_datepicker.selectedYear, d_datepicker.selectedMonth, d_datepicker.selectedDay);
+			this.travelRequest.date_departure = d_date;
+
+			// Let's begin persisting processus of the new Travel with the Locations persisting
+			this.persistLocations();
+		}
+	}
+
+	// Simultaneous requests to our Location API to determine if locations already exist or not
+	// IF IT EXIST :
+	// - Get location Id and Go to transport persisting
+	// IF NOT :
+	// - Googe GeoCode API to get some informations on selected places
+    // - Persist those informations in our BDD & get id of new locations
+    // - Go to transport persisting
+    persistLocations() {
+		let self = this;
+		let nbReqs = 2;
+
+		this._http.get('/api/locations/name/' + this.departure.value, this.options)
+			.map(res => res.json())
+			.subscribe(locations => {
+				if (locations.length == 0){
+					self._http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + self.departure.value + '&key=' + self.googleApiKey, self.options)
+						.map(res => res.json().results[0])
+						.subscribe(response => {
+							// Find the Short Code Country
+							var country_code = self.getCountryCode(response);
+
+							self._http.get('/api/countries/country_code/' + country_code, self.options_post)
+								.map(res => res.json()._id)
+								.subscribe(country_code_id => {
+									let departure =
+										{
+											name: self.departure.value,
+											country: country_code_id,
+											loc: [response.geometry.location.lat, response.geometry.location.lng]
+										};
+									// Post new Location getted from Google Geocode API
+									self._http.post('/api/locations', JSON.stringify(departure), self.options_post)
+										.map(res => res.json())
+										// .map(res => res._id)
+										.subscribe(
+										location_id => {
+											self.departure_place = location_id;
+											nbReqs--;
+											if (!nbReqs) self.persistTransport();
+										},
+										error => {
+											console.log(JSON.stringify(error));
+										}
+										);
+								});
+						}
 						);
+				}else{
+					self.departure_place = locations[0]._id;
+					nbReqs--;
+					if (!nbReqs) self.persistTransport();
 				}
 			});
+
+		this._http.get('/api/locations/name/' + this.arrival.value, this.options)
+			.map(res => res.json())
+			.subscribe(locations => {
+				if (locations.length == 0) {
+					self._http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + self.arrival.value + '&key=' + self.googleApiKey, self.options)
+						.map(res => res.json().results[0])
+						.subscribe(response => {
+							// Find the Short Code Country
+							let country_code = self.getCountryCode(response);
+
+							self._http.get('/api/countries/country_code/' + country_code, self.options_post)
+								.map(res => res.json()._id)
+								.subscribe(country_code_id => {
+									let arrival =
+										{
+											name: self.arrival.value,
+											country: country_code_id,
+											loc: [response.geometry.location.lat, response.geometry.location.lng]
+										};
+
+									// Post new Location getted from Google Geocode API
+									self._http.post('/api/locations', JSON.stringify(arrival), self.options_post)
+										.map(res => res.json())
+										// .map(res => res._id)
+										.subscribe(
+										location_id => {
+											self.arrival_place = location_id;
+											nbReqs--;
+											if (!nbReqs) self.persistTransport();
+										},
+										error => {
+											console.log(JSON.stringify(error));
+										}
+										);
+								});
+							}
+							);
+				} else {
+					self.arrival_place = locations[0]._id;
+					nbReqs--;
+					if (!nbReqs) self.persistTransport();
+				}
+			});
+    }
+
+    getCountryCode(response) {
+		for (var i = 0; i < response.address_components.length; i++) {
+			for (var b = 0; b < response.address_components[i].types.length; b++) {
+				if (response.address_components[i].types[b] == "country") {
+					return response.address_components[i].short_name;
+				}
+			}
+		}
+		return "";
+    }
+
+    // Persist New Transport (use the two Locations previously created)
+	persistTransport() {
+		let transport = {
+			departure: this.departure_place,
+			arrival: this.arrival_place,
+			date_departure: this.travelRequest.date_departure
+		}
+
+		this._http.post('/api/transports', JSON.stringify(transport), this.options_post)
+			.map(res => res.json()._id)
+			.subscribe(
+			location_id => {
+				this.travelRequest.transports = [location_id];
+				this.persistTravel();
+				console.log(this.travelRequest);
+			},
+			error => {
+				console.log(JSON.stringify(error));
+			}
+			);
+	}
+
+	// Post new Travel
+	persistTravel() {
+		delete this.travelRequest.departure;
+		delete this.travelRequest.arrival;
+
+		this._http.post('/api/travels', JSON.stringify(this.travelRequest), this.options_post)
+			.map(res => res.json())
+			.map(res => res._id)
+			.subscribe(
+			response => {
+				this._router.navigate(['ListingPropositions', { id: response }]);
+			},
+			error => {
+				console.log(JSON.stringify(error));
+			}
+			);
 	}
 
 	// Initialization With JQuery Datepicker
 	ngAfterViewInit() {
 		jQuery(this.el.nativeElement)
 			.find('.depart_date')
+			.datepicker({ minDate: -0, maxDate: "+3M" });
+
+		jQuery(this.el.nativeElement)
+			.find('.return_date')
 			.datepicker({ minDate: -0, maxDate: "+3M" });
 	}
 
@@ -146,14 +280,4 @@ export class Main implements AfterViewInit, OnInit {
             _this.arrival_place = place;
         });
     }
-
-	updateDateModel() {
-		// Update Date Form model when changement (need to do this because of JQuery action)
-		let datepicker = jQuery(this.el.nativeElement)
-			.find('.depart_date')
-			.data()
-			.datepicker;
-		let date = new Date(datepicker.selectedYear, datepicker.selectedMonth, datepicker.selectedDay);
-		this.date_departure.updateValue(date);
-	}
 }
