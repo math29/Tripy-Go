@@ -128,7 +128,8 @@ export class Main implements AfterViewInit, OnInit {
 							var country_code = self.getCountryCode(response);
 
 							self._http.get('/api/countries/country_code/' + country_code, self.options_post)
-								.map(res => res.json()._id)
+								.map(res => res.json())
+								.map(res => res[0]._id)
 								.subscribe(country_code_id => {
 									let departure =
 										{
@@ -136,6 +137,7 @@ export class Main implements AfterViewInit, OnInit {
 											country: country_code_id,
 											loc: [response.geometry.location.lat, response.geometry.location.lng]
 										};
+									console.log(country_code_id);
 									// Post new Location getted from Google Geocode API
 									self._http.post('/api/locations', JSON.stringify(departure), self.options_post)
 										.map(res => res.json())
@@ -171,7 +173,7 @@ export class Main implements AfterViewInit, OnInit {
 							let country_code = self.getCountryCode(response);
 
 							self._http.get('/api/countries/country_code/' + country_code, self.options_post)
-								.map(res => res.json()._id)
+								.map(res => res.json()[0]._id)
 								.subscribe(country_code_id => {
 									let arrival =
 										{

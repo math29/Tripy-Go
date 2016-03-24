@@ -8,8 +8,9 @@
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
 var Country = require('../api/country/country.model');
-
-
+var Travel = require('../api/travel/travel.model');
+var Location = require('../api/location/location.model');
+var Transport = require('../api/transport/transport.model');
 
 Thing.find({}).remove(function() {
   Thing.create({
@@ -33,29 +34,6 @@ Thing.find({}).remove(function() {
   });
 });
 
-User.find({}).remove(function() {
-  User.create({
-    provider: 'local',
-    name: 'Test User',
-    email: 'test@test.com',
-    password: 'test'
-  }, {
-    provider: 'local',
-    role: 'admin',
-    name: 'Admin',
-    email: 'admin@admin.com',
-    password: 'admin'
-  },{
-    provider: 'local',
-    role: 'adminInfo',
-    email: 'admin@info.com',
-    name: 'Admin Info',
-    password: 'admin'
-  }, function() {
-      console.log('finished populating users');
-    }
-  );
-});
 
 Country.find({}).remove(function(){
   Country.create(
@@ -2559,6 +2537,104 @@ Country.find({}).remove(function(){
   				"continent": "Africa",
   				"area": "390580.0",
   				"languages": "en-ZW,sn,nr,nd"
-  			}
+  			}, function(){
+          console.log("finished populating Countries");
+        }
+  );
+});
+
+
+Location.find({}).remove(function() {
+  Location.create({
+    "name" : "New York, État de New York, États-Unis",
+    "loc" : [
+        40.7127837000000028,
+        -74.0059413000000035
+    ]
+  },{
+    "name" : "Gagan Mahal, Domalguda, Himayatnagar, Hyderabad, Telangana, Inde",
+    "loc" : [
+        17.4079957000000007,
+        78.4801671000000027
+    ]
+  }, function(err, loc1, loc2){
+    setTimeout(function() {
+      Country.find({'country_code':"AD"}, function(err, country){
+        loc1.country = country[0];
+        loc2.country = country[0];
+        loc1.save();
+        loc2.save();
+      });
+
+      console.log('finished populating Locations');
+    }, 2000);
+  });
+});
+
+Transport.find({}).remove(function(){
+  setTimeout(function() {
+    Location.find({}, function(err, locs){
+      Transport.create({
+        distance: 1000,
+        class: "HIGH",
+        cost: 200,
+        date_departure: Date.now(),
+        departure: locs[0],
+        arrival: locs[1]
+      }, function(){
+        console.log('finished populating transports');
+      });
+    });
+  }, 3000);
+});
+
+
+Travel.find({}).remove(function() {
+  Travel.create({
+    name: "Voyage en Turquie",
+    budget: 3000,
+    nbTravellers: 3
+  }, function(err, travel) {
+      setTimeout(function() {
+        Transport.find({}, function(err, transports) {
+          travel.transports.push(transports[0]);
+          travel.save();
+          console.log('finished populating travels');
+        });
+      }, 4000);
+  });
+});
+
+User.find({}).remove(function() {
+  User.create({
+    provider: 'local',
+    name: 'Test User',
+    email: 'test@test.com',
+    password: 'test'
+  }, {
+    provider: 'local',
+    role: 'admin',
+    name: 'Admin',
+    email: 'admin@admin.com',
+    password: 'admin'
+  },{
+    provider: 'local',
+    role: 'adminInfo',
+    email: 'admin@info.com',
+    name: 'Admin Info',
+    password: 'admin',
+    travels: []
+  }, function(err, user1, user2, user3) {
+      // Populate AdminInfo Travels
+      setTimeout(function() {
+          Travel.find({}, function(err, travels){
+            for(var i = 0; i< travels.length; i++){
+              user3.travels.push(travels[i]);
+            }
+            user3.save();
+            console.log('finished populating users');
+          });
+        }, 5000);
+    }
   );
 });
