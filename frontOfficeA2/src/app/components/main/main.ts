@@ -64,14 +64,17 @@ export class Main implements AfterViewInit, OnInit {
 		});
 		this.options_post = new RequestOptions({ headers: headers_post });
 
-		let headers_auth = new Headers({
-			'Content-Type': 'application/json',
-			'Authorization': 'Bearer ' + this._auth.getToken()
-		});
-		this.options_post = new RequestOptions({ headers: headers_auth });
+		this.options_post = new RequestOptions({ headers: _auth.getBearerHeaders() });
     }
 
+    // *******************************************************************************************
     // Fonction Called on form "Let's Started" Submit
+    // The following actions are displayed :
+    // - Check the Form validity
+    // - Get the Author and store it in our json object
+    // - Converte arrival and departure inputs to dates and store it into our json object
+    // - Lunch the persisting processus with the Locations persisting
+    // *******************************************************************************************
     startWithSubmit() {
 		if (this.startForm.valid) {
 			// Add User if connected - Null else
@@ -99,13 +102,17 @@ export class Main implements AfterViewInit, OnInit {
 		}
 	}
 
+	// *******************************************************************************************
 	// Simultaneous requests to our Location API to determine if locations already exist or not
 	// IF IT EXIST :
 	// - Get location Id and Go to transport persisting
 	// IF NOT :
 	// - Googe GeoCode API to get some informations on selected places
+	// - Extract COUNTRY CODE from Geocode Response
+	// - Find Country concerned in our BDD
     // - Persist those informations in our BDD & get id of new locations
     // - Go to transport persisting
+    // *******************************************************************************************
     persistLocations() {
 		let self = this;
 		let nbReqs = 2;
@@ -198,6 +205,9 @@ export class Main implements AfterViewInit, OnInit {
 			});
     }
 
+    // *******************************************************************************************
+    // This function extract the COUNTRY CODE from the Geocode Response
+    // *******************************************************************************************
     getCountryCode(response) {
 		for (var i = 0; i < response.address_components.length; i++) {
 			for (var b = 0; b < response.address_components[i].types.length; b++) {
@@ -209,7 +219,9 @@ export class Main implements AfterViewInit, OnInit {
 		return "";
     }
 
+    // *******************************************************************************************
     // Persist New Transport (use the two Locations previously created)
+    // *******************************************************************************************
 	persistTransport() {
 		let transport = {
 			departure: this.departure_place,
@@ -223,7 +235,6 @@ export class Main implements AfterViewInit, OnInit {
 			location_id => {
 				this.travelRequest.transports = [location_id];
 				this.persistTravel();
-				console.log(this.travelRequest);
 			},
 			error => {
 				console.log(JSON.stringify(error));
@@ -231,7 +242,9 @@ export class Main implements AfterViewInit, OnInit {
 			);
 	}
 
-	// Post new Travel
+	// *******************************************************************************************
+	// Persist new Travel (use the transport previously created)
+	// *******************************************************************************************
 	persistTravel() {
 		delete this.travelRequest.departure;
 		delete this.travelRequest.arrival;
@@ -249,7 +262,9 @@ export class Main implements AfterViewInit, OnInit {
 			);
 	}
 
+	// *******************************************************************************************
 	// Initialization With JQuery Datepicker
+	// *******************************************************************************************
 	ngAfterViewInit() {
 		jQuery(this.el.nativeElement)
 			.find('.depart_date')
@@ -260,7 +275,9 @@ export class Main implements AfterViewInit, OnInit {
 			.datepicker({ minDate: -0, maxDate: "+3M" });
 	}
 
+	// *******************************************************************************************
 	// Initialization Inputs with Google autocomplete API
+	// *******************************************************************************************
 	ngOnInit() {
 		let _this = this;
         let input_departure: any = document.getElementById('input-departure');
