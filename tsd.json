@@ -28,6 +28,9 @@
     },
     "jqueryui/jqueryui.d.ts": {
       "commit": "6766ed1d0faf02ede9e2edf2e66bbb2388c825ec"
+    },
+    "socket.io-client/socket.io-client.d.ts": {
+      "commit": "dc6d1ebfaa554e85b91846574728930972ca9868"
     }
   }
 }
