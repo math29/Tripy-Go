@@ -1,7 +1,7 @@
 import {Component} from 'angular2/core';
 import { RouterLink } from 'angular2/router';
 // import { FormBuilder, ControlGroup, Validators, Control } from 'angular2/common';
-import { AuthService } from '../../../tripy_go_lib/auth.service';
+import { AuthService } from '../../../tripy_go_lib/services/auth.service';
 
 import { Overview } from './overview/overview';
 import { Settings } from './settings/settings';
