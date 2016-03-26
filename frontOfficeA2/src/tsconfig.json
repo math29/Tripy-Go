@@ -48,6 +48,7 @@
         "app/tripy_go_lib/services/auth.service.ts",
         "app.ts",
         "../../typings/angular2/angular2.d.ts",
+        "../../typings/d3/d3.d.ts",
         "../../typings/jasmine/jasmine.d.ts",
         "../../typings/jquery.ui.datetimepicker/jquery.ui.datetimepicker.d.ts",
         "../../typings/jquery/jquery.d.ts",

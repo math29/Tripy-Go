@@ -45,6 +45,9 @@
   <script src="lib/angular2/bundles/angular2.dev.js"></script>
   <script src="lib/angular2/bundles/http.dev.js"></script>
   <script src="lib/angular2/bundles/router.dev.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+  <script src="http://mbostock.github.io/d3/talk/20111116/d3/d3.geo.js" charset="utf-8"></script>
+
   <!-- build:js({.tmp,app}) scripts/scripts.js -->
   <script src="lib/chart.js/Chart.min.js"></script>
   <script src="js/sb-admin-2.js"></script>
@@ -112,7 +115,7 @@
         'marked':'lib/marked/marked.min.js',
         'socket.io-client':'lib/socket.io-client/socket.io.js',
         'angular2-jwt': 'lib/angular2-jwt',
-        'd3':'lib/d3/src'
+        'd3':'lib/d3/d3.min.js'
       }
     });
     System.import('./scripts_js/app.js').then(null, console.error.bind(console));
