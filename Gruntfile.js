@@ -53,10 +53,13 @@ module.exports = function (grunt) {
         suppressImplicitAnyIndexErrors: true,
         reference: './typings/tsd.d.ts'
       },
-      back_office:{
-        src: '<%= yeoman.back_office %>/app/scripts/**/*.ts',
-        outDir: '<%= yeoman.back_office %>/app/scripts_js'
-      },
+      //back_office:{
+      //  src: '<%= yeoman.back_office %>/app/scripts/**/*.ts',
+      //  outDir: '<%= yeoman.back_office %>/app/scripts_js'
+      //},
+	  back_office:{
+		tsconfig:"<%= yeoman.back_office %>/tsconfig.json"
+	  }
       front_office: {
         tsconfig:"<%= yeoman.front_office_A2 %>/tsconfig.json",
       }
