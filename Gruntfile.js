@@ -19,7 +19,8 @@ module.exports = function (grunt) {
     ts: 'grunt-ts',
     cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner',
-    buildcontrol: 'grunt-build-control'
+    buildcontrol: 'grunt-build-control',
+	compress: 'grunt-contrib-compress'
   });
 
   // Time how long tasks take. Can help when optimizing build times
@@ -40,6 +41,27 @@ module.exports = function (grunt) {
       public: 'dist/public',
       private: 'dist/back'
     },
+	compress:{
+		deploy: {
+			options:{
+				archive: 'target/archive.tgz'
+			},
+			files:[
+				{expand: true, cwd: 'node_modules/', src: ['**'], dest: 'node_modules/'},
+				{expand:true, cwd: 'public/', src:['**'], dest:'public/'},
+				{expand:true, cwd:'private/', src:['**'], dest:'private/'},
+				{expand:true, cwd:'server/', src: ['**'], dest:'server/'}
+			]
+		},
+		deploy_test: {
+			options:{
+				archive: 'target/archive.tgz'
+			},
+			files:[
+				{expand: true, cwd: 'dist/', src: ['**']}
+			]
+		}
+	},
     ts: {
       options:{
         target: 'es5',
