@@ -44,7 +44,7 @@ module.exports = function (grunt) {
 	compress:{
 		deploy: {
 			options:{
-				archive: 'target/archive.tgz'
+				archive: 'target/archive.tar.gz'
 			},
 			files:[
 				{expand: true, cwd: 'node_modules/', src: ['**'], dest: 'node_modules/'},
