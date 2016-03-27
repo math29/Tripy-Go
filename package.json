@@ -6,7 +6,7 @@
     "title": "API to travel all around the world"
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.9",
+    "angular2": "2.0.0-beta.3",
     "angular2-jwt": "^0.1.6",
     "body-parser": "~1.5.0",
     "busboy-body-parser": "0.0.9",
