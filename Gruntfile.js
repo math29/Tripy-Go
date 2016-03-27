@@ -59,7 +59,7 @@ module.exports = function (grunt) {
       //},
 	  back_office:{
 		tsconfig:"<%= yeoman.back_office %>/tsconfig.json"
-	  }
+	  },
       front_office: {
         tsconfig:"<%= yeoman.front_office_A2 %>/tsconfig.json",
       }
