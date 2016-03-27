@@ -31,6 +31,9 @@
     },
     "socket.io-client/socket.io-client.d.ts": {
       "commit": "dc6d1ebfaa554e85b91846574728930972ca9868"
+    },
+    "es6-shim/es6-shim.d.ts": {
+      "commit": "299b5caa22876ef27dc8e9a5b7fd7bf93457b6f4"
     }
   }
 }
