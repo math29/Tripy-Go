@@ -58,7 +58,7 @@ module.exports = function (grunt) {
         outDir: '<%= yeoman.back_office %>/app/scripts_js'
       },
       front_office: {
-        tsconfig:"<%= yeoman.front_office_A2 %>/tsconfig.json",
+        tsconfig:"<%= yeoman.front_office_A2 %>/src/tsconfig.json",
       }
     },
     express: {
