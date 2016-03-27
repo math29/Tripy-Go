@@ -42,20 +42,11 @@ module.exports = function (grunt) {
       private: 'dist/back'
     },
 	compress:{
+
 		deploy: {
 			options:{
-				archive: 'target/archive.tar.gz'
-			},
-			files:[
-				{expand: true, cwd: 'node_modules/', src: ['**'], dest: 'node_modules/'},
-				{expand:true, cwd: 'public/', src:['**'], dest:'public/'},
-				{expand:true, cwd:'private/', src:['**'], dest:'private/'},
-				{expand:true, cwd:'server/', src: ['**'], dest:'server/'}
-			]
-		},
-		deploy_test: {
-			options:{
-				archive: 'target/archive.tgz'
+			mode:'tgz',
+			archive: 'target/archive.tar.gz'
 			},
 			files:[
 				{expand: true, cwd: 'dist/', src: ['**']}
