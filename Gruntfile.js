@@ -494,7 +494,8 @@ module.exports = function (grunt) {
 			'socket.io/**/*',
 			'lodash/**/*',
 			'socket.io-client/**/*',
-			'bootstrap/**/*'
+			'bootstrap/**/*',
+			'jqyery/**/*'
 		]
 	  },
       back_office_lib: {
