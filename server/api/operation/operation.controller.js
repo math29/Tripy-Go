@@ -165,7 +165,7 @@ function sym() {
 
     // Run filter function on each array against the other
     return filterFunction(arr1, arr2)
-      .concat(filterFunction(arr2, arr1));
+      .concat(filterFunction(arr2, arr1));//NOSONAR
   };
 
   // Reduce all arguments getting the difference of them

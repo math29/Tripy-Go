@@ -30,6 +30,7 @@ function onConnect(socket) {
   require('../api/thing/thing.socket').register(socket);
   require('../api/language/language.socket').register(socket);
   require('../api/country/country.socket').register(socket);
+  require('../api/transportType/transportType.socket').register(socket);
 }
 
 module.exports = function (socketio) {

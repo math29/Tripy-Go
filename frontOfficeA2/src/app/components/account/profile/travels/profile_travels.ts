@@ -20,7 +20,8 @@ export class ProfileTravels {
 			.map(res => res.json())
 			.subscribe(
 			response => {
-				this.travels = response
+				this.travels = response;
+				console.log(this.travels);
 			},
 			error => {
 				console.log(JSON.stringify(error));
