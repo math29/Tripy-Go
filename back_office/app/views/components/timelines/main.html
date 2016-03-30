@@ -24,7 +24,7 @@
 
   </div>
 
-  <div class="row" *ngIf="timelines && operations">
+  <div class="row" *ngIf="timelines && operations && timelines.length > 0">
 
     <stats number="{{timelines.length}}" comments="Timelines!" colour="primary" type="comments" goto="#"></stats>
     <stats number="{{operations.length}}" comments="Opérations!" colour="primary" type="user" goto="#"></stats>
