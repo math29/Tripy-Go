@@ -27,7 +27,7 @@ import {CmptFooter} from './components/cmptFooter/cmptFooter'
 	{ path: '/login', component: Login, name: 'Login' },
 	{ path: '/signup', component: Signup, as: 'Signup' },
 	{ path: '/profile', component: Profile, as: 'Profile' },
-	{ path: '/transports', component: ListingPropositions, as: 'Listing' }
+	{ path: '/transport/listing/:id', component: ListingPropositions, name: 'ListingPropositions' }
 ])
 export class FrontOfficeA2App {
 
