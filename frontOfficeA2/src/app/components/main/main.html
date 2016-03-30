@@ -5,7 +5,7 @@
         <h2 class="text-center">FIND YOUR PERFECT ESCAPE</h2>
           <div role="tabpanel" class="tab-pane" id="hotel">
             <form (ngSubmit)="startWithSubmit()"  [ngFormModel]="startForm">
-              <div class="col-md-offset-1 col-sm-offset-1 col-md-3 col-sm-3 search-col-padding">
+              <div class="col-md-3 col-sm-3 search-col-padding">
                 <label>Point départ</label>
                 <div class="input-group">
                   <input type="text" id="input-departure" class="form-control" ngControl="departure"/>
@@ -22,7 +22,14 @@
               <div class="col-md-3 col-sm-3 search-col-padding">
                 <label>Date départ</label>
                 <div class="input-group">
-                  <input type="text" class="form-control depart_date" ngControl="date_departure" (click)="updateDateModel()">
+                  <input type="text" class="form-control depart_date" ngControl="date_departure">
+                  <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-3 search-col-padding">
+                <label>Date retour</label>
+                <div class="input-group">
+                  <input type="text" class="form-control return_date" ngControl="date_return">
                   <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
                 </div>
               </div>

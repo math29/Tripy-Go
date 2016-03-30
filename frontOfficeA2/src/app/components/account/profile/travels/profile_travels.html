@@ -1,7 +1,7 @@
 <div class="tab-pane fade in">
 	<div class="col-md-12">
 		<div class="item-entry" *ngFor="#travel of travels">
-			<span>Order ID: CR1234</span>
+			<span>{{ travel.name }}</span>
 			<div class="item-content">
 				<div class="item-body">
 					<div class="col-md-2 col-sm-2 clear-padding text-center">
@@ -20,7 +20,7 @@
 					</div>
 				</div>
 				<div class="item-footer"> 
-					<p><strong>Order Date:</strong> 20 Aug 2015<strong>Order Total:</strong> $566</p>
+					<p><strong>Dates :</strong> {{ travel.date_departure }}<strong> - </strong> {{ travel.date_return }}</p>
 				</div>
 				<div class="clearfix"></div>
 			</div>

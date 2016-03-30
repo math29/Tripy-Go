@@ -73,6 +73,33 @@ router.get('/', controller.index);
 router.get('/:id', controller.show);
 
 /**
+  * @api {get} /api/locations/:name Request location by name
+  * @apiName GetByName
+  * @apiGroup Locations
+  *
+  * @apiParam {String} name  name of the Location searched
+  *
+  * @apiSuccess {Location} Location
+  *
+  * @apiSuccessExample Success-Response:
+  *   HTTP/1.1 Success-Response:
+  *   [
+  *      {
+  *       "_id": "564ceb9ca91ae0a62fbda592",
+  *       "name": "Paris",
+  *       "loc": [
+  *           4.5456,
+  *           5.4648
+  *       ],
+  *       "__v": 0
+  *   }
+  *    ]
+  *
+  *
+  */
+router.get('/name/:name', controller.showByName);
+
+/**
   * @api {get} /api/locations/:longitude/:latitude/:distance/:limit Request Locations arround a given Location
   * @apiName GetArroundLocation
   * @apiGroup Locations

@@ -20,6 +20,14 @@ exports.show = function(req, res) {
   });
 };
 
+// Get a single location by name
+exports.showByName = function(req, res) {
+  Location.find({"name": req.params.name}, function (err, location) {
+    if(err) { return handleError(res, err); }
+    return res.json(location);
+  });
+};
+
 // Creates a new location in the DB.
 exports.create = function(req, res) {
   Location.create(req.body, function(err, location) {

@@ -1,5 +1,9 @@
 'use strict';
 
+var Loc = require('../location/location.model');
+var Transport = require('../transport/transport.model');
+var logger = require('../../config/logger.js');
+
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
@@ -16,26 +20,10 @@ var TravelSchema = new Schema({
   nbTravellers: Number,
   date_departure: Date,
   date_return: Date,
-  month_departure: Date,
-  choose_by_dates: Boolean,
-  choose_by_month: Boolean,
-  personal_interest: {
-    playa: { type: Boolean, default: false },
-    mountain: { type: Boolean, default: false }
-  },
-  region_idea: { type: String, default: "" },
-  selectedHashtags: [{
+  transports: [{
     type: Schema.Types.ObjectId,
-    ref: 'Hashtag'
-  }],
-  departure: {
-    type: Schema.Types.ObjectId,
-    ref: 'Location'
-  },
-  arrival: {
-    type: Schema.Types.ObjectId,
-    ref: 'Location'
-  }
+    ref: 'Transport'
+  }]
 });
 
 module.exports = mongoose.model('Travel', TravelSchema);

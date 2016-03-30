@@ -7,10 +7,9 @@ var mongoose = require('mongoose'),
 var TransportSchema = new Schema({
   type: {
     type: Schema.Types.ObjectId,
-    ref: 'TransportType',
-    required: true
+    ref: 'TransportType'
   },
-  distance: {type: Number, required: true},
+  distance: {type: Number},
   departure: {
     type: Schema.Types.ObjectId,
     ref: 'Location',
@@ -23,7 +22,7 @@ var TransportSchema = new Schema({
   },
   class: String,
   cost: Number,
-  departure_time: {type: Date, required: true}
+  date_departure: {type: Date, required: true}
 });
 
 module.exports = mongoose.model('Transport', TransportSchema);
