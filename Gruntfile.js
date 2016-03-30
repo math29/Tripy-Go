@@ -490,7 +490,8 @@ module.exports = function (grunt) {
           'marked/**/*',
           'socket.io-client/**/*',
           'font-awesome/**/*',
-          'angular2-jwt/**/*'
+          'angular2-jwt/**/*',
+          'd3/**/*'
         ]
       },
       tripy_go_lib_back: {

@@ -8,9 +8,10 @@
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
 var Country = require('../api/country/country.model');
+var Transport = require('../api/transport/transport.model');
+var TransportType = require('../api/transportType/transportType.model');
 var Travel = require('../api/travel/travel.model');
 var Location = require('../api/location/location.model');
-var Transport = require('../api/transport/transport.model');
 
 Thing.find({}).remove(function() {
   Thing.create({

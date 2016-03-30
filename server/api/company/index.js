@@ -22,7 +22,8 @@ var router = express.Router();
  *
  *
  * @apiParam {String} name  Name given by the user to the Company
- * @apiParam {String} img   Img given by the user to th Company
+ * @apiParam {String} img   Img given by the user to the Company
+ * @apiParam {String} url   Url given by the user to the Company
  *
  */
 
