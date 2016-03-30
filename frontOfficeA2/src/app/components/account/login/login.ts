@@ -2,13 +2,13 @@ import {Component} from 'angular2/core';
 import {Router, RouterLink, ROUTER_DIRECTIVES} from 'angular2/router';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { Http, Headers } from 'angular2/http';
-import { AuthService } from '../../../tripy_go_lib/auth.service';
+import { AuthService } from '../../../tripy_go_lib/services/auth.service';
 
 @Component({
   selector: 'login',
   templateUrl: 'app/components/account/login/login.html',
   styleUrls: ['app/components/account/login/login.css'],
-  providers: [AuthService],
+  providers: [],
   directives: [RouterLink, CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES],
   pipes: []
 })

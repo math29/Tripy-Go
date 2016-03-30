@@ -13,7 +13,7 @@ declare var jQuery: JQueryStatic;
 	selector: 'settings',
 	templateUrl: 'app/components/account/profile/settings/settings.html',
 	// styleUrls: ['app/components/account/profile/profile.css'],
-	providers: [AuthService],
+	providers: [],
 	directives: [RouterLink],
 	pipes: []
 })
@@ -93,6 +93,11 @@ export class Settings implements AfterViewInit, OnInit {
 				}
 				);
 		}
+	}
+
+	updateUserPicture() {
+		// if (this.userUpdateForm.valid) {
+		// }
 	}
 
 	populateUserForm() {
