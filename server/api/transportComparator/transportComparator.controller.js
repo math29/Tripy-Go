@@ -5,9 +5,9 @@ var TransportComparator = require('./transportComparator.model');
 
 // Get list of transport comparator
 exports.index = function(req, res) {
-  TransportComparator.find(function (err, transports) {
+  TransportComparator.find(function (err, comparators) {
     if(err) { return handleError(res, err); }
-    return res.status(200).json(transports);
+    populate(comparators, req, res);
   });
 };
 
@@ -16,7 +16,8 @@ exports.show = function(req, res) {
   TransportComparator.findById(req.params.id, function (err, transport) {
     if(err) { return handleError(res, err); }
     if(!transport) { return res.status(404).send('Not Found'); }
-    return res.json(transport);
+    populate(transport, req, res);
+    //return res.json(transport);
   });
 };
 
@@ -54,6 +55,26 @@ exports.destroy = function(req, res) {
   });
 };
 
+/**
+ * Populate the comparator with company and transport types
+ *
+ * @param doc: document to Populate
+ * @param req: HTTP request
+ * @param res: HTTP response
+ *
+ */
+function populate(doc, req, res){
+  TransportComparator.populate(doc, [{path:'company', ref:'Company'}, {path:'type', ref:'TransportType'}], function(err, result){
+    if(err)console.err(err);
+    return res.status(200).json(result);
+  });
+}
+
 function handleError(res, err) {
-  return res.status(500).send(err);
+  if(err.code==11000){
+    var error = {error: 'Ce comparateur existe déjà'};
+      return res.status(500).json(error);
+  }
+
+  return res.status(500).json({error: err.toString()});
 }
