@@ -36,6 +36,7 @@ module.exports = function(app) {
   // All other routes should redirect to the index.html
   app.route('/*')
     .get(function(req, res) {
+      console.log(app.get('appPath'));
       var p = app.get('appPath');
       if(req.url.indexOf("back") > -1){
         if(process.env.NODE_ENV === 'production'){
