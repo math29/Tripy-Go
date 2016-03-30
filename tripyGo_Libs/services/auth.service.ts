@@ -144,7 +144,7 @@ export class AuthService {
    */
   getUserAvatar() :string{
     if (this.getMe().picture) {
-      return "/api/files/" + this.getMe().picture + "?_ts=" + new Date().getTime();
+      return this.getMe().picture;
     }
     return "/assets/images/user.png";
   }

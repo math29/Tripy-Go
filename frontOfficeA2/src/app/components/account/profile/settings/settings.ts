@@ -42,6 +42,7 @@ export class Settings implements AfterViewInit, OnInit {
 	hasAnotherDropZoneOver: boolean = false;
 
 	constructor(private _auth: AuthService, fb: FormBuilder, private _http: Http, private el: ElementRef) {
+		console.log(_auth.getMe());
 		// Initializing forms
 		this.name = fb.control('', Validators.compose([]));
 		this.fname = fb.control('', Validators.compose([]));
@@ -106,7 +107,17 @@ export class Settings implements AfterViewInit, OnInit {
 	// ****************************************
 
 	updateUserPicture(responsePath: any) {
-		console.log("here ?");
+		let user = this._auth.getMe();
+		user.picture = "/api/files/" + responsePath.file._id ;
+		// "/api/files/" + $scope.user.picture + "?_ts=" + new Date().getTime();
+		console.log(user.picture);
+		this._http.put('/api/users/' + user._id, JSON.stringify(user), this.options)
+			.map(res => res.json())
+			.subscribe(
+				response => {
+					this._auth.storeMe();
+				}
+			);
 	}
 
 	fileOverBase(e: any) {
