@@ -8,7 +8,7 @@ import { Stepbar } from './stepbar/stepbar';
 	selector: 'header',
 	templateUrl: 'app/components/header/header.html',
 	styleUrls: ['app/components/header/header.css'],
-	providers: [AuthService],
+	providers: [],
 	directives: [ROUTER_DIRECTIVES, Stepbar],
 	pipes: []
 })

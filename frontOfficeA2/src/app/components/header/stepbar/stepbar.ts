@@ -6,7 +6,7 @@ import { AuthService } from '../../../tripy_go_lib/services/auth.service';
 	selector: 'stepbar',
 	templateUrl: 'app/components/header/stepbar/stepbar.html',
 	styleUrls: ['app/components/header/stepbar/stepbar.css'],
-	providers: [AuthService],
+	providers: [],
 	directives: [ROUTER_DIRECTIVES],
 	pipes: [],
 	inputs: []

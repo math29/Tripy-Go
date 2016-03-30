@@ -8,7 +8,7 @@ import { AuthService } from '../../../../tripy_go_lib/services/auth.service';
 	selector: 'overview',
 	templateUrl: 'app/components/account/profile/overview/overview.html',
 	// styleUrls: ['app/components/account/profile/profile.css'],
-	providers: [AuthService],
+	providers: [],
 	directives: [RouterLink],
 	pipes: []
 })

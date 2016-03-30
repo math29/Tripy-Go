@@ -1,11 +1,12 @@
 import {Component} from 'angular2/core';
 
-import { RouteConfig, Router} from 'angular2/router';
+import { RouteConfig, Router, ROUTER_DIRECTIVES } from 'angular2/router';
 import { Login } from './components/account/login/login';
 import { Signup } from './components/account/signup/signup';
 import { Main } from './components/main/main';
 import { Profile } from './components/account/profile/profile';
 import { ListingPropositions } from './components/transport/listingPropositions/listingPropositions';
+import {HTTP_PROVIDERS} from 'angular2/http';
 
 import {LoggedInRouterOutlet} from './LoggedInOutlet';
 
@@ -16,8 +17,8 @@ import {CmptFooter} from './components/cmptFooter/cmptFooter'
 @Component({
   selector: 'front-office-a2-app',
   templateUrl: 'app/front-office-a2.html',
-  providers: [],
-  directives: [Header, CmptFooter, LoggedInRouterOutlet],
+  providers: [HTTP_PROVIDERS],
+  directives: [Header, CmptFooter, LoggedInRouterOutlet, ROUTER_DIRECTIVES],
   pipes: []
 })
 @RouteConfig([

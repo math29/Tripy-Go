@@ -18,7 +18,7 @@ declare var google: any;
   selector: 'main',
   templateUrl: 'app/components/main/main.html',
   styleUrls: ['app/components/main/main.css'],
-  providers: [FormBuilder, AuthService],
+  providers: [FormBuilder],
   directives: [DATEPICKER_DIRECTIVES],
   pipes: []
 })

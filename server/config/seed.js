@@ -8,9 +8,12 @@
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
 var Country = require('../api/country/country.model');
+var Company = require('../api/company/company.model');
+var Transport = require('../api/transport/transport.model');
+var TransportType = require('../api/transportType/transportType.model');
+var TransportComparator = require('../api/transportComparator/transportComparator.model');
 var Travel = require('../api/travel/travel.model');
 var Location = require('../api/location/location.model');
-var Transport = require('../api/transport/transport.model');
 
 Thing.find({}).remove(function() {
   Thing.create({
@@ -34,6 +37,18 @@ Thing.find({}).remove(function() {
   });
 });
 
+var transportTypeId = "";
+TransportType.find({}).remove(function(){
+  TransportType.create(
+    {
+      name:'plane',
+      img: 'fa-plane'
+    }
+  , function(err,ttype){
+    if(err)console.error(err);
+    transportTypeId = ttype._id;
+  })
+})
 
 Country.find({}).remove(function(){
   Country.create(
@@ -2637,4 +2652,23 @@ User.find({}).remove(function() {
         }, 5000);
     }
   );
+});
+
+
+
+
+
+Company.find().remove(function(){
+  Company.create({
+  name:'Liligo',
+  img:'liligo.png',
+  url:'https://liligo.com'
+}, function(err, company){
+  TransportComparator.find({}).remove(function(){
+    TransportComparator.create({
+      type:[transportTypeId],
+      company:company._id
+    })
+  })
+});
 });

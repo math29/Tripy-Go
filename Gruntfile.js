@@ -514,7 +514,8 @@ module.exports = function (grunt) {
           'marked/**/*',
           'socket.io-client/**/*',
           'font-awesome/**/*',
-          'angular2-jwt/**/*'
+          'angular2-jwt/**/*',
+          'd3/**/*'
         ]
       },
       tripy_go_lib_back: {
@@ -572,7 +573,8 @@ module.exports = function (grunt) {
           'rxjs/**/*',
           'angular2-jwt/*',
           'ng2-bootstrap/**/*',
-          'moment/**/*'
+          'moment/**/*',
+          'ng2-file-upload/**/*'
         ]
       },
       // TRIPY-GO LIBRAIRIES GLOBALES

@@ -23,6 +23,8 @@ body {
   padding-bottom: 19px;
 }
 
+
+path {fill: #bbb;stroke: #fff;}
 /*.navbar{
   background-color: #f2676b;
 }

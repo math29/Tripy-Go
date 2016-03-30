@@ -11,7 +11,7 @@ import { ProfileTravels } from './travels/profile_travels';
 	selector: 'profile',
 	templateUrl: 'app/components/account/profile/profile.html',
 	styleUrls: ['app/components/account/profile/profile.css'],
-	providers: [AuthService],
+	providers: [],
 	directives: [RouterLink, Overview, Settings, ProfileTravels],
 	pipes: []
 })

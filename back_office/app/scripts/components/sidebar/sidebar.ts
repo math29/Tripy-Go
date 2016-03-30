@@ -44,6 +44,7 @@ export class SidebarCmp{
       let logs:Item = {"route":"Logs", "icon":"fa-filter", "content":"Logs"};
       let timelines: Item = {"route":"Timelines", "icon":"fa-table", "content":"Timelines"};
       let transportTypes: Item = {"route": "TransportTypes", "icon": "fa-car", "content": "Moyens de transports"};
+      let transport: Item = {"route": "Transports", "icon": "fa-map", "content": "Transports"};
 
       this.items = [];
       this.items.push(dashboard);
@@ -53,6 +54,7 @@ export class SidebarCmp{
       this.items.push(timelines);
       this.items.push(users);
       this.items.push(transportTypes);
+      this.items.push(transport);
       if(this.isAdminInfo()){
         this.items.push(mongo);
         this.items.push(logs);

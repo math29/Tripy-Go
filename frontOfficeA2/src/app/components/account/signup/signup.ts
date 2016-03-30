@@ -7,7 +7,7 @@ import { AuthService } from '../../../tripy_go_lib/services/auth.service';
 	selector: 'signup',
 	templateUrl: 'app/components/account/signup/signup.html',
 	styleUrls: ['app/components/account/signup/signup.css'],
-	providers: [AuthService, FormBuilder],
+	providers: [FormBuilder],
 	directives: [RouterLink],
 	pipes: []
 })

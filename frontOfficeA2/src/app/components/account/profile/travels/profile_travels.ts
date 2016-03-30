@@ -9,7 +9,7 @@ import 'rxjs/add/operator/map';
 	selector: 'profileTravels',
 	templateUrl: 'app/components/account/profile/travels/profile_travels.html',
 	// styleUrls: ['app/components/account/profile/profile.css'],
-	providers: [AuthService],
+	providers: [],
 	directives: [RouterLink],
 	pipes: []
 })

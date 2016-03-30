@@ -42,7 +42,9 @@ export class AuthService {
         this.user = this.user._body;
         this.user = JSON.parse(this.user);
         localStorage.setItem('jwt-local-user', JSON.stringify(this.user));
-        this._userObserver.next(this.user);
+        if(this._userObserver){
+          this._userObserver.next(this.user);
+        }
     }, errors => console.log('Could not retrieve user'));
   }
 
@@ -142,7 +144,7 @@ export class AuthService {
    */
   getUserAvatar() :string{
     if (this.getMe().picture) {
-      return "/api/files/" + this.getMe().picture + "?_ts=" + new Date().getTime();
+      return this.getMe().picture;
     }
     return "/assets/images/user.png";
   }
