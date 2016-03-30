@@ -22,14 +22,19 @@ export class Header {
 	}
 
 	ngOnInit() {
-		this.routesStepBar = {
-			'letsStarted': 1,
-			'star_with': 2
-		};
+		this.routesStepBar = [
+			'transport/listing',
+			'star_with'
+		];
 
+		// Un peu forcé malgé moi de faire ce petit parcours des différentes routes qui composent notre stepbar
+		// JE vérifie pour chacune d'entre elles si elle est contenu dans la route actuelle (gère par la même occasion le cas où nous aurions des paramètres)
 		this._router.subscribe((path) => {
-			if (this.routesStepBar[path]) this.step = this.routesStepBar[path];
-			else this.step = 0;
+			this.step = 0;
+			for (let i = 0; i < this.routesStepBar.length; i++){
+				if (path.indexOf(this.routesStepBar[i]) > -1)
+					this.step = i+1;
+			}
 		});
 	}
 }

@@ -1,13 +1,45 @@
+<!-- START: PAGE TITLE -->
+<div class="row page-title">
+	<div class="container clear-padding text-center flight-title">
+		<h3>Première étape</h3>
+		<h4 class="thank">Trouvons un moyen de nous déplacer ! :)</h4>
+	</div>
+</div>
+<!-- END: PAGE TITLE -->
+
+<!-- START: CONTACT-US -->
+<div class="row contact-address">
+	<div class="container clear-padding">
+		<div class="text-center">
+			<h2>Transports</h2>
+			<h5>Plusieurs moyens de transports s'offrent à nous. Vous ferez votre choix en fonction de vos envies, des prix, des disponibilités... Nous vous proposons ici une liste de comparateurs de transports qui vous proposerons tous les trajets actuellement disponibles sur le marché !</h5>
+			<div class="space"></div>
+			<div class="col-md-4 col-sm-4">
+				<i class="fa fa-map-marker"></i>
+				<p>Street #42, Burbank, LA</p>
+			</div>
+			<div class="col-md-4 col-sm-4">
+				<i class="fa fa-envelope-o"></i>
+				<p><a href="mailto:your@email.com">your@email.com</a></p>
+			</div>
+			<div class="col-md-4 col-sm-4">
+				<i class="fa fa-phone"></i>
+				<p>+91 1234567890</p>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END: CONTACT-US -->
 <div class="row">
 	<div class="container">
 		<div class="col-md-12 hotel-listing">
-			<div *ngFor="#i of [1,2,3]">
+			<div *ngFor="#comparator of comparators">
 				<!-- START: Transport LIST VIEW -->
 				<div class="col-md-6 col-sm-6">
 					<div class="cruise-list-view">
 						<div class="col-md-9 clear-padding">
-							<h4 style="text-align: center;">Comparateur de prix X</h4>
-							<img src="assets/images/cruise2.jpg" alt="cruise">
+							<h4 style="text-align: center;">{{ comparator.company.name }}</h4>
+							<img [src]="comparator.company.img" [alt]="comparator.company.name">
 						</div>
 						<div class="clearfix-sm"></div>
 						<div class="col-md-3 booking-box clear-padding text-center">
@@ -27,11 +59,12 @@
 								<i class="fa fa-star-o"></i>
 								<h5>Note utilisateurs</h5>
 							</div>
-							<div class="price">
-								<h3>$500</h3>
-								<h5>$73/night</h5>
-								<a href="#">Plus d'infos</a>
-							</div>
+							<a [href]="comparator.company.url">
+								<div class="price">
+									<h3>Let's</h3>
+									<h3>GO !</h3>
+								</div>
+							</a>
 						</div>
 					</div>
 				</div>
