@@ -10,22 +10,29 @@ declare var d3:any;
     template : `<h3 #myH3>some text</h3>
     <div id="map"></div>
         `,
+    styles:[
+    `path {fill: #ccc;stroke: #fff;}`
+    ]
 })
 export class TransportMapCmp {
     @ViewChild('myH3') myH3;
+    root: any;
 
-    constructor(public renderer: Renderer, public el: ElementRef){ }
+    constructor(public renderer: Renderer, public el: ElementRef){
+      this.root = d3.select(el);
+      console.log(this.root[0].node().getBBox());
+    }
 
     ngAfterViewInit() {
       var w = 1280,
-    h = 800;
+      h = 800;
 
     var projection = d3.geo.mercator()
       /*.mode("equidistant")
       .origin([-98, 38])
-      .scale(100)
+
       .translate([640, 360]);*/
-      .scale((w + 1) / 2 / Math.PI)
+      .scale((w + 1)  / Math.PI)
     /*.translate([w / 2, h / 2])
     .precision(.1);*/
 

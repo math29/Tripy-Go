@@ -9,7 +9,8 @@ var mongoose = require('mongoose'),
  **/
 var CompanySchema = new Schema({
   name: {type: String, index: {unique: true}},
-  img: String
+  img: String,
+  url: String
 });
 
 module.exports = mongoose.model('Company', CompanySchema);
