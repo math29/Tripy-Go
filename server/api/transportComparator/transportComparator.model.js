@@ -17,4 +17,4 @@ var TransportComparatorSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('TransportComparator', TransportSchema);
+module.exports = mongoose.model('TransportComparator', TransportComparatorSchema);
