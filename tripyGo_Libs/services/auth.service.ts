@@ -42,9 +42,9 @@ export class AuthService {
         this.user = this.user._body;
         this.user = JSON.parse(this.user);
         localStorage.setItem('jwt-local-user', JSON.stringify(this.user));
-        //if(this._observer){
+        if(this._userObserver){
           this._userObserver.next(this.user);
-        //}
+        }
     }, errors => console.log('Could not retrieve user'));
   }
 
