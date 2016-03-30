@@ -3,18 +3,21 @@
 
 import {Component, OnInit, AfterViewInit, ElementRef} from 'angular2/core';
 import { RouterLink } from 'angular2/router';
-import { FormBuilder, ControlGroup, Validators, Control } from 'angular2/common';
+import { FormBuilder, ControlGroup, Validators, Control, FORM_DIRECTIVES, NgClass, NgStyle, CORE_DIRECTIVES } from 'angular2/common';
 import { Http, Headers, RequestOptions } from 'angular2/http';
 import { AuthService } from '../../../../tripy_go_lib/services/auth.service';
+import { FILE_UPLOAD_DIRECTIVES, FileUploader } from 'ng2-file-upload/ng2-file-upload';
 
 declare var jQuery: JQueryStatic;
+
+const fileAPI = "/api/files";
 
 @Component({
 	selector: 'settings',
 	templateUrl: 'app/components/account/profile/settings/settings.html',
-	// styleUrls: ['app/components/account/profile/profile.css'],
+	styleUrls: ['app/components/account/profile/settings/settings.css'],
 	providers: [],
-	directives: [RouterLink],
+	directives: [RouterLink, FILE_UPLOAD_DIRECTIVES, FORM_DIRECTIVES, NgClass, NgStyle, CORE_DIRECTIVES],
 	pipes: []
 })
 export class Settings implements AfterViewInit, OnInit {
@@ -28,14 +31,18 @@ export class Settings implements AfterViewInit, OnInit {
     zipcode: Control;
     city: Control;
     country: Control;
-    picture: Control;
     birthday: Control;
 
     user_info_message: String;
 
     options: RequestOptions;
 
+    uploader: FileUploader = new FileUploader({ url: fileAPI });
+	hasBaseDropZoneOver: boolean = false;
+	hasAnotherDropZoneOver: boolean = false;
+
 	constructor(private _auth: AuthService, fb: FormBuilder, private _http: Http, private el: ElementRef) {
+		// Initializing forms
 		this.name = fb.control('', Validators.compose([]));
 		this.fname = fb.control('', Validators.compose([]));
 		this.phone = fb.control('', Validators.compose([]));
@@ -44,7 +51,6 @@ export class Settings implements AfterViewInit, OnInit {
 		this.city = fb.control('', Validators.compose([]));
 		this.country = fb.control('', Validators.compose([]));
 		this.birthday = fb.control('', Validators.compose([]));
-		// this.picture = fb.control('', Validators.compose([Validators.required]));
 
 		this.userUpdateForm = fb.group({
 			name: this.name,
@@ -54,20 +60,21 @@ export class Settings implements AfterViewInit, OnInit {
 			zipcode: this.zipcode,
 			city: this.city,
 			country: this.country,
-			birthday: this.birthday,
-			picture: this.picture
+			birthday: this.birthday
 		});
 
-		// Subscribe to Email changes
-		// this.email.valueChanges.subscribe((change) => {
-		// 	this.emailUsed = false;
-		// });
+		// Necessary to not have an error
+		this.uploader.queueLimit = 1;
+		this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+			let responsePath = JSON.parse(response);
+			this.updateUserPicture(responsePath);// the url will be in the response
+		};
+
 		this.options = new RequestOptions({ headers: _auth.getBearerHeaders() });
 	}
 
 	updateUser() {
 		if (this.userUpdateForm.valid) {
-			console.log(this.userUpdateForm.value);
 			let user = this.userUpdateForm.value;
 
 			// Update and format DatePickers Departure and return
@@ -86,7 +93,6 @@ export class Settings implements AfterViewInit, OnInit {
 					console.log(response);
 					this._auth.storeMe();
 					this.user_info_message = "Paramètres mis à jour !";
-					// this._router.navigate(['ListingPropositions', { id: response }]);
 				},
 				error => {
 					console.log(JSON.stringify(error));
@@ -95,10 +101,20 @@ export class Settings implements AfterViewInit, OnInit {
 		}
 	}
 
-	updateUserPicture() {
-		// if (this.userUpdateForm.valid) {
-		// }
+	// ****************************************
+	// GESTION UPLOAD NEW PICTURES
+	// ****************************************
+
+	updateUserPicture(responsePath: any) {
+		console.log("here ?");
 	}
+
+	fileOverBase(e: any) {
+		this.hasBaseDropZoneOver = e;
+	}
+
+
+	// POPULATING USER UPDATE FORM
 
 	populateUserForm() {
 		let user = this._auth.getMe();

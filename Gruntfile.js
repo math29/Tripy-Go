@@ -549,7 +549,8 @@ module.exports = function (grunt) {
           'rxjs/**/*',
           'angular2-jwt/*',
           'ng2-bootstrap/**/*',
-          'moment/**/*'
+          'moment/**/*',
+          'ng2-file-upload/**/*'
         ]
       },
       // TRIPY-GO LIBRAIRIES GLOBALES
