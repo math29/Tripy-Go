@@ -1,14 +1,14 @@
 import {Component, OnInit} from 'angular2/core';
 import { ROUTER_DIRECTIVES, Router } from 'angular2/router';
 
-import { AuthService } from '../../tripy_go_lib/auth.service'
+import { AuthService } from '../../tripy_go_lib/services/auth.service'
 import { Stepbar } from './stepbar/stepbar';
 
 @Component({
 	selector: 'header',
 	templateUrl: 'app/components/header/header.html',
 	styleUrls: ['app/components/header/header.css'],
-	providers: [AuthService],
+	providers: [],
 	directives: [ROUTER_DIRECTIVES, Stepbar],
 	pipes: []
 })

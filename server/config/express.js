@@ -59,8 +59,9 @@ module.exports = function(app) {
   if ('development' === env || 'test' === env) {
     app.use(require('connect-livereload')());
     app.use(express.static(path.join(config.root, '.tmp')));
-    app.use('/front',express.static(path.join(config.root, 'client')));
-    app.set('/front', path.join(config.root, 'client'));
+    // app.use('/front',express.static(path.join(config.root, 'client')));
+    // app.set('/front', path.join(config.root, 'client'));
+    app.set('appPath', path.join(config.root, 'frontOfficeA2/dist/'));
     app.use( express.static(path.join(config.root, 'frontOfficeA2/dist/')));
     app.use('/back',express.static(path.join(config.root, 'back_office/app/')));
     if('test' !== env){
