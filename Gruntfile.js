@@ -758,6 +758,7 @@ module.exports = function (grunt) {
       'concurrent:server',
       'copy:tripy_go_lib',
       'front_office',
+      'back_office',
       'injector',
       // 'wiredep',
       'autoprefixer',

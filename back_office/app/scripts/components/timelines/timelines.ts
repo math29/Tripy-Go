@@ -7,7 +7,7 @@ import {StatsCmp} from '../utils/stats';
 import {TimelineService} from '../../services/timelineService';
 import {OperationsService} from '../../services/operationsService';
 import {TimelineCmp} from './timeline';
-import {MarkdownPipe} from '../../pipes/marked';
+import {MarkdownPipe} from '../../tripy-lib/pipes/marked';
 
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import * as io from 'socket.io-client';
