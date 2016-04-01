@@ -3,7 +3,7 @@ import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {Response} from 'angular2/http';
 import {TimelineService} from '../../services/timelineService';
 import {OperationsService} from '../../services/operationsService';
-import {MarkdownPipe} from '../../pipes/marked';
+import {MarkdownPipe} from '../../tripy-lib/pipes/marked';
 
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 

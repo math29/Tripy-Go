@@ -6,7 +6,7 @@
 
 // Set default node environment to development
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-var TAG = "WTC-App";
+var TAG = "Tripygo-App";
 
 var express = require('express');
 var mongoose = require('mongoose');
