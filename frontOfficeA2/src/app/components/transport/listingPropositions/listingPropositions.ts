@@ -35,12 +35,6 @@ export class ListingPropositions {
 			.subscribe(comparators => {
 				this.comparators = comparators;
 			});
-
-		// let comp = new TransportComparator();
-		// comp = {
-		// 	type: [{ name: "Avion", img: "url" }],
-		// 	company: { name: "LILIGO", img: "assets/images/cruise2.jpg", url: "http://www.liligo.fr/" }
-		// };
 	}
 }
 

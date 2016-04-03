@@ -8,6 +8,7 @@ import { AboutUs } from './components/team/about-us/about-us';
 import { Contact } from './components/team/contact/contact';
 import { Profile } from './components/account/profile/profile';
 import { ListingPropositions } from './components/transport/listingPropositions/listingPropositions';
+import { Research } from './components/transport/research/research';
 import {HTTP_PROVIDERS} from 'angular2/http';
 
 import {LoggedInRouterOutlet} from './LoggedInOutlet';
@@ -31,7 +32,8 @@ import {CmptFooter} from './components/cmptFooter/cmptFooter'
 	{ path: '/login', component: Login, name: 'Login' },
 	{ path: '/signup', component: Signup, as: 'Signup' },
 	{ path: '/profile', component: Profile, as: 'Profile' },
-	{ path: '/transport/listing/:id', component: ListingPropositions, name: 'ListingPropositions' }
+	{ path: '/transport/listing/:id', component: ListingPropositions, name: 'ListingPropositions' },
+	{ path: '/transport/research/:id', component: Research, name: 'Research' }
 ])
 export class FrontOfficeA2App {
 
