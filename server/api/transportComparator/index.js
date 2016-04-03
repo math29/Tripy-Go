@@ -132,10 +132,28 @@ router.post('/', auth.hasRole('admin'), controller.create);
   *
   */
 router.put('/:id', auth.hasRole('admin'), controller.update);
+
+/**
+  * @api {patch} /api/transportComparators/:id Substitute a transport comparator
+  * @apiName SubstituteTransportComparator
+  * @apiGroup TransportComparator
+  *
+  * @apiUse ApiParamsTransport
+  *
+  * @apiSuccess {Object} Object response
+  *
+  * @apiSuccessExample Success-Response:
+  *   HTTP/1.1 201 Created:
+  *      {
+  *          "__v": 0,
+  *          "_id": "564cf49161e7bc8345166168"
+  *      }
+  *
+  */
 router.patch('/:id', auth.hasRole('admin'), controller.update);
 
 /**
-  * @api {delete} /api/transportComparatorss/:id Delete a transport comparator
+  * @api {delete} /api/transportComparators/:id Delete a transport comparator
   * @apiName DeleteTransportComparator
   * @apiGroup TransportComparator
   *
