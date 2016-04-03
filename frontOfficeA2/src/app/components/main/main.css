@@ -17,7 +17,7 @@
 .start-with {
 	background: url('assets/images/departure.jpg');
 	background-attachment: fixed;
-	text-shadow: -2px 2px 0px #f9676b;
+	text-shadow: -1px 1px 0px #f9676b;
 }
 
 .more-infos{
