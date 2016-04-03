@@ -2661,7 +2661,7 @@ User.find({}).remove(function() {
 Company.find().remove(function(){
   Company.create({
   name:'Liligo',
-  img:'liligo.png',
+  img:'assets/images/cruise2.jpg',
   url:'https://liligo.com'
 }, function(err, company){
   TransportComparator.find({}).remove(function(){

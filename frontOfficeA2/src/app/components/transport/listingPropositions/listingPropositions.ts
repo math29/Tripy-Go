@@ -1,6 +1,6 @@
 import {Component} from 'angular2/core';
 import { RouterLink, RouteParams } from 'angular2/router';
-import { Http, RequestOptions } from 'angular2/http';
+import { Http, RequestOptions, Headers } from 'angular2/http';
 
 @Component({
 	selector: 'listing-propositions',
@@ -14,23 +14,33 @@ export class ListingPropositions {
 	travel_id: String;
 	comparators: Array<TransportComparator>;
 
+	options: RequestOptions;
+
 	constructor(private params: RouteParams, private _http:Http) {
 		this.travel_id = params.get('id');
-		this.comparators = [];
 		this.synchTransportsComparators();
+
+		// Headers For api requests
+		let headers = new Headers({
+		});
+		this.options = new RequestOptions({ headers: headers });
 	}
 
 	// ***************************************
 	// Get the all list of transports comparators and store it into comparators vars
 	// ***************************************
 	synchTransportsComparators() {
-		let comp = new TransportComparator();
-		comp = {
-			type: [{ name: "Avion", img: "url" }],
-			company: { name: "LILIGO", img: "assets/images/cruise2.jpg", url: "http://www.liligo.fr/" }
-		};
+		this._http.get('/api/transport/comparator', this.options)
+			.map(res => res.json())
+			.subscribe(comparators => {
+				this.comparators = comparators;
+			});
 
-		this.comparators.push(comp);
+		// let comp = new TransportComparator();
+		// comp = {
+		// 	type: [{ name: "Avion", img: "url" }],
+		// 	company: { name: "LILIGO", img: "assets/images/cruise2.jpg", url: "http://www.liligo.fr/" }
+		// };
 	}
 }
 
