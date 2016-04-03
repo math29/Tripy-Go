@@ -9,7 +9,7 @@ import 'rxjs/add/operator/map'
 @Injectable()
 export class TransportTypeService {
 
-  public base_url = '/api/transportType/';
+  public base_url = '/api/transport/type/';
   constructor(private _http: Http, private _authService:AuthService) {}
 
   /**

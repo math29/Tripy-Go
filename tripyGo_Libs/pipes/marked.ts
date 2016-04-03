@@ -1,13 +1,13 @@
-/// <reference path="../../../../typings/marked/marked.d.ts" />
+/// <reference path="../../../../../typings/marked/marked.d.ts" />
 
 import {Pipe} from 'angular2/core';
 import * as marked from 'marked';
 /*
- * Filter log items which contains query
+ * parse markdown text to HTML
  * Usage:
- *   value | filterLog:query
+ *   text | markdown
  * Example:
- *   {{ 2 |  filterLog:DISCONNECTING}}
+ *   # Titre1 |  markdown
 */
 
 @Pipe({
