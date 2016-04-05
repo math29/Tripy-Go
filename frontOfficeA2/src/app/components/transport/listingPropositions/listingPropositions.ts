@@ -7,7 +7,7 @@ import { Http, RequestOptions, Headers } from 'angular2/http';
 	templateUrl: 'app/components/transport/listingPropositions/listingPropositions.html',
 	styleUrls: ['app/components/transport/listingPropositions/listingPropositions.css'],
 	providers: [],
-	directives: [],
+	directives: [RouterLink],
 	pipes: []
 })
 export class ListingPropositions {
@@ -34,6 +34,7 @@ export class ListingPropositions {
 			.map(res => res.json())
 			.subscribe(comparators => {
 				this.comparators = comparators;
+				console.log(this.comparators);
 			});
 	}
 }

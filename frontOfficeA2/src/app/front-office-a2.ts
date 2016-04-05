@@ -33,7 +33,7 @@ import {CmptFooter} from './components/cmptFooter/cmptFooter'
 	{ path: '/signup', component: Signup, as: 'Signup' },
 	{ path: '/profile', component: Profile, as: 'Profile' },
 	{ path: '/transport/listing/:id', component: ListingPropositions, name: 'ListingPropositions' },
-	{ path: '/transport/research/:id', component: Research, name: 'Research' }
+	{ path: '/transport/research/:id', component: Research, name: 'ListingResearch' }
 ])
 export class FrontOfficeA2App {
 
