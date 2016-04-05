@@ -24,7 +24,7 @@ export class Header {
 	ngOnInit() {
 		this.routesStepBar = [
 			'transport/listing',
-			'star_with'
+			'transport/research'
 		];
 
 		// Un peu forcé malgé moi de faire ce petit parcours des différentes routes qui composent notre stepbar

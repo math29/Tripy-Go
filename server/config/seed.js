@@ -2662,7 +2662,7 @@ Company.find().remove(function(){
   Company.create({
   name:'Liligo',
   img:'assets/images/cruise2.jpg',
-  url:'https://liligo.com'
+  url:'http://liligo.fr'
 }, function(err, company){
   TransportComparator.find({}).remove(function(){
     TransportComparator.create({

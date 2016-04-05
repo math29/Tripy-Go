@@ -1,22 +1,27 @@
-import {Component} from 'angular2/core';
+/// <reference path="../../../../../../typings/jquery/jquery.d.ts" />
+
+import {Component, OnInit, ElementRef} from 'angular2/core';
 import { RouterLink, RouteParams } from 'angular2/router';
 import { Http, RequestOptions, Headers } from 'angular2/http';
 import { AuthService } from '../../../tripy_go_lib/services/auth.service';
 
+declare var jQuery: JQueryStatic;
+
 @Component({
 	selector: 'research',
 	templateUrl: 'app/components/transport/research/research.html',
-	// styleUrls: ['app/components/transport/listingPropositions/listingPropositions.css'],
+	styleUrls: ['app/components/transport/research/research.css'],
 	providers: [],
 	directives: [RouterLink],
 	pipes: []
 })
-export class Research {
+export class Research implements OnInit {
 	comparator: any;
 	options_post: RequestOptions;
 
-	constructor(private params: RouteParams, private _http: Http, private _auth: AuthService) {
-		this.getComparator(params.get('id'));
+	iframe_height: number;
+
+	constructor(private params: RouteParams, private _http: Http, private _auth: AuthService, private el: ElementRef) {
 		this.options_post = new RequestOptions({ headers: _auth.getBearerHeaders() });
 	}
 
@@ -30,5 +35,11 @@ export class Research {
 				this.comparator = comparator;
 				console.log(this.comparator);
 			});
+	}
+
+	ngOnInit() {
+		this.getComparator(this.params.get('id'));
+
+		this.iframe_height = window.innerHeight -87 -50;
 	}
 }
