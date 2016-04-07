@@ -155,9 +155,13 @@ export class Main implements AfterViewInit, OnInit {
 											if (!nbReqs) self.persistTransport();
 										},
 										error => {
+											console.log("Il faudrait gérer ici l'ajout du pars manquant !");
 											console.log(JSON.stringify(error));
 										}
 										);
+								},
+								error => {
+									console.log(JSON.stringify(error));
 								});
 						}
 						);
@@ -202,6 +206,10 @@ export class Main implements AfterViewInit, OnInit {
 											console.log(JSON.stringify(error));
 										}
 										);
+								},
+								error => {
+									console.log("Il faudrait gérer ici l'ajout du pars manquant !");
+									console.log(JSON.stringify(error));
 								});
 							}
 							);
