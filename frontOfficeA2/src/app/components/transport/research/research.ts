@@ -33,7 +33,6 @@ export class Research implements OnInit {
 			.map(res => res.json())
 			.subscribe(comparator => {
 				this.comparator = comparator;
-				console.log(this.comparator);
 			});
 	}
 
