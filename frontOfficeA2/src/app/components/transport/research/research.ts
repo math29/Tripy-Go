@@ -20,6 +20,7 @@ export class Research implements OnInit {
 	options_post: RequestOptions;
 
 	iframe_height: number;
+	iframe_width: String;
 
 	constructor(private params: RouteParams, private _http: Http, private _auth: AuthService, private el: ElementRef) {
 		this.options_post = new RequestOptions({ headers: _auth.getBearerHeaders() });
@@ -40,5 +41,6 @@ export class Research implements OnInit {
 		this.getComparator(this.params.get('id'));
 
 		this.iframe_height = window.innerHeight -87 -50;
+		this.iframe_width = "75%";
 	}
 }
