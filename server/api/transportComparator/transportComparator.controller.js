@@ -71,7 +71,7 @@ function populate(doc, req, res){
 }
 
 function handleError(res, err) {
-  if(err.code==11000){
+  if(err.code === 11000){
     var error = {error: 'Ce comparateur existe déjà'};
       return res.status(500).json(error);
   }
