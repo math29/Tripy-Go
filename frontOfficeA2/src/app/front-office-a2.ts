@@ -7,8 +7,8 @@ import { Main } from './components/main/main';
 import { AboutUs } from './components/team/about-us/about-us';
 import { Contact } from './components/team/contact/contact';
 import { Profile } from './components/account/profile/profile';
-import { ListingPropositions } from './components/transport/listingPropositions/listingPropositions';
-import { Research } from './components/transport/research/research';
+import { ListingPropositions } from './components/steps/transport/listingPropositions/listingPropositions';
+import { Research } from './components/steps/transport/research/research';
 import {HTTP_PROVIDERS} from 'angular2/http';
 
 import {LoggedInRouterOutlet} from './LoggedInOutlet';

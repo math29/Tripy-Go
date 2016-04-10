@@ -1,18 +1,19 @@
-/// <reference path="../../../../../../typings/jquery/jquery.d.ts" />
+/// <reference path="../../../../../../../typings/jquery/jquery.d.ts" />
 
 import {Component, OnInit, ElementRef} from 'angular2/core';
 import { RouterLink, RouteParams } from 'angular2/router';
 import { Http, RequestOptions, Headers } from 'angular2/http';
-import { AuthService } from '../../../tripy_go_lib/services/auth.service';
+import { Timeline } from '../../timeline/timeline';
+import { AuthService } from '../../../../tripy_go_lib/services/auth.service';
 
 declare var jQuery: JQueryStatic;
 
 @Component({
 	selector: 'research',
-	templateUrl: 'app/components/transport/research/research.html',
-	styleUrls: ['app/components/transport/research/research.css'],
+	templateUrl: 'app/components/steps/transport/research/research.html',
+	styleUrls: ['app/components/steps/transport/research/research.css'],
 	providers: [],
-	directives: [RouterLink],
+	directives: [RouterLink, Timeline],
 	pipes: []
 })
 export class Research implements OnInit {
@@ -21,6 +22,9 @@ export class Research implements OnInit {
 
 	iframe_height: number;
 	iframe_width: String;
+
+	// Timeline gesture
+	timeline_id: number = 1;
 
 	constructor(private params: RouteParams, private _http: Http, private _auth: AuthService, private el: ElementRef) {
 		this.options_post = new RequestOptions({ headers: _auth.getBearerHeaders() });
