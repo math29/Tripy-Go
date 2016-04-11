@@ -10,5 +10,5 @@ module.exports = {
 
   seedDB: true,
   // reprise de données
-  rdo: true
+  rdo: false
 };
