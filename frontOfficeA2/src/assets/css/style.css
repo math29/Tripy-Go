@@ -190,8 +190,11 @@ h5 {
 	width: 100%;
 }
 #loader {
-	position: relative;
 	background: #f7f7f7;
+	position: absolute !important;
+	top: 0px; /* Header Height */
+	bottom: 0px; /* Footer Height */
+	width: 100%;
 }
 #loader div {
 	position: absolute;
@@ -5495,6 +5498,7 @@ h5 {
 	position: relative;
 	height: 100px;
 	margin-top: 40px;
+	margin-top: 50%;
 }
 .loading-animation span  {
     border-radius: 50%;
