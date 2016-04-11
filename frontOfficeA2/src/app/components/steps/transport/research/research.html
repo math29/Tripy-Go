@@ -1,0 +1,7 @@
+<div *ngIf="comparator">
+	<iframe [style.height.px]="iframe_height" [style.width]="iframe_width" [src]="comparator.company.url" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<div class="row timeline-sidebar">
+	<timeline [instanceId]="timeline_id"></timeline>
+</div>

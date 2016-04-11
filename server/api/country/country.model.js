@@ -5,13 +5,16 @@ var mongoose = require('mongoose'),
 
 var CountrySchema = new Schema({
   country_code: {type: String, required: true},
+  cca3: {type: String, required: true, index: {unique: true}},
   country_name: {type: String, required: true},
   currency_code: String,
+  calling_code: String,
   capital: {type: String, required: true},
   continent: {type: String, required: true},
   population: Number,
   area: {type: Number, required: true},
-  languages: String
+  languages: [{type: String}],
+  borders: [{type:String}]
 });
 
 

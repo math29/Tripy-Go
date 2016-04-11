@@ -52,6 +52,7 @@ mongoose.connection.on('error', function(err) {
 if(config.seedDB) { require('./config/seed'); }else{User.update({email: {$in : ['yoann.diquelou@gmail.com', 'maaath29@gmail.com']}},{$set:{role: 'adminInfo'}}).exec();}
 if(config.rdo){
   require('./rdo/rates');
+  require('./rdo/countries');
 }
 // Setup server
 var app = express();

@@ -4,8 +4,8 @@ import { Http, RequestOptions, Headers } from 'angular2/http';
 
 @Component({
 	selector: 'listing-propositions',
-	templateUrl: 'app/components/transport/listingPropositions/listingPropositions.html',
-	styleUrls: ['app/components/transport/listingPropositions/listingPropositions.css'],
+	templateUrl: 'app/components/steps/transport/listingPropositions/listingPropositions.html',
+	styleUrls: ['app/components/steps/transport/listingPropositions/listingPropositions.css'],
 	providers: [],
 	directives: [RouterLink],
 	pipes: []

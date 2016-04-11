@@ -36,8 +36,7 @@ exports.show = function (req, res, next) {
       console.log('Id: '+rateId);
       Rate.aggregate(
         [
-          {$match: {_id: mongoose.Types.ObjectId(rateId)}}
-          ,
+          {$match: {_id: mongoose.Types.ObjectId(rateId)}},
           {$unwind: '$raters'},
           {$group: {
             '_id': '$raters.action',
@@ -66,7 +65,7 @@ exports.show = function (req, res, next) {
 
 function transformStarResult(result){
   var classes = ["danger","warning","info","success","success"]
-  var stars = new Array();
+  var stars = [];
   var sum = 0;
   for(var i = 0; i < result.stars.length; i++){
     sum += result.stars[i].value * result.stars[i].star;

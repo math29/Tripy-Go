@@ -32,15 +32,27 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label col-sm-2" for="country_code">Country code:</label>
+          <label class="control-label col-sm-2" for="country_code">Code pays 2:</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="country_code" [(ngModel)]="edit_country.country_code" placeholder="Enter country code">
+            <input type="text" class="form-control" id="country_code" [(ngModel)]="edit_country.country_code" placeholder="Entrez le code pays à 2 caractères">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="cca3">Code pays 3:</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="cca3" [(ngModel)]="edit_country.cca3" placeholder="Entrez le code pays à 3 caractères">
           </div>
         </div>
         <div class="form-group">
           <label class="control-label col-sm-2" for="currency_code">Currency_code: </label>
           <div class="col-sm-10">
             <input type="text" class="form-control" id="currency_code" [(ngModel)]="edit_country.currency_code" placeholder="Enter currency code">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="calling_code">Idantifiant téléphonique: </label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="calling_code" [(ngModel)]="edit_country.calling_code" placeholder="Enter currency code">
           </div>
         </div>
         <div class="form-group">
@@ -126,6 +138,8 @@
           <thead>
           <tr role="row">
             <th class="sorting">Country code</th>
+            <th class="sorting">Cc 3</th>
+            <th class="sorting">Code tel</th>
             <th class="sorting">Country name</th>
             <th class="sorting">Capital</th>
             <th class="sorting">Currency</th>
@@ -139,6 +153,8 @@
           <!--  |filter:query |orderBy:orderType+orderby -->
           <tr *ngFor="#country of countries" ng-class="getClassFromInfo(country)">
             <td>{{country.country_code}}</td>
+            <td>{{country.cca3}}</td>
+            <td>{{country.calling_code}}</td>
             <td>{{country.country_name}}</td>
             <td>{{country.capital}}</td>
             <td>{{country.currency_code}}</td>
