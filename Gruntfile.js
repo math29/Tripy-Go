@@ -199,7 +199,7 @@ module.exports = function (grunt) {
 				patterns: [
 					{
 					match: /\/socket\.io\-client/g,
-					replacement: 'http://tripygo-breizher.rhcloud.com:8000/socket.io-client'
+					replacement: 'http://tripygo-breizher.rhcloud.com:8080/socket.io-client'
 					}
 				]
 			},
@@ -212,7 +212,7 @@ module.exports = function (grunt) {
 				patterns: [
 					{
 					match: /\/socket\.io\-client/g,
-					replacement: 'http://tripygo-math29land.rhcloud.com:8000/socket.io-client'
+					replacement: 'http://tripygo-math29land.rhcloud.com:8080/socket.io-client'
 					}
 				]
 			},
