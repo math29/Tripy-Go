@@ -54,7 +54,7 @@ export class SidebarCmp{
       this.items.push(timelines);
       this.items.push(users);
       this.items.push(transportTypes);
-      this.items.push(transport);
+      //this.items.push(transport);
       if(this.isAdminInfo()){
         this.items.push(mongo);
         this.items.push(logs);

@@ -34,6 +34,11 @@
                 </div>
               </div>
               <div class="clearfix"></div>
+              <div class="col-md-12 text-center">
+                <p class="help-block" *ngIf="departure.dirty && departure.hasError('required')">Lieu de départ requis</p>
+                <p class="help-block" *ngIf="arrival.dirty && arrival.hasError('required')">Destination requise</p>
+                <p class="help-block">{{ login_error }}</p>
+              </div>
               <div class="col-md-12 text-center search-col-padding">
                 <button type="submit" class="search-button btn transition-effect" [disabled]="!startForm.valid">Let's GO !</button>
               </div>

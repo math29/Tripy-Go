@@ -4,8 +4,15 @@
       <div class="navbar-contact">
         <!-- If We are not in travelling process -->
         <div class="col-md-7 col-sm-6 clear-padding" *ngIf="step == 0">
-          <a href="#" class="transition-effect"><i class="fa fa-phone"></i> (+33) 631067282</a>
-          <a href="#" class="transition-effect"><i class="fa fa-envelope-o"></i> maaath29@gmail.com</a>
+          <!-- <a href="#" class="transition-effect"><i class="fa fa-phone"></i> (+33) 631067282</a>
+          <a href="#" class="transition-effect"><i class="fa fa-envelope-o"></i> maaath29@gmail.com</a> -->
+          <div class="social-media">
+            <ul>
+              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+            </ul>
+          </div>
         </div>
         <!-- If We are IN travelling process -->
         <div class="col-md-7 col-sm-6 clear-padding" *ngIf="step != 0">
@@ -67,21 +74,22 @@
               <a class="navbar-brand logo" href="" [routerLink]="['Home']">Tripy-Go</a>
             </div>
 
-            <!-- BEGIN: NAVIGATION -->
-            <!-- <div class="navbar-collapse collapse">
+            <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                  <a ng-class="{active: isActive('/')}" class="dropdown-toggle" href="/" data-toggle="dropdown"><i class="fa fa-home"></i> HOME</a>
+                <li>
+                  <a href="" [routerLink]="['Home']"><i class="fa fa-home"></i> HOME</a>
                 </li>
-                <li class="dropdown">
-                  <a ng-class="{active: isActive('/start_with')}" class="dropdown-toggle" href="/start_with/new" data-toggle="dropdown"><i class="fa fa-plane"></i> Let's travel !</a>
+                <li>
+                  <a href="" [routerLink]="['AboutUs']"><i class="fa fa-users"></i> Tripy-Team</a>
                 </li>
-                <li ng-show="isAdmin()"  ng-class="{active: isActive('/admin')}" ng-click="goAdmin()" class="dropdown">
+                <li>
+                  <a href="" [routerLink]="['Contact']"><i class="fa fa-envelope-o"></i> Contacts</a>
+                </li>
+                <!-- <li ng-show="isAdmin()"  ng-class="{active: isActive('/admin')}" ng-click="goAdmin()" class="dropdown">
                   <a class="dropdown-toggle" data-toggle="dropdown">Admin</a>
-                </li>
+                </li> -->
               </ul>
-            </div> -->
-            <!-- END: NAVIGATION -->
+            </div>
           </div>
           <!--END: NAV-CONTAINER -->
         </div>

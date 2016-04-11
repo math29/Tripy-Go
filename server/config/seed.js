@@ -162,8 +162,8 @@ User.find({}).remove(function() {
 Company.find().remove(function(){
   Company.create({
   name:'Liligo',
-  img:'liligo.png',
-  url:'https://liligo.com'
+  img:'assets/images/cruise2.jpg',
+  url:'http://liligo.fr'
 }, function(err, company){
   TransportComparator.find({}).remove(function(){
     TransportComparator.create({

@@ -42,9 +42,12 @@ export class Main implements AfterViewInit, OnInit {
 
 	googleApiKey: String = "AIzaSyCbbSgj5Sk0_eiC9TAIbr2Un_trdaUOuwY";
 
+	// Errors Gesture
+	login_error: String;
+
 	constructor(private el: ElementRef, fb: FormBuilder, private _http: Http, private _auth: AuthService, private _router: Router) {
-		this.departure = fb.control('');
-		this.arrival = fb.control('');
+		this.departure = fb.control('', Validators.compose([Validators.required]));
+		this.arrival = fb.control('', Validators.compose([Validators.required]));
 		this.date_departure = fb.control('');
 		this.date_return = fb.control('');
 
@@ -76,7 +79,10 @@ export class Main implements AfterViewInit, OnInit {
     // - Lunch the persisting processus with the Locations persisting
     // *******************************************************************************************
     startWithSubmit() {
-		if (this.startForm.valid) {
+		if (!this._auth.isAuthed()) {
+			this.login_error = "Vous devez être connecté pour pouvoir vous lancer dans l'aventure ! :)";
+		}
+		else if (this.startForm.valid) {
 			// Add User if connected - Null else
 			this.travelRequest = this.startForm.value;
 			if (this._auth.isAuthed()) this.travelRequest.author = this._auth.getMe();
@@ -149,9 +155,13 @@ export class Main implements AfterViewInit, OnInit {
 											if (!nbReqs) self.persistTransport();
 										},
 										error => {
+											console.log("Il faudrait gérer ici l'ajout du pars manquant !");
 											console.log(JSON.stringify(error));
 										}
 										);
+								},
+								error => {
+									console.log(JSON.stringify(error));
 								});
 						}
 						);
@@ -196,6 +206,10 @@ export class Main implements AfterViewInit, OnInit {
 											console.log(JSON.stringify(error));
 										}
 										);
+								},
+								error => {
+									console.log("Il faudrait gérer ici l'ajout du pars manquant !");
+									console.log(JSON.stringify(error));
 								});
 							}
 							);

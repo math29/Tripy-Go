@@ -19,7 +19,8 @@ module.exports = function (grunt) {
     ts: 'grunt-ts',
     cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner',
-    buildcontrol: 'grunt-build-control'
+    buildcontrol: 'grunt-build-control',
+	compress: 'grunt-contrib-compress',
   });
 
   // Time how long tasks take. Can help when optimizing build times
@@ -40,6 +41,18 @@ module.exports = function (grunt) {
       public: 'dist/public',
       private: 'dist/back'
     },
+	compress:{
+
+		deploy: {
+			options:{
+			mode:'tgz',
+			archive: 'target/archive.tar.gz'
+			},
+			files:[
+				{expand: true, cwd: 'dist/', src: ['**']}
+			]
+		}
+	},
     ts: {
       options:{
         target: 'es5',
@@ -53,10 +66,13 @@ module.exports = function (grunt) {
         suppressImplicitAnyIndexErrors: true,
         reference: './typings/tsd.d.ts'
       },
-      back_office:{
-        src: '<%= yeoman.back_office %>/app/scripts/**/*.ts',
-        outDir: '<%= yeoman.back_office %>/app/scripts_js'
-      },
+      //back_office:{
+      //  src: '<%= yeoman.back_office %>/app/scripts/**/*.ts',
+      //  outDir: '<%= yeoman.back_office %>/app/scripts_js'
+      //},
+	  back_office:{
+		tsconfig:"<%= yeoman.back_office %>/tsconfig.json"
+	  },
       front_office: {
         tsconfig:"<%= yeoman.front_office_A2 %>/tsconfig.json",
       }
@@ -177,6 +193,34 @@ module.exports = function (grunt) {
         livereload: true
       }
     },
+	replace:{
+		rec: {
+			options: {
+				patterns: [
+					{
+					match: /\/socket\.io\-client/g,
+					replacement: 'http://tripygo-breizher.rhcloud.com:8000/socket.io-client'
+					}
+				]
+			},
+			files: [
+			{expand: true, flatten: false, src: ['dist/back/scripts_js/components/**/*', 'dist/public/frontOfficeA2/src/**/*']}
+			]
+		},
+		prod: {
+			options: {
+				patterns: [
+					{
+					match: /\/socket\.io\-client/g,
+					replacement: 'http://tripygo-math29land.rhcloud.com:8000/socket.io-client'
+					}
+				]
+			},
+			files: [
+			{expand: true, flatten: false, src: ['dist/back/scripts_js/components/**/*', 'dist/public/frontOfficeA2/src/**/*']}
+			]
+		}
+	},
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
       options: {
@@ -467,14 +511,22 @@ module.exports = function (grunt) {
         dest: '.tmp/',
         src: ['{app,components}/**/*.css']
       },
-      back_office_lib_bower: {
-        expand: true,
-        dest: './<%= yeoman.back_office %>/app/lib',
-        cwd: 'client/bower_components',
-        src: [
-          'bootstrap-iconpicker/**/*'
-        ]
-      },
+	  back_office_bower:{
+		expand: true,
+		dest:'./<%= yeoman.back_office %>/app/bower_components',
+		cwd:'client/bower_components',
+		src:[
+			'json3/**/*',
+			'font-awesome/**/*',
+			'metisMenu/**/*',
+			'socket.io/**/*',
+			'lodash/**/*',
+			'socket.io-client/**/*',
+			'bootstrap/**/*',
+			'jquery/**/*',
+			'bootstrap-iconpicker/**/*'
+		]
+	  },
       back_office_lib: {
         expand: true,
         dest: './<%= yeoman.back_office %>/app/lib',
@@ -834,8 +886,8 @@ module.exports = function (grunt) {
     });
 
   grunt.registerTask('back_office', [
+	'copy:back_office_bower',
     'copy:back_office_lib',
-    'copy:back_office_lib_bower',
     'copy:tripy_go_lib_back',
     'ts:back_office',
     'copy:back_office_compiled',
