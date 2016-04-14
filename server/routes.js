@@ -29,7 +29,7 @@ module.exports = function(app) {
   app.use('/api/company', require('./api/company'));
   /* Transports */
   app.use('/api/transport/type', require('./api/transportType'));
-  app.use('/api/transport/comparator', require('./api/transportComparator'));
+  app.use('/api/transport/comparators', require('./api/transportComparator'));
 
 
   // All undefined asset or api routes should return a 404

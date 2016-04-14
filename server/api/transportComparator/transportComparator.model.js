@@ -17,14 +17,14 @@ var TransportComparatorSchema = new Schema({
     ref: 'Company',
     required: true,
     index: {unique: true}
-  }
+  },
+  comments : [{comment: {type: String}, user: {type: Schema.Types.ObjectId, ref: 'User'} }]
 });
 
 var TransportComparator = mongoose.model('TransportComparator', TransportComparatorSchema);
 
 TransportComparatorSchema.pre('save', function(next){
   var self = this;
-  console.log(JSON.stringify(self));
   Company.find({_id:self.company}, function(err, result){
     if(err){
       next(err);

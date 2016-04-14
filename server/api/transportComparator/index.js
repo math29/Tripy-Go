@@ -59,7 +59,7 @@ var router = express.Router();
  *
  * @apiUse UserNotAuthorized
  */
-router.get('/', controller.index);
+router.get('/', auth.hasRole('admin'),controller.index);
 
 /**
  * @api {get} /api/transport/comparator/:id Get By Id

@@ -12,7 +12,7 @@ var TAG = "CompanyController";
  * @param res response
  */
 exports.index = function(req, res) {
-  Company.find()
+  Company.find().populate('country')
   .sort({name:1})
   .exec(
     function (err, companies) {
@@ -27,7 +27,9 @@ exports.index = function(req, res) {
 
 // Get a single company
 exports.show = function(req, res) {
-  Company.findById(req.params.id, function (err, company) {
+  Company.findOne({_id:req.params.id})
+    .populate('country')
+    .exec(function (err, company) {
     if(err) {
      return handleError(res, err);
     }
@@ -43,7 +45,9 @@ exports.show = function(req, res) {
 exports.showByName = function(req, res) {
   var searchQuery = {};
   searchQuery[req.params.cat] = req.params.name;
-  Company.find(searchQuery, function (err, company) {
+  Company.find(searchQuery)
+  .populate('country')
+  .exec( function (err, company) {
     if(err) {
       return handleError(res, err);
     }

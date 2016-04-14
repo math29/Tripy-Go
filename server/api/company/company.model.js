@@ -9,6 +9,7 @@ var mongoose = require('mongoose'),
  **/
 var CompanySchema = new Schema({
   name: {type: String, index: {unique: true}},
+  country: {type: mongoose.Schema.Types.ObjectId, ref: 'Country'},
   img: String,
   url: String
 });

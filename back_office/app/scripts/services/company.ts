@@ -8,7 +8,7 @@ import 'rxjs/add/operator/map'
 
 
 @Injectable()
-export class TransportService {
+export class CompanyService {
 
   public base_url = '/api/company/';
   constructor(private _http: Http, private _authService:AuthService) {}
