@@ -44,6 +44,33 @@
             </select>
           </div>
         </div>
+
+        <div class="form-group">
+          <div class="col-md-12">
+              <div ng2-file-drop
+                   [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                   (fileOver)="fileOverBase($event)"
+                   [uploader]="uploader"
+                   class="well my-drop-zone">
+                  Déposez ici une nouvelle photo
+              </div>
+
+              Ou ici
+              <input type="file" ng2-file-select [uploader]="uploader" />
+          </div>
+          <div class="col-md-12 text-center" style="margin-bottom: 40px">
+            <div *ngFor="#item of uploader.queue">
+              <button type="button" class="btn btn-success btn-xs"
+                      (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                  <span class="glyphicon glyphicon-upload"></span> Upload
+              </button>
+              <button type="button" class="btn btn-danger btn-xs"
+                      (click)="item.remove()">
+                  <span class="glyphicon glyphicon-trash"></span> Annuler
+              </button>
+            </div>
+          </div>
+        </div>
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" class="btn btn-default" ><span *ngIf="!companyEdit._id">Créer</span><span *ngIf="companyEdit._id">Mettre à jour</span></button>
@@ -70,6 +97,7 @@
         <table class="table table-striped table-bordered table-hover" role="grid">
           <thead>
           <tr role="row">
+            <th class="sorting">Image</th>
             <th class="sorting">Nom de l'entreprise</th>
             <th class="sorting">Lien</th>
             <th class="sorting">Pays</th>
@@ -79,6 +107,7 @@
           <tbody>
           <!--<tr *ngFor="#language of languages |filter:query |orderBy:orderType+orderby" ng-class="getClassFromInfo(language)">-->
           <tr *ngFor="#company of companies">
+            <td><img src="{{company.img}}" class="tableImg"></td>
             <td>{{company.name}}</td>
             <td>{{company.url}}</td>
             <td><span *ngIf="company.country">{{company.country.country_name}}</span></td>

@@ -543,7 +543,8 @@ module.exports = function (grunt) {
           'socket.io-client/**/*',
           'font-awesome/**/*',
           'angular2-jwt/**/*',
-          'd3/**/*'
+          'd3/**/*',
+          'ng2-file-upload/**/*'
         ]
       },
       tripy_go_lib_back: {

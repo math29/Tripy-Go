@@ -6,13 +6,17 @@ import {Response} from 'angular2/http';
 import {CompanyService} from '../../services/company';
 import {CountryService} from '../../services/countryService';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import { FILE_UPLOAD_DIRECTIVES, FileUploader } from 'ng2-file-upload/ng2-file-upload';
+
 import * as io from 'socket.io-client';
+const fileAPI = "/api/files";
+
 
 @Component({
   selector: 'companies',
   templateUrl: 'views/components/company/main.html',
   providers: [CompanyService, CountryService],
-  directives: [ROUTER_DIRECTIVES],
+  directives: [ROUTER_DIRECTIVES, FILE_UPLOAD_DIRECTIVES],
   pipes: []
 })
 export class CompanyCmp{
@@ -24,11 +28,46 @@ export class CompanyCmp{
     private companyEdit:any;
     private socket:any;
 
+    /*
+     * Uploader
+     */
+    uploader: FileUploader = new FileUploader({ url: fileAPI });
+    hasBaseDropZoneOver: boolean = false;
+    hasAnotherDropZoneOver: boolean = false;
+
     constructor(private _companyService: CompanyService, private _countryService: CountryService){
       let host = window.location.origin;
       this.socket = io.connect('',{path:'/socket.io-client'});
+
+      // Necessary to not have an error
+  		this.uploader.queueLimit = 1;
+  		this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+  			let responsePath = JSON.parse(response);
+        console.log(responsePath);
+  			this.updateCompanyPicture(responsePath);// the url will be in the response
+  		};
     }
 
+    // ****************************************
+    // GESTION UPLOAD NEW PICTURES
+    // ****************************************
+
+    updateCompanyPicture(responsePath: any) {
+      this.companyEdit.img = "/api/files/" + responsePath.file._id ;
+      // "/api/files/" + $scope.user.picture + "?_ts=" + new Date().getTime();
+      console.log(this.companyEdit.img);
+      /*this._http.put('/api/users/' + user._id, JSON.stringify(user), this.options)
+        .map(res => res.json())
+        .subscribe(
+          response => {
+            this._auth.storeMe();
+          }
+        );*/
+    }
+
+    fileOverBase(e: any) {
+      this.hasBaseDropZoneOver = e;
+    }
 
 
     logError(err) {
@@ -133,7 +172,7 @@ export class CompanyCmp{
     onChangeCountry(country){
       this.companyEdit.country = country;
     }
-    
+
     deleteCompany(company:any){
       this._companyService.deleteCompany(company).subscribe();
     }
