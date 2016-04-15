@@ -24,7 +24,7 @@ export class Research implements OnInit {
 	iframe_width: String;
 
 	// Timeline gesture
-	timeline_id: number = 1;
+	timeline_name: String = "transport_timeline";
 
 	constructor(private params: RouteParams, private _http: Http, private _auth: AuthService, private el: ElementRef) {
 		this.options_post = new RequestOptions({ headers: _auth.getBearerHeaders() });

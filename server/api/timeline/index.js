@@ -34,6 +34,23 @@ var router = express.Router();
 router.get('/', auth.hasRole('admin'), controller.index);
 
 /**
+ * @api {get} /api/timeline/:name Get Timeline by name
+ * @apiVersion 1.0.0
+ * @apiName GetTimelines
+ * @apiGroup Timelines
+ *
+ * @apiSuccess {Object} timeline requested
+ *
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *
+ *
+ * @apiUse UserNotAuthorized
+ */
+router.get('/name/:name', auth.isAuthenticated(), controller.getByName);
+
+/**
  * @api {get} /api/timeline/:navigation Request timeline for specified navigation
  * @apiVersion 1.0.0
  * @apiName GetTimeline

@@ -14,6 +14,7 @@ var TransportType = require('../api/transportType/transportType.model');
 var TransportComparator = require('../api/transportComparator/transportComparator.model');
 var Travel = require('../api/travel/travel.model');
 var Location = require('../api/location/location.model');
+var Timeline = require('../api/timeline/timeline.model');
 
 Thing.find({}).remove(function() {
   Thing.create({
@@ -173,3 +174,13 @@ Company.find().remove(function(){
   })
 });
 });
+
+
+Timeline.find().remove(function(){
+  Timeline.create({
+    name:'transport_timeline',
+    description: 'Timeline de l\'étape de choix de transport de l\'utilisateur'
+  }, function(err, timeline){
+    console.log("Finished populating timelines");
+  })
+})

@@ -69,13 +69,17 @@
                     },
                     "ng2-file-upload": {
                         "defaultExtension": "js"
+                    },
+                    'marked':{
+                      defaultExtension: 'js'
                     }
                 },
                 map: {
                     "angular2-jwt": "lib/angular2-jwt",
                     "ng2-bootstrap": "lib/ng2-bootstrap",
                     "moment": 'lib/moment/moment.js',
-                    "ng2-file-upload": "lib/ng2-file-upload"
+                    "ng2-file-upload": "lib/ng2-file-upload",
+                    'marked':'lib/marked/marked.min.js'
                 }
             });
             System.import('frontOfficeA2/src/app.js').then(null, console.error.bind(console));
