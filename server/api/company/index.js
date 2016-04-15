@@ -94,7 +94,7 @@ router.get('/:id', auth.isAuthenticated(),controller.show);
   *       }
   *
   */
-router.post('/:name', auth.hasRole('admin'),controller.create);
+router.post('/', auth.hasRole('admin'),controller.create);
 
 /**
   * @api {put} /api/company/:id Substitute a transportType
