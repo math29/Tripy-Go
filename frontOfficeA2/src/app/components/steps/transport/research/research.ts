@@ -25,7 +25,7 @@ export class Research implements OnInit {
 
 	// Timeline gesture
 	timeline_name: String = "transport_timeline";
-
+	travel_id: String;
 	constructor(private params: RouteParams, private _http: Http, private _auth: AuthService, private el: ElementRef) {
 		this.options_post = new RequestOptions({ headers: _auth.getBearerHeaders() });
 	}
@@ -34,7 +34,7 @@ export class Research implements OnInit {
 	// Get the selected comparator and store it into comparator vars
 	// ***************************************
 	getComparator(id:String) {
-		this._http.get('/api/transport/comparator/' + id, this.options_post)
+		this._http.get('/api/transport/comparators/' + id, this.options_post)
 			.map(res => res.json())
 			.subscribe(comparator => {
 				this.comparator = comparator;
@@ -42,8 +42,9 @@ export class Research implements OnInit {
 	}
 
 	ngOnInit() {
-		this.getComparator(this.params.get('id'));
-
+		this.getComparator(this.params.get('comparator_id'));
+		console.log(this.params.get('comparator_id'));
+		this.travel_id = this.params.get('comparator_id');
 		this.iframe_height = window.innerHeight -87 -50;
 		this.iframe_width = "75%";
 	}

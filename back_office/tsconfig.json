@@ -20,6 +20,7 @@
         "app/scripts/classes/language.ts",
         "app/scripts/classes/transport.ts",
         "app/scripts/classes/transportType.ts",
+        "app/scripts/components/company/company.ts",
         "app/scripts/components/country/country.ts",
         "app/scripts/components/header/header.ts",
         "app/scripts/components/header/header_notification.ts",

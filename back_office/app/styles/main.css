@@ -94,3 +94,8 @@ path {fill: #bbb;stroke: #fff;}
 text-decoration: none;
 background-color: #eee;
 }
+
+.tableImg{
+  width: 100px;
+  height: 100px;
+}

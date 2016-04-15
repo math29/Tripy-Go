@@ -28,7 +28,7 @@ var router = express.Router();
  */
 
 /**
- * @api {get} /api/transport/comparator Request list of all transport comparators
+ * @api {get} /api/transport/comparators Request list of all transport comparators
  * @apiVersion 0.0.0
  * @apiName GetTransportComparators
  * @apiGroup TransportComparator
@@ -59,10 +59,10 @@ var router = express.Router();
  *
  * @apiUse UserNotAuthorized
  */
-router.get('/', controller.index);
+router.get('/', auth.isAuthenticated(),controller.index);
 
 /**
- * @api {get} /api/transport/comparator/:id Get By Id
+ * @api {get} /api/transport/comparators/:id Get By Id
  * @apiVersion 0.0.0
  * @apiName GetTransportComparatorById
  * @apiGroup TransportComparator
@@ -96,7 +96,7 @@ router.get('/', controller.index);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 
 /**
-  * @api {post} /api/transport/comparator Insert a transport comparator
+  * @api {post} /api/transport/comparators Insert a transport comparator
   * @apiName InsertTransportComparator
   * @apiGroup TransportComparator
   *
@@ -115,7 +115,7 @@ router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', auth.hasRole('admin'), controller.create);
 
 /**
-  * @api {put} /api/transport/comparator/:id Substitute a transport comparator
+  * @api {put} /api/transport/comparators/:id Substitute a transport comparator
   * @apiName SubstituteTransportComparator
   * @apiGroup TransportComparator
   *
@@ -134,7 +134,7 @@ router.post('/', auth.hasRole('admin'), controller.create);
 router.put('/:id', auth.hasRole('admin'), controller.update);
 
 /**
-  * @api {patch} /api/transport/comparator/:id Substitute a transport comparator
+  * @api {patch} /api/transport/comparators/:id Substitute a transport comparator
   * @apiName SubstituteTransportComparator
   * @apiGroup TransportComparator
   *
@@ -153,7 +153,7 @@ router.put('/:id', auth.hasRole('admin'), controller.update);
 router.patch('/:id', auth.hasRole('admin'), controller.update);
 
 /**
-  * @api {delete} /api/transport/comparator/:id Delete a transport comparator
+  * @api {delete} /api/transport/comparators/:id Delete a transport comparator
   * @apiName DeleteTransportComparator
   * @apiGroup TransportComparator
   *
