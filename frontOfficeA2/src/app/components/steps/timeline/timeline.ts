@@ -10,7 +10,7 @@ import { MarkdownPipe } from '../../../tripy_go_lib/pipes/marked';
 	styleUrls: ['app/components/steps/timeline/timeline.css'],
 	providers: [],
 	directives: [RouterLink],
-	pipes: []
+	pipes: [MarkdownPipe]
 })
 export class Timeline {
 	@Input() name;

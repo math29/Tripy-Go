@@ -2,38 +2,35 @@
 	<div class="col-md-12 sidebar-wrapper clear-padding">
 		<!-- Display if instance doesn't existe -->
 		<div *ngIf="!instance" class="package-summary sidebar-item">
-			<h4>
-				<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Fonctionnalité en travaux
+			<h4 class="header-title">
+				Fonctionnalité en travaux <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
 			</h4>
 		</div>
 		<div *ngIf="instance">
-				<div class="package-summary sidebar-item">
-				<h4>
-					<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Fonctionnalité en travaux
-				</h4>
-				
-				<h4>
-					<i class="fa fa-bookmark"></i> {{ instance.name }}
+			<div class="package-summary sidebar-item">
+				<h4 class="header-title">
+					{{ instance.operations[0].title }}
 				</h4>
 				<div class="package-summary-body">
-					<h5><i class="fa fa-heart"></i>Theme</h5>
+					<span [innerHTML]="instance.operations[0].content | markdown"></span>
+					<!-- <h5><i class="fa fa-heart"></i>Theme</h5>
 					<p>Honeymoon, Group, Beach</p>
 					<h5><i class="fa fa-map-marker"></i>Departure Port</h5>
 					<p>Miami</p>
 					<h5><i class="fa fa-globe"></i>Itinerary</h5>
-					<p>Paris, London, Amesterdam</p>
+					<p>Paris, London, Amesterdam</p> -->
 				</div>
 				<div class="package-summary-footer text-center">
 					<div class="col-md-6 col-sm-6 col-xs-6 price">
-						<h5>Starting From</h5>
-						<h5><strong>$999/Person</strong></h5>
+						<h4>Premier conseil</h4>
+						<!-- <h5><strong>$999/Person</strong></h5> -->
 					</div>
 					<div class="col-md-6 col-sm-6 col-xs-6 book">
-						<a href="#">BOOK NOW</a>
+						<a href="#">Etape suivante</a>
 					</div>
 				</div>
 			</div>
-			<div class="assistance-box sidebar-item">
+			<!-- <div class="assistance-box sidebar-item">
 				<h4><i class="fa fa-phone"></i> Need Assistance</h4>
 				<div class="assitance-body text-center">
 					<h5>Need Help? Call us or drop a message. Our agents will be in touch shortly.</h5>
@@ -86,7 +83,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </div>

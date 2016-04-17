@@ -25,7 +25,10 @@ export class Research implements OnInit {
 
 	// Timeline gesture
 	timeline_name: String = "transport_timeline";
+	timeline_width: String;
 	travel_id: String;
+	opened: boolean = true;
+
 	constructor(private params: RouteParams, private _http: Http, private _auth: AuthService, private el: ElementRef) {
 		this.options_post = new RequestOptions({ headers: _auth.getBearerHeaders() });
 	}
@@ -41,11 +44,30 @@ export class Research implements OnInit {
 			});
 	}
 
+	// ***************************************
+	// Openning and closing timeline 
+	// ***************************************
+	timelineSizing(){
+		this.opened = !this.opened;
+		if (this.opened) { this.openTimeline() }
+		else { this.closeTimeline() }
+	}
+
+	openTimeline(){
+		this.iframe_width = "75%";
+		this.timeline_width = "25%";
+	}
+
+	closeTimeline(){
+		this.iframe_width = "100%";
+		this.timeline_width = "0%";
+	}
+
 	ngOnInit() {
 		this.getComparator(this.params.get('comparator_id'));
-		console.log(this.params.get('comparator_id'));
+		// console.log(this.params.get('comparator_id'));
 		this.travel_id = this.params.get('comparator_id');
 		this.iframe_height = window.innerHeight -87 -50;
-		this.iframe_width = "75%";
+		this.openTimeline();
 	}
 }

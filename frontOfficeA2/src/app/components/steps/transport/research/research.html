@@ -1,7 +1,13 @@
+<!-- This button allow to reduct the timeline -->
+<span [ngClass]="{'menu-toggle-open': opened, 'menu-toggle-close': !opened}" class="menu-toggle" (click)="timelineSizing()">
+	<i [ngClass]="{active: !opened}" class="fa fa-bars fa-lg"></i>
+	<i [ngClass]="{active: opened}" class="fa fa-arrow-right fa-lg"></i>
+</span>
+
 <div *ngIf="comparator">
 	<iframe [style.height.px]="iframe_height" [style.width]="iframe_width" [src]="comparator.company.url" frameborder="0" allowfullscreen></iframe>
 </div>
 
-<div class="row timeline-sidebar">
+<div [style.width]="timeline_width" class="row timeline-sidebar">
 	<timeline [name]="timeline_name"></timeline>
 </div>

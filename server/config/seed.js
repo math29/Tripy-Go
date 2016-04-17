@@ -15,6 +15,7 @@ var TransportComparator = require('../api/transportComparator/transportComparato
 var Travel = require('../api/travel/travel.model');
 var Location = require('../api/location/location.model');
 var Timeline = require('../api/timeline/timeline.model');
+var Operation = require('../api/operation/operation.model');
 
 Thing.find({}).remove(function() {
   Thing.create({
@@ -175,12 +176,25 @@ Company.find().remove(function(){
 });
 });
 
-
-Timeline.find().remove(function(){
-  Timeline.create({
-    name:'transport_timeline',
-    description: 'Timeline de l\'étape de choix de transport de l\'utilisateur'
-  }, function(err, timeline){
-    console.log("Finished populating timelines");
-  })
-})
+Operation.find().remove(function(){
+  Operation.create({
+    type: "Advice",
+    title: "Premier Conseil",
+    content: "Voici le contenu du premier conseil"
+  },{
+    type: "Advice",
+    title: "Deuxieme Conseil",
+    content: "Voici le contenu du deuxieme conseil"
+  }, function(err, operation1, operation2){
+    Timeline.find().remove(function(){
+      Timeline.create({
+        name:'transport_timeline',
+        description: 'Timeline de l\'étape de choix de transport de l\'utilisateur',
+        operations: [operation1, operation2]
+      }, function(err, timeline){
+        console.log("Finished populating timelines");
+      })
+    });
+  });
+});
+  
