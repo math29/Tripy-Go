@@ -270,7 +270,7 @@ export class Main implements AfterViewInit, OnInit {
 			.map(res => res._id)
 			.subscribe(
 			response => {
-				this._router.navigate(['ListingPropositions', { id: response }]);
+				this._router.navigate(['ListingPropositionsComparatorsTransport', { id: response }]);
 			},
 			error => {
 				console.log(JSON.stringify(error));

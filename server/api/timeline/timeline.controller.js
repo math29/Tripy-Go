@@ -44,6 +44,25 @@ exports.index = function(req, res){
   });
 }
 
+// Recherche d'une timeline par son nom
+exports.getByName = function(req, res){
+  Timeline.findOne({name: req.params.name}).populate('operations').populate('operations.root').exec(function(err, timeline){
+    if(err){
+      logger.error('La Timeline '+req.params.name+' est introuvable');
+      return res.status(400).json('{error:\'Timeline introuvable\'}');
+    }
+
+    Timeline.populate(timeline, {path:'operations.rate', model:'Rate'}, function(err, result){
+      if(err){
+        logger.error('Impossible de remplir les votes');
+        return res.status(400).json('{error: \'Impossible de récupérer le vote associé\'}');
+      }
+
+      return res.status(200).json(result);
+    });
+
+  });
+}
 
 // permet de créer une timeline
 exports.create = function(req, res){

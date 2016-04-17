@@ -1,12 +1,84 @@
+/*****************************/
+/* IFRAME DESIGN */
+/*****************************/
+iframe {
+	transition: width 2s;
+}
+
+/*****************************/
+/* TIMELINE DESIGN */
+/*****************************/
 .timeline-sidebar{
 	position: absolute;
 	right: 0px;
 	top: 50px;
 	bottom: 87px;
-	width: 25%;
 	overflow: scroll;
 	overflow-x:hidden;
+	transition: width 2s;
+	-webkit-transition: width 2s; /* Safari */
 }
+
+.menu-toggle {
+	z-index: 900;
+	position: fixed;
+	display: block;
+	cursor: pointer;
+	width: 80px;
+	height: 60px;
+	background-color: #F2676B;
+	transition: right 2s;
+	-webkit-transition: right 2s; /* Safari */
+}
+
+.menu-toggle-open {
+	top: 50px;
+	border-bottom-right-radius: 100%;
+	/* Firefox */
+	right: -moz-calc(25% - 80px);
+	/* WebKit */
+	right: -webkit-calc(25% - 80px);
+	/* Opera */
+	right: -o-calc(25% - 80px);
+	/* Standard */
+	right: calc(25% - 80px);
+}
+
+.menu-toggle-open i {
+	margin-left: -15px; 
+}
+
+.menu-toggle-close {
+	top: 50px;
+	right: 0;
+	border-bottom-left-radius: 100%;
+}
+
+.menu-toggle:active i{
+  	opacity: 0.8
+}
+
+.menu-toggle i {
+	color: #f0f0f0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -15px;
+	transition: transform .7s cubic-bezier(1.000, 0.005, 0.240, 1.000);
+	visibility: hidden;
+}
+
+.menu-toggle:hover i {
+	color: #00adef !important;
+}
+
+.menu-toggle .active {
+	visibility: visible;
+}
+
+/*****************************/
+/* GENERAL SCROLLBARS DESIGN */
+/*****************************/
 
 ::-webkit-scrollbar {
     width: 12px;

@@ -13,7 +13,7 @@
 			<div *ngFor="#comparator of comparators">
 				<!-- START: Transport LIST VIEW -->
 				<div class="col-md-6 col-sm-6">
-					<a href="" [routerLink]="['ListingResearch', {id: comparator._id}]">
+					<a href="" [routerLink]="['ResearchTransport', {comparator_id: comparator._id, travel_id: travel_id}]">
 						<div class="cruise-list-view">
 							<div class="col-md-9 clear-padding">
 								<h4 style="text-align: center;">{{ comparator.company.name }}</h4>

@@ -24,7 +24,10 @@ export class Research implements OnInit {
 	iframe_width: String;
 
 	// Timeline gesture
-	timeline_id: number = 1;
+	timeline_name: String = "transport_timeline";
+	timeline_width: String;
+	travel_id: String;
+	opened: boolean = true;
 
 	constructor(private params: RouteParams, private _http: Http, private _auth: AuthService, private el: ElementRef) {
 		this.options_post = new RequestOptions({ headers: _auth.getBearerHeaders() });
@@ -34,17 +37,37 @@ export class Research implements OnInit {
 	// Get the selected comparator and store it into comparator vars
 	// ***************************************
 	getComparator(id:String) {
-		this._http.get('/api/transport/comparator/' + id, this.options_post)
+		this._http.get('/api/transport/comparators/' + id, this.options_post)
 			.map(res => res.json())
 			.subscribe(comparator => {
 				this.comparator = comparator;
 			});
 	}
 
-	ngOnInit() {
-		this.getComparator(this.params.get('id'));
+	// ***************************************
+	// Openning and closing timeline 
+	// ***************************************
+	timelineSizing(){
+		this.opened = !this.opened;
+		if (this.opened) { this.openTimeline() }
+		else { this.closeTimeline() }
+	}
 
-		this.iframe_height = window.innerHeight -87 -50;
+	openTimeline(){
 		this.iframe_width = "75%";
+		this.timeline_width = "25%";
+	}
+
+	closeTimeline(){
+		this.iframe_width = "100%";
+		this.timeline_width = "0%";
+	}
+
+	ngOnInit() {
+		this.getComparator(this.params.get('comparator_id'));
+		// console.log(this.params.get('comparator_id'));
+		this.travel_id = this.params.get('comparator_id');
+		this.iframe_height = window.innerHeight -87 -50;
+		this.openTimeline();
 	}
 }

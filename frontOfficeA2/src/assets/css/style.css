@@ -3906,45 +3906,7 @@ h5 {
 .package-detail-sidebar .package-summary-body p i {
 	margin: 0px 5px;
 }
-.package-summary-footer {
-	overflow: hidden;
-}
-.package-summary-footer .price {
-	background: #e6e6e6;
-	padding: 10px 0px 11px;
-	position: relative;
-}
-.package-summary-footer .price h4 {
-	font-weight: bold;
-}
-.package-summary-footer .price:after {
-	background: #e6e6e6 none repeat scroll 0 0;
-    content: "";
-    height: 25px;
-    position: absolute;
-    right: -12px;
-    top: 35%;
-    transform: rotate(45deg);
-	-webkit-transform: rotate(45deg);
-	-moz-transform: rotate(45deg);
-	-ms-transform: rotate(45deg);
-	-o-transform: rotate(45deg);
-    width: 25px;
-    z-index: 1;
-}
-.package-summary-footer .book {
-	background: #F2676B;
-	padding: 32px 0 31px;
-}
-.package-summary-footer .book a{
-	border: 2px solid #ffffff;
-    color: #ffffff;
-    font-weight: bold;
-    padding: 10px 15px;
-}
-.package-summary-footer .book a:hover {
-	background: #00adef;
-}
+
 .package-detail-sidebar  .assitance-body {
 	padding: 20px;
 }

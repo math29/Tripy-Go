@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from 'angular2/core';
+import {Component, Input, OnChanges, SimpleChange} from 'angular2/core';
 import { RouterLink, RouteParams } from 'angular2/router';
 import { Http, RequestOptions, Headers } from 'angular2/http';
 import { AuthService } from '../../../tripy_go_lib/services/auth.service';
@@ -10,10 +10,10 @@ import { MarkdownPipe } from '../../../tripy_go_lib/pipes/marked';
 	styleUrls: ['app/components/steps/timeline/timeline.css'],
 	providers: [],
 	directives: [RouterLink],
-	pipes: []
+	pipes: [MarkdownPipe]
 })
 export class Timeline {
-	@Input() instanceId;
+	@Input() name;
 	options_post: RequestOptions;
 
 	instance: any;
@@ -26,7 +26,7 @@ export class Timeline {
 	// Get the selected timeline and store it into timeline_instance vars
 	// ***************************************
 	getTimeline() {
-		this._http.get('/api/timeline/570a418de80725d519eb5d2e', this.options_post)
+		this._http.get('/api/timeline/name/' + this.name, this.options_post)
 			.map(res => res.json())
 			.subscribe(timeline => {
 				this.instance = timeline;
@@ -35,7 +35,13 @@ export class Timeline {
 	}
 
 
-	ngOnInit() {
-		this.getTimeline();
+	ngOnChanges(changes: { [propertyName: string]: SimpleChange }) {
+		// We get the new instance timeline id to get the timeline
+		for (let propName in changes) {
+			if(propName == "name"){
+				let name = changes[propName].currentValue;
+				this.getTimeline();
+			}
+		}
 	}
 }
