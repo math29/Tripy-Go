@@ -38,9 +38,15 @@ exports.update = function(req, res) {
     if (err) { return handleError(res, err); }
     if(!transport) { return res.status(404).send('Not Found'); }
     // merge de l'ancien et du nouveau comparateur
-    var updated = _.merge(transport, req.body);
+    //var updated = _.merge(transport, req.body);
+    if(req.body.type){
+      transport.type = req.body.type;
+    }
+    if(req.body.company){
+      transport.company = req.body.company;
+    }
     // On sauvegarde le nouveau comparateur
-    updated.save(function (err) {
+    transport.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.status(200).json(transport);
     });

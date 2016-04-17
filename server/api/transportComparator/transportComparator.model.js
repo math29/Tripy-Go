@@ -34,14 +34,19 @@ TransportComparatorSchema.pre('save', function(next){
       var error = new Error("La compagnie n'éxiste pas");
       next(error);
     }
-    TransportType.find({_id:{$in:[self.type]}}, function(err, resultTypes){
+    console.log(JSON.parse(JSON.stringify(self)));
+    TransportType.find({_id:{$in:self.type}}, function(err, resultTypes){
       if(err){
-        next(err);
+        console.log('error');
+        console.log(err);
+        next(new Error(err));
+      }else{
+        console.log(JSON.parse(JSON.stringify(resultTypes)));
+        if(resultTypes.length === self.type.length){
+          next();
+        }
+        next(new Error(Math.abs(resultTypes.length - self.type.length)+" moyens de transports sont incorrects"));
       }
-      if(resultTypes.length === self.type.length){
-        next();
-      }
-      next(new Error(Math.abs(resultTypes.length - self.type.length)+" moyens de transports sont incorrects"));
     });
 
   });
