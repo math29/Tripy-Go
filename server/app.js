@@ -14,9 +14,18 @@ var config = require('./config/environment');
 var logger = require('./config/logger');
 var winston = require('winston');
 var User = require('./api/user/user.model.js');
+var mongo = require('mongodb');
+var mongoClient = mongo.MongoClient;
 // requiert WinstonDB pour logger dans mongoDB.
 require('winston-mongodb');
 
+
+mongoClient.connect(config.mongo.uri, function(err, db) {
+  if(err){
+    exit(-1);
+  }
+  global.mongo_connection = db;
+  });
 // on ne transmet les logs que sur les environnement de développement et de production
 switch(process.env.NODE_ENV){
   case 'production':
@@ -49,7 +58,12 @@ mongoose.connection.on('error', function(err) {
 	}
 );
 // Populate DB with sample data
-if(config.seedDB) { require('./config/seed'); }else{User.update({email: {$in : ['yoann.diquelou@gmail.com', 'maaath29@gmail.com']}},{$set:{role: 'adminInfo'}}).exec();}
+if(config.seedDB) {
+  require('./config/seed');
+}else{
+  User.update({email: {$in : ['yoann.diquelou@gmail.com', 'maaath29@gmail.com']}},{$set:{role: 'adminInfo'}}).exec();
+}
+
 if(config.rdo){
   require('./rdo/rates');
   require('./rdo/countries');
