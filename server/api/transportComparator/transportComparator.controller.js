@@ -74,7 +74,7 @@ exports.destroy = function(req, res) {
  *
  */
 function populate(doc, req, res){
-  TransportComparator.populate(doc, [{path:'company', ref:'Company'}, {path:'type', ref:'TransportType'}], function(err, result){
+  TransportComparator.populate(doc, [{path:'company', ref:'Company'}, {path:'type', ref:'TransportType'}, {path: 'ergo_rate', ref:'Rate'}, {path: 'content_rate', ref:'Rate'}], function(err, result){
     if(err)console.err(err);
     return res.status(200).json(result);
   });

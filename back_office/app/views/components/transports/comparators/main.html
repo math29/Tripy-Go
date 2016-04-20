@@ -70,7 +70,8 @@
           <tr role="row">
             <th class="sorting">Entreprise</th>
             <th class="sorting">Types de transports</th>
-            <th class="sorting">Note</th>
+            <th class="sorting">Ergonomie</th>
+            <th class="sorting">Contenu</th>
           </tr>
           </thead>
           <tbody>
@@ -78,7 +79,8 @@
           <tr *ngFor="#comparator of comparators">
             <td>{{comparator.company.name}}</td>
             <td><span *ngFor="#type of comparator.type"><span class="fa {{type.img}}"></span>{{type.name}}</span></td>
-            <td>4*</td>
+            <td *ngIf="comparator.ergo_rate.raters.length > 0">{{comparator.ergo_rate.score}}</td><td *ngIf="comparator.ergo_rate.raters.length == 0">Pas de votes</td>
+            <td *ngIf="comparator.content_rate.raters.length > 0">{{comparator.content_rate.score}}</td><td *ngIf="comparator.content_rate.raters.length == 0">Pas de votes</td>
             <td><a (click)="edit(comparator)" class="trash"><span class="glyphicon glyphicon-edit pull-right"></span></a></td>
             <td><a (click)="deleteComparator(comparator)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a></td>
           </tr>
