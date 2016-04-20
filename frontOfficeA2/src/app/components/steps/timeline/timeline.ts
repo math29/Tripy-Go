@@ -17,6 +17,7 @@ export class Timeline {
 	options_post: RequestOptions;
 
 	instance: any;
+	step: number = 0;
 
 	constructor(private _http: Http, private _auth: AuthService) {
 		this.options_post = new RequestOptions({ headers: _auth.getBearerHeaders() });
@@ -34,6 +35,16 @@ export class Timeline {
 			})
 	}
 
+	// ***************************************
+	// Timeline Navigation Gesture
+	// ***************************************
+	nextStep() {
+		this.step++;
+	}
+
+	previousStep() {
+		this.step--;
+	}
 
 	ngOnChanges(changes: { [propertyName: string]: SimpleChange }) {
 		// We get the new instance timeline id to get the timeline
