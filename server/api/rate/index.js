@@ -17,7 +17,7 @@ var router = express.Router();
  */
 
 /**
- * @api {get} /api/back/rate Request list of all rates
+ * @api {get} /api/rate Request list of all rates
  * @apiVersion 1.0.0
  * @apiName GetRates
  * @apiGroup Rates
@@ -41,7 +41,7 @@ var router = express.Router();
 router.get('/', auth.hasRole('admin'), controller.index);
 
 /**
- * @api {get} /api/back/rate/:id Request operations with specific ID
+ * @api {get} /api/rate/:id Request operations with specific ID
  * @apiVersion 1.0.0
  * @apiName GetRate
  * @apiGroup Rates
@@ -62,7 +62,7 @@ router.get('/', auth.hasRole('admin'), controller.index);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 
 /**
- * @api {post} /api/back/rate/vote/:side/:id Vote for a rate with specific ID
+ * @api {post} /api/rate/vote/:side/:id Vote for a rate with specific ID
  * @apiParam {Any} side  sens ("up","down") du vote si le vote est de type pile, ou nombre d'étoiles si le vote est de type Stars
  * @apiParam {String} id  id du vote
  * @apiVersion 1.0.0
@@ -83,7 +83,7 @@ router.get('/:id', auth.isAuthenticated(), controller.show);
  */
 router.post('/vote/:side/:id', auth.isAuthenticated(), controller.vote);
 /**
- * @api {delete} /api/back/rate/:id delete rate with specific ID
+ * @api {delete} /api/rate/:id delete rate with specific ID
  * @apiVersion 1.0.0
  * @apiName DeleteRate
  * @apiGroup Rates

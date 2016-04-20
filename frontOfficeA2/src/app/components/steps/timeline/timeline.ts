@@ -46,6 +46,18 @@ export class Timeline {
 		this.step--;
 	}
 
+	// ***************************************
+	// Timeline Score Gesture
+	// ***************************************
+	updateRate(vote){
+		this._http.post('/api/rate/vote/' + vote + "/" + this.instance.operations[this.step].rate._id, null, this.options_post)
+			.map(res => res.json())
+			.subscribe(rate => {
+				console.log(rate);
+			})
+		
+	}
+
 	ngOnChanges(changes: { [propertyName: string]: SimpleChange }) {
 		// We get the new instance timeline id to get the timeline
 		for (let propName in changes) {

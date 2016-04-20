@@ -91,7 +91,15 @@
 			<i class="fa fa-chevron-left " aria-hidden="true"></i>
 		</a>
 		<div class="rate">
-			<i class="fa fa-minus-circle" aria-hidden="true"></i> <strong>36</strong> <i class="fa fa-plus-circle" aria-hidden="true"></i>
+			<div class="minus" (click)="updateRate('down')">
+				<i class="fa fa-minus" aria-hidden="true"></i>
+			</div>
+			<div class="score">
+				<strong>36</strong>
+			</div>
+			<div class="plus" (click)="updateRate('up')">
+				<i class="fa fa-plus" aria-hidden="true"></i>
+			</div>
 		</div>
 		<a class="next-step step-arrow" *ngIf="step < instance.operations.length - 1" (click)="nextStep()">
 			<i class="fa fa-chevron-right" aria-hidden="true"></i>
