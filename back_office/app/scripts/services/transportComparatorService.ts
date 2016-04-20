@@ -28,8 +28,8 @@ export class TransportComparatorService{
   createComparator(comparator:any){
     let headers = this._authService.getBearerHeaders();
     let options = new RequestOptions({ headers: headers });
-    return this._http.post(this.base_url, JSON.stringify(comparator), options)
-            .map(res => <any> res.json());
+    return this._http.post(this.base_url, JSON.stringify(comparator), options);
+
   }
 
   /**
@@ -42,5 +42,16 @@ export class TransportComparatorService{
     let options = new RequestOptions({ headers: headers });
     return this._http.put(this.base_url + '/' + comparator._id , JSON.stringify(comparator), options)
             .map(res => <any> res.json());
+  }
+
+  /**
+   * Supprime un comparateur de transport
+   *
+   * @param comparator comparateur de transport
+   */
+  removeComparator(comparator: any){
+    let headers = this._authService.getBearerHeaders();
+    let options = new RequestOptions({ headers: headers });
+    return this._http.delete(this.base_url + '/' + comparator._id ,options);
   }
 }

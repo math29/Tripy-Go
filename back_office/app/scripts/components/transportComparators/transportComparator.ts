@@ -31,7 +31,29 @@ export class TransportComparatorCmp{
       private _transportComparatorService: TransportComparatorService,
       private _companyService: CompanyService){
       this.socket = io.connect('',{path:'/socket.io-client'});
-      this.socket.on('transportcomparator:save',(data:any)=>console.log('timeline :'+data));
+
+      // mise à jour du comparateur
+      this.socket.on('transportComparator:save',(data:any)=>{
+        data.company = _.find(this.companies, { '_id': data.company });
+        for(let i = 0; i < data.type.length; i++){
+          data.type[i] = _.find(this.transportTypes, { '_id': data.type[i] });
+        }
+        let index = this.getComparatorIndex(data._id);
+
+        if(index > -1){
+          this.comparators[index] = data;
+        }else{
+          this.comparators.push(data);
+        }
+
+      });
+
+      this.socket.on('transportComparator:remove',(data:any)=>{
+        let index = this.getComparatorIndex(data._id);
+        if(index > -1){
+          this.comparators.splice(index, 1);
+        }
+      });
 
     }
 
@@ -56,8 +78,8 @@ export class TransportComparatorCmp{
     }
 
     ngOnDestroy(){
-      this.socket.removeAllListeners('transportcomparator:remove');
-      this.socket.removeAllListeners('transportcomparator:save');
+      this.socket.removeAllListeners('transportComparator:remove');
+      this.socket.removeAllListeners('transportComparator:save');
     }
 
     /**
@@ -67,9 +89,22 @@ export class TransportComparatorCmp{
       if(typeof this.transportComparatorEdit.company !== 'string'){
         this.transportComparatorEdit.company = this.transportComparatorEdit.company._id;
       }
+
+      /*
+       * Pour chaque type de transport du comparateur,
+       * On vérifie qu'on à bien l'id de l'objet en base, et non l'objet
+       */
+      for(let i = 0; i < this.transportComparatorEdit.type.length; i++){
+        if(typeof this.transportComparatorEdit.type[i] !== 'string'){
+          console.log(this.transportComparatorEdit.type[i]);
+          this.transportComparatorEdit.type[i] = this.transportComparatorEdit.type[i]._id;
+        }
+      }
       console.log('create comparator');
       this._transportComparatorService.createComparator(this.transportComparatorEdit)
-        .subscribe(res => {console.log(res);
+        .subscribe(res => {
+          console.log(res);
+          console.log(res.status);
           if(res.status == 201){
             this.messages.push('Comparateur créé avec succès');
             this.transportComparatorEdit = null;
@@ -151,7 +186,6 @@ export class TransportComparatorCmp{
 
     addType(type:any){
       this.transportComparatorEdit.type[this.transportComparatorEdit.type.length] = type;
-      console.log(this.transportComparatorEdit.type);
     }
 
     removeType(type:any){
@@ -173,7 +207,13 @@ export class TransportComparatorCmp{
     }
 
     getComparatorIndex(id:string){
-      return _.findIndex(this.comparators, function(o) { return {'_id' : id} });
+      console.log(this.comparators.length);
+      for(let i = 0; i < this.comparators.length; i++){
+        console.log('bidon');
+        console.log(this.comparators[i]._id + ' ?= ' + id);
+        if(this.comparators[i]._id == id)return i;
+      }
+      return -1;
     }
 
     /**
@@ -183,8 +223,10 @@ export class TransportComparatorCmp{
      */
     edit(comparator:any){
       this.transportComparatorEdit = comparator;
-      console.log(this.transportComparatorEdit);
     }
 
-    deleteComparator(comparator: any){}
+    deleteComparator(comparator: any){
+      this._transportComparatorService.removeComparator(comparator)
+        .subscribe();
+    }
 }
