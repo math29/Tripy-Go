@@ -45,48 +45,72 @@ export class TransportComparatorCmp{
       }, error => {this.errors.push("Impossible de récupérer les comparateurs de transports");});
     }
 
-    getCompanies(){
+    getCompanies() {
       this._companyService.getCompanies()
         .subscribe(success => this.companies = success, error => this.errors.push(error));
     }
 
-    filter() {
-        if (this.transportComparatorEdit.company !== ""){
-            this.filteredCompanies = this.companies.filter(function(el){
-                return el.toLowerCase().indexOf(this.query.toLowerCase()) > -1;
-            }.bind(this));
-        }else{
-            this.filteredCompanies = [];
-        }
-    }
-
-    select(item){
-        this.transportComparatorEdit.company = item;
-        this.filteredCompanies = [];
+    selectCompany(company: any){
+      this.transportComparatorEdit.company = company;
     }
 
     ngOnDestroy(){
       this.socket.removeAllListeners('transportcomparator:remove');
       this.socket.removeAllListeners('transportcomparator:save');
     }
+
     /**
      * Insertion d'une timeline via l'API
      */
     createComparatorAPI(){
+      if(typeof this.transportComparatorEdit.company !== 'string'){
+        this.transportComparatorEdit.company = this.transportComparatorEdit.company._id;
+      }
+      console.log('create comparator');
       this._transportComparatorService.createComparator(this.transportComparatorEdit)
         .subscribe(res => {console.log(res);
           if(res.status == 201){
             this.messages.push('Comparateur créé avec succès');
             this.transportComparatorEdit = null;
           }
-        }, errors => {this.errors.push('Impossible d\'insérer la timeline');})
+        }, errors => {this.errors.push('Impossible d\'insérer le comparateur');})
+    }
+
+    /**
+     * mise à jour d'un comparateur via l'API
+     */
+    updateComparatorAPI(comparator){
+      let transformComparator = JSON.parse(JSON.stringify(comparator));
+      /*
+       * Si l'entreprise n'est pas une string, on  prend la valeur de _id de l'objet
+       */
+      if(typeof transformComparator.company !== 'string'){
+        transformComparator.company = transformComparator.company._id;
+      }
+      /*
+       * Pour chaque type de transport du comparateur,
+       * On vérifie qu'on à bien l'id de l'objet en base, et non l'objet
+       */
+      for(let i = 0; i < transformComparator.type.length; i++){
+        if(typeof transformComparator.type[i] !== 'string'){
+          console.log(transformComparator.type[i]);
+          transformComparator.type[i] = transformComparator.type[i]._id;
+        }
+      }
+
+      // Requête de mise à jour
+      this._transportComparatorService.updateComparator(transformComparator)
+        .subscribe(res => {
+          this.messages.push('Comparateur mis à jour avec succès');
+          this.transportComparatorEdit = null;
+        }, errors => {this.errors.push('Impossible de mettre à jour le comparateur');})
     }
 
     /**
      * Create a comparator
      */
     createComparator(){
-      this.transportComparatorEdit = {};
+      this.transportComparatorEdit = {comments: [], company:{}, type:[]};
     }
 
     /**
@@ -109,6 +133,7 @@ export class TransportComparatorCmp{
      *
      */
     ngOnInit(){
+      this.getCompanies();
       this.getTransportTypes();
       this.getTransportComparators();
     }
@@ -123,13 +148,37 @@ export class TransportComparatorCmp{
       return valid;
     }
 
+    addType(type:any){
+      this.transportComparatorEdit.type[this.transportComparatorEdit.type.length] = type;
+      console.log(this.transportComparatorEdit.type);
+    }
+
+    removeType(type:any){
+      let index = this.indexOfType(type);
+      if(index > -1){
+        this.transportComparatorEdit.type.splice(index, 1);
+      }
+    }
+
+    typeInArray(type){
+      return this.indexOfType(type) > -1 ? true: false;
+    }
+
+    indexOfType(type){
+      for(let i = 0; i < this.transportComparatorEdit.type.length; i++){
+        if(this.transportComparatorEdit.type[i]._id === type._id)return i;
+      }
+      return -1;
+    }
+
     /**
      * Edit a comparator
      *
      * @param comparator to edit
      */
-    editComparator(comparator:any){
+    edit(comparator:any){
       this.transportComparatorEdit = comparator;
+      console.log(this.transportComparatorEdit);
     }
 
     deleteComparator(comparator: any){}

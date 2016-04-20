@@ -31,6 +31,7 @@ function onConnect(socket) {
   require('../api/language/language.socket').register(socket);
   require('../api/country/country.socket').register(socket);
   require('../api/transportType/transportType.socket').register(socket);
+  require('../api/company/company.socket').register(socket);
   require('../api/transportComparator/transportComparator.socket').register(socket);
 }
 

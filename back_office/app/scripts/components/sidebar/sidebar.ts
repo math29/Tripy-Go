@@ -46,6 +46,7 @@ export class SidebarCmp{
       let transportTypes: Item = {"route": "TransportTypes", "icon": "fa-car", "content": "Moyens de transports"};
       let transport: Item = {"route": "Transports", "icon": "fa-map", "content": "Transports"};
       let company: Item = {"route": "Company", "icon": "fa-building", "content": "Entreprises"};
+      let transportComparator: Item = {"route": "TransportComparator", "icon":"fa-balance-scale", "content": "Comparateur de transport"};
 
       this.items = [];
       this.items.push(dashboard);
@@ -57,6 +58,7 @@ export class SidebarCmp{
       this.items.push(transportTypes);
       //this.items.push(transport);
       this.items.push(company);
+      this.items.push(transportComparator);
       if(this.isAdminInfo()){
         this.items.push(mongo);
         this.items.push(logs);
