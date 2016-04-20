@@ -1,48 +1,59 @@
+/*********************************/
+/* GENERAL */
+/*********************************/
+
 .header-title {
 	text-align: right;
 }
 
 
+
 /*********************************/
 /* FOOTER DESIGN */
 /*********************************/
-.package-summary-footer {
-	overflow: hidden;
-}
-.package-summary-footer .price {
+
+.sidebar-item-bottom {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	z-index: 900;
+	text-align:center;
 	background: #e6e6e6;
-	padding: 18px 0 18px;
-	position: relative;
 }
-.package-summary-footer .price h4 {
-	font-weight: bold;
-	padding: 10px 15px;
+
+.sidebar-item-bottom .previous-step {
+	float:left;
 }
-.package-summary-footer .price:after {
-	background: #e6e6e6 none repeat scroll 0 0;
-    content: "";
-    height: 25px;
-    position: absolute;
-    right: -12px;
-    top: 35%;
-    transform: rotate(45deg);
-	-webkit-transform: rotate(45deg);
-	-moz-transform: rotate(45deg);
-	-ms-transform: rotate(45deg);
-	-o-transform: rotate(45deg);
-    width: 25px;
-    z-index: 1;
+
+.sidebar-item-bottom .next-step {
+	float:right;
 }
-.package-summary-footer .book {
-	background: #F2676B;
-	padding: 32px 0 31px;
+
+.step-arrow {
+	font-size: large;
+	padding: 20px 25px;
+	background: rgba(242,103,107,0.9);
+	color: white;
 }
-.package-summary-footer .book a{
-	border: 2px solid #ffffff;
-    color: #ffffff;
-    font-weight: bold;
-    padding: 10px 15px;
+
+.step-arrow:hover {
+	background: rgba(242,103,107,0.5);
+	color: #00adef;
 }
-.package-summary-footer .book a:hover {
-	background: #00adef;
+
+.sidebar-item-bottom .rate {
+	display: inline-block;
+	margin:0 auto;
+	padding: 16px 25px;
+	font-size: x-large;
+	background: rgba(242,103,107,0.9);
+	color: white;
+}
+
+.sidebar-item-bottom .rate .fa-plus-circle {
+	color: green;
+}
+
+.sidebar-item-bottom .rate .fa-minus-circle {
+	color: red;
 }

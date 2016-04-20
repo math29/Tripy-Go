@@ -9,10 +9,10 @@
 		<div *ngIf="instance">
 			<div class="package-summary sidebar-item">
 				<h4 class="header-title">
-					{{ instance.operations[0].title }}
+					{{ instance.operations[step].title }}
 				</h4>
 				<div class="package-summary-body">
-					<span [innerHTML]="instance.operations[0].content | markdown"></span>
+					<span [innerHTML]="instance.operations[step].content | markdown"></span>
 					<!-- <h5><i class="fa fa-heart"></i>Theme</h5>
 					<p>Honeymoon, Group, Beach</p>
 					<h5><i class="fa fa-map-marker"></i>Departure Port</h5>
@@ -20,15 +20,15 @@
 					<h5><i class="fa fa-globe"></i>Itinerary</h5>
 					<p>Paris, London, Amesterdam</p> -->
 				</div>
-				<div class="package-summary-footer text-center">
+				<!-- <div class="package-summary-footer text-center">
 					<div class="col-md-6 col-sm-6 col-xs-6 price">
 						<h4>Premier conseil</h4>
-						<!-- <h5><strong>$999/Person</strong></h5> -->
+						<h5><strong>$999/Person</strong></h5>
 					</div>
 					<div class="col-md-6 col-sm-6 col-xs-6 book">
 						<a href="#">Etape suivante</a>
 					</div>
-				</div>
+				</div> -->
 			</div>
 			<!-- <div class="assistance-box sidebar-item">
 				<h4><i class="fa fa-phone"></i> Need Assistance</h4>
@@ -85,5 +85,16 @@
 				</div>
 			</div> -->
 		</div>
+	</div>
+	<div class="sidebar-item-bottom" *ngIf="instance && instance.operations.length > 1">
+		<a class="previous-step step-arrow" *ngIf="step > 0" (click)="previousStep()">
+			<i class="fa fa-chevron-left " aria-hidden="true"></i>
+		</a>
+		<div class="rate">
+			<i class="fa fa-minus-circle" aria-hidden="true"></i> <strong>36</strong> <i class="fa fa-plus-circle" aria-hidden="true"></i>
+		</div>
+		<a class="next-step step-arrow" *ngIf="step < instance.operations.length - 1" (click)="nextStep()">
+			<i class="fa fa-chevron-right" aria-hidden="true"></i>
+		</a>
 	</div>
 </div>
