@@ -55,6 +55,7 @@
         "../../typings/jquery.ui.datetimepicker/jquery.ui.datetimepicker.d.ts",
         "../../typings/jquery/jquery.d.ts",
         "../../typings/jqueryui/jqueryui.d.ts",
+        "../../typings/lodash/lodash.d.ts",
         "../../typings/marked/marked.d.ts",
         "../../typings/moment/moment-node.d.ts",
         "../../typings/moment/moment.d.ts",

@@ -33,6 +33,17 @@ export class TimelinesCmp{
     constructor(private _timelineService: TimelineService, private _operationsService: OperationsService){
       let host = window.location.origin;
       this.socket = io.connect('',{path:'/socket.io-client'});
+      this.socket.on('timeline:save',(data:any)=>console.log('timeline :'+data));
+      this.socket.on('operation:save',(data:any)=>{
+        this.operations.push(data);
+      });
+      this.socket.on('operation:remove',(data:any)=>{
+        console.log('remove: ' + JSON.stringify(data));
+        let index = this.getIndexOfOperation(data, this.operations);
+        if(index > -1){
+          this.operations.splice(index,1);
+        }
+      });
     }
 
     getTimelines(){
@@ -44,7 +55,6 @@ export class TimelinesCmp{
         if(this.timelines.length == 0){
           this.createTimeline();
         }
-        this.socket.on('timeline:save',(data:any)=>console.log('timeline :'+data));
 
         }, error => {this.errors.push("Impossible de récupérer les timelines");});
     }
@@ -77,14 +87,6 @@ export class TimelinesCmp{
         .subscribe(
           data => this.operations = data,
           err => {this.logError(err);this.errors.push("Impossible de récupérer la liste des opérations.")});
-      //this.socket.syncUpdates('operation', this.operations);
-        this.socket.on('operation:save',(data:any)=>{
-          console.log('operation: '+data);
-        });
-        this.socket.on('operation:remove',(data:any)=>{
-                  console.log('remove operation: '+data);
-                });
-
     }
 
     onUpdate(response: any){
@@ -141,7 +143,9 @@ export class TimelinesCmp{
      *
      */
     isTimelineOnOperation(timeline:any, operation:any){
+      // on vérifie que l'opération existe
       if(operation !== null){
+        // si l'opération est associée à une ou plusieurs timelines
         if(operation.steps !== undefined){
           for(let i = 0; i < operation.steps.length; i++){
             if(operation.steps[i].id === timeline._id){
@@ -156,10 +160,13 @@ export class TimelinesCmp{
     /**
      * Ajoute une opération à une timeline (Ne pas oublier de soumettre les informations)
      *
+     * Par défaut l'opération est ajoutée à la fin de la timeline
+     *
      * @param timeline  Timeline dans laquelle ajouter l'opération
      */
     addToTimeline(timeline:any){
       let tmline = {id: timeline._id ,step:timeline.operations.length};
+      // on vérifie que l'opération n'est pas déjà dans la timeline
       if(!this.isTimelineOnOperation(timeline, this.operationEdit)){
         if(this.operationEdit.steps === undefined){
           this.operationEdit.steps = [];
@@ -168,14 +175,16 @@ export class TimelinesCmp{
       }
     }
 
-    removeFromTimeline(timeline:any){
-      let index = this.findTimelineInOperation(timeline, this.operationEdit);
-      console.log(index);
+    /**
+     * Supprime une opération de la timeline
+     *
+     */
+    removeFromTimeline(timeline:any, operation: any){
+      let index = this.findTimelineInOperation(timeline, operation);
+
       if(index !== -1){
         this.operationEdit.steps.splice(index, 1);
       }
-      console.log('removed');
-      console.log(this.operationEdit);
     }
 
     findTimelineInOperation(timeline:any, operation: any){
@@ -192,6 +201,12 @@ export class TimelinesCmp{
 
     createThisTimeline(){}
 
+
+    /**
+     * Insertion / Mise à jour d'une opération
+     *
+     * @param operation: Operation à insérer/mettre à jour
+     */
     saveOperation(operation:any){
       this._operationsService.saveOperation(operation)
         .subscribe(res => {

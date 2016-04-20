@@ -30,6 +30,7 @@ module.exports = function(app) {
   /* Transports */
   app.use('/api/transport/type', require('./api/transportType'));
   app.use('/api/transport/comparators', require('./api/transportComparator'));
+  app.use('/api/transport/aggregator', require('./api/transport/aggregator'));
 
 
   // All undefined asset or api routes should return a 404

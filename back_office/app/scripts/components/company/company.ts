@@ -9,6 +9,7 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
 import { FILE_UPLOAD_DIRECTIVES, FileUploader } from 'ng2-file-upload/ng2-file-upload';
 
 import * as io from 'socket.io-client';
+import * as _ from 'lodash';
 const fileAPI = "/api/files";
 
 
@@ -120,7 +121,9 @@ export class CompanyCmp{
 
           // set socket to listen languages saved
           this.socket.on('company:save', (data:any)=>{
+            data.country = _.find(this.countries, { '_id': data.country });
             let index = this.findCompanyIndex(data._id);
+
             if(index > -1){
               this.companies[index] = data;
             }else{

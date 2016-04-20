@@ -11,7 +11,8 @@ var CompanySchema = new Schema({
   name: {type: String, index: {unique: true}},
   country: {type: mongoose.Schema.Types.ObjectId, ref: 'Country'},
   img: String,
-  url: String
+  url: String,
+  standing: String
 });
 
 module.exports = mongoose.model('Company', CompanySchema);

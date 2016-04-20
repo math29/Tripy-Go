@@ -87,11 +87,15 @@ exports.create = function(req, res){
 exports.addOperation = function(req, res){
   var operationId = req.params.operationId;
   var timelineId = req.params.timelineId;
+
+  // recherche de l'opération
   Operation.findOne({_id: operationId}, function(err, data){
       if(err){
         logger.error('L\'opération demandée n\'existe pas');
         return res.status(400).json('{error:\'Unable to find operation\'}');
       }else{
+
+        
         Timeline.findOneAndUpdate({_id:timelineId, operations:{$nin: [operationId]}},{$push:{operations: operationId}},{safe: true, upsert: false}, function(err, doc){
           if(err){
             return res.status(400).send('ERROR');

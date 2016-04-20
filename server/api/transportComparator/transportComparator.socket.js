@@ -16,9 +16,11 @@ exports.register = function(socket) {
 }
 
 function onSave(socket, doc, cb) {
-  socket.emit('transport:save', doc);
+  console.log('save');
+  socket.emit('transportComparator:save', doc);
 }
 
 function onRemove(socket, doc, cb) {
-  socket.emit('transport:remove', doc);
+  console.log('remove');
+  socket.emit('transportComparator:remove', doc);
 }

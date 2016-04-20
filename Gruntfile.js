@@ -544,7 +544,8 @@ module.exports = function (grunt) {
           'font-awesome/**/*',
           'angular2-jwt/**/*',
           'd3/**/*',
-          'ng2-file-upload/**/*'
+          'ng2-file-upload/**/*',
+          'lodash/dist/lodash.min.js'
         ]
       },
       tripy_go_lib_back: {

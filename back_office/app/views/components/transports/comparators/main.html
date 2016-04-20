@@ -22,7 +22,7 @@
 
     <button class="btn" *ngIf="!transportComparatorEdit"  (click)="createComparator()"><i class="glyphicon glyphicon-plus"></i>Ajouter un comparateur</button>
     <div id="comparatorForm" *ngIf="transportComparatorEdit">
-      <pre>{{transportComparatorEdit | json}}</pre>
+      <!-- <pre>{{transportComparatorEdit | json}}</pre> -->
       <form class="form-horizontal" role="form">
         <div class="form-group">
           <label class="control-label col-sm-2" for="name">Entreprise:</label>

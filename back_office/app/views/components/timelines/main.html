@@ -86,7 +86,7 @@
                   <tr *ngFor="#timeline of timelines">
                     <td>{{timeline.name}}</td>
                     <td><a class="glyphicon glyphicon-plus" *ngIf="!isTimelineOnOperation(timeline, operationEdit)" (click)="addToTimeline(timeline)"></a>
-                      <a class="glyphicon glyphicon-minus" (click)="removeFromTimeline(timeline)" *ngIf="isTimelineOnOperation(timeline, operationEdit)"></a>
+                      <a class="glyphicon glyphicon-minus" (click)="removeFromTimeline(timeline, operationEdit)" *ngIf="isTimelineOnOperation(timeline, operationEdit)"></a>
                     </td>
                   </tr>
                   </tbody>
