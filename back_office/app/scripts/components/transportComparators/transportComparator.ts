@@ -8,6 +8,7 @@ import {CompanyService} from '../../services/company';
 
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import * as io from 'socket.io-client';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'timelines',
@@ -30,6 +31,8 @@ export class TransportComparatorCmp{
       private _transportComparatorService: TransportComparatorService,
       private _companyService: CompanyService){
       this.socket = io.connect('',{path:'/socket.io-client'});
+      this.socket.on('transportcomparator:save',(data:any)=>console.log('timeline :'+data));
+
     }
 
     getTransportComparators(){
@@ -40,8 +43,6 @@ export class TransportComparatorCmp{
         if(this.comparators.length == 0){
           this.createComparator();
         }
-        this.socket.on('transportcomparator:save',(data:any)=>console.log('timeline :'+data));
-
       }, error => {this.errors.push("Impossible de récupérer les comparateurs de transports");});
     }
 
@@ -169,6 +170,10 @@ export class TransportComparatorCmp{
         if(this.transportComparatorEdit.type[i]._id === type._id)return i;
       }
       return -1;
+    }
+
+    getComparatorIndex(id:string){
+      return _.findIndex(this.comparators, function(o) { return {'_id' : id} });
     }
 
     /**
