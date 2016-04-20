@@ -78,7 +78,7 @@
           <!--<tr *ngFor="#language of languages |filter:query |orderBy:orderType+orderby" ng-class="getClassFromInfo(language)">-->
           <tr *ngFor="#comparator of comparators">
             <td>{{comparator.company.name}}</td>
-            <td><span *ngFor="#type of comparator.type"><span class="fa {{type.img}}"></span>{{type.name}}</span></td>
+            <td><span *ngFor="#type of comparator.type"><span class="fa {{type.img}}"></span>{{type.name}}<br/></span></td>
             <td *ngIf="comparator.ergo_rate.raters.length > 0">{{comparator.ergo_rate.score}}</td><td *ngIf="comparator.ergo_rate.raters.length == 0">Pas de votes</td>
             <td *ngIf="comparator.content_rate.raters.length > 0">{{comparator.content_rate.score}}</td><td *ngIf="comparator.content_rate.raters.length == 0">Pas de votes</td>
             <td><a (click)="edit(comparator)" class="trash"><span class="glyphicon glyphicon-edit pull-right"></span></a></td>
