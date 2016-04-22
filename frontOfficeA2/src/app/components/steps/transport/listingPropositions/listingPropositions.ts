@@ -2,13 +2,14 @@ import {Component} from 'angular2/core';
 import { RouterLink, RouteParams } from 'angular2/router';
 import { Http, RequestOptions, Headers } from 'angular2/http';
 import { AuthService } from '../../../../tripy_go_lib/services/auth.service';
+import { TransportComparatorCmp } from '../../../../tripy_go_lib/components/transport-comparator/transport-comparator';
 
 @Component({
 	selector: 'listing-propositions',
 	templateUrl: 'app/components/steps/transport/listingPropositions/listingPropositions.html',
 	styleUrls: ['app/components/steps/transport/listingPropositions/listingPropositions.css'],
 	providers: [],
-	directives: [RouterLink],
+	directives: [RouterLink, TransportComparatorCmp],
 	pipes: []
 })
 export class ListingPropositions {

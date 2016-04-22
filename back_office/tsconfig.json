@@ -59,6 +59,7 @@
         "app/scripts/tripy-lib/components/rate/rate.service.ts",
         "app/scripts/tripy-lib/components/rate/stackRate.ts",
         "app/scripts/tripy-lib/components/rate/starsRate.ts",
+        "app/scripts/tripy-lib/components/transport-comparator/transport-comparator.ts",
         "app/scripts/tripy-lib/pipes/marked.ts",
         "app/scripts/tripy-lib/services/auth.service.ts",
         "../typings/angular2/angular2.d.ts",
