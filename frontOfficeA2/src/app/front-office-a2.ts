@@ -1,6 +1,14 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 
-import { RouteConfig, Router, ROUTER_DIRECTIVES } from 'angular2/router';
+import { RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
+import {HTTP_PROVIDERS} from 'angular2/http';
+
+import {LoggedInRouterOutlet} from './LoggedInOutlet';
+import { AuthService } from './tripy_go_lib/services/auth.service';
+
+// Import Components
+import { Header } from './components/header/header';
+import { CmptFooter } from './components/cmptFooter/cmptFooter';
 import { Login } from './components/account/login/login';
 import { Signup } from './components/account/signup/signup';
 import { Main } from './components/main/main';
@@ -9,13 +17,6 @@ import { Contact } from './components/team/contact/contact';
 import { Profile } from './components/account/profile/profile';
 import { ListingPropositions } from './components/steps/transport/listingPropositions/listingPropositions';
 import { Research } from './components/steps/transport/research/research';
-import {HTTP_PROVIDERS} from 'angular2/http';
-
-import {LoggedInRouterOutlet} from './LoggedInOutlet';
-
-// Import Components
-import { Header } from './components/header/header';
-import {CmptFooter} from './components/cmptFooter/cmptFooter'
 
 @Component({
   selector: 'front-office-a2-app',
@@ -37,6 +38,10 @@ import {CmptFooter} from './components/cmptFooter/cmptFooter'
 ])
 export class FrontOfficeA2App {
 
-	constructor(private _router: Router) {
+	constructor(private _auth: AuthService) {
+	}
+
+	ngOnInit() {
+		this._auth.checkJWTValid();
 	}
 }
