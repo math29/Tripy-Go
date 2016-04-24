@@ -47,7 +47,7 @@ TransportType.find({}).remove(function(){
       img: 'fa-plane'
     },
   function(err,ttype){
-    if(err)console.error(err);
+    // if(err)console.error(err);
     transportTypeId = ttype._id;
   })
 })
@@ -153,28 +153,31 @@ User.find({}).remove(function() {
             console.log('finished populating users');
           });
         }, 5000);
+
+      Company.find().remove(function(){
+        Company.create({
+          name:'Liligo',
+          img:'assets/images/cruise2.jpg',
+          url:'http://liligo.fr'
+        }, function(err, company){
+          TransportComparator.find({}).remove(function(){
+            TransportComparator.create({
+              type:[transportTypeId],
+              company:company._id,
+              comments: [
+                {
+                  comment: "Très bon comparateur",
+                  user: user1._id
+                }
+              ]
+            })
+          })
+        });
+      });
     }
   );
 });
 
-
-
-
-
-Company.find().remove(function(){
-  Company.create({
-  name:'Liligo',
-  img:'assets/images/cruise2.jpg',
-  url:'http://liligo.fr'
-}, function(err, company){
-  TransportComparator.find({}).remove(function(){
-    TransportComparator.create({
-      type:[transportTypeId],
-      company:company._id
-    })
-  })
-});
-});
 
 Operation.find().remove(function(){
   Operation.create({

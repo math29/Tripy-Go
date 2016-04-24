@@ -117,6 +117,15 @@ module.exports = function (grunt) {
           livereload: true
         }
       },
+      tripyGoLib: {
+        files: [
+          './tripyGo_Libs/**/*'
+        ],
+        tasks: ['front_office'],
+        options: {
+          livereload: true
+        }
+      },
       injectJS: {
         files: [
           '<%= yeoman.client %>/{app,components}/**/*.js',

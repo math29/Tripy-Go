@@ -38,6 +38,7 @@
         "app/components/main/main.ts",
         "app/components/steps/timeline/timeline.ts",
         "app/components/steps/transport/listingPropositions/listingPropositions.ts",
+        "app/components/steps/transport/listingPropositions/transport-comparator/transport-comparator.ts",
         "app/components/steps/transport/research/research.ts",
         "app/components/team/about-us/about-us.ts",
         "app/components/team/contact/contact.ts",

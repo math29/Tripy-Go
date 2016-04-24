@@ -1,0 +1,59 @@
+<!--<a href="" [routerLink]="['ResearchTransport', {comparator_id: comparator._id, travel_id: travel_id}]"> -->
+<div class="cruise-list-view" *ngIf="comparator">
+	<div class="col-md-4 col-sm-4 clear-padding">
+		<img *ngIf="comparator.company.img" [src]="comparator.company.img" [alt]="comparator.company.name">
+	</div>
+	<div class="col-md-5 col-sm-5 clear-padding booking-box text-center">
+		<h2>{{ comparator.company.name }}</h2>
+	</div>
+	<!-- <div class="clearfix-sm"></div> -->
+	<div class="col-md-3 col-sm-3 booking-box clear-padding text-center">
+		<div class="rating-box">
+			<i class="fa fa-star"></i>
+			<i class="fa fa-star"></i>
+			<i class="fa fa-star"></i>
+			<i class="fa fa-star"></i>
+			<i class="fa fa-star-o"></i>
+			<h5>Ergonomie</h5>
+		</div>
+		<div class="rating-box">
+			<i class="fa fa-star"></i>
+			<i class="fa fa-star"></i>
+			<i class="fa fa-star"></i>
+			<i class="fa fa-star"></i>
+			<i class="fa fa-star-o"></i>
+			<h5>Contenu</h5>
+		</div>
+	</div>
+	<div *ngIf="comments" class="col-md-12 col-sm-12 list-comments">
+		<hr>
+		<h3>Commentaires</h3>
+		<div class="panel panel-default" *ngFor="#comment of comparator.comments">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-2 col-sm-2">
+						<!-- <img [src]="_auth.getUserAvatar()" alt="User icon"> -->
+					</div>
+					<div class="col-md-7 col-sm-7">
+						<p>{{ comment.comment }}</p>
+					</div>
+					<div class="col-md-3 col-sm-3">
+						<div class="rating-box">
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star-o"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="comments-button">
+		<a (click)="comments = !comments">
+			<i *ngIf="!comments" class="fa fa-chevron-down" aria- hidden="true" > </i>
+			<i *ngIf="comments" class="fa fa-chevron-up" aria- hidden="true" > </i>
+		</a>
+	</div>
+</div>
