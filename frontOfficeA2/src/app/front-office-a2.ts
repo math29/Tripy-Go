@@ -1,7 +1,7 @@
 import {Component, OnInit} from 'angular2/core';
 
-import { RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
-import {HTTP_PROVIDERS} from 'angular2/http';
+import { RouteConfig, Router } from 'angular2/router';
+import { HTTP_PROVIDERS } from 'angular2/http';
 
 import {LoggedInRouterOutlet} from './LoggedInOutlet';
 import { AuthService } from './tripy_go_lib/services/auth.service';
@@ -22,7 +22,7 @@ import { Research } from './components/steps/transport/research/research';
   selector: 'front-office-a2-app',
   templateUrl: 'app/front-office-a2.html',
   providers: [HTTP_PROVIDERS],
-  directives: [Header, CmptFooter, LoggedInRouterOutlet, ROUTER_DIRECTIVES],
+  directives: [Header, CmptFooter, LoggedInRouterOutlet],
   pipes: []
 })
 @RouteConfig([
@@ -31,14 +31,14 @@ import { Research } from './components/steps/transport/research/research';
 	{ path: '/about-us', component: AboutUs, name: 'AboutUs' },
 	{ path: '/contact', component: Contact, name: 'Contact' },
 	{ path: '/login', component: Login, name: 'Login' },
-	{ path: '/signup', component: Signup, as: 'Signup' },
-	{ path: '/profile', component: Profile, as: 'Profile' },
+	{ path: '/signup', component: Signup, name: 'Signup' },
+	{ path: '/profile', component: Profile, name: 'Profile' },
 	{ path: '/transport/listing/:id', component: ListingPropositions, name: 'ListingPropositionsComparatorsTransport' },
 	{ path: '/transport/research/:comparator_id/:travel_id', component: Research, name: 'ResearchTransport' }
 ])
 export class FrontOfficeA2App {
 
-	constructor(private _auth: AuthService) {
+	constructor(private _auth: AuthService, private _router: Router) {
 	}
 
 	ngOnInit() {

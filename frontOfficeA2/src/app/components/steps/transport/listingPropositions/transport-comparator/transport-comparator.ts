@@ -22,4 +22,7 @@ export class TransportComparatorCmp {
 	ngOnInit(){
 		console.log(this.comparator);
 	}
+
+	// Img Sizing
+	
 }
