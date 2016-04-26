@@ -23,6 +23,10 @@ export class TimelineCmp{
 
   constructor(private _operationsService: OperationsService, private _timelineService: TimelineService){}
 
+  /**
+   * Récupére la classe de l'opération dans la timeline
+   *
+   */
   getClass(index: number){
     if(index%2 == 1){
       return "timeline-inverted";
@@ -31,15 +35,31 @@ export class TimelineCmp{
     }
   }
 
+  /**
+   * Monte ou descend une opération dans la timeline
+   *
+   * @param side -1 pour descendre l'opération, 1 pour monter l'opération
+   * @param operationId opération à bouger
+   * @param timelineId dans quelle timeline bouger l'opération
+   *
+   */
   moveOperation(side: number, operationId: string, timelineId){
     let s = "up";
     if(side == -1){
       s = "down";
     }
-    console.log("Move");
-    this._timelineService.moveOperation(timelineId, operationId, s).subscribe(data => this.onUpdate.emit({'type':'message','message':'Opération déplacée'}), errors => this.onUpdate.emit({'type':'error','message':"Impossible de déplacer l'opération"}));
+    this._timelineService.moveOperation(timelineId, operationId, s)
+      .subscribe(data => this.onUpdate.emit({'type':'message','message':'Opération déplacée'}),
+      errors => this.onUpdate.emit({'type':'error','message':"Impossible de déplacer l'opération"}));
   }
 
+  /**
+   * Supprime une opération d'une timeline
+   *
+   * @param timeline timeline de laquelle on veut supprimer l'opération
+   * @param operationId opération à supprimer
+   *
+   */
   deleteOperationFromTimeline(timeline: any, operationId: string){
     let operation = null;
     for(let i = 0; i < this.operations.length; i++){
@@ -63,6 +83,14 @@ export class TimelineCmp{
       }
   }
 
+  /**
+   * Trouve l'index de l'opération dans la timeline
+   *
+   * @param timeline objet timeline dans lequel on doit chercher l'opération
+   * @param operation opération à chercher
+   *
+   * @return index de l'opération ou -1 si elle n'est pas dans la timeline
+   */
   findTimelineInOperation(timeline:any, operation: any){
     if(operation.steps !== undefined){
       for(let i = 0; i < operation.steps.length; i++){
