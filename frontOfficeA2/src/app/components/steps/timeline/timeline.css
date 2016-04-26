@@ -12,6 +12,7 @@
 /* FOOTER DESIGN */
 /*********************************/
 
+/* Navigation dans les operations*/
 .sidebar-item-bottom {
 	position: absolute;
 	bottom: 0;
@@ -34,6 +35,7 @@
 	padding: 20px 25px;
 	background: rgba(242,103,107,0.9);
 	color: white;
+	cursor: pointer;
 }
 
 .step-arrow:hover {
@@ -41,19 +43,32 @@
 	color: #00adef;
 }
 
+/* Gesion du systeme de notation d'une opération */
 .sidebar-item-bottom .rate {
 	display: inline-block;
 	margin:0 auto;
-	padding: 16px 25px;
 	font-size: x-large;
 	background: rgba(242,103,107,0.9);
 	color: white;
 }
 
-.sidebar-item-bottom .rate .fa-plus-circle {
-	color: green;
+.sidebar-item-bottom .rate .score {
+	display: inline-block;
 }
 
-.sidebar-item-bottom .rate .fa-minus-circle {
+.sidebar-item-bottom .rate div {
+	display: inline-block;
+	padding: 15px 25px;
+}
+
+.sidebar-item-bottom .rate .plus:hover {
+	background: rgba(0, 153, 51, 0.3);
+	color: rgba(0, 153, 51, 1);
+	cursor: pointer;
+}
+
+.sidebar-item-bottom .rate .minus:hover {
+	background: rgba(242,103,107,0.8);
 	color: red;
+	cursor: pointer;
 }

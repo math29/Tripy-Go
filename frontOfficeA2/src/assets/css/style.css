@@ -2981,51 +2981,7 @@ h5 {
 	background-size: contain;
 	background-attachment: fixed;
 }
-.cruise-list-view {
-	margin-top: 40px;
-	border: 1px solid #e6e6e6;
-	box-shadow: 0px 0px 5px #e6e6e6;
-	overflow: hidden;
-}
-.cruise-list-view:hover {
-	border: 1px solid #F19C4F;
-	box-shadow: 0px 0px 5px #F19C4F;
-}
-.cruise-list-view img {
-	max-width: 100%;
-	min-height: 250px;
-	padding: 15px;
-}
-.cruise-list-view h4 {
-	font-weight: bold;
-	margin-top: 15px;
-}
-.cruise-list-view strong {
-	color: #00ADEF;
-	margin-right: 10px;
-}
-.cruise-list-view i {
-	margin-right: 5px;
-}
-.cruise-list-view .table {
-	margin-bottom: 0px;
-}
-.cruise-list-view .table td {
-	border-top: none;
-	border-bottom: 1px solid #e6e6e6;
-	padding: 6px;
-}
-.cruise-list-view .table tr:last-child td {
-	border-bottom: none;
-}
-.cruise-list-view .table tr td:first-child {
-	font-weight: bold;
-}
-.cruise-list-view .nav > li > a {
-	padding: 5px 15px;
-	color: #0A3152;
-	font-weight: bold;
-}
+
 .nav-tabs > li.active > a, 
 .nav-tabs > li.active > a:focus,
 .nav-tabs > li.active > a:hover {

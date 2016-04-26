@@ -6,9 +6,9 @@ var TransportComparator = require('./transportComparator.model');
 // Get list of transport comparator
 exports.index = function(req, res) {
   TransportComparator.find(function (err, comparators) {
-    if(err) { return handleError(res, err); }
-    populate(comparators, req, res);
-  });
+        if(err) { return handleError(res, err); }
+        populate(comparators, req, res);
+      });
 };
 
 // Get a single transport comparator
@@ -74,10 +74,17 @@ exports.destroy = function(req, res) {
  *
  */
 function populate(doc, req, res){
-  TransportComparator.populate(doc, [{path:'company', ref:'Company'}, {path:'type', ref:'TransportType'}, {path: 'ergo_rate', ref:'Rate'}, {path: 'content_rate', ref:'Rate'}], function(err, result){
-    if(err)console.err(err);
-    return res.status(200).json(result);
-  });
+  TransportComparator.populate(doc, [
+      {path:'company', ref:'Company'},
+      {path:'type', ref:'TransportType'},
+      {path: 'ergo_rate', ref: 'Rate'},
+      {path: 'content_rate', ref: 'Rate'},
+      {path: 'comments.user', ref: 'User', select:'-salt -hashedPassword -email -provider'}
+    ], function(err, result){
+      if(err)console.err(err);
+
+      return res.status(200).json(result);
+    });
 }
 
 function handleError(res, err) {
