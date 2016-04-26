@@ -42,6 +42,7 @@
         "app/scripts/pipes/filter.ts",
         "app/scripts/pipes/orderby.ts",
         "app/scripts/pipes/selectLevel.ts",
+        "app/scripts/services/agregator.ts",
         "app/scripts/services/auth.service.ts",
         "app/scripts/services/company.ts",
         "app/scripts/services/countryService.ts",

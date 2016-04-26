@@ -3,9 +3,10 @@
 
 import {Component, OnInit, ElementRef,OnDestroy} from 'angular2/core';
 import {NgForm} from 'angular2/common';
-import {Response} from 'angular2/http';
+import {Response, Http} from 'angular2/http';
 import {TransportMapCmp} from './transportMap';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import{AgregatorService} from '../../services/agregator';
 import * as io from 'socket.io-client';
 
 //declare var jQuery: JQueryStatic;
@@ -17,13 +18,14 @@ declare var $: any;
   selector: 'transport-type',
   templateUrl: 'views/components/transport/main.html',
   styleUrls: ['back/lib/bootstrap-iconpicker/bootstrap-iconpicker/css/bootstrap-iconpicker.min.css'],
-  providers: [],
+  providers: [AgregatorService],
   directives: [ROUTER_DIRECTIVES, TransportMapCmp]
 })
 export class TransportCmp{
     private errors: any=[];
     private messages: any=[];
 
+    private agregation: any;
     private keys:any;
     private orderby:string='';
     private orderOptions : string[] = ['+','-'];
@@ -32,13 +34,14 @@ export class TransportCmp{
     private selection: any;
     private socket:any;
 
-    constructor(){
+    constructor(private _agregatorService: AgregatorService){
       let host = window.location.origin;
       this.socket = io.connect('',{path:'/socket.io-client'});
     }
 
     ngOnInit(){
       this.getTransports();
+      this.getAgregation();
       // appelé lorsqu'un type de transport est supprimé
       this.socket.on('transportType:remove',
         (data:any)=>{
@@ -49,6 +52,12 @@ export class TransportCmp{
             }
           }
         });
+    }
+
+    getAgregation(){
+      this._agregatorService.getTransportAgregation()
+          .subscribe(success => {this.agregation = success; console.log(this.agregation);}
+          , error=> this.errors.push('Impossible de récupérer les statistiques'))
     }
 
     ngOnDestroy(){

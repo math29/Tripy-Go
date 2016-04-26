@@ -543,9 +543,10 @@ module.exports = function (grunt) {
           'socket.io-client/**/*',
           'font-awesome/**/*',
           'angular2-jwt/**/*',
-          'd3/**/*',
+          'd3/d3.min.js',
           'ng2-file-upload/**/*',
-          'lodash/dist/lodash.min.js'
+          'lodash/dist/lodash.min.js',
+          'datamaps/dist/datamaps.world.min.js'
         ]
       },
       tripy_go_lib_back: {

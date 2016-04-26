@@ -23,8 +23,8 @@
   <div class="panel-body">
     <!-- OPTIONS // TODO -->
 
-    <div class="row">
-      <transport-map></transport-map>
+    <div class="row" *ngIf="agregation" >
+      <transport-map [data]="agregation" ></transport-map>
     </div>
     <div class="row">
       <div class="col-lg-12" *ngIf="transports">

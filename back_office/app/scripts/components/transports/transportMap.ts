@@ -1,58 +1,65 @@
 /// <reference path="../../../../../typings/d3/d3.d.ts" />
 
-import {Component, Directive, ViewChild, ElementRef, Renderer} from 'angular2/core';
+import {Component, Directive, ViewChild, ElementRef, Renderer, Input} from 'angular2/core';
 //import * as d3 from 'd3';
 
 declare var d3:any;
+declare var Datamap: any;
 
 @Component({
     selector : 'transport-map',
-    template : `<h3 #myH3>some text</h3>
-    <div id="map"></div>
-        `,
-    styles:[
-    `path {fill: #ccc;stroke: #fff;}`
-    ]
+    template : `
+    <style>
+      #map {height: 400px;}
+    </style>
+    <div class="map" id="map"></div>
+        `
 })
 export class TransportMapCmp {
     @ViewChild('myH3') myH3;
+    @Input() data: any;
     root: any;
 
-    constructor(public renderer: Renderer, public el: ElementRef){
-      this.root = d3.select(el);
-      console.log(this.root[0].node().getBBox());
-    }
+    constructor(public renderer: Renderer, public el: ElementRef){}
 
     ngAfterViewInit() {
-      var w = 1280,
-      h = 800;
-
-    var projection = d3.geo.mercator()
-      /*.mode("equidistant")
-      .origin([-98, 38])
-
-      .translate([640, 360]);*/
-      .scale((w + 1)  / Math.PI)
-    /*.translate([w / 2, h / 2])
-    .precision(.1);*/
-
-      var path = d3.geo.path()
-      .projection(projection);
-
-
-
-      var svg = d3.select("#map").insert("svg:svg", "h2")
-        .attr("width", w)
-        .attr("height", h);
-      var states = svg.append("svg:g")
-        .attr("id", "states");
-        //this.renderer.setElementStyle(this.myH3.nativeElement, 'background-color', 'blue');
-        d3.json("./views/components/transport/countries.geo.json", function(collection) {
-          console.log(collection);
-          states.selectAll("path")
-          .data(collection.features)
-          .enter().append("svg:path")
-          .attr("d", path);
-});
+      var map = new Datamap({element: document.getElementById('map'),
+      fills: {
+      defaultFill: 'rgb(90, 150, 200)',
+      departure: '#00adef',
+      arrival: '#f9676b'
+    }});
+      let paths = [];
+      let cities = [];
+      for(let i = 0; i < this.data.length; i++){
+        cities.push({name: this.data[i].departure.name,
+          latitude: this.data[i].departure.loc[0],
+          longitude: this.data[i].departure.loc[1],
+          radius: 10 * this.data[i].dest.length,
+          fillKey: 'departure'
+        });
+        for(let j = 0; j < this.data[i].dest.length; j++){
+          cities.push({name: this.data[i].dest[j].name,
+            latitude: this.data[i].dest[j].loc[0],
+            longitude: this.data[i].dest[j].loc[1],
+            radius: 10,
+            fillKey: 'arrival'
+          });
+          paths.push(
+            {origin: {
+              latitude: this.data[i].departure.loc[0],
+              longitude: this.data[i].departure.loc[1]
+            },
+            destination: {
+              latitude: this.data[i].dest[j].loc[0],
+              longitude: this.data[i].dest[j].loc[1]
+            }
+          });
+        }
+      }
+      map.arc(paths);
+      map.bubbles(cities, {
+  popupTemplate: function(geo, data) {
+    return '<div class="hoverinfo">' + data.name + '</div>';  }});
     }
 }

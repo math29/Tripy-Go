@@ -41,7 +41,7 @@
         <div class="form-group">
           <label class="control-label col-sm-2" for="code">Type de transport:</label>
           <div class="col-sm-10">
-            <div *ngFor="#type of transportTypes" ><span class="fa {{type.img}}"></span>{{type.name}} <span *ngIf="!typeInArray(type)"  (click)="addType(type)" class="fa fa-plus"></span> <span *ngIf="typeInArray(type)" (click)="removeType(type)" class="fa fa-minus"></span></div>
+            <div *ngFor="#type of transportTypes" ><span class="fa {{type.img}}"></span>{{type.name}} <button *ngIf="!typeInArray(type)" (click)="addType(type)" class="fa fa-plus">Ajouter</button> <button *ngIf="typeInArray(type)" (click)="removeType(type)" class="fa fa-minus">Supprimer</button></div>
           </div>
         </div>
         <div class="form-group">

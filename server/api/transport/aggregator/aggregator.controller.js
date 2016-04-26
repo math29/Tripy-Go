@@ -39,11 +39,16 @@ exports.index = function(req, res) {
               console.log(locationsArray);
               for(var l = 0; l < aggregation.length; l++){
                 var localAg = aggregation[l];
-                localAg.departure = locationsArray[_.findIndex(locationsArray, function(o) { return {'_id' : localAg._id} })];
+                localAg.departure = locationsArray[_.findIndex(locationsArray, function(o) { return String(o._id) == String(localAg._id); })];
                 delete localAg._id;
 
                 for(var j = 0 ; j < localAg.dest.length; j++){
-                  localAg.dest[j] = locationsArray[_.findIndex(locationsArray, function(o) { return {'_id' : localAg.dest[j]} })];
+                  console.log('J: '+j + ' obj: '+ localAg.dest[j]);
+                  var fi = _.find(locationsArray, function(o) {
+                    return String(o._id) == String(localAg.dest[j]); });
+                  if(fi){
+                    localAg.dest[j] = fi;
+                  }
                 }
 
               }
