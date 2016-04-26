@@ -33,19 +33,39 @@ export class TimelinesCmp{
     constructor(private _timelineService: TimelineService, private _operationsService: OperationsService){
       let host = window.location.origin;
       this.socket = io.connect('',{path:'/socket.io-client'});
-      this.socket.on('timeline:save',(data:any)=>console.log('timeline :'+data));
+      this.socket.on('timeline:save',(data:any)=>{
+        //console.log('timeline :'+data)
+        this.getTimelines();
+
+      });
+
       this.socket.on('operation:save',(data:any)=>{
-        this.operations.push(data);
+        //console.log(data);
+        for(let i = 0; i < this.operations.length; i++){
+          if(this.operations[i]._id == data._id){
+            this.operations[i] == data;
+            data = null;
+          }
+        }
+        if(data != null){
+          this.operations.push(data);
+        }
+        this.getTimelines();
       });
       this.socket.on('operation:remove',(data:any)=>{
-        console.log('remove: ' + JSON.stringify(data));
+        //console.log('remove: ' + JSON.stringify(data));
         let index = this.getIndexOfOperation(data, this.operations);
         if(index > -1){
           this.operations.splice(index,1);
         }
+        this.getTimelines();
       });
     }
 
+    /**
+     * Récupére les timelines en BDD
+     *
+     */
     getTimelines(){
       this._timelineService.getTimelines().subscribe(res => {
         this.timelines = res;
@@ -60,11 +80,16 @@ export class TimelinesCmp{
     }
 
 
+    /*
+     * Désallocation des sockets
+     *
+     */
     ngOnDestroy(){
       this.socket.removeAllListeners('operation:remove');
       this.socket.removeAllListeners('operation:save');
       this.socket.removeAllListeners('timeline:save');
     }
+
     /**
      * Insertion d'une timeline via l'API
      */
@@ -78,10 +103,18 @@ export class TimelinesCmp{
         }, errors => {this.errors.push('Impossible d\'insérer la timeline');})
     }
 
+    /**
+     * Crée une nouvelle timeline
+     *
+     */
     createTimeline(){
       this.newTimeline = {name:"",description:""};
     }
 
+    /**
+     * Récupération des opérations en base de donnée
+     *
+     */
     getOperations(){
       this._operationsService.getOperations()
         .subscribe(
@@ -89,6 +122,10 @@ export class TimelinesCmp{
           err => {this.logError(err);this.errors.push("Impossible de récupérer la liste des opérations.")});
     }
 
+    /**
+     * Losqu'il y à une mise à jour
+     *
+     */
     onUpdate(response: any){
       if(response.type === 'message'){
         this.messages.push(response.message);
@@ -198,9 +235,6 @@ export class TimelinesCmp{
 
       return -1;
     }
-
-    createThisTimeline(){}
-
 
     /**
      * Insertion / Mise à jour d'une opération
