@@ -45,13 +45,14 @@ export class TransportCmp{
     public afterTomorrow:Date;
     public formats:Array<string> = ['DD-MM-YYYY', 'YYYY/MM/DD', 'DD.MM.YYYY', 'shortDate'];
     public format:string = this.formats[0];
+    slideValue: number[] = [0, 40000];
     public dateOptions:any = {
       formatYear: 'YY',
       startingDay: 1
     };
     private opened:boolean = false;
 
-  public constructor(private _agregatorService: AgregatorService) {
+  public constructor(private _agregatorService: AgregatorService, private elementRef: ElementRef) {
     (this.tomorrow = new Date()).setDate(this.tomorrow.getDate() + 1);
     (this.afterTomorrow = new Date()).setDate(this.tomorrow.getDate() + 2);
     (this.minDate = new Date()).setDate(this.minDate.getDate() - 1000);
@@ -59,7 +60,10 @@ export class TransportCmp{
       {date: this.tomorrow, status: 'full'},
       {date: this.afterTomorrow, status: 'partially'}
     ];
+
+
   }
+
   public getDate():number {
     return this.dt && this.dt.getTime() || new Date().getTime();
   }
@@ -112,13 +116,27 @@ export class TransportCmp{
     this.dt = new Date(this.minDate.valueOf());
   }
 
-    ngOnInit(){
-      this.getTransports();
-      this.getAgregation();
+  ngOnInit(){
+    this.getTransports();
+    this.getAgregation();
+
+    var $amount = jQuery(this.elementRef.nativeElement).find(".amount");
+          jQuery(this.elementRef.nativeElement).find(".slider").slider({
+              range: true,
+              orientation: "horizontal",
+              min: 0,
+              max: 40000,
+              values: [0, 40000],
+              slide: (event, ui) => {
+                  this.slideValue = ui.values;
+                  $amount.val(ui.value);
+              }
+          });
     }
 
     getAgregation(){
-      this._agregatorService.getTransportAgregation()
+      let options : Object = {distance: {min: this.slideValue[0], max: this.slideValue[1]}};
+      this._agregatorService.getTransportAgregation(options)
           .subscribe(success => {this.agregation = success; console.log(this.agregation);}
           , error=> this.errors.push('Impossible de récupérer les statistiques'))
     }

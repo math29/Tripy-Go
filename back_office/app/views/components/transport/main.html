@@ -27,14 +27,14 @@
 
         <div class="form-group">
           <input type="checkbox" name="filterDate" [(ngModel)]="filterDate">Filtrer par date<br>
-          <div class="row">
-            <div class="col-lg-12" *ngIf="filterDate">
+          <div class="row" *ngIf="filterDate">
+            <div class="col-lg-12" >
               <pre class="card card-block card-header">Selected date is: <em *ngIf="dt">{{ getDate() | date:'fullDate'}}</em></pre>
               <div class="row">
                 <div class="col-lg-6">
                   <h4>Date de début</h4>
                   <div style="display:inline-block; min-height:290px;">
-                    <datepicker [(ngModel)]="dt" [minDate]="minDate" [showWeeks]="true" (onSelect)="alert()"></datepicker>
+                    <datepicker [(ngModel)]="dt" [minDate]="minDate" [maxDate]="today_date" [showWeeks]="true" (onUpdate)="alert()"></datepicker>
                   </div>
                 </div>
                 <div class="col-lg-6">
@@ -45,14 +45,19 @@
                 </div>
               </div>
 
-
-              <hr />
               <button type="button" class="btn btn-sm btn-info" (click)="today()">Aujourd'hui</button>
               <button type="button" class="btn btn-sm btn-danger" (click)="clear()">Effacer</button>
               <button type="button" class="btn btn-sm btn-default btn-secondary" (click)="toggleMin()" tooltip="After today restriction">Min date</button>
 
             </div>
           </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <span class="sliderName">Fourchette de distance: {{slideValue[0]}}Km - {{slideValue[1]}}Km</span>
+              <div class="slider"></div>
+            </div>
+          </div>
+
         </div>
         <div class="form-group">
 
