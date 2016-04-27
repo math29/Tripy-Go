@@ -1,6 +1,5 @@
 import {Component, OnInit} from 'angular2/core';
 import {Http, RequestOptions} from 'angular2/http';
-import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {AuthService} from '../../tripy-lib/services/auth.service';
 import {StarsRateCmp} from '../../tripy-lib/components/rate/starsRate';

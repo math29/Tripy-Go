@@ -192,7 +192,7 @@ exports.show = function(req, res) {
  * Removed specified operation from database
  */
 exports.destroy = function(req, res) {
-  Operation.findOneAndRemove({_id: req.params.id}, function(err, operation){
+  Operation.findOne({_id: req.params.id}, function(err, operation){
     if(err){
       return handleError(res, err);
     }

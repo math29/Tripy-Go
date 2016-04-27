@@ -15,10 +15,10 @@
       "commit": "dade4414712ce84e3c63393f1aae407e9e7e6af7"
     },
     "moment/moment.d.ts": {
-      "commit": "3a86e056dc018541d82dd74639fca18ba8d605da"
+      "commit": "08ed4e9f1869e37e29514d862e0158b40e550232"
     },
     "moment/moment-node.d.ts": {
-      "commit": "3a86e056dc018541d82dd74639fca18ba8d605da"
+      "commit": "08ed4e9f1869e37e29514d862e0158b40e550232"
     },
     "jquery/jquery.d.ts": {
       "commit": "6766ed1d0faf02ede9e2edf2e66bbb2388c825ec"
@@ -37,6 +37,12 @@
     },
     "lodash/lodash.d.ts": {
       "commit": "544a35a10866b32afda9c7f029c0764558563f4f"
+    },
+    "es6-collections/es6-collections.d.ts": {
+      "commit": "08ed4e9f1869e37e29514d862e0158b40e550232"
+    },
+    "es6-promise/es6-promise.d.ts": {
+      "commit": "08ed4e9f1869e37e29514d862e0158b40e550232"
     }
   }
 }

@@ -179,25 +179,30 @@ User.find({}).remove(function() {
 });
 
 
-Operation.find().remove(function(){
-  Operation.create({
-    type: "Advice",
-    title: "Premier Conseil",
-    content: "Voici le contenu du premier conseil"
-  },{
-    type: "Advice",
-    title: "Deuxieme Conseil",
-    content: "Voici le contenu du deuxieme conseil"
-  }, function(err, operation1, operation2){
-    Timeline.find().remove(function(){
-      Timeline.create({
-        name:'transport_timeline',
-        description: 'Timeline de l\'étape de choix de transport de l\'utilisateur',
-        operations: [operation1, operation2]
-      }, function(err, timeline){
-        console.log("Finished populating timelines");
-      })
+
+
+Timeline.find().remove(function(){
+  Timeline.create({
+    name:'transport_timeline',
+    description: 'Timeline de l\'étape de choix de transport de l\'utilisateur',
+    operations: []
+  }, function(err, timeline){
+    console.log("Finished populating timelines");
+    Operation.find().remove(function(){
+      Operation.create({
+        type: "Advice",
+        title: "Premier Conseil",
+        content: "Voici le contenu du premier conseil",
+        steps: [{step: 0, id:timeline._id}]
+      },{
+        type: "Advice",
+        title: "Deuxieme Conseil",
+        content: "Voici le contenu du deuxieme conseil",
+        steps:[{step:1, id: timeline._id}]
+      }, function(err, operation1, operation2){
+        timeline.operations.push(operation1._id);
+        timeline.operations.push(operation2._id);
+      });
     });
-  });
+  })
 });
-  

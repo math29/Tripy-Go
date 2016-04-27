@@ -75,8 +75,10 @@ exports.destroy = function(req, res) {
  */
 function populate(doc, req, res){
   TransportComparator.populate(doc, [
-      {path:'company', ref:'Company'}, 
-      {path:'type', ref:'TransportType'}, 
+      {path:'company', ref:'Company'},
+      {path:'type', ref:'TransportType'},
+      {path: 'ergo_rate', ref: 'Rate'},
+      {path: 'content_rate', ref: 'Rate'},
       {path: 'comments.user', ref: 'User', select:'-salt -hashedPassword -email -provider'}
     ], function(err, result){
       if(err)console.err(err);

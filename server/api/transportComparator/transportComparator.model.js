@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
+var Rate = require('../rate/rate.model');
 var Company = require('../company/company.model');
 var TransportType = require('../transportType/transportType.model');
 
@@ -18,6 +19,8 @@ var TransportComparatorSchema = new Schema({
     required: true,
     index: {unique: true}
   },
+  ergo_rate: {type: Schema.Types.ObjectId, ref: 'Rate'},
+  content_rate: {type: Schema.Types.ObjectId, ref: 'Rate'},
   comments : [{comment: {type: String}, user: {type: Schema.Types.ObjectId, ref: 'User'} }]
 });
 
@@ -25,30 +28,48 @@ var TransportComparator = mongoose.model('TransportComparator', TransportCompara
 
 TransportComparatorSchema.pre('save', function(next){
   var self = this;
-  Company.find({_id:self.company}, function(err, result){
+  Rate.create({type:'stars', raters:[], score: 0}, function(err, r1){
     if(err){
-      next(err);
+      console.err('Could not create Rate');
+      next(new Error('Impossible de créer le vote'));
     }
-    // on vérifie qu'il existe bien une compagnie qui à cet id
-    if(result.length === 0){
-      var error = new Error("La compagnie n'éxiste pas");
-      next(error);
-    }
-    console.log(JSON.parse(JSON.stringify(self)));
-    TransportType.find({_id:{$in:self.type}}, function(err, resultTypes){
+    self.ergo_rate = r1;
+    Rate.create({type:'stars', raters:[], score: 0}, function(err, r2){
       if(err){
-        console.log('error');
-        console.log(err);
-        next(new Error(err));
-      }else{
-        console.log(JSON.parse(JSON.stringify(resultTypes)));
-        if(resultTypes.length === self.type.length){
-          next();
-        }
-        next(new Error(Math.abs(resultTypes.length - self.type.length)+" moyens de transports sont incorrects"));
+        console.err('Could not create Rate');
+        next(new Error('Impossible de créer le vote'));
       }
-    });
+      self.content_rate = r2;
+      Company.find({_id:self.company}, function(err, result){
+        if(err){
+          next(err);
+        }
+        // on vérifie qu'il existe bien une compagnie qui à cet id
+        if(result.length === 0){
+          var error = new Error("La compagnie n'éxiste pas");
+          next(error);
+        }
+        console.log(JSON.parse(JSON.stringify(self)));
+        TransportType.find({_id:{$in:self.type}}, function(err, resultTypes){
+          if(err){
+            console.log('error');
+            console.log(err);
+            next(new Error(err));
+          }else{
+            console.log(JSON.parse(JSON.stringify(resultTypes)));
+            if(resultTypes.length === self.type.length){
+              next();
+            }
+            next(new Error(Math.abs(resultTypes.length - self.type.length)+" moyens de transports sont incorrects"));
+          }
+        });
 
+      });
+    });
   });
 })
+
+TransportComparatorSchema.post('remove', function(doc){
+  Rate.remove({_id: {$in: [doc.content_rate, doc.ergo_rate] }}).exec();
+});
 module.exports = TransportComparator;

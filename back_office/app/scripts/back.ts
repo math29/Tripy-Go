@@ -24,7 +24,7 @@ import {LoggedInRouterOutlet} from './LoggedInOutlet';
   selector: 'wtc-back',
   templateUrl: 'views/dashboard/main.html',
   providers: [HTTP_PROVIDERS],
-  directives: [ROUTER_DIRECTIVES, HeaderCmp, LoginCmp, MongoCmp, LogCmp, TimelinesCmp, CountryCmp, LoggedInRouterOutlet],
+  directives: [HeaderCmp, LoginCmp, MongoCmp, LogCmp, TimelinesCmp, CountryCmp, LoggedInRouterOutlet],
   pipes: []
 })
 @RouteConfig([

@@ -545,16 +545,17 @@ module.exports = function (grunt) {
           'reflect-metadata/Reflect.js',
           'systemjs/**/*',
           'rxjs/**/*',
-          'ng2-cookies/**/*',
+          'ng2-bootstrap/**/*',
           'ng2-charts/**/*',
+          'ng2-file-upload/**/*',
           'chart.js/**/*',
           'marked/**/*',
           'socket.io-client/**/*',
           'font-awesome/**/*',
           'angular2-jwt/**/*',
-          'd3/**/*',
-          'ng2-file-upload/**/*',
-          'lodash/dist/lodash.min.js'
+          'd3/d3.min.js',
+          'lodash/dist/lodash.min.js',
+          'datamaps/dist/datamaps.world.min.js'
         ]
       },
       tripy_go_lib_back: {

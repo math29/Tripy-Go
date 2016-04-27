@@ -2,7 +2,6 @@
 
 import {Component, OnInit, OnDestroy} from 'angular2/core';
 import {NgForm} from 'angular2/common';
-import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {Response} from 'angular2/http';
 import {LanguageService} from '../../services/languageService';
 import {Language} from '../../classes/language';

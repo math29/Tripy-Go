@@ -156,7 +156,9 @@ export class AuthService {
    **/
   logout():void{
     localStorage.clear();
-    this._userObserver.next(null);
+    if(this._userObserver){
+      this._userObserver.next(null);
+    }
     this._router.navigate( ['Login'] );
   }
 
