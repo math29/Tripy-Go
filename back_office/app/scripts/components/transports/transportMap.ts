@@ -1,7 +1,9 @@
 /// <reference path="../../../../../typings/d3/d3.d.ts" />
 
 import {Component, Directive, ViewChild, ElementRef, Renderer, Input} from 'angular2/core';
-//import * as d3 from 'd3';
+
+
+import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
 
 declare var d3:any;
 declare var Datamap: any;
@@ -20,8 +22,7 @@ export class TransportMapCmp {
     @Input() data: any;
     root: any;
 
-    constructor(public renderer: Renderer, public el: ElementRef){}
-
+public constructor(public renderer: Renderer, public el: ElementRef) {}
     ngAfterViewInit() {
       var map = new Datamap({element: document.getElementById('map'),
       fills: {
@@ -62,4 +63,7 @@ export class TransportMapCmp {
   popupTemplate: function(geo, data) {
     return '<div class="hoverinfo">' + data.name + '</div>';  }});
     }
+
+
+
 }

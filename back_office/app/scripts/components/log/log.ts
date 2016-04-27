@@ -1,5 +1,4 @@
 import {Component} from 'angular2/core';
-import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {Response} from 'angular2/http';
 //import {PAGINATION_PROVIDERS} from 'ng2-bootstrap/ng2-bootstrap';
 import {LogService} from '../../services/log.service';

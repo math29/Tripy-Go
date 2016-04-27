@@ -1,7 +1,6 @@
 /// <reference path="../../../../../typings/socket.io-client/socket.io-client.d.ts" />
 
 import {Component, OnInit, OnDestroy} from 'angular2/core';
-import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {Response} from 'angular2/http';
 import {StatsCmp} from '../utils/stats';
 import {TimelineService} from '../../services/timelineService';

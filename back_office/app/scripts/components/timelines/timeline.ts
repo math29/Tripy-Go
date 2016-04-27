@@ -1,5 +1,4 @@
 import {Component,EventEmitter, Output} from 'angular2/core';
-import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {Response} from 'angular2/http';
 import {TimelineService} from '../../services/timelineService';
 import {OperationsService} from '../../services/operationsService';
