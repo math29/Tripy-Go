@@ -5,10 +5,24 @@ var _ = require('lodash');
 
 // Get list of transports
 exports.index = function(req, res) {
-  var matchQuery = {};
-  if(req.query.min_dist && req.query.max_dist){
-    matchQuery = {'distance':{$gt: Number(req.query.min_dist), $lt: Number(req.query.max_dist)}};
+  var matchQuery = {
+    'distance':{}
+  };
+  if(req.query.min_dist){
+    matchQuery.distance['$gt'] = Number(req.query.min_dist);
   }
+  if(req.query.max_dist){
+    matchQuery.distance['$lt'] = Number(req.query.max_dist);
+  }
+  if(req.query.min_date){
+    matchQuery.date_departure = {};
+    matchQuery.date_departure['$gte'] = new Date(req.query.min_date);
+  }
+  if(req.query.max_date){
+    if(!matchQuery.date_departure)matchQuery.date_departure = {};
+    matchQuery.date_departure['$lte'] = new Date(req.query.max_date);
+  }
+
   global.mongo_connection.collection('transports')
     .aggregate(
         {$match: matchQuery},

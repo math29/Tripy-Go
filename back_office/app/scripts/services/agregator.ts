@@ -36,9 +36,17 @@ export class AgregatorService {
    * Récupère les timelines
    */
   getTransportAgregation(agregateOptions: any){
+    let queryString = '';
+    if(agregateOptions.distance){
+      queryString += `min_dist=${agregateOptions.distance.min}&max_dist=${agregateOptions.distance.max}`;
+    }
+    if(agregateOptions.date){
+      if(queryString != '')queryString +="&";
+      queryString += `min_date=${agregateOptions.date.min}&max_date=${agregateOptions.date.max}`;
+    }
     let headers = this._authService.getBearerHeaders();
     let options = new RequestOptions({ headers: headers ,
-    search: new URLSearchParams(`min_dist=${agregateOptions.distance.min}&max_dist=${agregateOptions.distance.max}`)
+    search: new URLSearchParams(queryString)
   }
   );
     return this._http.get('/api/transport/aggregator', options)

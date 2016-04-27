@@ -39,6 +39,7 @@ export class TransportCmp{
     public dt:Date = new Date();
     public dt_end:Date = new Date();
     private today_date:Date = new Date();
+    filterDate: boolean;
     public minDate:Date = void 0;
     public events:Array<any>;
     public tomorrow:Date;
@@ -135,7 +136,15 @@ export class TransportCmp{
     }
 
     getAgregation(){
-      let options : Object = {distance: {min: this.slideValue[0], max: this.slideValue[1]}};
+      let options : any = {distance: {min: this.slideValue[0], max: this.slideValue[1]}};
+      if(this.filterDate){
+        options.date = {};
+        options.date.min = this.dt.toISOString();
+        this.dt_end.setMinutes(59);
+        this.dt_end.setHours(23);
+        options.date.max = this.dt_end.toISOString();
+      }
+      console.log(options);
       this._agregatorService.getTransportAgregation(options)
           .subscribe(success => {this.agregation = success; console.log(this.agregation);}
           , error=> this.errors.push('Impossible de récupérer les statistiques'))
