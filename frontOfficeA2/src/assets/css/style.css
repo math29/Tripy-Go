@@ -2987,42 +2987,7 @@ h5 {
 .nav-tabs > li.active > a:hover {
 	color: #0A3152;
 }
-.cruise-list-view .booking-box {
-	border-left: 1px solid #e6e6e6;
-}
-.cruise-list-view  .rating-box i {
-	margin-right: 0px;
-}
-.cruise-list-view .rating-box {
-	min-height: 125px;
-	padding: 24px 0px;
-	border-bottom: 1px solid #e6e6e6;
-}
-.cruise-list-view .rating-box h5 {
-	margin-top: 0px;
-	line-height: 1.6;
-}
-.cruise-list-view .price {
-	min-height: 125px;
-	padding: 18px 0px;
-	background: #F2676B;
-	color: #ffffff;
-}
-.cruise-list-view .price h3 {
-	margin-top: 0px;
-	font-weight: bold;
-}
-.cruise-list-view .price a {
-	color: #ffffff;
-	font-weight: bold;
-	font-size: 13px;
-}
-.cruise-list-view .price a:hover {
-	text-decoration: underline;
-}
-.cruise-list-view:hover .price {
-	background: #00ADEF;
-}
+
 @media (max-width: 991px) {
 	.cruise-list-view .booking-box {
 		border-top: 1px solid #e6e6e6;

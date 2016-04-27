@@ -1,9 +1,9 @@
 <!--<a href="" [routerLink]="['ResearchTransport', {comparator_id: comparator._id, travel_id: travel_id}]"> -->
 <div class="cruise-list-view" *ngIf="comparator">
-	<div class="col-md-2 col-sm-2 clear-padding">
+	<div class="col-md-3 col-sm-3 clear-padding">
 		<img *ngIf="comparator.company.img" [src]="comparator.company.img" [alt]="comparator.company.name">
 	</div>
-	<div class="col-md-5 col-sm-5 clear-padding booking-box text-center">
+	<div class="col-md-3 col-sm-3 clear-padding booking-box text-center">
 		<h2>{{ comparator.company.name }}</h2>
 	</div>
 	<!-- <div class="clearfix-sm"></div> -->
@@ -25,7 +25,8 @@
 			<h5>Contenu</h5>
 		</div>
 	</div>
-	<div *ngIf="comments" class="col-md-12 col-sm-12 list-comments">
+	<!-- *ngIf="comments" -->
+	<div class="col-md-3 col-sm-3 booking-box clear-padding text-center">
 		<hr>
 		<h3>Commentaires</h3>
 		<div class="panel panel-default" *ngFor="#comment of comparator.comments">

@@ -169,7 +169,7 @@ export class AuthService {
           this.user = data;
           this.user = this.user._body;
           this.user = JSON.parse(this.user);
-          this._userObserver.next(this.user);
+          // this._userObserver.next(this.user);
       }, errors => {
         console.log('Could not retrieve user');
         this.logout();

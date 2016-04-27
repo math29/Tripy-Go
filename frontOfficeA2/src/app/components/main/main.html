@@ -6,29 +6,29 @@
           <div role="tabpanel" class="tab-pane" id="hotel">
             <form (ngSubmit)="startWithSubmit()"  [ngFormModel]="startForm">
               <div class="col-md-3 col-sm-3 search-col-padding">
-                <label>Point départ</label>
                 <div class="input-group">
-                  <input type="text" id="input-departure" class="form-control" ngControl="departure"/>
+                  <span class="input-group-addon">DE</span>
+                  <input type="text" id="input-departure" class="form-control" placeholder="Indiquer un lieu" ngControl="departure"/>
                   <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
                 </div>
               </div>
               <div class="col-md-3 col-sm-3 search-col-padding">
-                <label>Destination</label>
                 <div class="input-group">
-                  <input type="text" id="input-arrival" class="form-control" ngControl="arrival">
+                  <span class="input-group-addon"> A</span>
+                  <input type="text" id="input-arrival" class="form-control" placeholder="Indiquer un lieu" ngControl="arrival">
                   <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
                 </div>
               </div>
               <div class="col-md-3 col-sm-3 search-col-padding">
-                <label>Date départ</label>
                 <div class="input-group">
+                  <span class="input-group-addon">DU</span>
                   <input type="text" class="form-control depart_date" ngControl="date_departure">
                   <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
                 </div>
               </div>
               <div class="col-md-3 col-sm-3 search-col-padding">
-                <label>Date retour</label>
                 <div class="input-group">
+                  <span class="input-group-addon">AU</span>
                   <input type="text" class="form-control return_date" ngControl="date_return">
                   <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
                 </div>
@@ -45,7 +45,7 @@
               <div class="clearfix"></div>
               <a href="#how-it-work">
                 <p class="more-infos">
-                  En savoir plus
+                  Euh..c’est quoi ce site?
                 </p>
               </a>
             </form>
