@@ -1,5 +1,7 @@
 'use strict';
 
+var Location = require('../location/location.model');
+var geo = require('node-geo-distance');
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
@@ -23,6 +25,18 @@ var TransportSchema = new Schema({
   class: String,
   cost: Number,
   date_departure: {type: Date, required: true}
+});
+
+TransportSchema.pre('save', function(next){
+  var self = this;
+  Location.find({_id: {$in: [self.departure, self.arrival]}}, function(err, locations){
+    console.log(JSON.stringify(locations));
+    geo.vincenty({latitude: locations[0].loc[0], longitude: locations[0].loc[1]},
+      {latitude: locations[1].loc[0], longitude: locations[1].loc[1]}, function(dist) {
+        self.distance = dist / 1000;
+        next();
+    });
+  })
 });
 
 module.exports = mongoose.model('Transport', TransportSchema);
