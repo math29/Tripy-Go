@@ -1,3 +1,70 @@
+/**
+*
+* Author: Mathieu ALLAIN
+* Description: Stylesheet transport comparator page
+*
+**/
+
+/*********************************************************
+	TABLE OF CONTENTS
+	1. GENERAL
+	2. IMG
+	3. COMPARATOR NAME
+	4. COMMENTS
+	5. COMPARATOR LINK
+	5. RATING
+**********************************************************/
+
+/*********************************************************
+			1. GENERAL
+**********************************************************/
+
+.cruise-list-view {
+	margin-top: 40px;
+	border: 1px solid #e6e6e6;
+	box-shadow: 0px 0px 5px #e6e6e6;
+	overflow: hidden;
+	height: 165px;
+}
+.cruise-list-view:hover {
+	border: 1px solid #F19C4F;
+	box-shadow: 0px 0px 5px #F19C4F;
+}
+
+.cruise-list-view strong {
+	color: #00ADEF;
+	margin-right: 10px;
+}
+
+/*********************************************************
+			2. IMG
+**********************************************************/
+
+.cruise-list-view img {
+	max-width: 100%;
+	padding: 15px;
+}
+
+.img.wide{
+	max-width: 100%;
+    max-height: 100%;
+    height: auto;
+}
+
+/*********************************************************
+			3. COMPARATOR NAME
+**********************************************************/
+
+.cruise-list-view .element-box {
+	/*min-height: 125px;*/
+	padding: 13.4px 0px;
+	border: 1px solid #e6e6e6;
+}
+
+/*********************************************************
+			4. COMMENTS
+**********************************************************/
+
 .comments-button{
 	position: absolute; 
 	bottom: 0; 
@@ -14,8 +81,6 @@
 	margin-top: -10px;
 }
 
-
-/* COMMENTAIRES */
 .list-comments {
 	text-align: center;
 	padding-bottom: 20px;
@@ -27,106 +92,27 @@
 	border-bottom: none;
 }
 
-
-/* Comparator LOGO */
-.img.wide{
-	max-width: 100%;
-    max-height: 100%;
-    height: auto;
+.comments-link {
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+	text-align: center;
+	background: rgba(249, 103, 107, 1);
 }
 
-
-
-
-.cruise-list-view {
-	margin-top: 40px;
-	border: 1px solid #e6e6e6;
-	box-shadow: 0px 0px 5px #e6e6e6;
-	overflow: hidden;
-	height: 165px;
-}
-.cruise-list-view:hover {
-	border: 1px solid #F19C4F;
-	box-shadow: 0px 0px 5px #F19C4F;
-}
-.cruise-list-view img {
-	max-width: 100%;
-	padding: 15px;
-}
-.cruise-list-view h4 {
-	font-weight: bold;
-	margin-top: 15px;
-}
-.cruise-list-view strong {
-	color: #00ADEF;
-	margin-right: 10px;
-}
-.cruise-list-view i {
-	margin-right: 5px;
-}
-.cruise-list-view .table {
-	margin-bottom: 0px;
-}
-.cruise-list-view .table td {
-	border-top: none;
-	border-bottom: 1px solid #e6e6e6;
-	padding: 6px;
-}
-.cruise-list-view .table tr:last-child td {
-	border-bottom: none;
-}
-.cruise-list-view .table tr td:first-child {
-	font-weight: bold;
-}
-.cruise-list-view .nav > li > a {
-	padding: 5px 15px;
-	color: #0A3152;
-	font-weight: bold;
+.comments-link i {
+	margin: 10px 0px;
+	color: white;
 }
 
-/************************/
-/* RATING PART */
-/************************/
-
-.cruise-list-view .booking-box {
-	border-left: 1px solid #e6e6e6;
-}
-.cruise-list-view  .rating-box i {
-	margin-right: 0px;
-}
-.cruise-list-view .rating-box {
-	/*min-height: 125px;*/
-	padding: 13px 0px;
-	border: 1px solid #e6e6e6;
+.comments-link:hover {
+	background: #00adef;
 }
 
-.cruise-list-view .element-box {
-	/*min-height: 125px;*/
-	padding: 13.4px 0px;
-	border: 1px solid #e6e6e6;
-}
 
-.cruise-list-view .price {
-	min-height: 125px;
-	padding: 18px 0px;
-	background: #F2676B;
-	color: #ffffff;
-}
-.cruise-list-view .price h3 {
-	margin-top: 0px;
-	font-weight: bold;
-}
-.cruise-list-view .price a {
-	color: #ffffff;
-	font-weight: bold;
-	font-size: 13px;
-}
-.cruise-list-view .price a:hover {
-	text-decoration: underline;
-}
-.cruise-list-view:hover .price {
-	background: #00ADEF;
-}
+/*********************************************************
+			5. COMPARATOR LINK
+**********************************************************/
 
 .external-link-container {
 	height: 100%;
@@ -152,19 +138,19 @@
 	color: white;
 }
 
-.comments-link {
-	width: 100%;
-	height: 100%;
-	cursor: pointer;
-	text-align: center;
-	background: #00adef;
-}
 
-.comments-link i {
-	margin: 10px 0px;
-	color: white;
-}
+/*********************************************************
+			6. RATING
+**********************************************************/
 
-.comments-link:hover {
-	background: rgba(249, 103, 107, 1);
+.cruise-list-view .booking-box {
+	border-left: 1px solid #e6e6e6;
+}
+.cruise-list-view  .rating-box i {
+	margin-right: 0px;
+}
+.cruise-list-view .rating-box {
+	/*min-height: 125px;*/
+	padding: 13px 0px;
+	border: 1px solid #e6e6e6;
 }
