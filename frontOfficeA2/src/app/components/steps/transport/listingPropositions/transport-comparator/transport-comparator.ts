@@ -1,12 +1,13 @@
 import {Component, Input, OnInit} from 'angular2/core';
 import { Http, RequestOptions, Headers } from 'angular2/http';
+import { RouterLink } from 'angular2/router';
 
 @Component({
 	selector: 'comparator',
 	templateUrl: 'app/components/steps/transport/listingPropositions/transport-comparator/transport-comparator.html',
 	styleUrls: ['app/components/steps/transport/listingPropositions/transport-comparator/transport-comparator.css'],
 	providers: [],
-	directives: [],
+	directives: [RouterLink],
 	pipes: [],
 	inputs: ['comparator']
 })

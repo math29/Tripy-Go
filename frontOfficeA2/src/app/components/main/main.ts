@@ -32,6 +32,8 @@ export class Main implements AfterViewInit, OnInit {
 
 	departure_place: any;
 	arrival_place: any;
+	date_dep_temp: any = 0;
+	date_arr_temp: any = 0;
 
 	travelRequest: any;
 
@@ -44,6 +46,12 @@ export class Main implements AfterViewInit, OnInit {
 
 	// Errors Gesture
 	login_error: String;
+
+	// Form Input Design
+	departureFocused: Boolean = false;
+	arrivalFocused: Boolean = false;
+	dDepartureFocused: Boolean = false;
+	dArrivalFocused: Boolean = false;
 
 	constructor(private el: ElementRef, fb: FormBuilder, private _http: Http, private _auth: AuthService, private _router: Router) {
 		this.departure = fb.control('', Validators.compose([Validators.required]));
@@ -282,14 +290,80 @@ export class Main implements AfterViewInit, OnInit {
 	// Initialization With JQuery Datepicker
 	// *******************************************************************************************
 	ngAfterViewInit() {
+		let _this = this;
 		jQuery(this.el.nativeElement)
 			.find('.depart_date')
-			.datepicker({ minDate: -0, maxDate: "+3M" });
+			.datepicker({ 
+				minDate: -0,
+				maxDate: "+3M",
+				onClose: function(selectedDate) {
+					_this.date_dep_temp = selectedDate;
+					$(".return_date").datepicker("option", "minDate", selectedDate);
+					// Focus on next datepicker once this is done
+					jQuery(_this.el.nativeElement)
+						.find('.return_date')
+						.focus();
+				}
+			});
 
 		jQuery(this.el.nativeElement)
 			.find('.return_date')
-			.datepicker({ minDate: -0, maxDate: "+3M" });
+			.datepicker({
+				minDate: -0,
+				maxDate: "+3M",
+				onClose: function(selectedDate) {
+					_this.date_arr_temp = selectedDate;
+					$(".depart_date").datepicker("option", "maxDate", selectedDate);
+				},
+				beforeShowDay: function(date) {
+					let className;
+					let time_d_date = 0;
+					let time_a_date = 0;
+
+					if (_this.date_dep_temp){
+						let split_d = _this.date_dep_temp.split('/');
+						let d_date = new Date(split_d[2], split_d[1]-1, split_d[0]);
+						time_d_date = d_date.getTime();
+					}
+
+					if (_this.date_arr_temp){
+						let split_a = _this.date_arr_temp.split('/');
+						let a_date = new Date(split_a[2], split_a[1]-1, split_a[0]);
+						time_a_date = a_date.getTime();
+					}
+
+					let currentDate = date.getTime();
+
+					if (time_d_date && (currentDate == time_d_date)) {
+						className = "highlight-selected-dates"
+					}
+					else if (time_a_date && (currentDate == time_a_date)) {
+						className = "highlight-selected-dates";
+					}
+					else if ((time_a_date && time_d_date) && (time_d_date < currentDate && currentDate < time_a_date)) {
+						className = "between-date";
+					}
+					else {
+						className = "";
+					}
+
+					return [true, className];
+					// return [true, "highlight-selected-dates"];
+				}
+			});
 	}
+
+
+	// getDates(startDate, stopDate) {
+	//     this.dates = {};
+	//     let currentDate = startDate;
+	//     while (currentDate <= stopDate) {
+	//         this.dates.push(new Date(currentDate))
+	//         currentDate = currentDate +1;
+	//     }
+	// 	console.log(this.dates);
+	//     return this.dates;
+	// }
 
 	// *******************************************************************************************
 	// Initialization Inputs with Google autocomplete API
