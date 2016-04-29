@@ -19,7 +19,8 @@ var router = express.Router();
 /**
  *  @apiDefine ApiParamsAgregator
  *
- *
+ *  @param min_dist distance minimale
+ *  @param max_dist distance maximale
  */
 
 /**

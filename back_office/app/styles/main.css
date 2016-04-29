@@ -99,3 +99,11 @@ background-color: #eee;
   width: 100px;
   height: 100px;
 }
+
+.slider{
+  border:0; color:#f6931f; font-weight:bold;
+}
+
+.sliderName{
+  border:0; color:#f6931f; font-weight:bold;
+}

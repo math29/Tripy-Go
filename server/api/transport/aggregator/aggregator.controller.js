@@ -5,8 +5,13 @@ var _ = require('lodash');
 
 // Get list of transports
 exports.index = function(req, res) {
+  var matchQuery = {};
+  if(req.query.min_dist && req.query.max_dist){
+    matchQuery = {'distance':{$gt: Number(req.query.min_dist), $lt: Number(req.query.max_dist)}};
+  }
   global.mongo_connection.collection('transports')
     .aggregate(
+        {$match: matchQuery},
         {$group: {
             _id:'$departure',
             'avg_cost':{$avg: '$cost'},

@@ -1,6 +1,6 @@
 import {Injectable} from 'angular2/core';
 import {AuthService} from '../tripy-lib/services/auth.service';
-import {Http, Response, Headers, RequestOptions} from 'angular2/http';
+import {Http, Response, Headers, RequestOptions, URLSearchParams} from 'angular2/http';
 import {Observable}     from 'rxjs/Observable';
 import {Transport} from '../classes/transport';
 import 'rxjs/add/operator/map'
@@ -35,9 +35,12 @@ export class AgregatorService {
   /**
    * Récupère les timelines
    */
-  getTransportAgregation(){
+  getTransportAgregation(agregateOptions: any){
     let headers = this._authService.getBearerHeaders();
-    let options = new RequestOptions({ headers: headers });
+    let options = new RequestOptions({ headers: headers ,
+    search: new URLSearchParams(`min_dist=${agregateOptions.distance.min}&max_dist=${agregateOptions.distance.max}`)
+  }
+  );
     return this._http.get('/api/transport/aggregator', options)
             .map(res => <any> res.json());
   }

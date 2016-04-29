@@ -18,52 +18,73 @@ declare var Datamap: any;
         `
 })
 export class TransportMapCmp {
-    @ViewChild('myH3') myH3;
-    @Input() data: any;
-    root: any;
+  _data: any;
+  @ViewChild('myH3') myH3;
+  @Input()
+  set data(data: any){
+    this._data = data;
+    this.initData();
+  }
 
-public constructor(public renderer: Renderer, public el: ElementRef) {}
-    ngAfterViewInit() {
-      var map = new Datamap({element: document.getElementById('map'),
-      fills: {
-      defaultFill: 'rgb(90, 150, 200)',
-      departure: '#00adef',
-      arrival: '#f9676b'
+  root: any;
+  private map: any;
+
+  public constructor(public renderer: Renderer, public el: ElementRef) {
+  }
+
+  public initMap(){
+    document.getElementById('map').innerHTML = "";
+    this.map = new Datamap({element: document.getElementById('map'),
+    fills: {
+    defaultFill: 'rgb(90, 150, 200)',
+    departure: '#00adef',
+    arrival: '#f9676b'
     }});
-      let paths = [];
-      let cities = [];
-      for(let i = 0; i < this.data.length; i++){
-        cities.push({name: this.data[i].departure.name,
-          latitude: this.data[i].departure.loc[0],
-          longitude: this.data[i].departure.loc[1],
-          radius: 10 * this.data[i].dest.length,
-          fillKey: 'departure'
+  }
+
+  ngAfterViewInit() {
+    this.initMap();
+    this.initData();
+  }
+
+
+
+  public initData(){
+    this.map = null;
+    this.initMap();
+    console.log("init data");
+    let paths = [];
+    let cities = [];
+    for(let i = 0; i < this._data.length; i++){
+      cities.push({name: this._data[i].departure.name,
+        latitude: this._data[i].departure.loc[0],
+        longitude: this._data[i].departure.loc[1],
+        radius: 10 * this._data[i].dest.length,
+        fillKey: 'departure'
+      });
+      for(let j = 0; j < this._data[i].dest.length; j++){
+        cities.push({name: this._data[i].dest[j].name,
+          latitude: this._data[i].dest[j].loc[0],
+          longitude: this._data[i].dest[j].loc[1],
+          radius: 10,
+          fillKey: 'arrival'
         });
-        for(let j = 0; j < this.data[i].dest.length; j++){
-          cities.push({name: this.data[i].dest[j].name,
-            latitude: this.data[i].dest[j].loc[0],
-            longitude: this.data[i].dest[j].loc[1],
-            radius: 10,
-            fillKey: 'arrival'
-          });
-          paths.push(
-            {origin: {
-              latitude: this.data[i].departure.loc[0],
-              longitude: this.data[i].departure.loc[1]
-            },
-            destination: {
-              latitude: this.data[i].dest[j].loc[0],
-              longitude: this.data[i].dest[j].loc[1]
-            }
-          });
-        }
+        paths.push(
+          {origin: {
+            latitude: this._data[i].departure.loc[0],
+            longitude: this._data[i].departure.loc[1]
+          },
+          destination: {
+            latitude: this._data[i].dest[j].loc[0],
+            longitude: this._data[i].dest[j].loc[1]
+          }
+        });
       }
-      map.arc(paths);
-      map.bubbles(cities, {
-  popupTemplate: function(geo, data) {
-    return '<div class="hoverinfo">' + data.name + '</div>';  }});
     }
-
-
+    this.map.arc(paths);
+    this.map.bubbles(cities, {
+      popupTemplate: function(geo, data) {
+        return '<div class="hoverinfo">' + data.name + '</div>';  }});
+  }
 
 }
