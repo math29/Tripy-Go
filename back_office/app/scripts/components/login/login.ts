@@ -16,7 +16,12 @@ export class LoginCmp{
   public user: any = {email:"", password:""};
   response: any;
 
-  constructor(private _authService:AuthService, private _router: Router){}
+  constructor(private _authService:AuthService, private _router: Router){
+    /*this._authService.checkJWTValid();
+    if(this._authService.getMe()){
+      this._router.navigate( ['Home'] );
+    }*/
+  }
 
   /**
    * Used to login the user

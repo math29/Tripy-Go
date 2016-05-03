@@ -18,9 +18,9 @@ export class HomeCmp{
   }
 
   ngOnInit(){
-    /*if(!this._authService.isAdmin()){
+    if(!this._authService.isAdmin()){
       this.logout();
-    }*/
+    }
   }
 
   logout(){
