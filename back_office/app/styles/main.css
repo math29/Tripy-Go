@@ -107,3 +107,7 @@ background-color: #eee;
 .sliderName{
   border:0; color:#f6931f; font-weight:bold;
 }
+
+.preRendering{
+  border: 1px dotted grey;
+}

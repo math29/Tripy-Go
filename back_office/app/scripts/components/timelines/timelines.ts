@@ -7,15 +7,19 @@ import {TimelineService} from '../../services/timelineService';
 import {OperationsService} from '../../services/operationsService';
 import {TimelineCmp} from './timeline';
 import {MarkdownPipe} from '../../tripy-lib/pipes/marked';
+import {MdEditor} from '../../tripy-lib/components/md-editor/md-editor';
 
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import * as io from 'socket.io-client';
+
+declare var to_markdown:any;
+
 
 @Component({
   selector: 'timelines',
   templateUrl: 'views/components/timelines/main.html',
   providers: [TimelineService, OperationsService],
-  directives: [ROUTER_DIRECTIVES, StatsCmp, TimelineCmp],
+  directives: [ROUTER_DIRECTIVES, StatsCmp, TimelineCmp, MdEditor],
   pipes: [MarkdownPipe]
 })
 export class TimelinesCmp{
@@ -23,6 +27,7 @@ export class TimelinesCmp{
     private messages: any=[];
 
     private operationEdit:any = null;
+    private contentEdit:string = null;
     private newTimeline:any;
     private timelines: any = null;
     private operations:any = null;
@@ -59,6 +64,11 @@ export class TimelinesCmp{
         }
         this.getTimelines();
       });
+    }
+
+
+    descriptionChanged(newDescription) {
+      this.operationEdit.content = to_markdown.toMarkdown(newDescription);
     }
 
     /**

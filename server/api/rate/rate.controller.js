@@ -4,6 +4,7 @@ var Rate = require('./rate.model.js');
 var logger = require('../../config/logger');
 var TypeChecker = require('../../utils/checkObjects');
 var mongoose = require('mongoose');
+var _ = require('lodash');
 
 /**
  * Get list of rates
@@ -122,12 +123,26 @@ exports.vote = function(req, res){
     }
   }
   var rateOb = {user: userId, action: sideValue};
-
+  Rate.findOne({_id: rateId, type: rateType}, function(err, result){
+    if(err){
+      logger.error(err);
+      return res.status(500).json('{error:\'Unable to find rate\'}');
+    }
+    var userVote = _.findIndex(result.raters, function(o){ return o.user == userId;})
+    if(userVote != -1){
+      result.raters.push(rateOb);
+      result.score += sideValue;
+    }else{
+      result.raters[userVote] = rateOb;
+    }
+    return res.status(200).json(result);
+  });
+  /*
   Rate.findOneAndUpdate({_id: rateId, type: rateType, "raters.user" : {$nin: [userId]}},{$push:{raters: rateOb}, $inc:{score: sideValue}},function(err, result){
     if(err){
       logger.error(err);
       return res.status(500).json('{error:\'Unable to find rate\'}');
     }
     return res.status(200).json(result);
-  });
+  });*/
 }

@@ -72,8 +72,11 @@
             </div>
             <div class="form-group">
               <label class="control-label" for="content">Contenu de l'opération</label>
-              <textarea class="form-control" id="content" [(ngModel)]="operationEdit.content" required></textarea>
-              <span [innerHTML]="operationEdit.content | markdown"></span>
+              <md-editor [mceContent]="operationEdit.content" (contentChanged)="descriptionChanged($event)"></md-editor>
+              <!--<textarea class="form-control" id="content" [(ngModel)]="operationEdit.content" required></textarea>-->
+              <div class="preRendering">
+                <span [innerHTML]="operationEdit.content | markdown"></span>
+              </div>
             </div>
             <div class="panel panel-info">
               <div class="panel-heading">Timelines</div>
