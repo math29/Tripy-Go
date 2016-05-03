@@ -1,116 +1,118 @@
 <section>
-  <div class="row start-with single-search">
-    <div class="container clear-padding">
-      <div class="col-md-12 clear-padding search-section">
-        <h2 class="text-center">FIND YOUR PERFECT ESCAPE</h2>
-          <div role="tabpanel" class="tab-pane" id="hotel">
-            <form (ngSubmit)="startWithSubmit()"  [ngFormModel]="startForm">
-              <div class="col-md-3 col-sm-3 search-col-padding">
-                <label>Point départ</label>
-                <div class="input-group">
-                  <input type="text" id="input-departure" class="form-control" ngControl="departure"/>
-                  <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
+    <div class="row single-search">
+        <div class="container clear-padding">
+            <div class="col-md-12 clear-padding search-section">
+                <h2 class="text-center">FIND YOUR PERFECT ESCAPE</h2>
+                <div role="tabpanel" class="tab-pane" id="hotel">
+                    <form (ngSubmit)="startWithSubmit()"  [ngFormModel]="startForm">
+                        <div class="col-md-3 col-sm-3 search-col-padding">
+                            <div class="input-group" [ngClass]="{inputFocused: departureFocused}">
+                                <span class="input-group-addon">DE</span>
+                                <input type="text" id="input-departure" class="form-control" placeholder="Indiquer un lieu" ngControl="departure" (focus)="departureFocused = true" (blur)="departureFocused = false"/>
+                                <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-3 search-col-padding">
+                            <div class="input-group" [ngClass]="{inputFocused: arrivalFocused}">
+                                <span class="input-group-addon"> A</span>
+                                <input type="text" id="input-arrival" class="form-control" placeholder="Indiquer un lieu" ngControl="arrival" (focus)="arrivalFocused = true" (blur)="arrivalFocused = false">
+                                <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-3 search-col-padding">
+                            <div class="input-group" [ngClass]="{inputFocused: dDepartureFocused}">
+                                <span class="input-group-addon">DU</span>
+                                <input type="text" class="form-control depart_date" ngControl="date_departure" (focus)="dDepartureFocused = true" (blur)="dDepartureFocused = false">
+                                <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-3 search-col-padding">
+                            <div class="input-group" [ngClass]="{inputFocused: dArrivalFocused}">
+                                <span class="input-group-addon">AU</span>
+                                <input type="text" class="form-control return_date" ngControl="date_return" (focus)="dArrivalFocused = true" (blur)="dArrivalFocused = false">
+                                <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-12 text-center">
+                            <p class="help-block" *ngIf="departure.dirty && departure.hasError('required')">Lieu de départ requis</p>
+                            <p class="help-block" *ngIf="arrival.dirty && arrival.hasError('required')">Destination requise</p>
+                            <p class="help-block">{{ login_error }}</p>
+                        </div>
+                        <div class="col-md-12 text-center search-col-padding">
+                            <button type="submit" class="search-button btn transition-effect" [disabled]="!startForm.valid">Let's GO !</button>
+                        </div>
+                        <div class="clearfix"></div>
+                        
+                            <p class="more-infos">
+                            <a href="#how-it-work">
+                            Euh..c’est quoi ce site?
+                            </a>
+                            </p>
+                        
+                    </form>
                 </div>
-              </div>
-              <div class="col-md-3 col-sm-3 search-col-padding">
-                <label>Destination</label>
-                <div class="input-group">
-                  <input type="text" id="input-arrival" class="form-control" ngControl="arrival">
-                  <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-3 search-col-padding">
-                <label>Date départ</label>
-                <div class="input-group">
-                  <input type="text" class="form-control depart_date" ngControl="date_departure">
-                  <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-3 search-col-padding">
-                <label>Date retour</label>
-                <div class="input-group">
-                  <input type="text" class="form-control return_date" ngControl="date_return">
-                  <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-                </div>
-              </div>
-              <div class="clearfix"></div>
-              <div class="col-md-12 text-center">
-                <p class="help-block" *ngIf="departure.dirty && departure.hasError('required')">Lieu de départ requis</p>
-                <p class="help-block" *ngIf="arrival.dirty && arrival.hasError('required')">Destination requise</p>
-                <p class="help-block">{{ login_error }}</p>
-              </div>
-              <div class="col-md-12 text-center search-col-padding">
-                <button type="submit" class="search-button btn transition-effect" [disabled]="!startForm.valid">Let's GO !</button>
-              </div>
-              <div class="clearfix"></div>
-              <a href="#how-it-work">
-                <p class="more-infos">
-                  En savoir plus
-                </p>
-              </a>
-            </form>
-          </div>
+            </div>
         </div>
     </div>
-  </div>
 </section>
 
 <section id="how-it-work">
     <div class="row work-row">
-      <div class="container">
-        <div class="section-title text-center">
-          <h2>Organiser son voyage</h2>
-          <h4>DESTINATION - TRANSPORT - HEBERGEMENT</h4>
-          <div class="space"></div>
-          <p>
-            Grâce à notre agent de voyage virtuel et à nos algorithmes de recherche ultra-performents,<br>
-            nous t'aidons à organiser ton voyage !
-          </p>
+        <div class="container">
+            <div class="section-title text-center">
+                <h2>Organiser son voyage</h2>
+                <h4>DESTINATION - TRANSPORT - HEBERGEMENT</h4>
+                <div class="space"></div>
+                <p>
+                Grâce à notre agent de voyage virtuel et à nos algorithmes de recherche ultra-performents,<br>
+                nous t'aidons à organiser ton voyage !
+                </p>
+            </div>
+            <div class="work-step">
+                <div class="col-md-4 col-sm-4 first-step text-center">
+                    <i class="fa fa-globe"></i>
+                    <h5>Trouver sa destination</h5>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                </div>
+                <div class="col-md-4 col-sm-4 second-step text-center">
+                    <i class="fa fa-plane"></i>
+                    <h5>Réserver son transport</h5>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                </div>
+                <div class="col-md-4 col-sm-4 third-step text-center">
+                    <i class="fa fa-home"></i>
+                    <h5>Réserver son hébergement</h5>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                </div>
+            </div>
         </div>
-        <div class="work-step">
-          <div class="col-md-4 col-sm-4 first-step text-center">
-            <i class="fa fa-globe"></i>
-            <h5>Trouver sa destination</h5>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-          </div>
-          <div class="col-md-4 col-sm-4 second-step text-center">
-            <i class="fa fa-plane"></i>
-            <h5>Réserver son transport</h5>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-          </div>
-          <div class="col-md-4 col-sm-4 third-step text-center">
-            <i class="fa fa-home"></i>
-            <h5>Réserver son hébergement</h5>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-          </div>
-        </div>
-      </div>
     </div>
 </section>
 
 <section id="advice-row">
-  <div class="row top-advice">
-    <div class="container">
-      <div class="section-title text-center">
-        <h2>Profitez de conseils pertinents</h2>
-        <h4>COMMUNAUTEE - AGENT VIRTUEL</h4>
-        <div class="space"></div>
-        <p>
-          Fini de se dire "A, si j'avais sû !". Découvrez toutes les possibilités que vous réserve l'organisation de vacances en ligne !
-        </p>
-      </div>
-      <div class="work-step">
-        <div class="col-md-6 col-sm-6 first-step text-center">
-          <i><img class="community" src="assets/fonts/communication.svg"></i>
-          <h5>La communautée</h5>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+    <div class="row top-advice">
+        <div class="container">
+            <div class="section-title text-center">
+                <h2>Profitez de conseils pertinents</h2>
+                <h4>COMMUNAUTEE - AGENT VIRTUEL</h4>
+                <div class="space"></div>
+                <p>
+                Fini de se dire "A, si j'avais sû !". Découvrez toutes les possibilités que vous réserve l'organisation de vacances en ligne !
+                </p>
+            </div>
+            <div class="work-step">
+                <div class="col-md-6 col-sm-6 first-step text-center">
+                    <i><img class="community" src="assets/fonts/communication.svg"></i>
+                    <h5>La communautée</h5>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                </div>
+                <div class="col-md-6 col-sm-6 second-step text-center">
+                    <i><img class="virtual-agent" src="assets/fonts/virtualAgent.svg"></i>
+                    <h5>L'agent de voyage virtuel</h5>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                </div>
+            </div>
         </div>
-        <div class="col-md-6 col-sm-6 second-step text-center">
-          <i><img class="virtual-agent" src="assets/fonts/virtualAgent.svg"></i>
-          <h5>L'agent de voyage virtuel</h5>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-        </div>
-      </div>
     </div>
-  </div>
 </section>

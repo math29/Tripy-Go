@@ -1,38 +1,60 @@
-<!--<a href="" [routerLink]="['ResearchTransport', {comparator_id: comparator._id, travel_id: travel_id}]"> -->
-<div class="cruise-list-view" *ngIf="comparator">
-	<div class="col-md-2 col-sm-2 clear-padding">
-		<img *ngIf="comparator.company.img" [src]="comparator.company.img" [alt]="comparator.company.name">
-	</div>
-	<div class="col-md-5 col-sm-5 clear-padding booking-box text-center">
-		<h2>{{ comparator.company.name }}</h2>
-	</div>
-	<!-- <div class="clearfix-sm"></div> -->
-	<div class="col-md-3 col-sm-3 booking-box clear-padding text-center">
-		<div class="rating-box">
-			<i class="fa fa-star"></i>
-			<i class="fa fa-star"></i>
-			<i class="fa fa-star"></i>
-			<i class="fa fa-star"></i>
-			<i class="fa fa-star-o"></i>
-			<h5>Ergonomie</h5>
+<div *ngIf="comparator">
+	<div class="cruise-list-view">
+		<div class="col-md-3 col-sm-3 clear-padding">
+			<img *ngIf="comparator.company.img" [src]="comparator.company.img" [alt]="comparator.company.name">
 		</div>
-		<div class="rating-box">
-			<i class="fa fa-star"></i>
-			<i class="fa fa-star"></i>
-			<i class="fa fa-star"></i>
-			<i class="fa fa-star"></i>
-			<i class="fa fa-star-o"></i>
-			<h5>Contenu</h5>
+		<div class="col-md-3 col-sm-3 clear-padding booking-box text-center">
+			<div class="element-box">
+				<h3>{{ comparator.company.name }}</h3>
+			</div>
+			<div class="element-box">
+				<h3>46</h3>
+			</div>
 		</div>
-	</div>
-	<div *ngIf="comments" class="col-md-12 col-sm-12 list-comments">
-		<hr>
-		<h3>Commentaires</h3>
-		<div class="panel panel-default" *ngFor="#comment of comparator.comments">
+		<div class="col-md-2 col-sm-2 booking-box clear-padding text-center">
+			<div class="rating-box">
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star-o"></i>
+				<h5>Ergonomie</h5>
+			</div>
+			<div class="rating-box">
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star-o"></i>
+				<i class="fa fa-star-o"></i>
+				<i class="fa fa-star-o"></i>
+				<h5>Contenu</h5>
+			</div>
+		</div>
+		<!-- *ngIf="comments" -->
+		<div class="col-md-2 col-sm-2 booking-box clear-padding text-center">
+			<div class="rating-box">
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star-o"></i>
+				<i class="fa fa-star-o"></i>
+				<h5>Véracité prix</h5>
+			</div>
+			<div class="comments-link">
+				<i class="fa fa-comments-o fa-4x" aria-hidden="true"></i>
+			</div>
+		</div>
+		<div class="col-md-2 col-sm-2 booking-box clear-padding text-center external-link-container">
+			<a href="" [routerLink]="['ResearchTransport', {comparator_id: comparator._id, travel_id: travel_id}]"> 
+				<div class="external-link">
+					<i class="fa fa-arrow-right fa-4x" aria-hidden="true"></i>
+				</div>
+			</a>
+		</div>
+		<!-- <div class="panel panel-default" *ngFor="#comment of comparator.comments">
 			<div class="panel-body">
 				<div class="row">
 					<div class="col-md-2 col-sm-2">
-						<!-- <img [src]="_auth.getUserAvatar()" alt="User icon"> -->
+						<p>hello</p>
 					</div>
 					<div class="col-md-7 col-sm-7">
 						<p>{{ comment.comment }}</p>
@@ -48,12 +70,12 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-	<div class="comments-button">
-		<a (click)="comments = !comments">
-			<i *ngIf="!comments" class="fa fa-chevron-down" aria- hidden="true" > </i>
-			<i *ngIf="comments" class="fa fa-chevron-up" aria- hidden="true" > </i>
-		</a>
+		</div> -->
+		<!-- <div class="comments-button">
+			<a (click)="comments = !comments">
+				<i *ngIf="!comments" class="fa fa-chevron-down" aria- hidden="true" > </i>
+				<i *ngIf="comments" class="fa fa-chevron-up" aria- hidden="true" > </i>
+			</a>
+		</div> -->
 	</div>
 </div>
