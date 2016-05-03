@@ -52,6 +52,7 @@ export class MdEditor {
                 mode: 'exact',
                 height: 500,
                 theme: 'modern',
+                language_url: 'js/fr_FR.js',
                 plugins: [
                     'textpattern advlist autolink lists link image charmap print preview anchor',
                     'searchreplace visualblocks code fullscreen',
@@ -87,7 +88,12 @@ export class MdEditor {
         this.contentChanged.emit(tinymce.get(this.elementID).getContent());
     }
 
-
+    /**
+     * Set text content
+     *
+     * @param content content to show in html
+     *
+     */
     set mceContent(content) {
         this.htmlContent = content;
     }
