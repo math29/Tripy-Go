@@ -46,7 +46,7 @@ tinymce.PluginManager.add('fontawesome', function(editor, url) {
 
             gridHtml = '<div class="mce-fontawesome-panel-accordion">';
                 gridHtml += '<div class="mce-fontawesome-panel-title">' + iconTitle + '</div>';
-                gridHtml += '<div class="mce-fontawesome-panel-content">';
+                gridHtml += '<div class="mce-fontawesome-panel-content hidden">';
                 gridHtml += '<div class="row">';
                 var i = 0;
                 for (var y = 0; y < (iconGroup.length / width); y++) {
@@ -55,7 +55,7 @@ tinymce.PluginManager.add('fontawesome', function(editor, url) {
                         if (iconGroup[y * width + x]) {
                             id = iconGroup[y * width + x].id;
                             name = iconGroup[y * width + x].name;
-                            gridHtml += '<div style="display:inline-block; padding:5px;" class="col-lg-2" data-id="'  + id +   '">';
+                            gridHtml += '<div style="display:inline-block; padding:5px;" class="mce-icon-cell js-mce-fontawesome-insert col-lg-2" data-id="' + id + '">';
                             //gridHtml += '<div class="mce-icon-cell js-mce-fontawesome-insert col-lg-2" data-id="' + id + '"' + (group === 'spinnerIcons' ? ' data-spin="true"' : '' ) + '>';
                             gridHtml += '<span style="display:inline-block;" class="fa fa-' + id + ' fa-3"></span>';
                             //gridHtml += '<span style="display:inline-block;" class="'+ (group === iconTitle ? '' : 'hidden' ) + '"> fa fa-'+id+'</span>';
@@ -99,7 +99,7 @@ tinymce.PluginManager.add('fontawesome', function(editor, url) {
             autoScroll: true,
             width: 690,
             height: 500,
-            title: translate('Icons'),
+            title: translate('Logos'),
             spacing: 20,
             padding: 10,
             classes: 'fontawesome-panel',
@@ -148,7 +148,7 @@ tinymce.PluginManager.add('fontawesome', function(editor, url) {
 
         // Open first item
         var firstAccordion = document.querySelector('.mce-fontawesome-panel-accordion');
-        firstAccordion.classList.add('mce-fontawesome-panel-accordion-open');
+        //firstAccordion.classList.add('mce-fontawesome-panel-accordion-open');
 
         var firstAccordionContent = firstAccordion.querySelector('.mce-fontawesome-panel-content');
         firstAccordionContent.style.height = 'auto';

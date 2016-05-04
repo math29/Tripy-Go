@@ -30,7 +30,6 @@ exports.index = function(req, res){
             var s = findStepOperation(result[i]._id, result[i].operations[j]);
 
             ops[s] = JSON.parse(JSON.stringify(result[i].operations[j]));
-            console.log(ops);
             ops[s].rate.raters = ops[s].rate.raters.length;
             delete ops[s].steps;
             ops[s].step = s;
