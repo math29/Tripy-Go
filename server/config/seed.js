@@ -62,11 +62,6 @@ Country.find({}).remove(function(){
   );
 });
 
-
-// Remove all rates
-Rate.find({}).remove(function(){
-
-});
 Location.find({}).remove(function() {
   Location.create({
     "name" : "New York, État de New York, États-Unis",
@@ -167,18 +162,36 @@ User.find({}).remove(function() {
           img:'assets/images/cruise2.jpg',
           url:'http://liligo.fr'
         }, function(err, company){
-          TransportComparator.find({}).remove(function(){
-            TransportComparator.create({
-              type:[transportTypeId],
-              company:company._id,
-              comments: [
-                {
-                  comment: "Très bon comparateur",
-                  user: user1._id
-                }
-              ]
+          // Remove all rates
+          Rate.find({}).remove(function(){
+            // 2 Rates used by comparators comments
+            Rate.create({
+              score: 0,
+              type: "Stack"
+            },{
+              score: 0,
+              type: "Stack"
+            }, function(err, rate1, rate2){
+              TransportComparator.find({}).remove(function(){
+                TransportComparator.create({
+                  type:[transportTypeId],
+                  company:company._id,
+                  comments: [
+                    {
+                      comment: "Très bon comparateur",
+                      user: user1._id,
+                      rate: rate1._id
+                    },
+                    {
+                      comment: "Très bon comparateur oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui",
+                      user: user1._id,
+                      rate: rate2._id
+                    }
+                  ]
+                });
+              });
             })
-          })
+          });
         });
       });
     }
