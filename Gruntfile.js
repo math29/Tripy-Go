@@ -846,7 +846,7 @@ module.exports = function (grunt) {
     if (target === 'server') {
       return grunt.task.run([
         'env:all',
-        'env:test'
+        'env:test',
         'mochaTest',
       ]);
     }

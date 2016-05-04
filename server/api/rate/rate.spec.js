@@ -39,7 +39,6 @@ var fOperation = {
 
 var rate_stack = new Rate({score:0, raters:[], type:'Stack'});
 var rate_stars = new Rate({score:0, raters:[], type:'Stars'});
-
 var rate_stack_id;
 var rate_stars_id;
 
@@ -55,13 +54,6 @@ simpleUser.save(function(){
           token = res.body.token;
         });
  });
-
-/*
- * Get stack rate id
- */
-rate_stack.save(function(rate){
-  rate_stack_id = rate._id;
-});
 
 /*
  * Get admin user token
@@ -82,13 +74,17 @@ describe('API /api/rate', function() {
 
   before(function(done) {
     // Clear users before testing
-    Rate.update({$set: {score:0, raters:[]}}).exec().then(function() {
-      done();
+    rate_stack.save(function(){
+      rate_stars.save(function(){
+        done();
+      });
     });
   });
 
    afterEach(function(done) {
-    done();
+     Rate.remove({}).exec().then(function(){
+       done();
+     });
   });
 
   it('should get all rates', function(done){
@@ -102,9 +98,12 @@ describe('API /api/rate', function() {
         if(err){
         return done(err);
         }
+
         res.body.should.be.instanceof(Array);
-        var body = req.body;
-        body.length.should.be.equals(1);
+        console.log(res.body);
+        /*var body = {body: JSON.parse(JSON.stringify(res.body))};
+        console.log(body.body.length);*/
+        //body.length.should.be.equals(1);
         done();
       });
   });
