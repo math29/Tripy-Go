@@ -79,7 +79,8 @@ function populate(doc, req, res){
       {path:'type', ref:'TransportType'},
       {path: 'ergo_rate', ref: 'Rate'},
       {path: 'content_rate', ref: 'Rate'},
-      {path: 'comments.user', ref: 'User', select:'-salt -hashedPassword -email -provider'}
+      {path: 'comments.user', ref: 'User', select:'-salt -hashedPassword -email -provider'},
+      {path: 'comments.rate', ref: 'Rate'}
     ], function(err, result){
       if(err)console.err(err);
 

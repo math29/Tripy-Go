@@ -21,9 +21,6 @@ exports.index = function(req, res) {
 };
 
 
-/**
- * Get a single user
- */
 exports.show = function (req, res, next) {
   var rateId = req.params.id;
 
@@ -58,7 +55,6 @@ exports.show = function (req, res, next) {
       );
     }else{
       res.json(rate);
-
     }
   });
 };

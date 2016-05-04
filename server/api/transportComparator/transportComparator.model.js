@@ -23,7 +23,11 @@ var TransportComparatorSchema = new Schema({
   },
   ergo_rate: {type: Schema.Types.ObjectId, ref: 'Rate'},
   content_rate: {type: Schema.Types.ObjectId, ref: 'Rate'},
-  comments : [{comment: {type: String}, user: {type: Schema.Types.ObjectId, ref: 'User'} }]
+  comments : [{
+      comment: {type: String},
+      user: {type: Schema.Types.ObjectId, ref: 'User'},
+      rate: {type: Schema.Types.ObjectId, ref: 'Rate'}
+    }]
 });
 
 var TransportComparator = mongoose.model('TransportComparator', TransportComparatorSchema);
