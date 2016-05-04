@@ -56,9 +56,10 @@ export class MdEditor {
                 plugins: [
                     'textpattern advlist autolink lists link image charmap print preview anchor',
                     'searchreplace visualblocks code fullscreen',
-                    'insertdatetime media table contextmenu paste code'
+                    'insertdatetime media table contextmenu paste code emoticons fontawesome'
                 ],
-                toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+                content_css: '//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css',
+                toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image emoticons',
                 elements: this.elementID,
                 setup: this.tinyMCESetup.bind(this)
             }
