@@ -124,7 +124,8 @@ Travel.find({}).remove(function() {
       }, 4000);
   });
 });
-
+// Remove all rates
+Rate.find({}).remove(function(){});
 User.find({}).remove(function() {
   User.create({
     provider: 'local',
@@ -162,8 +163,7 @@ User.find({}).remove(function() {
           img:'assets/images/cruise2.jpg',
           url:'http://liligo.fr'
         }, function(err, company){
-          // Remove all rates
-          Rate.find({}).remove(function(){
+
             // 2 Rates used by comparators comments
             Rate.create({
               score: 0,
@@ -189,7 +189,6 @@ User.find({}).remove(function() {
                     }
                   ]
                 });
-              });
             })
           });
         });
