@@ -3,7 +3,7 @@
 // v2.0.6
 tinymce.PluginManager.requireLangPack('fontawesome');
 tinymce.PluginManager.add('fontawesome', function(editor, url) {
-
+    url = '//netdna.bootstrapcdn.com/font-awesome/4.5.0';
     var translate = tinymce.util.I18n.translate;
 
     // This is the json format of https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/src/icons.yml
@@ -47,19 +47,28 @@ tinymce.PluginManager.add('fontawesome', function(editor, url) {
             gridHtml = '<div class="mce-fontawesome-panel-accordion">';
                 gridHtml += '<div class="mce-fontawesome-panel-title">' + iconTitle + '</div>';
                 gridHtml += '<div class="mce-fontawesome-panel-content">';
-
+                gridHtml += '<div class="row">';
+                var i = 0;
                 for (var y = 0; y < (iconGroup.length / width); y++) {
+
                     for (var x = 0; x < width; x++) {
                         if (iconGroup[y * width + x]) {
                             id = iconGroup[y * width + x].id;
                             name = iconGroup[y * width + x].name;
-                            gridHtml += '<div class="mce-icon-cell js-mce-fontawesome-insert" data-id="' + id + '"' + (group === 'spinnerIcons' ? ' data-spin="true"' : '' ) + '>';
-                                gridHtml += '<span class="fa fa-' + id + (group === 'spinnerIcons' ? ' fa-spin' : '' ) +'"></span>';
+                            gridHtml += '<div style="display:inline-block; padding:5px;" class="col-lg-2" data-id="'  + id +   '">';
+                            //gridHtml += '<div class="mce-icon-cell js-mce-fontawesome-insert col-lg-2" data-id="' + id + '"' + (group === 'spinnerIcons' ? ' data-spin="true"' : '' ) + '>';
+                            gridHtml += '<span style="display:inline-block;" class="fa fa-' + id + ' fa-3"></span>';
+                            //gridHtml += '<span style="display:inline-block;" class="'+ (group === iconTitle ? '' : 'hidden' ) + '"> fa fa-'+id+'</span>';
                             gridHtml += '</div>';
+                            if(i++ > 7){
+                              gridHtml += '<br/>';
+                              i=0;
+                            }
                         }
                     }
+
                 }
-                gridHtml += '</div>';
+            gridHtml += '</div>';
             gridHtml += '</div>';
 
             return gridHtml;
@@ -165,12 +174,14 @@ tinymce.PluginManager.add('fontawesome', function(editor, url) {
                 accordionItems[i].classList.remove('mce-fontawesome-panel-accordion-open');
 
                 accordionPanel = accordionItems[i].querySelector('.mce-fontawesome-panel-content');
+                accordionPanel.classList.add('hidden');
                 accordionPanel.style.height = '0';
             }
 
             // Show this item if it was previously hidden
             if (!open) {
                 var accordionItemContent = accordionItem.querySelector('.mce-fontawesome-panel-content');
+                accordionItemContent.classList.remove('hidden');
 
                 accordionItemContent.style.height = 'auto';
                 var nextHeight = Math.ceil(accordionItemContent.getBoundingClientRect().height);
@@ -315,7 +326,7 @@ tinymce.PluginManager.add('fontawesome', function(editor, url) {
     editor.on('init', function() {
         var csslink = editor.dom.create('link', {
             rel: 'stylesheet',
-            href: url + '/css/fontawesome.min.css'
+            href: url + '/css/font-awesome.min.css'
         });
         document.getElementsByTagName('head')[0].appendChild(csslink);
     });
