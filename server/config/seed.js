@@ -14,6 +14,7 @@ var TransportType = require('../api/transportType/transportType.model');
 var TransportComparator = require('../api/transportComparator/transportComparator.model');
 var Travel = require('../api/travel/travel.model');
 var Location = require('../api/location/location.model');
+var Rate = require('../api/rate/rate.model');
 var Timeline = require('../api/timeline/timeline.model');
 var Operation = require('../api/operation/operation.model');
 
@@ -62,6 +63,10 @@ Country.find({}).remove(function(){
 });
 
 
+// Remove all rates
+Rate.find({}).remove(function(){
+
+});
 Location.find({}).remove(function() {
   Location.create({
     "name" : "New York, État de New York, États-Unis",
@@ -88,6 +93,8 @@ Location.find({}).remove(function() {
     }, 2000);
   });
 });
+
+
 
 Transport.find({}).remove(function(){
   setTimeout(function() {

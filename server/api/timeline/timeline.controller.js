@@ -95,7 +95,7 @@ exports.addOperation = function(req, res){
         return res.status(400).json('{error:\'Unable to find operation\'}');
       }else{
 
-        
+
         Timeline.findOneAndUpdate({_id:timelineId, operations:{$nin: [operationId]}},{$push:{operations: operationId}},{safe: true, upsert: false}, function(err, doc){
           if(err){
             return res.status(400).send('ERROR');

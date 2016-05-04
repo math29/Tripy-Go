@@ -5,6 +5,8 @@ var mongoose = require('mongoose'),
 var Rate = require('../rate/rate.model');
 var Company = require('../company/company.model');
 var TransportType = require('../transportType/transportType.model');
+var logger = require('../../config/logger');
+
 
 
 var TransportComparatorSchema = new Schema({
@@ -28,15 +30,15 @@ var TransportComparator = mongoose.model('TransportComparator', TransportCompara
 
 TransportComparatorSchema.pre('save', function(next){
   var self = this;
-  Rate.create({type:'stars', raters:[], score: 0}, function(err, r1){
+  Rate.create({type:'Stars', raters:[], score: 0}, function(err, r1){
     if(err){
-      console.err('Could not create Rate');
+      logger.error('Could not create Rate');
       next(new Error('Impossible de créer le vote'));
     }
     self.ergo_rate = r1;
-    Rate.create({type:'stars', raters:[], score: 0}, function(err, r2){
+    Rate.create({type:'Stars', raters:[], score: 0}, function(err, r2){
       if(err){
-        console.err('Could not create Rate');
+        logger.error('Could not create Rate');
         next(new Error('Impossible de créer le vote'));
       }
       self.content_rate = r2;
@@ -49,14 +51,12 @@ TransportComparatorSchema.pre('save', function(next){
           var error = new Error("La compagnie n'éxiste pas");
           next(error);
         }
-        console.log(JSON.parse(JSON.stringify(self)));
+        //logger.debug(JSON.parse(JSON.stringify(self)));
         TransportType.find({_id:{$in:self.type}}, function(err, resultTypes){
           if(err){
-            console.log('error');
-            console.log(err);
+            logger.error(err);
             next(new Error(err));
           }else{
-            console.log(JSON.parse(JSON.stringify(resultTypes)));
             if(resultTypes.length === self.type.length){
               next();
             }

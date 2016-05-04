@@ -555,7 +555,8 @@ module.exports = function (grunt) {
           'angular2-jwt/**/*',
           'd3/d3.min.js',
           'lodash/dist/lodash.min.js',
-          'datamaps/dist/datamaps.world.min.js'
+          'datamaps/dist/datamaps.world.min.js',
+          'to-markdown/dist/to-markdown.js'
         ]
       },
       tripy_go_lib_back: {
