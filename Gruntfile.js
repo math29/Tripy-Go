@@ -556,7 +556,8 @@ module.exports = function (grunt) {
           'd3/d3.min.js',
           'lodash/dist/lodash.min.js',
           'datamaps/dist/datamaps.world.min.js',
-          'to-markdown/dist/to-markdown.js'
+          'to-markdown/dist/to-markdown.js',
+          'moment/**/*'
         ]
       },
       tripy_go_lib_back: {
