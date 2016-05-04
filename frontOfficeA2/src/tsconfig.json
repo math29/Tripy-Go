@@ -23,7 +23,6 @@
         "rewriteTsconfig": true
     },
     "files": [
-        "app/LoggedInOutlet.ts",
         "app/components/account/login/login.spec.ts",
         "app/components/account/login/login.ts",
         "app/components/account/profile/overview/overview.ts",
@@ -43,6 +42,7 @@
         "app/components/team/about-us/about-us.ts",
         "app/components/team/contact/contact.ts",
         "app/front-office-a2.ts",
+        "app/LoggedInOutlet.ts",
         "app/services/user.singleton.ts",
         "app/tripy_go_lib/auth.service.ts",
         "app/tripy_go_lib/components/md-editor/md-editor.ts",
