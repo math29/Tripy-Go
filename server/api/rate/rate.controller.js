@@ -34,7 +34,6 @@ exports.show = function (req, res, next) {
     }
     if (!rate) return res.status(401).send('Unauthorized');
     if(rate.type === 'Stars'){
-      console.log('Id: '+rateId);
       Rate.aggregate(
         [
           {$match: {_id: mongoose.Types.ObjectId(rateId)}},
@@ -128,12 +127,25 @@ exports.vote = function(req, res){
       logger.error(err);
       return res.status(500).json('{error:\'Unable to find rate\'}');
     }
-    var userVote = _.findIndex(result.raters, function(o){ return o.user == userId;})
-    if(userVote != -1){
+    if(!result){
+      return res.status(204).json({'error': 'No content'});
+    }
+    var userVote = _.findIndex(result.raters, function(o){
+      return String(o.user) == String(userId);});
+    if(userVote == -1){
       result.raters.push(rateOb);
       result.score += sideValue;
+      result.save();
     }else{
-      result.raters[userVote] = rateOb;
+      if(rateOb.action != result.raters[userVote].action){
+        Rate.update({_id: rateId, type: rateType, "raters.user": rateOb.user},
+          {$set:
+            {"raters.$.action": rateOb.action}, $inc:{"score": Number(rateOb.action - result.raters[userVote].action)}}, function(){});
+        result.raters[userVote] = rateOb;
+      }
+
+
+
     }
     return res.status(200).json(result);
   });
