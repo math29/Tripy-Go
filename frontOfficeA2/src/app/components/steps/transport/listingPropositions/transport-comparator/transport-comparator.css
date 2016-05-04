@@ -62,6 +62,24 @@
 	border: 1px solid #e6e6e6;
 }
 
+.comparator-title .tooltip-title {
+    visibility: hidden;
+    width: 120px;
+    background-color: #00adef;
+    color: white;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+.comparator-title:hover .tooltip-title {
+    visibility: visible;
+}
+
 /*********************************************************
 			4. COMMENTS
 **********************************************************/
@@ -165,6 +183,43 @@
 	border: 1px solid #e6e6e6;
 }
 
+.rating-box .tooltip-ergo {
+	visibility: hidden;
+    width: 120px;
+    background-color: #00adef;
+    color: white;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+.rating-box:hover .tooltip-ergo {
+    visibility: visible;
+}
+
+.rating-box .tooltip-contenu {
+	visibility: hidden;
+    width: 120px;
+    background-color: #00adef;
+    color: white;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    margin: -50px 0px 0px 30px;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+.rating-box:hover .tooltip-contenu {
+    visibility: visible;
+}
+
 
 /*********************************************************
 			7. LIST-COMMENTS
@@ -178,4 +233,27 @@
 .list-comments:hover {
 	border: 1px solid #F19C4F;
 	box-shadow: 0px 0px 5px #F19C4F;
+}
+
+/*********************************************************
+			8. NUMBER OF COMPANYS
+**********************************************************/
+
+.nb-company .tooltip-nb-company {
+    visibility: hidden;
+    width: 120px;
+    background-color: #00adef;
+    color: white;
+    text-align: center;
+    padding: 5px 0;
+    margin: -50px 0px 0px 30px;
+    border-radius: 6px;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+.nb-company:hover .tooltip-nb-company {
+    visibility: visible;
 }

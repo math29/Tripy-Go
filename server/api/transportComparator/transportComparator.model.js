@@ -15,6 +15,7 @@ var TransportComparatorSchema = new Schema({
     ref: 'TransportType',
     required: true
   }],
+  nbCompanies: Number,
   company:{
     type: Schema.Types.ObjectId,
     ref: 'Company',

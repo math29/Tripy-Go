@@ -176,6 +176,7 @@ User.find({}).remove(function() {
                 TransportComparator.create({
                   type:[transportTypeId],
                   company:company._id,
+                  nbCompanies: 36,
                   comments: [
                     {
                       comment: "Très bon comparateur",
