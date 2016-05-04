@@ -134,10 +134,13 @@ exports.vote = function(req, res){
       result.save();
     }else{
       if(rateOb.action != result.raters[userVote].action){
+        var score_difference = Number(rateOb.action) - Number(result.raters[userVote].action);
+
         Rate.update({_id: rateId, type: rateType, "raters.user": rateOb.user},
           {$set:
-            {"raters.$.action": rateOb.action}, $inc:{"score": Number(rateOb.action - result.raters[userVote].action)}}, function(){});
+            {"raters.$.action": rateOb.action}, $inc:{"score": score_difference}}, function(){});
         result.raters[userVote] = rateOb;
+        result.score += score_difference;
       }
 
 
