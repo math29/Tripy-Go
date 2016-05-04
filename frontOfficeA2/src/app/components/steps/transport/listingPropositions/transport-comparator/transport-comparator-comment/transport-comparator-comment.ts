@@ -13,6 +13,7 @@ import { AuthService } from '../../../../../../tripy_go_lib/services/auth.servic
 })
 export class TransportComparatorComment {
 	private comment: any;
+	private vote_side: String;
 	private options_post: RequestOptions;
   
 	constructor(private _auth: AuthService, private _http: Http) {
@@ -25,11 +26,11 @@ export class TransportComparatorComment {
 
 	// Rate Votes
 	vote(side) {
-		console.log(side);
-		// Post new Location getted from Google Geocode API
+		this.vote_side = side;
+
+		// Post Vote
 		this._http.post(`/api/rate/vote/${side}/${this.comment.rate._id}`, null, this.options_post)
 			.map(res => res.json())
-			// .map(res => res._id)
 			.subscribe(res => {
 				console.log(this.comment.rate);
 				this.comment.rate = res;
