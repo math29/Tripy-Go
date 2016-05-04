@@ -39,7 +39,7 @@
 				<i class="fa fa-star-o"></i>
 				<h5>Véracité prix</h5>
 			</div>
-			<div class="comments-link">
+			<div class="comments-link" (click)="comments = !comments" [ngClass]="{'comments-link-active': comments}">
 				<i class="fa fa-comments-o fa-4x" aria-hidden="true"></i>
 			</div>
 		</div>
@@ -50,32 +50,16 @@
 				</div>
 			</a>
 		</div>
-		<!-- <div class="panel panel-default" *ngFor="#comment of comparator.comments">
-			<div class="panel-body">
-				<div class="row">
-					<div class="col-md-2 col-sm-2">
-						<p>hello</p>
-					</div>
-					<div class="col-md-7 col-sm-7">
-						<p>{{ comment.comment }}</p>
-					</div>
-					<div class="col-md-3 col-sm-3">
-						<div class="rating-box">
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star-o"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div> -->
 		<!-- <div class="comments-button">
 			<a (click)="comments = !comments">
 				<i *ngIf="!comments" class="fa fa-chevron-down" aria- hidden="true" > </i>
 				<i *ngIf="comments" class="fa fa-chevron-up" aria- hidden="true" > </i>
 			</a>
 		</div> -->
+	</div>
+	<div *ngIf="comments" class="col-md-12 col-sm-12 clear-padding list-comments">
+		<div *ngFor="#comment of comparator.comments">
+			<comparatorComment [comment]="comment"></comparatorComment>
+		</div>
 	</div>
 </div>

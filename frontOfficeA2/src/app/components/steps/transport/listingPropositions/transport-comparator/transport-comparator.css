@@ -12,7 +12,8 @@
 	3. COMPARATOR NAME
 	4. COMMENTS
 	5. COMPARATOR LINK
-	5. RATING
+	6. RATING
+	7. LIST-COMMENTS
 **********************************************************/
 
 /*********************************************************
@@ -109,6 +110,15 @@
 	background: #00adef;
 }
 
+/* On active */
+.comments-link-active {
+	background: #00adef;
+}
+
+.comments-link-active i {
+	color: #F2676B;
+}
+
 
 /*********************************************************
 			5. COMPARATOR LINK
@@ -153,4 +163,19 @@
 	/*min-height: 125px;*/
 	padding: 13px 0px;
 	border: 1px solid #e6e6e6;
+}
+
+
+/*********************************************************
+			7. LIST-COMMENTS
+**********************************************************/
+
+.list-comments {
+	border: 1px solid #e6e6e6;
+    box-shadow: 0px 0px 5px #e6e6e6;
+}
+
+.list-comments:hover {
+	border: 1px solid #F19C4F;
+	box-shadow: 0px 0px 5px #F19C4F;
 }

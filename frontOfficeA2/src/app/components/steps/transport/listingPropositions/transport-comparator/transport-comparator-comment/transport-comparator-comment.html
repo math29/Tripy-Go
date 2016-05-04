@@ -1,0 +1,29 @@
+<div class="comparator-comment">
+	<div class="row">
+		<div class="col-md-1 col-sm-1 user-picture">
+			<img *ngIf="comment.user.picture" [src]="comment.user.picture">
+			<img *ngIf="!comment.user.picture" src="assets/images/user.jpg">
+		</div>
+		<div class="col-md-1 col-sm-1 comment-rate">
+			<!-- <i class="fa fa-caret-up fa-3x" aria-hidden="true"></i> -->
+			<i class="rate-up">
+				<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 612.002 612.002" style="enable-background:new 0 0 612.002 612.002;" xml:space="preserve"><g><g><path d="M592.639,358.376L423.706,189.439c-64.904-64.892-170.509-64.892-235.421,0.005L19.363,358.379
+				c-25.817,25.817-25.817,67.674,0,93.489c25.817,25.817,67.679,25.819,93.491-0.002l168.92-168.927
+				c13.354-13.357,35.092-13.361,48.444-0.005l168.93,168.932c12.91,12.907,29.825,19.365,46.747,19.365
+				c16.915,0,33.835-6.455,46.747-19.365C618.456,426.051,618.456,384.193,592.639,358.376z"/></g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>	
+			</i>
+			<span>46</span>
+			<i class="rate-down">
+				<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 612.004 612.004" style="enable-background:new 0 0 612.004 612.004;" xml:space="preserve">
+				<g><g><path d="M499.147,160.094L330.222,329.019c-6.472,6.472-15.075,10.035-24.223,10.035c-9.146,0-17.749-3.561-24.218-10.035
+				L112.854,160.094c-25.822-25.817-67.674-25.817-93.491,0c-25.817,25.819-25.817,67.674,0,93.491L188.29,422.508
+				c31.443,31.445,73.245,48.764,117.712,48.764s86.269-17.319,117.714-48.761l168.925-168.925c25.817-25.817,25.817-67.674,0-93.491
+				C566.822,134.277,524.962,134.277,499.147,160.094z"/></g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
+			</i>
+			<!-- <i class="fa fa-caret-down fa-3x" aria-hidden="true"></i> -->
+		</div>
+		<div class="col-md-10 col-sm-10 comment-content">
+			<p>{{ comment.comment }}</p>
+		</div>
+	</div>
+</div>

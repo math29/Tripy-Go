@@ -168,6 +168,10 @@ User.find({}).remove(function() {
                 {
                   comment: "Très bon comparateur",
                   user: user1._id
+                },
+                {
+                  comment: "Très bon comparateur oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui",
+                  user: user1._id
                 }
               ]
             })
