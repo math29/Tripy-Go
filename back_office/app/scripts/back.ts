@@ -28,8 +28,8 @@ import {LoggedInRouterOutlet} from './LoggedInOutlet';
   pipes: []
 })
 @RouteConfig([
-  { path: '/login', name: 'Login', component: LoginCmp},
-  { path: '/home', name:'Home', component: HomeCmp,useAsDefault: true },
+  { path: '/login', name: 'Login', component: LoginCmp,useAsDefault: true},
+  { path: '/home', name:'Home', component: HomeCmp },
   { path: '/mongo', name: 'Mongo', component: MongoCmp},
   { path: '/countries', name: 'Countries', component: CountryCmp},
   { path: '/company', name: 'Company', component: CompanyCmp},

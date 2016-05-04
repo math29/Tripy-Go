@@ -17,10 +17,10 @@ export class LoginCmp{
   response: any;
 
   constructor(private _authService:AuthService, private _router: Router){
-    /*this._authService.checkJWTValid();
+    this._authService.checkJWTValid();
     if(this._authService.getMe()){
       this._router.navigate( ['Home'] );
-    }*/
+    }
   }
 
   /**
