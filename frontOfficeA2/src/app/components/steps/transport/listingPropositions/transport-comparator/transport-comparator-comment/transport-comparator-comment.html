@@ -4,8 +4,7 @@
 			<img *ngIf="comment.user.picture" [src]="comment.user.picture">
 			<img *ngIf="!comment.user.picture" src="assets/images/user.jpg">
 		</div>
-		<div class="col-md-1 col-sm-1 comment-rate">
-			<!-- <i class="fa fa-caret-up fa-3x" aria-hidden="true"></i> -->
+		<div class="col-md-1 col-sm-1 comment-rate" [ngClass]="{up: rate_side=='up', down: rate_side=='down'}">
 			<i class="rate-up" (click)="vote('up')">
 				<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 612.002 612.002" style="enable-background:new 0 0 612.002 612.002;" xml:space="preserve"><g><g><path d="M592.639,358.376L423.706,189.439c-64.904-64.892-170.509-64.892-235.421,0.005L19.363,358.379
 				c-25.817,25.817-25.817,67.674,0,93.489c25.817,25.817,67.679,25.819,93.491-0.002l168.92-168.927
@@ -20,7 +19,6 @@
 				c31.443,31.445,73.245,48.764,117.712,48.764s86.269-17.319,117.714-48.761l168.925-168.925c25.817-25.817,25.817-67.674,0-93.491
 				C566.822,134.277,524.962,134.277,499.147,160.094z"/></g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
 			</i>
-			<!-- <i class="fa fa-caret-down fa-3x" aria-hidden="true"></i> -->
 		</div>
 		<div class="col-md-10 col-sm-10 comment-content">
 			<p>{{ comment.comment }}</p>

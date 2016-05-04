@@ -76,6 +76,29 @@
 }
 
 /*********************************************************
+			3-1. After RATE
+**********************************************************/
+
+/* Cas vote positif */
+.comparator-comment .up .rate-down svg path {
+	fill: grey;
+	fill-opacity: 0.5;
+}
+
+.comparator-comment .down .rate-up svg path {
+	fill: grey;
+	fill-opacity: 0.5;
+}
+
+.comparator-comment .up span {
+	color: green;
+}
+
+.comparator-comment .down span {
+	color: red;
+}
+
+/*********************************************************
 			4. CONTENT
 **********************************************************/
 
