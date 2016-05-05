@@ -21,6 +21,23 @@ exports.show = function(req, res) {
   });
 };
 
+// Get transport comparator comments with offset
+exports.getComments = function(req, res) {
+  TransportComparator
+  .populate('comments.rate')
+  .aggregate(
+    [
+      {$match: {_id: ObjectId("572a23165f760780657fafd9")}},
+      {$unwind: '$comments'},
+      {$sort: {'$comments.rate.score':-1}}
+    ], function(err, result){
+      if(err) return res.status(500).send(err);
+
+      res.json(transformStarResult(result[0]));
+    }
+  );
+}
+
 // Creates a new transport comparator in the DB.
 exports.create = function(req, res) {
   TransportComparator.create(req.body, function(err, transport) {

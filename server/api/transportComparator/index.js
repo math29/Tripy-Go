@@ -67,9 +67,9 @@ router.get('/', auth.isAuthenticated(),controller.index);
  * @apiName GetTransportComparatorById
  * @apiGroup TransportComparator
  *
- * @apiParam {Number} id  Id of the target transport
+ * @apiParam {Number} id  Id of the target comparator transport
  *
- * @apiSuccess {Transport} Transport
+ * @apiSuccess {Comparator} Comparator
  *
  * @apiSuccessExample Success-Response:
  *   HTTP/1.1 200 OK
@@ -94,6 +94,41 @@ router.get('/', auth.isAuthenticated(),controller.index);
  * @apiUse UserNotAuthorized
  */
 router.get('/:id', auth.isAuthenticated(), controller.show);
+
+/**
+ * @api {get} /api/transport/comparators/comments/:offset/:id Get By Id
+ * @apiVersion 0.0.0
+ * @apiName GetTransportComparatorComments
+ * @apiGroup TransportComparator
+ *
+ * @apiParam {Number} offset  The first of 5 comments requested
+ * @apiParam {Number} id  Id of the target comparator transport
+ *
+ * @apiSuccess {Array} Comments
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *      {
+ *            "__v": 0,
+ *            "company": {
+ *              _id:'564ceecea3300dfc3906f536',
+ *              name: 'Liligo',
+ *              url: 'https://liligo.com'
+ *            },
+ *            types: [
+ *              {
+ *               _id:'564ceecea3300dfc3906f536',
+ *               name: 'Plane',
+ *               image: '564ceecea3300dfc3906f536'
+ *              },
+ *              ...
+ *            ]
+ *            "_id": "564cf500bbb31f62475efc31"
+ *       }
+ *
+ * @apiUse UserNotAuthorized
+ */
+router.get('/comments/:offset/:id', auth.isAuthenticated(), controller.getComments);
 
 /**
   * @api {post} /api/transport/comparators Insert a transport comparator
