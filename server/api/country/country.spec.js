@@ -33,24 +33,28 @@ var adminJS = {
 
 var fCountry = {
    country_code:'VG',
+   cca3: 'VGI',
    country_name:'British Virgin Islands',
    currency_code:'USD',
    population:21730,
    capital:'Road Town',
    continent:'North America',
    area:153,
-   languages:'en-VG'
+   languages:'en-VG',
+   calling_code: '+33'
  }
 
  var country = new Country({
    country_code:'VG',
    country_name:'British Virgin Islands',
+   cca3: 'VGI',
    currency_code:'USD',
    population:21730,
    capital:'Road Town',
    continent:'North America',
    area:153,
-   languages:'en-VG'
+   languages:'en-VG',
+   calling_code: '+33'
  });
 
 
@@ -105,19 +109,18 @@ describe('API /api/countries', function() {
 
   it("shouldn't add the country", function(done){
     country.save().then(function(){
-                request(app)
-                  .post('/api/countries')
-                  .set({'Authorization': 'Bearer '+tokenAdmin})
-                  .send(fCountry)
-                  .expect(201)
-                  .expect('Content-Type', /json/)
-                  .end(function(err, res){
-                    if(err)return done(err);
-                    res.body.should.be.instanceof(Object);
-                    done();
-                  });
-
-          });
+      request(app)
+        .post('/api/countries')
+        .set({'Authorization': 'Bearer '+tokenAdmin})
+        .send(fCountry)
+        .expect(400)
+        .expect('Content-Type', /json/)
+        .end(function(err, res){
+          if(err)return done(err);
+          res.body.should.be.instanceof(Object);
+          done();
+        });
+      });
   });
 
   it("Simple users can't add country", function(done){
@@ -152,16 +155,17 @@ describe('API /api/countries', function() {
   it('should get a list of countries', function(done){
     country.save().then(function(){
     request(app)
-          .get('/api/countries')
-          .set({'Authorization': 'Bearer '+token})
-          .expect(200)
-          .expect('Content-Type', /json/)
-          .end(function(err, res) {
-            if (err) return done(err);
-            res.body.should.be.instanceof(Array);
-            done();
-          });
-          });
+      .get('/api/countries')
+      .set({'Authorization': 'Bearer '+token})
+      .send()
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        if (err) return done(err);
+          res.body.should.be.instanceof(Array);
+          done();
+      });
+    });
   });
 
 
@@ -178,4 +182,3 @@ describe('API /api/countries', function() {
   });
 
 });
-
