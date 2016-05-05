@@ -13,7 +13,6 @@ describe('GET /api/transports/aggregator', function() {
       .expect('Content-Type', /json/)
       .end(function(err, res) {
         if (err) return done(err);
-        console.log(typeof res.body);
         res.body.should.be.instanceof(Object);
         done();
       });
