@@ -68,7 +68,7 @@ exports.create = function(req, res) {
 		country.save(function(err){
 		if(err) {
 		  logger.error(err);
-		  return handleError(res, err);
+		  return res.status(400).json({error:'Le pays éxiste déjà'});
 		}
 
 		return res.status(statusCode).json(country);

@@ -62,13 +62,13 @@ describe('GET /api/transportComparator', function() {
 
   it('should respond with JSON array', function(done) {
     request(app)
-      .get('/api/transport/comparator')
+      .get('/api/transport/comparators')
       .set({'Authorization': 'Bearer '+tokenAdmin})
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res) {
         if (err) return done(err);
-        res.body.should.be.instanceof(Array);
+        res.body.should.be.instanceof(Object);
         done();
       });
   });

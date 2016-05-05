@@ -59,7 +59,7 @@ router.get('/', auth.hasRole('admin'), controller.index);
  *
  * @apiUse UserNotAuthorized
  */
-router.get('/:id', auth.isAuthenticated(), controller.show);
+router.get('/:id', auth.isAuthenticated(), controller.findById);
 
 /**
  * @api {post} /api/rate/vote/:side/:id Vote for a rate with specific ID
