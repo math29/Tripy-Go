@@ -39,8 +39,6 @@ var fOperation = {
 
 var rate_stack = new Rate({score:0, raters:[], type:'Stack'});
 var rate_stars = new Rate({score:0, raters:[], type:'Stars'});
-var rate_stack_id;
-var rate_stars_id;
 
 var token = "";
 var tokenAdmin = "";
@@ -74,6 +72,8 @@ describe('API /api/rate', function() {
 
   before(function(done) {
     // Clear users before testing
+    rate_stack = new Rate({score:0, raters:[], type:'Stack'});
+    rate_stars = new Rate({score:0, raters:[], type:'Stars'});
     rate_stack.save(function(){
       rate_stars.save(function(){
         done();
@@ -81,7 +81,7 @@ describe('API /api/rate', function() {
     });
   });
 
-   afterEach(function(done) {
+   after(function(done) {
      Rate.remove({}).exec().then(function(){
        done();
      });
@@ -98,73 +98,205 @@ describe('API /api/rate', function() {
         if(err){
         return done(err);
         }
-
-        res.body.should.be.instanceof(Array);
-        console.log(res.body);
-        /*var body = {body: JSON.parse(JSON.stringify(res.body))};
-        console.log(body.body.length);*/
-        //body.length.should.be.equals(1);
+        res.body.should.be.instanceof(Object);
         done();
       });
   });
 
-  /*it("Simple users can't add operation", function(done){
+  it('Simple user shouldn\'t get all rates', function(done){
     request(app)
-      .post('/api/operations/'+fOperation.title)
+      .get('/api/rate/')
       .set({'Authorization': 'Bearer '+token})
-      .send({content:fOperation})
+      .send()
       .expect(403)
-      .expect('Content-Type','text/html; charset=utf-8')
       .end(function(err, res){
-        if(err)return done(err);
+        if(err){
+        return done(err);
+        }
         done();
       });
   });
 
-  it('should get error message when required param is not present', function(done){
-    fOperation.title ="";
+  it('should get Stack rate', function(done){
     request(app)
-      .post('/api/operations/test')
-      .set({'Authorization' : 'Bearer '+tokenAdmin})
-      .send({})
-      .expect(400)
+      .get('/api/rate/'+ rate_stack._id)
+      .set({'Authorization': 'Bearer '+tokenAdmin})
+      .send()
+      .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res){
-        if(err) return done(err);
-        res.body.errors.length.should.be.above(0);
+        if(err)return done(err);
+        res.body.should.be.instanceof(Object);
+        res.body.type.should.be.equal('Stack');
+        res.body.score.should.be.equal(0);
+        res.body.raters.length.should.be.equal(0);
         done();
       });
-
   });
 
-  it('should get a list of operations', function(done){
-      operation.save().then(function(data){
-          request(app)
-                .get('/api/operations')
-                .set({'Authorization': 'Bearer '+tokenAdmin})
-                .expect(200)
-                .expect('Content-Type', /json/)
-                .end(function(err, res) {
-                  if (err) return done(err);
-                  res.body.should.be.instanceof(Array);
-                  done();
-                });
-                });
-
-
-  });
-
-
-  it('should respond with Unauthorized', function(done) {
+  it('simple user should get Stack rate', function(done){
     request(app)
-      .get('/api/operations')
+      .get('/api/rate/'+ rate_stack._id)
       .set({'Authorization': 'Bearer '+token})
-      .expect(403)
-      .expect('Content-Type', 'text/html; charset=utf-8')
-      .end(function(err, res) {
-        if (err) return done(err);
+      .send()
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res){
+        if(err)return done(err);
+        res.body.should.be.instanceof(Object);
+        res.body.type.should.be.equal('Stack');
+        res.body.score.should.be.equal(0);
+        res.body.raters.length.should.be.equal(0);
         done();
       });
-  });*/
+  });
+
+  it('should get Stars rate', function(done){
+    request(app)
+      .get('/api/rate/'+ rate_stars._id)
+      .set({'Authorization': 'Bearer '+tokenAdmin})
+      .send()
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res){
+        if(err)return done(err);
+        res.body.should.be.instanceof(Object);
+        res.body.type.should.be.equal('Stars');
+        res.body.score.should.be.equal(0);
+        res.body.raters.length.should.be.equal(0);
+        done();
+      });
+  });
+
+  it('simple user should get Stars rate', function(done){
+    request(app)
+      .get('/api/rate/'+ rate_stars._id)
+      .set({'Authorization': 'Bearer '+token})
+      .send()
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res){
+        if(err)return done(err);
+        res.body.should.be.instanceof(Object);
+        res.body.type.should.be.equal('Stars');
+        res.body.score.should.be.equal(0);
+        res.body.raters.length.should.be.equal(0);
+        done();
+      });
+  });
+
+  it('should Vote up stack rate', function(done){
+    request(app)
+      .post('/api/rate/vote/up/'+ rate_stack._id)
+      .set({'Authorization': 'Bearer '+tokenAdmin})
+      .send()
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res){
+        if(err)return done(err);
+        res.body.should.be.instanceof(Object);
+        res.body.type.should.be.equal('Stack');
+        res.body.score.should.be.equal(1);
+        res.body.raters.length.should.be.equal(1);
+        //res.body.raters[0].user.should.be.equal(adminUser._id);
+        res.body.raters[0].action.should.be.equal(1);
+        done();
+      });
+  });
+
+  it('simple user should Vote up stack rate', function(done){
+    request(app)
+      .post('/api/rate/vote/up/'+ rate_stack._id)
+      .set({'Authorization': 'Bearer '+token})
+      .send()
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res){
+        if(err)return done(err);
+        res.body.should.be.instanceof(Object);
+        res.body.type.should.be.equal('Stack');
+        res.body.score.should.be.equal(2);
+        res.body.raters.length.should.be.equal(2);
+        //res.body.raters[0].user.should.be.equal(adminUser._id);
+        res.body.raters[1].action.should.be.equal(1);
+        done();
+      });
+  });
+
+  it('should Vote down stack rate', function(done){
+    request(app)
+      .post('/api/rate/vote/down/'+ rate_stack._id)
+      .set({'Authorization': 'Bearer '+tokenAdmin})
+      .send()
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res){
+        if(err)return done(err);
+        res.body.should.be.instanceof(Object);
+        res.body.type.should.be.equal('Stack');
+        res.body.score.should.be.equal(0);
+        res.body.raters.length.should.be.equal(2);
+        //res.body.raters[0].user.should.be.equal(adminUser._id);
+        res.body.raters[0].action.should.be.equal(-1);
+        done();
+      });
+  });
+
+  it('simple user should Vote down stack rate', function(done){
+    request(app)
+      .post('/api/rate/vote/down/'+ rate_stack._id)
+      .set({'Authorization': 'Bearer '+token})
+      .send()
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res){
+        if(err)return done(err);
+        res.body.should.be.instanceof(Object);
+        res.body.type.should.be.equal('Stack');
+        res.body.score.should.be.equal(-2);
+        res.body.raters.length.should.be.equal(2);
+        //res.body.raters[0].user.should.be.equal(adminUser._id);
+        res.body.raters[1].action.should.be.equal(-1);
+        done();
+      });
+  });
+
+  it('should Vote up stars rate', function(done){
+    request(app)
+      .post('/api/rate/vote/5/'+ rate_stars._id)
+      .set({'Authorization': 'Bearer '+tokenAdmin})
+      .send()
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res){
+        if(err)return done(err);
+        res.body.should.be.instanceof(Object);
+        res.body.type.should.be.equal('Stars');
+        res.body.score.should.be.equal(5);
+        res.body.raters.length.should.be.equal(1);
+        //res.body.raters[0].user.should.be.equal(adminUser._id);
+        res.body.raters[0].action.should.be.equal(5);
+        done();
+      });
+  });
+
+  it('should Vote down stars rate', function(done){
+    request(app)
+      .post('/api/rate/vote/1/'+ rate_stars._id)
+      .set({'Authorization': 'Bearer '+tokenAdmin})
+      .send()
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res){
+        if(err)return done(err);
+        res.body.should.be.instanceof(Object);
+        res.body.type.should.be.equal('Stars');
+        res.body.score.should.be.equal(1);
+        res.body.raters.length.should.be.equal(1);
+        //res.body.raters[0].user.should.be.equal(adminUser._id);
+        Number(res.body.raters[0].action).should.be.equal(1);
+        done();
+      });
+  });
 
 });

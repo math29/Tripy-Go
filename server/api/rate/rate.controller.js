@@ -21,17 +21,19 @@ exports.index = function(req, res) {
 };
 
 
-exports.show = function (req, res, next) {
+exports.findById = function (req, res, next) {
   var rateId = req.params.id;
 
   Rate.findById(rateId, function (err, rate, next) {
     if (err) {
       logger.error("Could not retrieve rate", rate);
+
       return next(err);
     }
-    if (!rate) return res.status(401).send('Unauthorized');
+    if (!rate){
+      return res.status(204).send('No Content');
+    }
     if(rate.type === 'Stars'){
-      console.log(rateId);
       if(rate.raters.length > 0){
         Rate.aggregate(
           [
@@ -51,15 +53,13 @@ exports.show = function (req, res, next) {
             }
           ], function(err, result){
             if(err) return res.status(500).send(err);
-            console.log(result);
-            /*if(result.length > 0){
+            if(result.length > 0){
               return res.json(transformStarResult(result[0]));
-            }*/
+            }
             return res.json({'error':'fail'});
           });
-      }else{
-        return res.status(200).json(rate);
       }
+      return res.status(200).json(rate);
 
     }else{
       return res.status(200).json(rate);
