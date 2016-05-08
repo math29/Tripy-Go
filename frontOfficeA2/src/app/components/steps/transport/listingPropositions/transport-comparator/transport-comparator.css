@@ -85,25 +85,29 @@
 			4. COMMENTS
 **********************************************************/
 
-.comments-button{
+.next-comments{
 	position: absolute; 
 	bottom: 0; 
-	width: 100%; 
-	text-align: center;
+	right: 25%;
 }
 
-.comments-button i{
+.previous-comments{
+	position: absolute; 
+	bottom: 0; 
+	left: 25%;
+}
+
+.comments-arrow i {
 	padding: 10px 25px 10px 25px; 
-	margin-bottom: 0px; 
+	margin: 7px 0px;
 	background: #F2676B; 
 	color: white; 
 	cursor: pointer;
-	margin-top: -10px;
 }
 
 .list-comments {
 	text-align: center;
-	padding-bottom: 20px;
+	padding-bottom: 40px;
 }
 
 .list-comments .rating-box {

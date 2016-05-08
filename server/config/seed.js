@@ -171,7 +171,22 @@ User.find({}).remove(function() {
             },{
               score: 0,
               type: "Stack"
-            }, function(err, rate1, rate2){
+            },{
+              score: 0,
+              type: "Stack"
+            },{
+              score: 0,
+              type: "Stack"
+            },{
+              score: 0,
+              type: "Stack"
+            },{
+              score: 0,
+              type: "Stack"
+            },{
+              score: 0,
+              type: "Stack"
+            }, function(err, rate1, rate2, rate3, rate4, rate5, rate6, rate7){
               TransportComparator.find({}).remove(function(){
                 TransportComparator.create({
                   type:[transportTypeId],
@@ -187,6 +202,31 @@ User.find({}).remove(function() {
                       comment: "Très bon comparateur oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui",
                       user: user1._id,
                       rate: rate2._id
+                    },
+                    {
+                      comment: "Très bon comparateur oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui",
+                      user: user1._id,
+                      rate: rate3._id
+                    },
+                    {
+                      comment: "Très bon comparateur oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui",
+                      user: user1._id,
+                      rate: rate4._id
+                    },
+                    {
+                      comment: "Très bon comparateur oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui",
+                      user: user1._id,
+                      rate: rate5._id
+                    },
+                    {
+                      comment: "Très bon comparateur oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui",
+                      user: user1._id,
+                      rate: rate6._id
+                    },
+                    {
+                      comment: "Très bon comparateur oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui",
+                      user: user1._id,
+                      rate: rate7._id
                     }
                   ]
                 });
