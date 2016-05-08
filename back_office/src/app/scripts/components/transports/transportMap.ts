@@ -1,4 +1,4 @@
-/// <reference path="../../../../../typings/d3/d3.d.ts" />
+/// <reference path="../../../../../../typings/d3/d3.d.ts" />
 
 import {Component, Directive, ViewChild, ElementRef, Renderer, Input} from 'angular2/core';
 

@@ -1,4 +1,4 @@
-/// <reference path="../../../../../typings/socket.io-client/socket.io-client.d.ts" />
+/// <reference path="../../../../../../typings/socket.io-client/socket.io-client.d.ts" />
 
 import {Component, OnInit, OnDestroy} from 'angular2/core';
 import {NgForm} from 'angular2/common';

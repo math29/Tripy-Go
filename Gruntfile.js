@@ -20,7 +20,6 @@ module.exports = function (grunt) {
     cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner',
     buildcontrol: 'grunt-build-control',
-	compress: 'grunt-contrib-compress',
   });
 
   // Time how long tasks take. Can help when optimizing build times
@@ -35,24 +34,13 @@ module.exports = function (grunt) {
       client: require('./bower.json').appPath || 'client',
       front_office_A2: './frontOfficeA2/src',
       front_office_dist: './frontOfficeA2/dist',
-      back_office: 'back_office',
+      back_office: 'back_office/src',
+      back_office_dist: 'back_office/dist',
       lib:'tripyGo_Libs',
       dist: 'dist',
       public: 'dist/public',
       private: 'dist/back'
     },
-	compress:{
-
-		deploy: {
-			options:{
-			mode:'tgz',
-			archive: 'target/archive.tar.gz'
-			},
-			files:[
-				{expand: true, cwd: 'dist/', src: ['**']}
-			]
-		}
-	},
     ts: {
       options:{
         target: 'es5',
@@ -70,9 +58,9 @@ module.exports = function (grunt) {
       //  src: '<%= yeoman.back_office %>/app/scripts/**/*.ts',
       //  outDir: '<%= yeoman.back_office %>/app/scripts_js'
       //},
-	  back_office:{
-		tsconfig:"<%= yeoman.back_office %>/tsconfig.json"
-	  },
+	     back_office:{
+		       tsconfig:"<%= yeoman.back_office %>/tsconfig.json"
+	    },
       front_office: {
         tsconfig:"<%= yeoman.front_office_A2 %>/tsconfig.json",
       }
@@ -288,7 +276,8 @@ module.exports = function (grunt) {
           ]
         }]
       },
-      server: '.tmp'
+      server: '.tmp',
+      back_office_dist: '<%= yeoman.back_office_dist %>'
     },
 
     // Add vendor prefixed styles
@@ -520,44 +509,51 @@ module.exports = function (grunt) {
         dest: '.tmp/',
         src: ['{app,components}/**/*.css']
       },
+      back_office_base:{
+        expand: true,
+        dest: '<%= yeoman.back_office_dist %>',
+        cwd: '<%= yeoman.back_office %>/app/',
+        src: [
+          '**/*'
+        ]
+      },
 	  back_office_bower:{
 		expand: true,
-		dest:'./<%= yeoman.back_office %>/app/bower_components',
+		dest:'./<%= yeoman.back_office_dist %>/bower_components',
 		cwd:'client/bower_components',
 		src:[
-			'json3/**/*',
-			'font-awesome/**/*',
-			'metisMenu/**/*',
-			'socket.io/**/*',
-			'lodash/**/*',
-			'socket.io-client/**/*',
-			'bootstrap/**/*',
-			'jquery/**/*',
-			'bootstrap-iconpicker/**/*'
+			'json3/lib/json3.min.js',
+      'bootstrap/dist/**/*',
+      'bootstrap-iconpicker/bootstrap-iconpicker/**/*.min.*',
+			'font-awesome/**/*.min.*',
+			'metisMenu/dist/**/*.min.*',
+			'lodash/lodash.min.js',
+			'socket.io-client/socket.io.js',
+			'jquery/dist/jquery.min.js'
 		]
 	  },
       back_office_lib: {
         expand: true,
-        dest: './<%= yeoman.back_office %>/app/lib',
+        dest: './<%= yeoman.back_office_dist %>/lib',
         cwd: 'node_modules',
         src: [
-          'angular2/bundles/**/*',
-          'reflect-metadata/Reflect.js',
-          'systemjs/**/*',
+          'angular2/**/*.js',
+          'reflect-metadata/**/*',
+          'systemjs/dist/**/*',
           'rxjs/**/*',
           'ng2-bootstrap/**/*',
           'ng2-charts/**/*',
           'ng2-file-upload/**/*',
-          'chart.js/**/*',
-          'marked/**/*',
-          'socket.io-client/**/*',
+          'chart.js/Chart.min.js',
+          'marked/marked.min.js',
+          'socket.io-client/socket.io.js',
           'font-awesome/**/*',
-          'angular2-jwt/**/*',
+          'angular2-jwt/angular2-jwt.js*',
           'd3/d3.min.js',
-          'lodash/dist/lodash.min.js',
-          'datamaps/dist/datamaps.world.min.js',
-          'to-markdown/dist/to-markdown.js',
-          'moment/**/*'
+          'lodash/dist/**/*',
+          'datamaps/dist/**/*',
+          'to-markdown/dist/**/*',
+          'moment/min/**/*'
         ]
       },
       tripy_go_lib_back: {
@@ -764,6 +760,39 @@ module.exports = function (grunt) {
             ]
         }
       },
+      // Inject application script files into index.html (doesn't include bower)
+      back_libs: {
+        options: {
+          transform: function(filePath) {
+            filePath = filePath.replace('/back_office/dist/', '');
+            //filePath = filePath.replace('/.tmp/', '');
+            return '<script src="' + filePath + '"></script>';
+          },
+          starttag: '<!-- injector:js -->',
+          endtag: '<!-- endinjector -->'
+        },
+        files: {
+          '<%= yeoman.back_office_dist %>/index.html': [
+               [
+                 '<%= yeoman.back_office_dist %>/bower_components/jquery/dist/jquery.min.js',
+                 '<%= yeoman.back_office_dist %>/bower_components/bootstrap/dist/js/bootstrap.min.js',
+                 '<%= yeoman.back_office_dist %>/bower_components/metisMenu/dist/metisMenu.min.js',
+                 '<%= yeoman.back_office_dist %>/bower_components/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.2.0.min.js',
+                 '<%= yeoman.back_office_dist %>/bower_components/bootstrap-iconpicker/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js',
+                 '<%= yeoman.back_office_dist %>/lib/systemjs/dist/system.js',
+                 '<%= yeoman.back_office_dist %>/lib/angular2/bundles/angular2-polyfills.js',
+                 '<%= yeoman.back_office_dist %>/lib/angular2/bundles/angular2.min.js',
+                 '<%= yeoman.back_office_dist %>/lib/angular2/bundles/http.min.js',
+                 '<%= yeoman.back_office_dist %>/lib/angular2/bundles/router.min.js',
+                 '<%= yeoman.back_office_dist %>/lib/d3/d3.min.js',
+                 '<%= yeoman.back_office_dist %>/lib/to-markdown/dist/to-markdown.js',
+                 '<%= yeoman.back_office_dist %>/lib/datamaps/dist/datamaps.world.min.js',
+                 '<%= yeoman.back_office_dist %>/lib/chart.js/Chart.min.js',
+                 '<%= yeoman.back_office_dist %>/js/*.js'
+               ]
+            ]
+        }
+      },
 
       // Inject component css into index.html
       css: {
@@ -900,7 +929,9 @@ module.exports = function (grunt) {
     });
 
   grunt.registerTask('back_office', [
-	'copy:back_office_bower',
+    'clean:back_office_dist',
+    'copy:back_office_base',
+	  'copy:back_office_bower',
     'copy:back_office_lib',
     'copy:tripy_go_lib_back',
     'ts:back_office',
