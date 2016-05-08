@@ -15,21 +15,31 @@
 		</div>
 		<div class="col-md-2 col-sm-2 booking-box clear-padding text-center">
 			<div class="rating-box">
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star-o"></i>
+				<i *ngIf="comparator.ergo_rate.score > 0" class="fa fa-star"></i>
+				<i *ngIf="comparator.ergo_rate.score > 1" class="fa fa-star"></i>
+				<i *ngIf="comparator.ergo_rate.score > 2" class="fa fa-star"></i>
+				<i *ngIf="comparator.ergo_rate.score > 3" class="fa fa-star"></i>
+				<i *ngIf="comparator.ergo_rate.score > 4" class="fa fa-star"></i>
+				<i *ngIf="comparator.ergo_rate.score < 1" class="fa fa-star-o"></i>
+				<i *ngIf="comparator.ergo_rate.score < 2" class="fa fa-star-o"></i>
+				<i *ngIf="comparator.ergo_rate.score < 3" class="fa fa-star-o"></i>
+				<i *ngIf="comparator.ergo_rate.score < 4" class="fa fa-star-o"></i>
+				<i *ngIf="comparator.ergo_rate.score < 5" class="fa fa-star-o"></i>
 				<h5>Ergonomie</h5>
 				<span class="tooltip-ergo">Note de l'ergonomie par utilisateurs</span>
 			</div>
 			<div class="rating-box">
 				<span class="tooltip-contenu">Note du contenu par utilisateurs</span>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star-o"></i>
-				<i class="fa fa-star-o"></i>
-				<i class="fa fa-star-o"></i>
+				<i *ngIf="comparator.content_rate.score > 0" class="fa fa-star"></i>
+				<i *ngIf="comparator.content_rate.score > 1" class="fa fa-star"></i>
+				<i *ngIf="comparator.content_rate.score > 2" class="fa fa-star"></i>
+				<i *ngIf="comparator.content_rate.score > 3" class="fa fa-star"></i>
+				<i *ngIf="comparator.content_rate.score > 4" class="fa fa-star"></i>
+				<i *ngIf="comparator.content_rate.score < 1" class="fa fa-star-o"></i>
+				<i *ngIf="comparator.content_rate.score < 2" class="fa fa-star-o"></i>
+				<i *ngIf="comparator.content_rate.score < 3" class="fa fa-star-o"></i>
+				<i *ngIf="comparator.content_rate.score < 4" class="fa fa-star-o"></i>
+				<i *ngIf="comparator.content_rate.score < 5" class="fa fa-star-o"></i>
 				<h5>Contenu</h5>
 			</div>
 		</div>

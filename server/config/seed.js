@@ -204,27 +204,27 @@ User.find({}).remove(function() {
                       rate: rate2._id
                     },
                     {
-                      comment: "Très bon comparateur oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui",
+                      comment: "U commentaire comme un autre",
                       user: user1._id,
                       rate: rate3._id
                     },
                     {
-                      comment: "Très bon comparateur oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui",
+                      comment: "Oui, c'est plutôt intéressant !",
                       user: user1._id,
                       rate: rate4._id
                     },
                     {
-                      comment: "Très bon comparateur oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui",
+                      comment: "Très satisfait de leurs services ! ",
                       user: user1._id,
                       rate: rate5._id
                     },
                     {
-                      comment: "Très bon comparateur oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui",
+                      comment: "hahahahahahahahahahahahaha",
                       user: user1._id,
                       rate: rate6._id
                     },
                     {
-                      comment: "Très bon comparateur oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui",
+                      comment: "Très bon ",
                       user: user1._id,
                       rate: rate7._id
                     }
