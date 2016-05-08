@@ -18,11 +18,14 @@ export class ListingPropositions {
 
 	options_post: RequestOptions;
 
+	transportTypes: any;
+
 	constructor(private params: RouteParams, private _http:Http, private _auth: AuthService) {
 		this.travel_id = params.get('id');
 
 		this.options_post = new RequestOptions({ headers: _auth.getBearerHeaders() });
 		this.synchTransportsComparators();
+		this.synchTransportTypes();
 	}
 
 	// ***************************************
@@ -33,7 +36,16 @@ export class ListingPropositions {
 			.map(res => res.json())
 			.subscribe(comparators => {
 				this.comparators = comparators;
-				console.log(this.comparators);
+				// console.log(this.comparators);
+			});
+	}
+
+	synchTransportTypes() {
+		this._http.get('/api/transport/type', this.options_post)
+			.map(res => res.json())
+			.subscribe(transportTypes => {
+				this.transportTypes = transportTypes;
+				console.log(this.transportTypes);
 			});
 	}
 }

@@ -27,7 +27,7 @@ var router = express.Router();
  */
 
 /**
- * @api {get} /api/transporttype/ Request list of all transports
+ * @api {get} /api/transport/type Request list of all transports
  * @apiVersion 0.0.0
  * @apiName GetTransportTypes
  * @apiGroup TransportType
@@ -50,7 +50,7 @@ var router = express.Router();
 router.get('/', controller.index);
 
 /**
- * @api {get} /api/transporttype/:id Get By Id
+ * @api {get} /api/transport/type/:id Get By Id
  * @apiVersion 0.0.0
  * @apiName GetTransportsById
  * @apiGroup TransportType
@@ -73,7 +73,7 @@ router.get('/', controller.index);
 router.get('/:id', controller.show);
 
 /**
-  * @api {post} /api/transportType/:name/ Insert a transportType
+  * @api {post} /api/transport/type/:name/ Insert a transportType
   * @apiName InsertTransportType
   * @apiGroup TransportType
   * @apiPermission admin
@@ -96,7 +96,7 @@ router.get('/:id', controller.show);
 router.post('/:name', auth.hasRole('admin'),controller.create);
 
 /**
-  * @api {put} /api/transports/:id Substitute a transportType
+  * @api {put} /api/transport/type/:id Substitute a transportType
   * @apiName SubstituteTransport
   * @apiGroup Transports
   *
@@ -115,7 +115,7 @@ router.post('/:name', auth.hasRole('admin'),controller.create);
 router.put('/:id', auth.hasRole('admin'),controller.update);
 
 /**
-  * @api {delete} /api/transports/:id Delete a transport
+  * @api {delete} /api/transport/type/:id Delete a transport
   * @apiName DeleteTransport
   * @apiGroup Transports
   *

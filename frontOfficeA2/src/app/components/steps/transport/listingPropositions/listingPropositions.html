@@ -22,54 +22,12 @@
 			</div>
 			<div class="filter-area">
 				<p>Plusieurs moyens de transports s'offrent à nous. Vous ferez votre choix en fonction de vos envies, des prix, des disponibilités... Nous vous proposons ici une liste de comparateurs de transports qui vous proposerons tous les trajets actuellement disponibles sur le marché !</p>
-				<!-- <div class="price-filter filter">
-					<h5><i class="fa fa-usd"></i> Price</h5>
-					<p>
-						<label></label>
-						<input type="text" id="amount" readonly>
-					</p>
-					<div id="price-range"></div>
-				</div>
 				<div class="star-filter filter">
-					<h5><i class="fa fa-dashboard"></i> Transmission</h5>
-					<ul>
-						<li><input type="checkbox"> Automatic</li>
-						<li><input type="checkbox"> Mannual</li>
-						<li><input type="checkbox"> Any</li>
+					<h5><i class="fa fa-dashboard"></i> Moyens de transports</h5>
+					<ul *ngFor="#type of transportTypes">
+						<li><input type="checkbox"> {{ type.name }}</li>
 					</ul>
 				</div>
-				<div class="location-filter filter">
-					<h5><i class="fa fa-certificate"></i> Car Brand</h5>
-					<ul>
-						<li><input type="checkbox"> AUDI</li>
-						<li><input type="checkbox"> BMW</li>
-						<li><input type="checkbox"> HONDA</li>
-						<li><input type="checkbox"> SUZUKI</li>
-						<li><input type="checkbox"> MERCEDES</li>
-						<li><input type="checkbox"> All</li>
-					</ul>
-				</div>
-				<div class="filter">
-					<h5><i class="fa fa-dashboard"></i> Engine</h5>
-					<ul>
-						<li><input type="checkbox"> Gas</li>
-						<li><input type="checkbox"> Diesel</li>
-						<li><input type="checkbox"> Electric</li>
-						<li><input type="checkbox"> Patrol</li>
-						<li><input type="checkbox"> Hybrid</li>
-						<li><input type="checkbox"> All</li>
-					</ul>
-				</div>
-				<div class="facilities-filter filter">
-					<h5><i class="fa fa-cog"></i> Equipments</h5>
-					<ul>
-						<li><input type="checkbox"> Car AC</li>
-						<li><input type="checkbox"> Music System</li>
-						<li><input type="checkbox"> FM Radio</li>
-						<li><input type="checkbox"> Satelite Navigation</li>
-						<li><input type="checkbox"> Power Lock</li>
-					</ul>
-				</div> -->
 			</div>
 		</div>
 	</div>
