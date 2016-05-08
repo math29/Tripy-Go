@@ -497,10 +497,11 @@ module.exports = function (grunt) {
         {
           expand: true,
           dot: true,
-          cwd: '<%= yeoman.back_office %>/app',
+          cwd: '<%= yeoman.back_office_dist %>',
           dest: '<%= yeoman.private %>',
           src: [
-'**/*'          ]
+            '**/*'
+          ]
         }]
       },
       styles: {
