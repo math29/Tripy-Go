@@ -63,7 +63,7 @@ module.exports = function(app) {
     // app.use('/front',express.static(path.join(config.root, 'client')));
     // app.set('/front', path.join(config.root, 'client'));
     app.set('appPath', path.join(config.root, 'frontOfficeA2/dist/'));
-    app.set('back', path.join(config.root, 'back_office/app/'));
+    app.set('back', path.join(config.root, 'back_office/dist/'));
     app.use( express.static(path.join(config.root, 'frontOfficeA2/dist/')));
     app.use('/back',express.static(path.join(config.root, 'back_office/dist/')));
     if('test' !== env){

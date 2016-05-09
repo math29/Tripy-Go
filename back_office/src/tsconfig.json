@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "outDir": "dist/app/scripts_js",
+        "outDir": "../dist/scripts_js",
         "target": "es5",
         "module": "system",
         "moduleResolution": "node",

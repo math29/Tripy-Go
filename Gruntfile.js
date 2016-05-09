@@ -17,6 +17,7 @@ module.exports = function (grunt) {
     useminBack: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
     ts: 'grunt-ts',
+    concat: 'grunt-contrib-concat',
     cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner',
     buildcontrol: 'grunt-build-control',
@@ -41,6 +42,7 @@ module.exports = function (grunt) {
       public: 'dist/public',
       private: 'dist/back'
     },
+    back_config: require('./config/grunt_back_office.json'),
     ts: {
       options:{
         target: 'es5',
@@ -54,10 +56,6 @@ module.exports = function (grunt) {
         suppressImplicitAnyIndexErrors: true,
         reference: './typings/tsd.d.ts'
       },
-      //back_office:{
-      //  src: '<%= yeoman.back_office %>/app/scripts/**/*.ts',
-      //  outDir: '<%= yeoman.back_office %>/app/scripts_js'
-      //},
 	     back_office:{
 		       tsconfig:"<%= yeoman.back_office %>/tsconfig.json"
 	    },
@@ -343,7 +341,6 @@ module.exports = function (grunt) {
         exclude: [/bootstrap-sass-official/, /bootstrap.js/, '/json3/', '/es5-shim/']
       }
     },
-
     // Renames files for browser caching purposes
     rev: {
       dist: {
@@ -362,7 +359,6 @@ module.exports = function (grunt) {
         }
       }
     },
-
     // Reads HTML for usemin blocks to enable smart builds that automatically
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
@@ -413,20 +409,6 @@ module.exports = function (grunt) {
         }]
       }
     },
-
-    // Allow the use of non-minsafe AngularJS files. Automatically makes it
-    // minsafe compatible so Uglify does not destroy the ng references
-    ngAnnotate: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '.tmp/concat',
-          src: '**/*.js',
-          dest: '.tmp/concat'
-        }]
-      }
-    },
-
     // Package all the html partials into a single javascript payload
     ngtemplates: {
       options: {
@@ -454,11 +436,13 @@ module.exports = function (grunt) {
         dest: '.tmp/tmp-templates.js'
       }
     },
-
     // Replace Google CDN references
     cdnify: {
       dist: {
         html: ['<%= yeoman.dist %>/public/*.html']
+      },
+      back_office_dist: {
+        html: ['<%= yeoman.private %>/*.html']
       }
     },
 
@@ -515,7 +499,8 @@ module.exports = function (grunt) {
         dest: '<%= yeoman.back_office_dist %>',
         cwd: '<%= yeoman.back_office %>/app/',
         src: [
-          '**/*'
+          '**/*',
+          '!/scripts/**/*'
         ]
       },
 	  back_office_bower:{
@@ -525,7 +510,7 @@ module.exports = function (grunt) {
 		src:[
 			'json3/lib/json3.min.js',
       'bootstrap/dist/**/*',
-      'bootstrap-iconpicker/bootstrap-iconpicker/**/*.min.*',
+      'bootstrap-iconpicker/**/*',
 			'font-awesome/**/*.min.*',
 			'metisMenu/dist/**/*.min.*',
 			'lodash/lodash.min.js',
@@ -567,16 +552,16 @@ module.exports = function (grunt) {
       },
       back_office_compiled: {
         expand: true,
-        dest: './<%= yeoman.back_office %>/app/scripts_js',
-        cwd: './<%= yeoman.back_office %>/app/scripts_js',
+        dest: './<%= yeoman.back_office_dist %>/scripts_js',
+        cwd: './<%= yeoman.back_office_dist %>/scripts_js/back_office/src/app/scripts',
         src: [
-          '<%= yeoman.back_office %>/app/scripts/**/*'
+          '<%= yeoman.back_office_dist %>/scripts_js/back_office/src/app/scripts/**/*.js'
         ]
       },
       back_office_inner: {
         expand: true,
-        dest: './<%= yeoman.back_office %>/app/scripts_js',
-        cwd: './<%= yeoman.back_office %>/app/scripts_js/back_office/app/scripts',
+        dest: './<%= yeoman.back_office_dist %>/scripts_js',
+        cwd: './<%= yeoman.back_office_dist %>/scripts_js/back_office/src/app/scripts',
         src: [
          '**/*'
          ]
@@ -762,7 +747,7 @@ module.exports = function (grunt) {
         }
       },
       // Inject application script files into index.html (doesn't include bower)
-      back_libs: {
+      back_lib: {
         options: {
           transform: function(filePath) {
             filePath = filePath.replace('/back_office/dist/', '');
@@ -775,21 +760,22 @@ module.exports = function (grunt) {
         files: {
           '<%= yeoman.back_office_dist %>/index.html': [
                [
-                 '<%= yeoman.back_office_dist %>/bower_components/jquery/dist/jquery.min.js',
-                 '<%= yeoman.back_office_dist %>/bower_components/bootstrap/dist/js/bootstrap.min.js',
-                 '<%= yeoman.back_office_dist %>/bower_components/metisMenu/dist/metisMenu.min.js',
-                 '<%= yeoman.back_office_dist %>/bower_components/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.2.0.min.js',
-                 '<%= yeoman.back_office_dist %>/bower_components/bootstrap-iconpicker/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js',
-                 '<%= yeoman.back_office_dist %>/lib/systemjs/dist/system.js',
-                 '<%= yeoman.back_office_dist %>/lib/angular2/bundles/angular2-polyfills.js',
-                 '<%= yeoman.back_office_dist %>/lib/angular2/bundles/angular2.min.js',
-                 '<%= yeoman.back_office_dist %>/lib/angular2/bundles/http.min.js',
-                 '<%= yeoman.back_office_dist %>/lib/angular2/bundles/router.min.js',
-                 '<%= yeoman.back_office_dist %>/lib/d3/d3.min.js',
-                 '<%= yeoman.back_office_dist %>/lib/to-markdown/dist/to-markdown.js',
-                 '<%= yeoman.back_office_dist %>/lib/datamaps/dist/datamaps.world.min.js',
-                 '<%= yeoman.back_office_dist %>/lib/chart.js/Chart.min.js',
-                 '<%= yeoman.back_office_dist %>/js/*.js'
+                 "<%= yeoman.back_office_dist %>/bower_components/jquery/dist/jquery.min.js",
+                 "<%= yeoman.back_office_dist %>/bower_components/bootstrap/dist/js/bootstrap.min.js",
+                 "<%= yeoman.back_office_dist %>/bower_components/metisMenu/dist/metisMenu.min.js",
+                 "<%= yeoman.back_office_dist %>/bower_components/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.2.0.min.js",
+                 "<%= yeoman.back_office_dist %>/bower_components/bootstrap-iconpicker/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js",
+                 "<%= yeoman.back_office_dist %>/lib/systemjs/dist/system.js",
+                 "<%= yeoman.back_office_dist %>/lib/angular2/bundles/angular2-polyfills.js",
+                 "<%= yeoman.back_office_dist %>/lib/angular2/bundles/angular2.min.js",
+                 "<%= yeoman.back_office_dist %>/lib/angular2/bundles/http.min.js",
+                 "<%= yeoman.back_office_dist %>/lib/angular2/bundles/router.min.js",
+                 "<%= yeoman.back_office_dist %>/lib/d3/d3.min.js",
+                 "<%= yeoman.back_office_dist %>/lib/marked/marked.min.js",
+                 "<%= yeoman.back_office_dist %>/lib/to-markdown/dist/to-markdown.js",
+                 "<%= yeoman.back_office_dist %>/lib/datamaps/dist/datamaps.world.min.js",
+                 "<%= yeoman.back_office_dist %>/lib/chart.js/Chart.min.js",
+                 "<%= yeoman.back_office_dist %>/js/*.js"
                ]
             ]
         }
@@ -812,7 +798,7 @@ module.exports = function (grunt) {
           ]
         }
       }
-    },
+    }
   });
 
   // Used for delaying livereload until after server has restarted
@@ -935,6 +921,7 @@ module.exports = function (grunt) {
 	  'copy:back_office_bower',
     'copy:back_office_lib',
     'copy:tripy_go_lib_back',
+    'injector:back_lib',
     'ts:back_office',
     'copy:back_office_compiled',
     'copy:back_office_inner'
@@ -959,7 +946,6 @@ module.exports = function (grunt) {
     'autoprefixer',
     'ngtemplates',
     'concat',
-    'ngAnnotate',
     'copy:dist',
     /*'cdnify',
     'cssmin',
