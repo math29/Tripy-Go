@@ -592,13 +592,13 @@ module.exports = function (grunt) {
         src: [
           'angular2/bundles/**/*',
           'reflect-metadata/Reflect.js',
-          'systemjs/**/*',
+          'systemjs/dist/**/*',
           'rxjs/**/*',
           'angular2-jwt/*',
           'ng2-bootstrap/**/*',
-          'moment/**/*',
+          'moment/min/**/*',
           'ng2-file-upload/**/*',
-          'marked/**/*'
+          'marked/marked.min.js'
         ]
       },
       // TRIPY-GO LIBRAIRIES GLOBALES
