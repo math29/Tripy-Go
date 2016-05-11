@@ -36,6 +36,7 @@
         "app/components/header/stepbar/stepbar.ts",
         "app/components/main/main.spec.ts",
         "app/components/main/main.ts",
+        "app/components/socialMedias/socialMedias.ts",
         "app/components/steps/timeline/timeline.ts",
         "app/components/steps/transport/listingPropositions/listingPropositions.ts",
         "app/components/steps/transport/listingPropositions/transport-comparator/transport-comparator-comment/transport-comparator-comment.ts",
