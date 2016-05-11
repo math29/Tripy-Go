@@ -21,6 +21,7 @@ import { Research } from './components/steps/transport/research/research';
 @Component({
   selector: 'front-office-a2-app',
   templateUrl: 'app/front-office-a2.html',
+  styleUrls: ['app/components/front-office-a2.css'],
   providers: [HTTP_PROVIDERS],
   directives: [Header, CmptFooter, LoggedInRouterOutlet],
   pipes: []
