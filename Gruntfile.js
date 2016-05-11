@@ -42,7 +42,6 @@ module.exports = function (grunt) {
       public: 'dist/public',
       private: 'dist/back'
     },
-    back_config: require('./config/grunt_back_office.json'),
     ts: {
       options:{
         target: 'es5',

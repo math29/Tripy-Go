@@ -12,6 +12,8 @@
         "suppressImplicitAnyIndexErrors": true
     },
     "files": [
+        "app/scripts/+login/components/login.component.ts",
+        "app/scripts/+login/index.ts",
         "app/scripts/app.ts",
         "app/scripts/back.ts",
         "app/scripts/classes/company.ts",
@@ -26,7 +28,6 @@
         "app/scripts/components/home/home.ts",
         "app/scripts/components/language/language.ts",
         "app/scripts/components/log/log.ts",
-        "app/scripts/components/login/login.ts",
         "app/scripts/components/mongo/mongo.ts",
         "app/scripts/components/sidebar/sidebar_element.ts",
         "app/scripts/components/sidebar/sidebar.ts",
@@ -80,6 +81,7 @@
     ],
     "filesGlob": [
         "app/scripts/**/*.ts",
+        "app/+login/**/*.ts",
         "app/lib/tripy-lib/**/*.d.ts",
         "../../typings/**/*.d.ts"
     ],

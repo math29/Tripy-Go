@@ -1,6 +1,6 @@
 import {Component, OnInit} from 'angular2/core';
 import {HeaderCmp} from './components/header/header';
-import {LoginCmp} from './components/login/login';
+import {LoginCmp} from './+login/index';
 import {HomeCmp} from './components/home/home';
 import {MongoCmp} from './components/mongo/mongo';
 import {TimelinesCmp} from './components/timelines/timelines';
