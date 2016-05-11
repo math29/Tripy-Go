@@ -25,13 +25,56 @@ body {
 
 
 path {fill: #bbb;stroke: #fff;}
-/*.navbar{
-  background-color: #f2676b;
+.navbar,
+.navbar-brand{
+  background-color: #00adef;
+  color: #fff;
 }
 
-.navbar li a:hover{
-  background-color: #f19c4f;
-}*/
+.navbar li a > i,
+.navbar li a > span{
+  color: #f9676b;
+}
+
+.nav li a:focus,
+.nav li a:hover {
+  background-color: #f9676b;
+  color: #00adef;
+}
+
+.nav li a:hover > i,
+.nav li a:focus > i,
+.nav li a:hover > span,
+.nav li a:focus > span {
+  background-color: #f9676b;
+  color: #00adef;
+}
+
+.nav li a.active:hover > i,
+.nav li a.active:focus > i,
+.nav li a.active:hover > span,
+.nav li a.active:focus > span {
+  background-color: #eee;
+  color: #00adef;
+}
+
+.itemselected:after{
+  float: right;
+  margin-right: -18px;
+  margin-top: -40px;
+  display: inline-block;
+  position: relative;
+  content:"";
+    width:0;
+    height:0;
+    border-top:20px solid transparent;
+    border-bottom:20px solid transparent;
+    border-left:20px solid #eee;
+  /*position:relative;
+  width:0px;
+  border:10px solid transparent;
+  border-left:10px solid red;*/
+}
 
 
 /* Custom page footer */
