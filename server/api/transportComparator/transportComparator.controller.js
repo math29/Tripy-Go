@@ -2,6 +2,8 @@
 
 var _ = require('lodash');
 var TransportComparator = require('./transportComparator.model');
+var Rate = require('../rate/rate.model');
+var mongoose = require('mongoose');
 
 // Get list of transport comparator
 exports.index = function(req, res) {
@@ -21,22 +23,13 @@ exports.show = function(req, res) {
   });
 };
 
-// Get transport comparator comments with offset
 exports.getComments = function(req, res) {
-  TransportComparator
-  .populate('comments.rate')
-  .aggregate(
-    [
-      {$match: {_id: ObjectId("572a23165f760780657fafd9")}},
-      {$unwind: '$comments'},
-      {$sort: {'$comments.rate.score':-1}}
-    ], function(err, result){
-      if(err) return res.status(500).send(err);
-
-      res.json(transformStarResult(result[0]));
-    }
-  );
-}
+  TransportComparator.findById(req.params.id, function (err, transport) {
+    if(err) { return handleError(res, err); }
+    if(!transport) { return res.status(404).send('Not Found'); }
+    filterComments(transport, req, res);
+  });
+};
 
 // Creates a new transport comparator in the DB.
 exports.create = function(req, res) {
@@ -100,8 +93,43 @@ function populate(doc, req, res){
       {path: 'comments.rate', ref: 'Rate'}
     ], function(err, result){
       if(err)console.err(err);
-
+      console.log(result);
       return res.status(200).json(result);
+    });
+}
+
+function compareCommentsDESC(a, b){
+    if(a.rate.score < b.rate.score)
+      return 1;
+    else if(a.rate.score > b.rate.score)
+      return -1;
+    else
+      return 0;
+}
+
+function filterComments(doc, req, res){
+  var limit = req.params.limit;
+  var offset = req.params.offset;
+
+  if(!limit) { return res.status(404).send('No limit given'); }
+  if(!offset) { return res.status(404).send('No Offset given'); }
+
+  TransportComparator.populate(doc, [
+      {path: 'comments.user', ref: 'User', select:'-salt -hashedPassword -email -provider'},
+      {path: 'comments.rate', ref: 'Rate'}
+    ], function(err, result){
+      if(err)console.err(err);
+
+      // On récupère seulement les commentaires du comparator
+      var comments = result.comments;
+
+      // Puis on les tris dans l'ordre descendant
+      comments.sort(compareCommentsDESC);
+
+      // On applique les limit et offset
+      var selected_comments = comments.splice(offset, limit);
+
+      return res.status(200).json(selected_comments);
     });
 }
 

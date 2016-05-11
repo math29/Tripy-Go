@@ -16,10 +16,13 @@ import { AuthService } from '../../../../../tripy_go_lib/services/auth.service';
 export class TransportComparatorCmp {
 	private comparator: any;
 
+	private options_post: RequestOptions;
+
 	// This var tell us if comments are epanded or not
 	private comments: Boolean = false;
-
-	private options_post: RequestOptions;
+	private comment_offset: number = 0;
+	private comment_limit: number = 5;
+	private number_comments: number;
   
 	constructor(private _auth: AuthService, private _http: Http) {
 		this.options_post = new RequestOptions({ headers: _auth.getBearerHeaders() });
@@ -27,13 +30,29 @@ export class TransportComparatorCmp {
 
 	ngOnInit(){
 		console.log(this.comparator);
-		this._http.post(`/api/transport/comparators/comments/0/${this.comparator._id}`, null, this.options_post)
+		this.number_comments = this.comparator.comments.length;
+		this.synchComments();
+	}
+
+	synchComments() {
+		this._http.get(`/api/transport/comparators/comments/${this.comparator._id}/${this.comment_limit}/${this.comment_offset}`, this.options_post)
 			.map(res => res.json())
-			.subscribe(res => {
-				console.log(res);
+			.subscribe(comments => {
+				this.comparator.comments = comments;
 			});
 	}
 
-	// Img Sizing
-	
+	nextComments() {
+		if ((this.comment_offset + this.comment_limit) < this.number_comments) {
+			this.comment_offset += 5;
+			this.synchComments();
+		}
+	}
+
+	previousComments() {
+		if (this.comment_offset > 0){
+			this.comment_offset -= 5;
+			this.synchComments();
+		}
+	}
 }

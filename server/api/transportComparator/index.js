@@ -59,7 +59,7 @@ var router = express.Router();
  *
  * @apiUse UserNotAuthorized
  */
-router.get('/', auth.isAuthenticated(),controller.index);
+router.get('/', auth.isAuthenticated(), controller.index);
 
 /**
  * @api {get} /api/transport/comparators/:id Get By Id
@@ -93,18 +93,19 @@ router.get('/', auth.isAuthenticated(),controller.index);
  *
  * @apiUse UserNotAuthorized
  */
-router.get('/:id', auth.isAuthenticated(), controller.show);
+router.get('/:id', controller.show); //auth.isAuthenticated(),
 
 /**
- * @api {get} /api/transport/comparators/comments/:offset/:id Get By Id
+ * @api {get} /api/transport/comparators/comments/:id/:limit/:offset Get Comments By Id with offset
  * @apiVersion 0.0.0
- * @apiName GetTransportComparatorComments
+ * @apiName GetTransportComparatorCommentsById
  * @apiGroup TransportComparator
  *
- * @apiParam {Number} offset  The first of 5 comments requested
  * @apiParam {Number} id  Id of the target comparator transport
+ * @apiParam {Number} offset  Offset of the comment wanted
+ * @apiParam {Number} limit  Number of comments wanted from the offset
  *
- * @apiSuccess {Array} Comments
+ * @apiSuccess {Comparator} Comparator
  *
  * @apiSuccessExample Success-Response:
  *   HTTP/1.1 200 OK
@@ -128,7 +129,7 @@ router.get('/:id', auth.isAuthenticated(), controller.show);
  *
  * @apiUse UserNotAuthorized
  */
-router.get('/comments/:offset/:id', auth.isAuthenticated(), controller.getComments);
+router.get('/comments/:id/:limit/:offset', auth.isAuthenticated(), controller.getComments);
 
 /**
   * @api {post} /api/transport/comparators Insert a transport comparator

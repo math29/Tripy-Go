@@ -107,5 +107,23 @@
 	border: 1px solid #e6e6e6;
     box-shadow: 0px 0px 5px #e6e6e6;
     border-radius: 3px;
-    /*margin-right: 10px;*/
+}
+
+.comment-content .tooltip-comment {
+    visibility: hidden;
+    width: 120px;
+    background-color: #00adef;
+    color: white;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-weight: bold;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+.comment-content:hover .tooltip-comment {
+    visibility: visible;
 }
