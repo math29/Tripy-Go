@@ -39,6 +39,12 @@
           </ul>
         </div>
         <div class="form-group">
+          <label class="control-label col-sm-2" for="nb_companies">Nombre de compagnies comparées:</label>
+          <div class="col-sm-10">
+            <input type="number" step="1" min="0" class="form-control" id="nbCompanies" [(ngModel)]="transportComparatorEdit.nbCompanies" placeholder="1">
+          </div>
+        </div>
+        <div class="form-group">
           <label class="control-label col-sm-2" for="code">Type de transport:</label>
           <div class="col-sm-10">
             <div *ngFor="#type of transportTypes" ><span class="fa {{type.img}}"></span>{{type.name}} <button *ngIf="!typeInArray(type)" (click)="addType(type)" class="fa fa-plus">Ajouter</button> <button *ngIf="typeInArray(type)" (click)="removeType(type)" class="fa fa-minus">Supprimer</button></div>
@@ -68,10 +74,11 @@
         <table class="table table-striped table-bordered table-hover" role="grid">
           <thead>
           <tr role="row">
-            <th class="sorting">Entreprise</th>
-            <th class="sorting">Types de transports</th>
-            <th class="sorting">Ergonomie</th>
-            <th class="sorting">Contenu</th>
+            <th >Entreprise</th>
+            <th >Types de transports</th>
+            <th >Nb companies</th>
+            <th >Ergonomie</th>
+            <th >Contenu</th>
           </tr>
           </thead>
           <tbody>
@@ -79,6 +86,7 @@
           <tr *ngFor="#comparator of comparators">
             <td>{{comparator.company.name}}</td>
             <td><span *ngFor="#type of comparator.type"><span class="fa {{type.img}}"></span>{{type.name}}<br/></span></td>
+            <td>{{comparator.nbCompanies}}</td>
             <td *ngIf="comparator.ergo_rate.raters.length > 0">{{comparator.ergo_rate.score}}</td><td *ngIf="comparator.ergo_rate.raters.length == 0">Pas de votes</td>
             <td *ngIf="comparator.content_rate.raters.length > 0">{{comparator.content_rate.score}}</td><td *ngIf="comparator.content_rate.raters.length == 0">Pas de votes</td>
             <td><a (click)="edit(comparator)" class="trash"><span class="glyphicon glyphicon-edit pull-right"></span></a></td>
