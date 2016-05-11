@@ -1,12 +1,13 @@
 import {Component, Input, OnInit} from 'angular2/core';
 import { Http, RequestOptions, Headers } from 'angular2/http';
 import { AuthService } from '../../../../../../tripy_go_lib/services/auth.service';
+import { RateService } from '../../../../../../services/rate.service';
 
 @Component({
 	selector: 'comparatorComment',
 	templateUrl: 'app/components/steps/transport/listingPropositions/transport-comparator/transport-comparator-comment/transport-comparator-comment.html',
 	styleUrls: ['app/components/steps/transport/listingPropositions/transport-comparator/transport-comparator-comment/transport-comparator-comment.css'],
-	providers: [],
+	providers: [RateService],
 	directives: [],
 	pipes: [],
 	inputs: ['comment']
@@ -16,7 +17,7 @@ export class TransportComparatorComment {
 	private rate_side: String;
 	private options_post: RequestOptions;
   
-	constructor(private _auth: AuthService, private _http: Http) {
+	constructor(private _auth: AuthService, private _http: Http, private _rate: RateService) {
 		this.options_post = new RequestOptions({ headers: _auth.getBearerHeaders() });
 	}
 
@@ -37,16 +38,11 @@ export class TransportComparatorComment {
 		}
 	}
 
-	// Rate Votes
-	vote(side) {
+	vote(side){
 		this.rate_side = side;
-
-		// Post Vote
-		this._http.post(`/api/rate/vote/${side}/${this.comment.rate._id}`, null, this.options_post)
-			.map(res => res.json())
-			.subscribe(res => {
-				console.log(this.comment.rate);
-				this.comment.rate = res;
+		this._rate.updateStackRate(side, this.comment.rate._id)
+			.subscribe(rate => {
+				this.comment.rate = rate;
 			});
 	}
 }

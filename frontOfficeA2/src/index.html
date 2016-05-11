@@ -29,6 +29,13 @@
 
         <link href="assets/css/light.css" rel="stylesheet" media="screen">
 
+        <style type="text/css" media="screen">
+            html, 
+            body {
+                height: 100%;
+            }
+        </style>
+
         <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800,700,600' rel='stylesheet' type='text/css'> -->
 
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?&libraries=places&language=fr-FR"></script>
@@ -78,7 +85,7 @@
                 map: {
                     "angular2-jwt": "lib/angular2-jwt",
                     "ng2-bootstrap": "lib/ng2-bootstrap",
-                    "moment": 'lib/moment/moment.js',
+                    "moment": 'lib/moment/min/moment.min.js',
                     "ng2-file-upload": "lib/ng2-file-upload",
                     'marked':'lib/marked/marked.min.js'
                 }
@@ -93,7 +100,7 @@
         <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="assets/js/jquery-ui.min.js"></script>
         <script src="assets/js/datepicker-fr.js"></script>
-        <!-- <script src="assets/js/bootstrap-select.min.js"></script> -->
+        <script src="lib/marked/marked.min.js"></script>
         <script src="assets/plugins/wow.min.js"></script>
     </body>
 </html>

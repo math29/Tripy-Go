@@ -264,55 +264,6 @@ h5 {
 .header-top {
 	background: #07253F;
 }
-.navbar-contact {
-	margin: 10px 0;
-	font-size: 12px;
-	overflow: hidden;
-}
-.navbar-contact .user-logged {
-	text-align: right;
-} 
-.navbar-contact .user-logged  img {
-	width: 30px;
-	height: 30px;
-	border-radius: 50%;
-}
-.navbar-contact .user-logged a {
-	margin: 0 0 0 15px;
-}
-.navbar-contact a {
-	color: #BEC4C8;	
-	display: inline-block;
-	margin: 7px 0 0 15px;
-}
-.navbar-contact a i {
-	color: #f9676b;
-	margin-right: 5px;
-}
-.navbar-contact .form-control {
-	background: #0A3152 none repeat scroll 0 0;
-    border: medium none;
-    border-radius: 0;
-    box-shadow: none;
-    color: #bec4c8;
-    height: 30px;
-    padding: 0 5px 0 10px;
-}
-.navbar-contact .input-group-addon {
-	background: #0A3152 none repeat scroll 0 0;
-    border: medium none;
-    border-radius: 0;
-    color: #f9676b;
-    padding: 0 10px 0 0;
-	margin-right: 15px;
-}
-.navbar-contact a:hover {
-	-webkit-transition-property: color;
-    -moz-transition-property: color;
-    -o-transition-property: color;
-    transition-property: color;
-	color: #f9676b;
-}
 .transparent-menu-top {
 	background: rgba(10, 49, 82, 0.8);
 }

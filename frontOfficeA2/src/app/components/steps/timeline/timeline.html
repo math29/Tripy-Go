@@ -13,96 +13,41 @@
 				</h4>
 				<div class="package-summary-body">
 					<span [innerHTML]="instance.operations[step].content | markdown"></span>
-					<!-- <h5><i class="fa fa-heart"></i>Theme</h5>
-					<p>Honeymoon, Group, Beach</p>
-					<h5><i class="fa fa-map-marker"></i>Departure Port</h5>
-					<p>Miami</p>
-					<h5><i class="fa fa-globe"></i>Itinerary</h5>
-					<p>Paris, London, Amesterdam</p> -->
-				</div>
-				<!-- <div class="package-summary-footer text-center">
-					<div class="col-md-6 col-sm-6 col-xs-6 price">
-						<h4>Premier conseil</h4>
-						<h5><strong>$999/Person</strong></h5>
-					</div>
-					<div class="col-md-6 col-sm-6 col-xs-6 book">
-						<a href="#">Etape suivante</a>
-					</div>
-				</div> -->
-			</div>
-			<!-- <div class="assistance-box sidebar-item">
-				<h4><i class="fa fa-phone"></i> Need Assistance</h4>
-				<div class="assitance-body text-center">
-					<h5>Need Help? Call us or drop a message. Our agents will be in touch shortly.</h5>
-					<h2>+91 1234567890</h2>
-					<h3>Or</h3>
-					<a href="mailto:info@yourdomain.com"><i class="fa fa-envelope-o"></i> Email Us</a>
 				</div>
 			</div>
-			<div class="review sidebar-item">
-				<h4><i class="fa fa-comments"></i> Package Reviews</h4>
-				<div class="sidebar-item-body text-center">
-					<div class="rating-box">
-						<div class="col-md-6 col-sm-6 col-xs-6 clear-padding tripadvisor">
-							<img src="assets/images/tripadvisor.png" alt="cruise"><br>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star-o"></i>
-							<h5>4.0/5.0 Based on 12 Reviews</h5>
-						</div>
-						<div class="col-md-6 col-sm-6 col-xs-6 clear-padding">
-							<i class="fa fa-users"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star-o"></i>
-							<h5>Based on 128 Guest Reviews</h5>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-					<div class="guest-say rating-box">
-						<h2><i class="fa fa-check-circle"></i> Perfect</h2>
-						<div>
-							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-						</div>
-						<div class="col-md-5 col-sm-5 col-xs-5 clear-padding user-img">
-							<img src="assets/images/user1.jpg" alt="cruise">
-						</div>
-						<div class="col-md-7 col-sm-7 col-xs-7 clear-padding user-name">
-							<span>Lenore, USA</span>
-							<span>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o"></i>
-								<i class="fa fa-star-o"></i>
-							</span>
-						</div>
-					</div>
-				</div>
-			</div> -->
 		</div>
 	</div>
-	<div class="sidebar-item-bottom" *ngIf="instance && instance.operations.length > 1">
-		<a class="previous-step step-arrow" *ngIf="step > 0" (click)="previousStep()">
-			<i class="fa fa-chevron-left " aria-hidden="true"></i>
-		</a>
-		<div class="rate">
-			<div class="minus" (click)="updateRate('down')">
-				<i class="fa fa-minus" aria-hidden="true"></i>
-			</div>
-			<div class="score">
-				<strong>36</strong>
-			</div>
-			<div class="plus" (click)="updateRate('up')">
-				<i class="fa fa-plus" aria-hidden="true"></i>
-			</div>
+	<div class="sidebar-item-bottom row" *ngIf="instance && instance.operations.length > 1">
+		<div class="col-md-5 col-sm-4 hidden-xs clear-padding">
+			<a class="previous-step step-arrow" *ngIf="step > 0" (click)="previousStep()">
+				<i class="fa fa-chevron-left " aria-hidden="true"></i>
+			</a>
 		</div>
-		<a class="next-step step-arrow" *ngIf="step < instance.operations.length - 1" (click)="nextStep()">
-			<i class="fa fa-chevron-right" aria-hidden="true"></i>
-		</a>
+		<div class="col-md-2 col-sm-4 operation-rate" [ngClass]="{up: rate_side=='up', down: rate_side=='down'}">
+			<i class="rate-up" (click)="vote('up')">
+				<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 612.002 612.002" style="enable-background:new 0 0 612.002 612.002;" xml:space="preserve"><g><g><path d="M592.639,358.376L423.706,189.439c-64.904-64.892-170.509-64.892-235.421,0.005L19.363,358.379
+				c-25.817,25.817-25.817,67.674,0,93.489c25.817,25.817,67.679,25.819,93.491-0.002l168.92-168.927
+				c13.354-13.357,35.092-13.361,48.444-0.005l168.93,168.932c12.91,12.907,29.825,19.365,46.747,19.365
+				c16.915,0,33.835-6.455,46.747-19.365C618.456,426.051,618.456,384.193,592.639,358.376z"/></g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>	
+			</i>
+			<span>{{ instance.operations[step].rate.score }}</span>
+			<i class="rate-down" (click)="vote('down')">
+				<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 612.004 612.004" style="enable-background:new 0 0 612.004 612.004;" xml:space="preserve">
+				<g><g><path d="M499.147,160.094L330.222,329.019c-6.472,6.472-15.075,10.035-24.223,10.035c-9.146,0-17.749-3.561-24.218-10.035
+				L112.854,160.094c-25.822-25.817-67.674-25.817-93.491,0c-25.817,25.819-25.817,67.674,0,93.491L188.29,422.508
+				c31.443,31.445,73.245,48.764,117.712,48.764s86.269-17.319,117.714-48.761l168.925-168.925c25.817-25.817,25.817-67.674,0-93.491
+				C566.822,134.277,524.962,134.277,499.147,160.094z"/></g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
+			</i>
+		</div>
+		<div class="col-md-5 col-sm-4 hidden-sm	hidden-md hidden-lg clear-padding">
+			<a class="previous-step step-arrow" *ngIf="step > 0" (click)="previousStep()">
+				<i class="fa fa-chevron-left " aria-hidden="true"></i>
+			</a>
+		</div>
+		<div class="col-md-5 col-sm-4 clear-padding">
+			<a class="next-step step-arrow" *ngIf="step < instance.operations.length - 1" (click)="nextStep()">
+				<i class="fa fa-chevron-right" aria-hidden="true"></i>
+			</a>
+		</div>
 	</div>
 </div>

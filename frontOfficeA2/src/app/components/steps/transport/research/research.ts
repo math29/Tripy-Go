@@ -41,6 +41,7 @@ export class Research implements OnInit {
 			.map(res => res.json())
 			.subscribe(comparator => {
 				this.comparator = comparator;
+				console.log(this.comparator);
 			});
 	}
 
@@ -65,7 +66,7 @@ export class Research implements OnInit {
 
 	ngOnInit() {
 		this.getComparator(this.params.get('comparator_id'));
-		// console.log(this.params.get('comparator_id'));
+		console.log(this.params);
 		this.travel_id = this.params.get('comparator_id');
 		this.iframe_height = window.innerHeight -87 -50;
 		this.openTimeline();
