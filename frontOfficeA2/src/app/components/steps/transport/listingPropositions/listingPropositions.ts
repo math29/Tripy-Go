@@ -3,6 +3,7 @@ import { RouterLink, RouteParams } from 'angular2/router';
 import { Http, RequestOptions, Headers } from 'angular2/http';
 import { AuthService } from '../../../../tripy_go_lib/services/auth.service';
 import { TransportComparatorCmp } from './transport-comparator/transport-comparator';
+import { filterTypeTransport } from '../../../../pipes/filterTypeTransport.pipe';
 
 @Component({
 	selector: 'listing-propositions',
@@ -10,7 +11,7 @@ import { TransportComparatorCmp } from './transport-comparator/transport-compara
 	styleUrls: ['app/components/steps/transport/listingPropositions/listingPropositions.css'],
 	providers: [],
 	directives: [RouterLink, TransportComparatorCmp],
-	pipes: []
+	pipes: [filterTypeTransport]
 })
 export class ListingPropositions {
 	travel_id: String;
@@ -36,7 +37,6 @@ export class ListingPropositions {
 			.map(res => res.json())
 			.subscribe(comparators => {
 				this.comparators = comparators;
-				// console.log(this.comparators);
 			});
 	}
 

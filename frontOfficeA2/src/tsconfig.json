@@ -45,6 +45,7 @@
         "app/components/team/about-us/about-us.ts",
         "app/components/team/contact/contact.ts",
         "app/front-office-a2.ts",
+        "app/pipes/filterTypeTransport.pipe.ts",
         "app/services/rate.service.ts",
         "app/services/user.singleton.ts",
         "app/tripy_go_lib/components/md-editor/md-editor.ts",
