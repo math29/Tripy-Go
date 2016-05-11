@@ -1,14 +1,15 @@
 import {Component, Input, OnChanges, SimpleChange} from 'angular2/core';
-import { RouterLink, RouteParams } from 'angular2/router';
-import { Http, RequestOptions, Headers } from 'angular2/http';
+import { RouterLink } from 'angular2/router';
+import { Http, RequestOptions } from 'angular2/http';
 import { AuthService } from '../../../tripy_go_lib/services/auth.service';
 import { MarkdownPipe } from '../../../tripy_go_lib/pipes/marked';
+import { RateService } from '../../../services/rate.service';
 
 @Component({
 	selector: 'timeline',
 	templateUrl: 'app/components/steps/timeline/timeline.html',
 	styleUrls: ['app/components/steps/timeline/timeline.css'],
-	providers: [],
+	providers: [RateService],
 	directives: [RouterLink],
 	pipes: [MarkdownPipe]
 })
@@ -19,7 +20,9 @@ export class Timeline {
 	instance: any;
 	step: number = 0;
 
-	constructor(private _http: Http, private _auth: AuthService) {
+	rate_side: string;
+
+	constructor(private _http: Http, private _auth: AuthService, private _rate: RateService) {
 		this.options_post = new RequestOptions({ headers: _auth.getBearerHeaders() });
 	}
 
@@ -31,6 +34,7 @@ export class Timeline {
 			.map(res => res.json())
 			.subscribe(timeline => {
 				this.instance = timeline;
+				this.updateRateDesign();
 				console.log(this.instance);
 			})
 	}
@@ -40,23 +44,14 @@ export class Timeline {
 	// ***************************************
 	nextStep() {
 		this.step++;
+		this.updateRateDesign();
 	}
 
 	previousStep() {
 		this.step--;
+		this.updateRateDesign();
 	}
 
-	// ***************************************
-	// Timeline Score Gesture
-	// ***************************************
-	updateRate(vote){
-		this._http.post('/api/rate/vote/' + vote + "/" + this.instance.operations[this.step].rate._id, null, this.options_post)
-			.map(res => res.json())
-			.subscribe(rate => {
-				console.log(rate);
-			})
-		
-	}
 
 	ngOnChanges(changes: { [propertyName: string]: SimpleChange }) {
 		// We get the new instance timeline id to get the timeline
@@ -64,6 +59,32 @@ export class Timeline {
 			if(propName == "name"){
 				let name = changes[propName].currentValue;
 				this.getTimeline();
+			}
+		}
+	}
+
+	// Vote parte
+	vote(side) {
+		this.rate_side = side;
+		this._rate.updateStackRate(side, this.instance.operations[this.step].rate._id)
+			.subscribe(rate => {
+				this.instance.operations[this.step].rate = rate;
+			});
+	}
+
+	updateRateDesign(){
+		// Initialize aspect
+		let rate = this.instance.operations[this.step].rate;
+		for (var i = 0; i < rate.raters.length; i++) {
+			if (rate.raters[i].user == this._auth.getMe()._id) {
+				switch (rate.raters[i].action) {
+					case 1:
+						this.rate_side = "up";
+						break;
+					case -1:
+						this.rate_side = "down";
+						break;
+				}
 			}
 		}
 	}
