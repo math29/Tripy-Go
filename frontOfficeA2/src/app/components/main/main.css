@@ -170,6 +170,10 @@
 	color: #07253F;
 }
 
+.search-section .ng-touched {
+	color: white;
+}
+
 .inputFocused span{
 	color: white !important;
 	background: #f9676b !important;
