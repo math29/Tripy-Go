@@ -408,33 +408,6 @@ module.exports = function (grunt) {
         }]
       }
     },
-    // Package all the html partials into a single javascript payload
-    ngtemplates: {
-      options: {
-        // This should be the name of your apps angular module
-        module: 'wtcApp',
-        htmlmin: {
-          collapseBooleanAttributes: true,
-          collapseWhitespace: true,
-          removeAttributeQuotes: true,
-          removeEmptyAttributes: true,
-          removeRedundantAttributes: true,
-          removeScriptTypeAttributes: true,
-          removeStyleLinkTypeAttributes: true
-        },
-        usemin: 'app/app.js'
-      },
-      main: {
-        cwd: '<%= yeoman.client %>',
-        src: ['{app,components}/**/*.html'],
-        dest: '.tmp/templates.js'
-      },
-      tmp: {
-        cwd: '.tmp',
-        src: ['{app,components}/**/*.html'],
-        dest: '.tmp/tmp-templates.js'
-      }
-    },
     // Replace Google CDN references
     cdnify: {
       dist: {
@@ -505,16 +478,10 @@ module.exports = function (grunt) {
 	  back_office_bower:{
 		expand: true,
 		dest:'./<%= yeoman.back_office_dist %>/bower_components',
-		cwd:'client/bower_components',
+		cwd:'bower_components',
 		src:[
-			'json3/lib/json3.min.js',
-      'bootstrap/dist/**/*',
       'bootstrap-iconpicker/**/*',
-			'font-awesome/**/*.min.*',
 			'metisMenu/dist/**/*.min.*',
-			'lodash/lodash.min.js',
-			'socket.io-client/socket.io.js',
-			'jquery/dist/jquery.min.js'
 		]
 	  },
       back_office_lib: {
@@ -529,13 +496,18 @@ module.exports = function (grunt) {
           'ng2-bootstrap/**/*',
           'ng2-charts/**/*',
           'ng2-file-upload/**/*',
+          'bootstrap/dist/**/*',
+          'json3/lib/json3.min.js',
+          'font-awesome/**/*.min.*',
           'chart.js/Chart.min.js',
-          'marked/marked.min.js',
           'socket.io-client/socket.io.js',
-          'font-awesome/**/*',
           'angular2-jwt/angular2-jwt.js*',
           'd3/d3.min.js',
-          'lodash/dist/**/*',
+          'marked/marked.min.js',
+          'socket.io-client/socket.io.js',
+          'lodash/lodash.min.js',
+          'jquery/dist/jquery.min.js',
+          'font-awesome/**/*',
           'datamaps/dist/**/*',
           'to-markdown/dist/**/*',
           'moment/min/**/*'
@@ -578,7 +550,7 @@ module.exports = function (grunt) {
       front_office_vendor: {
         expand: true,
         dest: './frontOfficeA2/dist/vendor',
-        cwd: './client/bower_components',
+        cwd: './bower_components',
         src: [
           'jquery/**/*',
           'bootstrap/**/**/*',
@@ -759,8 +731,8 @@ module.exports = function (grunt) {
         files: {
           '<%= yeoman.back_office_dist %>/index.html': [
                [
-                 "<%= yeoman.back_office_dist %>/bower_components/jquery/dist/jquery.min.js",
-                 "<%= yeoman.back_office_dist %>/bower_components/bootstrap/dist/js/bootstrap.min.js",
+                 "<%= yeoman.back_office_dist %>/lib/jquery/dist/jquery.min.js",
+                 "<%= yeoman.back_office_dist %>/lib/bootstrap/dist/js/bootstrap.min.js",
                  "<%= yeoman.back_office_dist %>/bower_components/metisMenu/dist/metisMenu.min.js",
                  "<%= yeoman.back_office_dist %>/bower_components/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.2.0.min.js",
                  "<%= yeoman.back_office_dist %>/bower_components/bootstrap-iconpicker/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js",
