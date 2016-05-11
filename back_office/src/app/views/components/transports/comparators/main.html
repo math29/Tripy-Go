@@ -1,0 +1,100 @@
+<!-- Errors -->
+<div  *ngFor="#error of errors" class="alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Error:</span>
+  {{error}}
+  <button type="button" class="close" (click)="errors.splice(errors.indexOf(error),1)" style="float: right;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+</div>
+
+<!-- messages -->
+<div  *ngFor="#message of messages" class="alert alert-success" role="alert">
+  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+  <span class="sr-only">Success:</span>
+  {{message}}
+  <button type="button" class="close" (click)="messages.splice(messages.indexOf(message),1)" style="float: right;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Comparateur de transport
+  </div>
+  <div class="panel-body">
+
+    <button class="btn" *ngIf="!transportComparatorEdit"  (click)="createComparator()"><i class="glyphicon glyphicon-plus"></i>Ajouter un comparateur</button>
+    <div id="comparatorForm" *ngIf="transportComparatorEdit">
+      <!-- <pre>{{transportComparatorEdit | json}}</pre> -->
+      <form class="form-horizontal" role="form">
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="name">Entreprise:</label>
+          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <div *ngIf="transportComparatorEdit.company"><img src="{{transportComparatorEdit.company.img}}" style="width:50px; height:50px;">{{transportComparatorEdit.company.name}}</div>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" style="position: relative" aria-labelledby="dropdownMenu1">
+            <li *ngFor="#company of companies">
+              <div (click)="selectCompany(company)">
+                <img src="{{company.img}}" style="width:50px; height:50px;">{{company.name}}
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="nb_companies">Nombre de compagnies comparées:</label>
+          <div class="col-sm-10">
+            <input type="number" step="1" min="0" class="form-control" id="nbCompanies" [(ngModel)]="transportComparatorEdit.nbCompanies" placeholder="1">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="code">Type de transport:</label>
+          <div class="col-sm-10">
+            <div *ngFor="#type of transportTypes" ><span class="fa {{type.img}}"></span>{{type.name}} <button *ngIf="!typeInArray(type)" (click)="addType(type)" class="fa fa-plus">Ajouter</button> <button *ngIf="typeInArray(type)" (click)="removeType(type)" class="fa fa-minus">Supprimer</button></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default" ><span *ngIf="!transportComparatorEdit._id" (click)="createComparatorAPI(transportComparatorEdit)">Créer</span><span *ngIf="transportComparatorEdit._id" (click)="updateComparatorAPI(transportComparatorEdit)">Mettre à jour</span></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="panel panel-info">
+  <div class="panel-heading">
+    Infos
+  </div>
+  <div class="panel-body">
+    <!--<div class="row">
+      <div class="col-lg-12">
+        <a class="btn btn-primary" download="comparators.json" href="{{ url }}">Télécharger au format JSON</a>
+      </div>
+    </div>-->
+    <div class="row">
+      <div class="col-lg-12">
+        <table class="table table-striped table-bordered table-hover" role="grid">
+          <thead>
+          <tr role="row">
+            <th >Entreprise</th>
+            <th >Types de transports</th>
+            <th >Nb companies</th>
+            <th >Ergonomie</th>
+            <th >Contenu</th>
+          </tr>
+          </thead>
+          <tbody>
+          <!--<tr *ngFor="#language of languages |filter:query |orderBy:orderType+orderby" ng-class="getClassFromInfo(language)">-->
+          <tr *ngFor="#comparator of comparators">
+            <td>{{comparator.company.name}}</td>
+            <td><span *ngFor="#type of comparator.type"><span class="fa {{type.img}}"></span>{{type.name}}<br/></span></td>
+            <td>{{comparator.nbCompanies}}</td>
+            <td *ngIf="comparator.ergo_rate.raters.length > 0">{{comparator.ergo_rate.score}}</td><td *ngIf="comparator.ergo_rate.raters.length == 0">Pas de votes</td>
+            <td *ngIf="comparator.content_rate.raters.length > 0">{{comparator.content_rate.score}}</td><td *ngIf="comparator.content_rate.raters.length == 0">Pas de votes</td>
+            <td><a (click)="edit(comparator)" class="trash"><span class="glyphicon glyphicon-edit pull-right"></span></a></td>
+            <td><a (click)="deleteComparator(comparator)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,6 @@
-/// <reference path="../../../../../typings/marked/marked.d.ts" />
-
 import {Pipe} from 'angular2/core';
-import * as marked from 'marked';
+
+declare var marked;
 /*
  * parse markdown text to HTML
  * Usage:

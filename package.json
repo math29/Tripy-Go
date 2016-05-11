@@ -20,7 +20,7 @@
     "ejs": "~0.8.4",
     "errorhandler": "~1.0.0",
     "es6-promise": "^3.0.2",
-    "es6-shim": "^0.33.13",
+    "es6-shim": "^0.35.0",
     "express": "~4.9.0",
     "express-jwt": "^3.1.0",
     "express-session": "~1.0.2",
@@ -55,7 +55,7 @@
     "systemjs": "^0.19.19",
     "winston": "^2.1.0",
     "winston-mongodb": "^1.2.0",
-    "zone.js": "^0.5.10"
+    "zone.js": "^0.5.15"
   },
   "devDependencies": {
     "apidoc": "~0.13.1",
