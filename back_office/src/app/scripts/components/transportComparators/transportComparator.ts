@@ -1,5 +1,3 @@
-/// <reference path="../../../../../../typings/socket.io-client/socket.io-client.d.ts" />
-
 import {Component, OnInit, OnDestroy} from 'angular2/core';
 import {Response} from 'angular2/http';
 import {TransportComparatorService} from '../../services/transportComparatorService';
@@ -7,7 +5,7 @@ import {TransportTypeService} from '../../services/transportTypeService';
 import {CompanyService} from '../../services/company';
 
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
-import * as io from 'socket.io-client';
+import {SocketService} from '../../services/socket.service';
 import * as _ from 'lodash';
 
 @Component({
@@ -25,35 +23,44 @@ export class TransportComparatorCmp{
     private companies:any = [];
     private filteredCompanies:any = [];
     private transportTypes:any = [];
-    private socket:any;
 
     constructor(private _transportTypeService: TransportTypeService,
       private _transportComparatorService: TransportComparatorService,
-      private _companyService: CompanyService){
-      this.socket = io.connect('',{path:'/socket.io-client'});
+      private _companyService: CompanyService,
+      private socketService: SocketService
+    ){
+      this.socketService.socketObservable$.subscribe(socketResponse => {
+        switch(socketResponse.channel) {
+          case 'transportComparator:save':
+            this.onSaveComparator(socketResponse.data);
+            break;
+          case 'transportComparator:remove':
+            let index = this.getComparatorIndex(socketResponse.data._id);
+            if(index > -1){
+              this.comparators.splice(index, 1);
+            }
+            break;
+        }
+      });
 
       // mise à jour du comparateur
-      this.socket.on('transportComparator:save',(data:any)=>{
-        data.company = _.find(this.companies, { '_id': data.company });
-        for(let i = 0; i < data.type.length; i++){
-          data.type[i] = _.find(this.transportTypes, { '_id': data.type[i] });
-        }
-        let index = this.getComparatorIndex(data._id);
+      this.socketService.addListener('transportComparator:save');
+      this.socketService.addListener('transportComparator:remove');
 
-        if(index > -1){
-          this.comparators[index] = data;
-        }else{
-          this.comparators.push(data);
-        }
+    }
 
-      });
+    onSaveComparator(data: any) {
+      data.company = _.find(this.companies, { '_id': data.company });
+      for(let i = 0; i < data.type.length; i++){
+        data.type[i] = _.find(this.transportTypes, { '_id': data.type[i] });
+      }
+      let index = this.getComparatorIndex(data._id);
 
-      this.socket.on('transportComparator:remove',(data:any)=>{
-        let index = this.getComparatorIndex(data._id);
-        if(index > -1){
-          this.comparators.splice(index, 1);
-        }
-      });
+      if(index > -1){
+        this.comparators[index] = data;
+      }else{
+        this.comparators.push(data);
+      }
 
     }
 
@@ -78,8 +85,7 @@ export class TransportComparatorCmp{
     }
 
     ngOnDestroy(){
-      this.socket.removeAllListeners('transportComparator:remove');
-      this.socket.removeAllListeners('transportComparator:save');
+      this.socketService.removeListener('transportComparator:remove','transportComparator:save');
     }
 
     /**

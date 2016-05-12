@@ -1,5 +1,3 @@
-/// <reference path="../../../../../../typings/socket.io-client/socket.io-client.d.ts" />
-
 import {Component, OnInit, OnDestroy} from 'angular2/core';
 import {Response} from 'angular2/http';
 import {StatsCmp} from '../utils/stats';
@@ -10,7 +8,7 @@ import {MarkdownPipe} from '../../tripy-lib/pipes/marked';
 import {MdEditor} from '../../tripy-lib/components/md-editor/md-editor';
 
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
-import * as io from 'socket.io-client';
+import {SocketService} from '../../services/socket.service';
 
 declare var to_markdown:any;
 
@@ -32,40 +30,48 @@ export class TimelinesCmp{
     private timelines: any = null;
     private operations:any = null;
     private timelineIndex: number = 0;
-    private socket:any;
 
-    constructor(private _timelineService: TimelineService, private _operationsService: OperationsService){
-      let host = window.location.origin;
-      this.socket = io.connect('',{path:'/socket.io-client'});
-      this.socket.on('timeline:save',(data:any)=>{
-        //console.log('timeline :'+data)
-        this.getTimelines();
+    constructor(private _timelineService: TimelineService, private _operationsService: OperationsService, private socketService: SocketService){
+      this.socketService.socketObservable$.subscribe(socketResponse => {
+        switch(socketResponse.channel){
+          case 'timeline:save':
+            this.getTimelines();
+            break;
+          case 'operation:save':
+            this.onSaveOperation(socketResponse.data);
+            break;
+          case 'operation:remove':
+            this.onRemoveOperation(socketResponse.data);
+            break;
+          default:
+        }
+      });
+      this.socketService.addListener('timeline:save');
+      this.socketService.addListener('operation:save');
+      this.socketService.addListener('operation:remove');
 
-      });
-
-      this.socket.on('operation:save',(data:any)=>{
-        //console.log(data);
-        for(let i = 0; i < this.operations.length; i++){
-          if(this.operations[i]._id == data._id){
-            this.operations[i] == data;
-            data = null;
-          }
-        }
-        if(data != null){
-          this.operations.push(data);
-        }
-        this.getTimelines();
-      });
-      this.socket.on('operation:remove',(data:any)=>{
-        //console.log('remove: ' + JSON.stringify(data));
-        let index = this.getIndexOfOperation(data, this.operations);
-        if(index > -1){
-          this.operations.splice(index,1);
-        }
-        this.getTimelines();
-      });
+    }
+    onRemoveOperation(data: any) {
+      let index = this.getIndexOfOperation(data, this.operations);
+      if(index > -1){
+        this.operations.splice(index,1);
+      }
+      this.getTimelines();
     }
 
+    onSaveOperation(data: any) {
+      //console.log(data);
+      for(let i = 0; i < this.operations.length; i++){
+        if(this.operations[i]._id == data._id){
+          this.operations[i] == data;
+          data = null;
+        }
+      }
+      if(data != null){
+        this.operations.push(data);
+      }
+      this.getTimelines();
+    }
 
     descriptionChanged(newDescription) {
       this.operationEdit.content = to_markdown.toMarkdown(newDescription);
@@ -94,9 +100,7 @@ export class TimelinesCmp{
      *
      */
     ngOnDestroy(){
-      this.socket.removeAllListeners('operation:remove');
-      this.socket.removeAllListeners('operation:save');
-      this.socket.removeAllListeners('timeline:save');
+      this.socketService.removeListener('timeline:save','operation:save','operation:remove');
     }
 
     /**

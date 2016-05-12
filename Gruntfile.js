@@ -480,7 +480,7 @@ module.exports = function (grunt) {
 		dest:'./<%= yeoman.back_office_dist %>/bower_components',
 		cwd:'bower_components',
 		src:[
-      'bootstrap-iconpicker/**/*',
+      'bootstrap-iconpicker/bootstrap-iconpicker/**/*',
 			'metisMenu/dist/**/*.min.*',
 		]
 	  },

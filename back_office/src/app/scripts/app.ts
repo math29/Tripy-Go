@@ -8,6 +8,7 @@ import { AuthConfig, AuthHttp } from 'angular2-jwt/angular2-jwt';
 
 import {Tripy_Back} from './back';
 import {AuthService} from './tripy-lib/services/auth.service';
+import {SocketService} from './services/socket.service';
 
 
 bootstrap(Tripy_Back, [
@@ -15,6 +16,7 @@ bootstrap(Tripy_Back, [
   HTTP_PROVIDERS,
   ROUTER_PROVIDERS,
   AuthService,
+  SocketService,
   provide(AuthHttp,{
     useFactory:(http) => {
       return new AuthHttp(new AuthConfig({

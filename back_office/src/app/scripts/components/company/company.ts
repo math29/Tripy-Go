@@ -1,5 +1,3 @@
-/// <reference path="../../../../../../typings/socket.io-client/socket.io-client.d.ts" />
-
 import {Component, OnInit, OnDestroy} from 'angular2/core';
 import {NgForm} from 'angular2/common';
 import {Response} from 'angular2/http';
@@ -9,7 +7,6 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
 import { FILE_UPLOAD_DIRECTIVES, FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import {SocketService} from '../../services/socket.service';
 
-import * as io from 'socket.io-client';
 import * as _ from 'lodash';
 const fileAPI = "/api/files";
 
@@ -17,7 +14,7 @@ const fileAPI = "/api/files";
 @Component({
   selector: 'companies',
   templateUrl: 'views/components/company/main.html',
-  providers: [CompanyService, CountryService, SocketService],
+  providers: [CompanyService, CountryService],
   directives: [ROUTER_DIRECTIVES, FILE_UPLOAD_DIRECTIVES],
   pipes: []
 })
@@ -38,7 +35,6 @@ export class CompanyCmp{
 
     constructor(private _companyService: CompanyService, private _countryService: CountryService, private socketService: SocketService){
       let host = window.location.origin;
-      //this.socket = io.connect('',{path:'/socket.io-client'});
 
       // Necessary to not have an error
   		this.uploader.queueLimit = 1;
@@ -106,12 +102,12 @@ export class CompanyCmp{
       this.getCompanies();
       // appelé lorsqu'un language est supprimé
       this.socketService.addListener('company:remove');
+      this.socketService.addListener('company:save');
 
     }
 
     ngOnDestroy(){
-      this.socketService.removeListener('company:remove');
-      this.socketService.removeListener('company:save');
+      this.socketService.removeListener('company:remove', 'company:save');
     }
 
    textIsValid(text){

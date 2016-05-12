@@ -1,5 +1,4 @@
 /// <reference path="../../../../../../typings/jquery/jquery.d.ts" />
-/// <reference path="../../../../../../typings/socket.io-client/socket.io-client.d.ts" />
 
 import {Component, OnInit, ElementRef,OnDestroy} from 'angular2/core';
 import {NgForm} from 'angular2/common';
@@ -9,7 +8,6 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
 import{AgregatorService} from '../../services/agregator';
 import {DATEPICKER_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 
-import * as io from 'socket.io-client';
 import * as moment from 'moment';
 
 //declare var jQuery: JQueryStatic;

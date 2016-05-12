@@ -1,5 +1,3 @@
-/// <reference path="../../../../../../typings/socket.io-client/socket.io-client.d.ts" />
-
 import {Component, OnInit, OnDestroy} from 'angular2/core';
 import {NgForm} from 'angular2/common';
 import {Response} from 'angular2/http';
@@ -7,7 +5,7 @@ import {LanguageService} from '../../services/languageService';
 import {Language} from '../../classes/language';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {OrderByPipe} from '../../pipes/orderby';
-import * as io from 'socket.io-client';
+import {SocketService} from '../../services/socket.service';
 
 @Component({
   selector: 'languages',
@@ -27,14 +25,40 @@ export class LanguageCmp{
     private orderType = this.orderOptions[0];
     private languages: Language[];
     private selection: any;
-    private socket:any;
 
-    constructor(private _languageService: LanguageService){
-      let host = window.location.origin;
-      this.socket = io.connect('',{path:'/socket.io-client'});
+    constructor(private _languageService: LanguageService, private socketService: SocketService){
+      this.socketService.socketObservable$.subscribe(socketResponse => {
+        switch(socketResponse.channel) {
+          case 'language:remove':
+            this.onRemoveLanguage(socketResponse.data);
+            break;
+          case 'language:save':
+            this.onSaveLanguage(socketResponse.data);
+            break;
+          default:
+        }
+      });
+      this.socketService.addListener('language:save');
+      this.socketService.addListener('language:remove');
     }
 
+    onRemoveLanguage(data) {
+      for(let i = 0; i < this.languages.length; i++){
+        if(this.languages[i]._id == data._id){
+          this.languages.splice(i,1);
+          break;
+        }
+      }
+    }
 
+    onSaveLanguage(data) {
+      let index = this.findLanguageIndex(data._id);
+      if(index > -1){
+        this.languages[index] = data;
+      }else{
+      this.languages.push(data);
+      }
+    }
 
     logError(err) {
       console.error('There was an error: ' + err);
@@ -42,21 +66,10 @@ export class LanguageCmp{
     ngOnInit(){
       this.getLanguages();
       // appelé lorsqu'un language est supprimé
-      this.socket.on('language:remove',
-        (data:any)=>{
-          for(let i = 0; i < this.languages.length; i++){
-            if(this.languages[i]._id == data._id){
-              this.languages.splice(i,1);
-              break;
-            }
-          }
-        });
-
     }
 
     ngOnDestroy(){
-      this.socket.removeAllListeners('language:remove');
-      this.socket.removeAllListeners('language:save');
+      this.socketService.removeListener('language:remove','language:save');
     }
 
    textIsValid(text){
@@ -89,15 +102,6 @@ export class LanguageCmp{
             this.orderby = this.keys[1];
             console.log(this.orderType+this.orderby);
           }
-          // set socket to listen languages saved
-          this.socket.on('language:save', (data:any)=>{
-            let index = this.findLanguageIndex(data._id);
-            if(index > -1){
-              this.languages[index] = data;
-            }else{
-            this.languages.push(data);
-            }
-          });
         },
         errors => console.log(errors));
     }

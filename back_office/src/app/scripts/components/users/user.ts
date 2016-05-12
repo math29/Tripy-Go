@@ -1,5 +1,3 @@
-/// <reference path="../../../../../../typings/socket.io-client/socket.io-client.d.ts" />
-
 import {Component, OnInit, OnDestroy} from 'angular2/core';
 import {NgForm} from 'angular2/common';
 import {Response} from 'angular2/http';
@@ -8,7 +6,7 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
 import {OrderByPipe} from '../../pipes/orderby';
 //import {ModalCmp} from '../../tripy-lib/components/modal/modal';
 import {StarsRateCmp} from '../../tripy-lib/components/rate/starsRate';
-import * as io from 'socket.io-client';
+import {SocketService} from '../../services/socket.service';
 
 @Component({
   selector: 'languages',
@@ -29,14 +27,40 @@ export class UsersCmp{
     private orderType = this.orderOptions[0];
     private users: any[];
     private selection: any;
-    private socket:any;
 
-    constructor(private _userService: UserService){
-      let host = window.location.origin;
-      this.socket = io.connect('',{path:'/socket.io-client'});
+    constructor(private _userService: UserService, private socketService: SocketService){
+      this.socketService.socketObservable$.subscribe(socketResponse => {
+        switch(socketResponse.channel) {
+          case 'user:save':
+          this.onSaveUser(socketResponse.data);
+            break;
+          case 'user:remove':
+            this.onRemoveUser(socketResponse.data);
+            break;
+          default:
+        }
+      });
+      this.socketService.addListener('user:save');
+      this.socketService.addListener('user:remove');
     }
 
+    onSaveUser(data:any) {
+      let index = this.findUserIndex(data._id);
+      if(index > -1){
+        this.users[index] = data;
+      }else{
+      this.users.push(data);
+      }
+    }
 
+    onRemoveUser(data:any) {
+      for(let i = 0; i < this.users.length; i++){
+        if(this.users[i]._id == data._id){
+          this.users.splice(i,1);
+          break;
+        }
+      }
+    }
 
     logError(err) {
       console.error('There was an error: ' + err);
@@ -45,21 +69,12 @@ export class UsersCmp{
       this.getRoles();
       this.getUsers();
       // appelé lorsqu'un language est supprimé
-      this.socket.on('user:remove',
-        (data:any)=>{
-          for(let i = 0; i < this.users.length; i++){
-            if(this.users[i]._id == data._id){
-              this.users.splice(i,1);
-              break;
-            }
-          }
-        });
+
 
     }
 
     ngOnDestroy(){
-      this.socket.removeAllListeners('user:remove');
-      this.socket.removeAllListeners('user:save');
+      this.socketService.removeListener('user:remove','user:save');
     }
 
    textIsValid(text){
@@ -91,15 +106,6 @@ export class UsersCmp{
             this.selection = this.keys[1];
             this.orderby = this.keys[1];
           }
-          // set socket to listen languages saved
-          this.socket.on('user:save', (data:any)=>{
-            let index = this.findUserIndex(data._id);
-            if(index > -1){
-              this.users[index] = data;
-            }else{
-            this.users.push(data);
-            }
-          });
         },
         errors => console.log(errors));
     }

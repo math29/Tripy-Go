@@ -13,24 +13,25 @@ export class SocketService {
   private listening: string[] = [];
   socketObservable$: Observable<any>;
   socketObserver: any;
+  private config: SocketIOClient.ConnectOpts;
 
   constructor() {
+    this.config = {};
+    this.config.path = '/socket.io-client';
+    this.config.reconnection = true;
+    this.config.reconnectionDelay = 1000;
+
     if(localStorage.getItem('env') == 'prod'){
-      console.log('prod');
-      this.socket = io.connect('',{path:'http://tripygo-breizher.rhcloud.com/socket.io-client'});
-    }else{
-      console.log('dev');
-      this.socket = io.connect('',{path:'/socket.io-client'});
+      this.config.path = 'http://tripygo-breizher.rhcloud.com/socket.io-client';
     }
+    this.socket = io.connect('', this.config);
+
     this.socketObservable$ = new Observable(observer => this.socketObserver = observer).share();
   }
 
-  /**
-   * Add a listener to socket channel
-   *
-   * @param channel: channel to listen
-   */
-  addListener(channel: string){
+
+
+  addListener(channel){
     if(!_.find(this.listening, function(o){return o == channel;})){
       this.listening.push(channel);
       this.socket.on(channel, (data:any) => {
@@ -47,10 +48,12 @@ export class SocketService {
     }
   }
 
-  removeListener(channel: string){
-    console.log('remove channel: '+ channel);
-    this.socket.removeAllListeners(channel);
-    _.pull(this.listening, channel);
+  removeListener(...channels) {
+    for(let i = 0; i < channels.length; i++){
+      let channel = channels[i];
+      this.socket.removeAllListeners(channel);
+      _.pull(this.listening, channel);
+    }
   }
 
   exit(){

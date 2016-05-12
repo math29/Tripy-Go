@@ -6,7 +6,7 @@ import {NgForm} from 'angular2/common';
 import {Response} from 'angular2/http';
 import {TransportTypeService} from '../../services/transportTypeService';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
-import * as io from 'socket.io-client';
+import {SocketService} from '../../services/socket.service';
 
 //declare var jQuery: JQueryStatic;
 //declare var $: JQueryStatic;
@@ -31,25 +31,43 @@ export class TransportTypeCmp{
     private orderType = this.orderOptions[0];
     private transportTypes: any[];
     private selection: any;
-    private socket:any;
 
-    constructor(private el: ElementRef,private _transportTypeService: TransportTypeService){
-      let host = window.location.origin;
-      this.socket = io.connect('',{path:'/socket.io-client'});
+    constructor(private el: ElementRef,private _transportTypeService: TransportTypeService, private socketService: SocketService){
+      this.socketService.socketObservable$.subscribe(socketResponse => {
+        switch(socketResponse.channel) {
+          case 'transportType:remove':
+            this.onRemoveTransport(socketResponse.data);
+            break;
+          case 'transportType:save':
+            this.onSaveTransport(socketResponse.data);
+            break;
+        }
+      });
+      this.socketService.addListener('transportType:remove');
+      this.socketService.addListener('transportType:save');
+    }
+
+    onRemoveTransport(data: any) {
+      for(let i = 0; i < this.transportTypes.length; i++){
+        if(this.transportTypes[i]._id == data._id){
+          this.transportTypes.splice(i,1);
+          break;
+        }
+      }
+    }
+
+    onSaveTransport(data: any) {
+      let index = this.findTransportIndex(data._id);
+      if(index > -1){
+        this.transportTypes[index] = data;
+      }else{
+      this.transportTypes.push(data);
+      }
     }
 
     ngOnInit(){
       this.getTransportTypes();
       // appelé lorsqu'un type de transport est supprimé
-      this.socket.on('transportType:remove',
-        (data:any)=>{
-          for(let i = 0; i < this.transportTypes.length; i++){
-            if(this.transportTypes[i]._id == data._id){
-              this.transportTypes.splice(i,1);
-              break;
-            }
-          }
-        });
     }
 
 
@@ -75,8 +93,7 @@ export class TransportTypeCmp{
     }
 
     ngOnDestroy(){
-      this.socket.removeAllListeners('transportType:remove');
-      this.socket.removeAllListeners('transportType:save');
+      this.socketService.removeListener('transportType:remove','transportType:save');
     }
 
    textIsValid(text){
@@ -112,15 +129,6 @@ export class TransportTypeCmp{
             this.selection = this.keys[1];
             this.orderby = this.keys[1];
           }
-          // set socket to listen languages saved
-          this.socket.on('transportType:save', (data:any)=>{
-            let index = this.findTransportIndex(data._id);
-            if(index > -1){
-              this.transportTypes[index] = data;
-            }else{
-            this.transportTypes.push(data);
-            }
-          });
         },
         errors => console.log(errors));
     }

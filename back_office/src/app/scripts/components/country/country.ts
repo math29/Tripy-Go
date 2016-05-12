@@ -1,5 +1,3 @@
-/// <reference path="../../../../../../typings/socket.io-client/socket.io-client.d.ts" />
-
 import {Component, OnInit, OnDestroy} from 'angular2/core';
 import {NgForm} from 'angular2/common';
 import {AuthService} from '../../tripy-lib/services/auth.service';
@@ -10,7 +8,8 @@ import {Language} from '../../classes/language';
 import {Country} from '../../classes/country';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {OrderByPipe} from '../../pipes/orderby';
-import * as io from 'socket.io-client';
+import {SocketService} from '../../services/socket.service';
+
 
 @Component({
   selector: 'countries',
@@ -30,17 +29,48 @@ export class CountryCmp{
     private orderType = this.orderOptions[0];
     private countries: Country[];
     private selection: any;
-    private socket:any;
     private languages:any;
 
     private continentList: string[] = ["Europe","Asia","Oceania","Amérique du Nord","Amérique du Sud","Artique","Antartique"];
 
-    constructor(private _countryService: CountryService, private _languageService: LanguageService){
-      let host = window.location.origin;
-      this.socket = io.connect('',{path:'/socket.io-client'});
+    constructor(private _countryService: CountryService, private _languageService: LanguageService, private socketService:SocketService){
+      this.socketService.addListener('country:remove');
+      this.socketService.addListener('country:save');
+      this.socketService.socketObservable$.subscribe(socketResponse => {
+        switch(socketResponse.channel){
+          case 'country:remove':
+            this.onCountryRemove(socketResponse.data);
+            break;
+          case 'country:save':
+            this.onCountrySave(socketResponse.data);
+            break;
+          default:
+        }
+      });
     }
 
+    /**
+     * When a country is removed
+     *
+     * @param data: socket response data about removed country
+     */
+    onCountryRemove(data: any) {
+      for(let i = 0; i < this.countries.length; i++){
+        if(this.countries[i]._id == data._id){
+          this.countries.splice(i,1);
+          break;
+        }
+      }
+    }
 
+    onCountrySave(data: any) {
+      let index = this.findCountryIndex(data._id);
+      if(index > -1){
+        this.countries[index] = data;
+      }else{
+      this.countries.push(data);
+      }
+    }
 
     logError(err) {
       console.error('There was an error: ' + err);
@@ -48,22 +78,10 @@ export class CountryCmp{
     ngOnInit(){
       this.getLanguages();
       this.getCountries();
-      // appelé lorsqu'un language est supprimé
-      this.socket.on('country:remove',
-        (data:any)=>{
-          for(let i = 0; i < this.countries.length; i++){
-            if(this.countries[i]._id == data._id){
-              this.countries.splice(i,1);
-              break;
-            }
-          }
-        });
-
     }
 
     ngOnDestroy(){
-      this.socket.removeAllListeners('country:remove');
-      this.socket.removeAllListeners('country:save');
+      this.socketService.removeListener('country:remove', 'country:save');
     }
 
    textIsValid(text){
@@ -96,15 +114,6 @@ export class CountryCmp{
             this.selection = this.keys[1];
             this.orderby = this.keys[1];
           }
-          // set socket to listen languages saved
-          this.socket.on('country:save', (data:any)=>{
-            let index = this.findCountryIndex(data._id);
-            if(index > -1){
-              this.countries[index] = data;
-            }else{
-            this.countries.push(data);
-            }
-          });
         },
         errors => console.log(errors));
     }
