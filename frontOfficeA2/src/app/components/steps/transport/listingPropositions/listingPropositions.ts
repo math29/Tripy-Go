@@ -1,5 +1,6 @@
 import {Component} from 'angular2/core';
 import { RouterLink, RouteParams } from 'angular2/router';
+import { NgForm } from 'angular2/common';
 import { Http, RequestOptions, Headers } from 'angular2/http';
 import { AuthService } from '../../../../tripy_go_lib/services/auth.service';
 import { TransportComparatorCmp } from './transport-comparator/transport-comparator';
@@ -20,6 +21,10 @@ export class ListingPropositions {
 	options_post: RequestOptions;
 
 	transportTypes: any;
+
+	// Filters variables
+	filterTypeChecked:Array<string> = [];
+	filterTypeMap = {};
 
 	constructor(private params: RouteParams, private _http:Http, private _auth: AuthService) {
 		this.travel_id = params.get('id');
@@ -45,8 +50,34 @@ export class ListingPropositions {
 			.map(res => res.json())
 			.subscribe(transportTypes => {
 				this.transportTypes = transportTypes;
-				console.log(this.transportTypes);
+				this.initFilterTypeMap();
 			});
+	}
+
+	// ***************************************
+	// Filters Gesture
+	// ***************************************
+	initFilterTypeMap() {
+		for (var x = 0; x < this.transportTypes.length; x++) {
+			this.filterTypeMap[this.transportTypes[x].name] = true;
+		}
+		this.updateOptions();
+	}
+
+	updateCheckedOptions(option, event) {
+		this.filterTypeMap[option] = event.target.checked;
+		
+		// update checked options
+		this.updateOptions();
+	}
+
+	updateOptions() {
+		this.filterTypeChecked = [];
+		for (var x in this.filterTypeMap) {
+			if (this.filterTypeMap[x]) {
+				this.filterTypeChecked.push(x);
+			}
+		}
 	}
 }
 
