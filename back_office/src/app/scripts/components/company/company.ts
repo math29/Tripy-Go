@@ -7,6 +7,7 @@ import {CompanyService} from '../../services/company';
 import {CountryService} from '../../services/countryService';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import { FILE_UPLOAD_DIRECTIVES, FileUploader } from 'ng2-file-upload/ng2-file-upload';
+import {SocketService} from '../../services/socket.service';
 
 import * as io from 'socket.io-client';
 import * as _ from 'lodash';
@@ -16,7 +17,7 @@ const fileAPI = "/api/files";
 @Component({
   selector: 'companies',
   templateUrl: 'views/components/company/main.html',
-  providers: [CompanyService, CountryService],
+  providers: [CompanyService, CountryService, SocketService],
   directives: [ROUTER_DIRECTIVES, FILE_UPLOAD_DIRECTIVES],
   pipes: []
 })
@@ -27,7 +28,6 @@ export class CompanyCmp{
     private companies: any = [];
     private countries: any = [];
     private companyEdit:any;
-    private socket:any;
 
     /*
      * Uploader
@@ -36,9 +36,9 @@ export class CompanyCmp{
     hasBaseDropZoneOver: boolean = false;
     hasAnotherDropZoneOver: boolean = false;
 
-    constructor(private _companyService: CompanyService, private _countryService: CountryService){
+    constructor(private _companyService: CompanyService, private _countryService: CountryService, private socketService: SocketService){
       let host = window.location.origin;
-      this.socket = io.connect('',{path:'/socket.io-client'});
+      //this.socket = io.connect('',{path:'/socket.io-client'});
 
       // Necessary to not have an error
   		this.uploader.queueLimit = 1;
@@ -47,6 +47,40 @@ export class CompanyCmp{
         console.log(responsePath);
   			this.updateCompanyPicture(responsePath);// the url will be in the response
   		};
+
+      this.socketService.socketObservable$.subscribe(updateCompany => {
+        let response = updateCompany;
+        switch(response.channel){
+          case 'company:save':
+            this.onCompanySave(response.data);
+            break;
+          case 'company:remove':
+            this.onCompanyRemove(response.data);
+            break;
+          default:
+
+        }
+      });
+    }
+
+    onCompanySave(data: any){
+      data.country = _.find(this.countries, { '_id': data.country });
+      let index = this.findCompanyIndex(data._id);
+
+      if(index > -1){
+        this.companies[index] = data;
+      }else{
+      this.companies.push(data);
+      }
+    }
+
+    onCompanyRemove(data: any){
+      for(let i = 0; i < this.companies.length; i++){
+        if(this.companies[i]._id == data._id){
+          this.companies.splice(i,1);
+          break;
+        }
+      }
     }
 
     // ****************************************
@@ -57,13 +91,6 @@ export class CompanyCmp{
       this.companyEdit.img = "/api/files/" + responsePath.file._id ;
       // "/api/files/" + $scope.user.picture + "?_ts=" + new Date().getTime();
       console.log(this.companyEdit.img);
-      /*this._http.put('/api/users/' + user._id, JSON.stringify(user), this.options)
-        .map(res => res.json())
-        .subscribe(
-          response => {
-            this._auth.storeMe();
-          }
-        );*/
     }
 
     fileOverBase(e: any) {
@@ -78,21 +105,13 @@ export class CompanyCmp{
       this.getCountries();
       this.getCompanies();
       // appelé lorsqu'un language est supprimé
-      this.socket.on('company:remove',
-        (data:any)=>{
-          for(let i = 0; i < this.companies.length; i++){
-            if(this.companies[i]._id == data._id){
-              this.companies.splice(i,1);
-              break;
-            }
-          }
-        });
+      this.socketService.addListener('company:remove');
 
     }
 
     ngOnDestroy(){
-      this.socket.removeAllListeners('company:remove');
-      this.socket.removeAllListeners('company:save');
+      this.socketService.removeListener('company:remove');
+      this.socketService.removeListener('company:save');
     }
 
    textIsValid(text){
@@ -118,18 +137,6 @@ export class CompanyCmp{
         .subscribe(data =>
         {
           this.companies = data;
-
-          // set socket to listen languages saved
-          this.socket.on('company:save', (data:any)=>{
-            data.country = _.find(this.countries, { '_id': data.country });
-            let index = this.findCompanyIndex(data._id);
-
-            if(index > -1){
-              this.companies[index] = data;
-            }else{
-            this.companies.push(data);
-            }
-          });
         },
         errors => console.log(errors));
     }

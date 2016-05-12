@@ -46,11 +46,13 @@ export class Tripy_Back{
   errorMessage: any;
 
   constructor(private _authService:AuthService, private _router: Router){
+    localStorage.setItem('env', 'dev');
   }
 
   ngOnInit(){
     this._authService.checkJWTValid();
     this._authService.userObservable$.subscribe(updateUser => this.me = updateUser);
+
   }
 
 }
