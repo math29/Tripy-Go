@@ -25,6 +25,7 @@ export class TimelinesCmp{
     private messages: any=[];
 
     private operationEdit:any = null;
+    private editTimelineName:boolean = false;
     private contentEdit:string = null;
     private newTimeline:any;
     private timelines: any = null;
@@ -71,6 +72,14 @@ export class TimelinesCmp{
         this.operations.push(data);
       }
       this.getTimelines();
+    }
+
+    newTimelineName(){
+      this._timelineService.editName(this.timelines[this.timelineIndex]._id, this.timelines[this.timelineIndex].name)
+        .subscribe(success => {
+          this.messages.push("Le nom de la timeline à été modifié");
+          this.editTimelineName = false;
+        }, error => this.errors.push("Impossible d'éditer le nom de la timeline"));
     }
 
     descriptionChanged(newDescription) {

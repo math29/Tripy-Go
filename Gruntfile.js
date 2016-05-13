@@ -507,6 +507,8 @@ module.exports = function (grunt) {
           'socket.io-client/socket.io.js',
           'lodash/lodash.min.js',
           'jquery/dist/jquery.min.js',
+          'jquery-ui-bundle/**/*',
+          'tinymce/**/*',
           'font-awesome/**/*',
           'datamaps/dist/**/*',
           'to-markdown/dist/**/*',

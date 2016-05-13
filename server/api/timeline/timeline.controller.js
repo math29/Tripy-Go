@@ -142,7 +142,7 @@ exports.removeOperation = function(req, res){
 }
 
 // récupére une timeline
-exports.show = function(req, res){
+exports.show = function(req, res) {
   Timeline.findOne({_id: req.params.id}).populate('operations').populate('operations.root').exec(function(err, timeline){
     if(err){
       logger.error('La Timeline '+req.params.id+' est introuvable');
@@ -161,11 +161,25 @@ exports.show = function(req, res){
   });
 }
 
+exports.updateName = function(req, res) {
+  if(req.params.name && req.params.timelineId) {
+    Timeline.update({_id:req.params.timelineId}, {$set: {'name': req.params.name}}, function(err, doc) {
+      if(err) {
+        handleError(res, err);
+      }else {
+        res.status(200).json({'ok': 'name modified'});
+      }
+    });
+  }else {
+    return res.status(204).json({'error': 'name parameter is missing'});
+  }
+}
+
 /**
  * Déplace une opération dans la timeline selectionné,
  * doit aussi déplacer l'ensemble des opérations de la timeline si nécessaire
  */
-exports.moveOperation = function(req, res){
+exports.moveOperation = function(req, res) {
   var side = -1;
   // est-ce qu'on veut que l'opération ait lieu plus tôt?
   if(req.params.side === 'down'){
@@ -224,6 +238,7 @@ exports.moveOperation = function(req, res){
   });
 
 }
+
 
 /**
  * Trouve l'étape de l'opération dans la timeline associée

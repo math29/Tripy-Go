@@ -113,10 +113,19 @@
 
   <!-- /.panel -->
   <div class="row" *ngIf="timelines && operations && timelines.length > 0">
+
+    <div *ngIf="timelines.length > 1">
+      <select>
+        <option *ngFor="#timeline of timelines">{{timeline.name}}</option>
+      </select>
+    </div>
+
     <div class="col-lg-8" *ngIf="timelineIndex != -1">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
+          <i class="fa fa-clock-o fa-fw"></i> <span *ngIf="!editTimelineName">{{timelines[timelineIndex].name}} </span>
+          <span *ngIf="editTimelineName"><input type="text" [(ngModel)]="timelines[timelineIndex].name"><button class="btn btn-primary" (click)="newTimelineName()">Valider</button></span>
+          <i class="fa fa-edit fa-fw" style="float: right;" (click)="editTimelineName = !editTimelineName"></i>
         </div>
         {{timelines[timelineIndex].description}}
         <!-- /.panel-heading -->

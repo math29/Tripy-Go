@@ -44,6 +44,10 @@ export class TimelineService {
     return this._http.put(this.base_url + side + '/' + timelineId + '/' +operationId, null, this.getHeaders())
   }
 
+  editName(timelineId: string, name:string ) {
+    return this._http.patch(this.base_url + timelineId + '/' + name, null, this.getHeaders());
+  }
+
   private handleError (error: Response) {
     // in a real world app, we may send the server to some remote logging infrastructure
     // instead of just logging it to the console

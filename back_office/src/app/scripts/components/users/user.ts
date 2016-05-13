@@ -15,7 +15,7 @@ import {SocketService} from '../../services/socket.service';
   directives: [ROUTER_DIRECTIVES, StarsRateCmp],
   pipes: [OrderByPipe]
 })
-export class UsersCmp{
+export class UsersCmp implements OnInit{
     private errors: any=[];
     private messages: any=[];
 
