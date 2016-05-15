@@ -1,7 +1,7 @@
 import {Component, OnInit} from 'angular2/core';
 import {HeaderCmp} from './components/header/header';
 import {LoginCmp} from './+login/index';
-import {HomeCmp} from './components/home/home';
+import {HomeCmp} from './+home/components/home.component';
 import {MongoCmp} from './components/mongo/mongo';
 import {TimelinesCmp} from './components/timelines/timelines';
 import {LogCmp} from './components/log/log';
