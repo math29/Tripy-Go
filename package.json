@@ -97,6 +97,7 @@
     "jasmine-core": "2.4.1",
     "jit-grunt": "^0.5.0",
     "jquery": "^2.2.3",
+    "jquery-ui-bundle": "^1.11.4",
     "jshint-stylish": "~0.1.5",
     "json3": "~3.3.1",
     "karma": "~0.12.9",
