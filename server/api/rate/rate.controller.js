@@ -20,7 +20,6 @@ exports.index = function(req, res) {
   });
 };
 
-
 exports.findById = function (req, res, next) {
   var rateId = req.params.id;
 

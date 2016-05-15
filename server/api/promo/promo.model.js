@@ -1,0 +1,16 @@
+'use strict';
+
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema;
+
+var PromoSchema = new Schema({
+  type: {type: String, required: true},
+  url: {type: String, required: true},
+  vendor: {type: String, required: true},
+  discount: {type: Number, required: true},
+  initial_price: {type: Number, required: true},
+  end_date: {type: Date},
+  img: {type: String, required: true}
+});
+
+module.exports = mongoose.model('Promo', PromoSchema);
