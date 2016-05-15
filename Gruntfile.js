@@ -917,8 +917,6 @@ module.exports = function (grunt) {
     'front_office',
     'back_office',
     'autoprefixer',
-    //'ngtemplates',
-    //'concat',
     'copy:dist',
     /*'cdnify',
     'cssmin',

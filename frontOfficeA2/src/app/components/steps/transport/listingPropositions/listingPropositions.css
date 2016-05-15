@@ -36,3 +36,39 @@
 	font-weight: bold;
 	color: #fff;
 }
+
+
+/***************************/
+/* Filters Checkboxs */
+/***************************/
+
+.filterType input[type="checkbox"] {
+    display:none;
+}
+
+.filterType input[type="checkbox"] + label span {
+    display:inline-block;
+    width:19px;
+    height:19px;
+    background: url('assets/fonts/empty-checkbox.png') top no-repeat;
+    cursor:pointer;
+    margin:-1px 4px 0 0;
+    vertical-align:middle;
+}
+
+.filterType input[type="checkbox"] + label span svg {
+    width:19px;
+    height:19px;
+}
+
+.filterType input[type="checkbox"]:checked + label span {
+    background:url('assets/fonts/checked-box.png') top no-repeat;
+}
+
+
+/**************************************/
+/************* Range Sliders  ****************/
+/**************************************/
+.ui-widget-header {
+	background: #00ADEF;
+}
