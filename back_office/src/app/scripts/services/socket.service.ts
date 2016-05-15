@@ -11,6 +11,7 @@ export class SocketService {
   //
   private socket: any;
   private listening: string[] = [];
+  private url:string = '';
   socketObservable$: Observable<any>;
   socketObserver: any;
   private config: SocketIOClient.ConnectOpts;
@@ -22,9 +23,10 @@ export class SocketService {
     this.config.reconnectionDelay = 1000;
 
     if(localStorage.getItem('env') == 'prod'){
-      this.config.path = 'http://tripygo-breizher.rhcloud.com/socket.io-client';
+		this.url = 'http://tripygo-breizher.rhcloud.com';
     }
-    this.socket = io.connect('', this.config);
+	this.socket = io.connect(this.url, this.config);
+
 
     this.socketObservable$ = new Observable(observer => this.socketObserver = observer).share();
   }
