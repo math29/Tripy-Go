@@ -47,7 +47,8 @@ export class SidebarCmp{
       let transport: Item = {"route": "Transports", "icon": "fa-map", "content": "Transports"};
       let company: Item = {"route": "Company", "icon": "fa-building", "content": "Entreprises"};
       let transportComparator: Item = {"route": "TransportComparator", "icon":"fa-balance-scale", "content": "Comparateur de transport"};
-      let transportAgregator: Item = {"route":"Transports", "icon":"fa-filter", "content":"Agregateur"}
+      let transportAgregator: Item = {"route":"Transports", "icon":"fa-filter", "content":"Agregateur"};
+      let promos: Item = {"route":"Promos", "icon": "fa-percent", "content": "Promos"};
 
       this.items = [];
       this.items.push(dashboard);
@@ -55,6 +56,7 @@ export class SidebarCmp{
       this.items.push(countries);
       this.items.push(langues);
       this.items.push(timelines);
+      this.items.push(promos);
       this.items.push(users);
       this.items.push(transportTypes);
       //this.items.push(transport);

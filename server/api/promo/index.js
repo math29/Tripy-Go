@@ -54,6 +54,8 @@ router.get('/', controller.index);
  * @apiUse UserNotAuthorized
  */
 router.post('/', auth.hasRole('admin'), controller.create);
+router.put('/:id', auth.hasRole('admin'), controller.update);
+router.get('/:id', controller.show);
 /**
  * @api {delete} /api/promos/:id delete promo with specific ID
  * @apiVersion 1.0.0

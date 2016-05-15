@@ -10,7 +10,15 @@ var PromoSchema = new Schema({
   discount: {type: Number, required: true},
   initial_price: {type: Number, required: true},
   end_date: {type: Date},
-  img: {type: String, required: true}
+  img: {type: String, required: true},
+  active: {type: Boolean, required: true},
+  archived: {type: Boolean, required: true},
+  clicks:{
+    anonymous: {type: Number, required: true},
+    connected : [
+      {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+    ]
+  }
 });
 
 module.exports = mongoose.model('Promo', PromoSchema);

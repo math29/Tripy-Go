@@ -66,13 +66,14 @@ describe('API /api/promo', function() {
       done();
     });
   });
-  
+
   it('should create a promo', function(done) {
     request(app)
       .post('/api/promos')
       .set({'Authorization': 'Bearer '+tokenAdmin})
       .send(
         {
+          "active":true,
     "type": "transport",
     "url": "https://google.com",
     "vendor": "Google",
