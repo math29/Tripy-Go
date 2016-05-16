@@ -55,6 +55,7 @@ router.get('/', controller.index);
  */
 router.post('/', auth.hasRole('admin'), controller.create);
 router.put('/:id', auth.hasRole('admin'), controller.update);
+router.patch('/notify', auth.hasRole('admin'), controller.notifyFb);
 router.get('/:id', controller.show);
 router.get('/connected/:id', auth.isAuthenticated(), controller.showConnected);
 

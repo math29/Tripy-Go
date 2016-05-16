@@ -20,38 +20,7 @@ exports.register = function(socket) {
 
 
 function onSave(socket, doc, cb) {
-
-  if(process.env.NODE_ENV == 'development') {
-    console.log('saving promo');
-    Facebook.find({}, function(err, doc) {
-      if(err) {
-        console.log(err);
-      }else {
-        console.log(doc);
-        var tr_req = http.request({
-          host: 'yoann-diquelou.fr',
-          port: '8082',
-          path: '/tripy',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }, function(resp) {
-          resp.on('data', function(chunk){
-            console.log(chunk)
-          }).on("error", function(e){
-          console.log("Got error: " + e.message);
-        });
-      });
-      tr_req.write(JSON.stringify({"dest": doc}));
-      tr_req.end();
-      }
-    });
-  }else {
-    console.log('Messenger platform message will not be send, it could be take as a spam');
-  }
   socket.emit('promo:save', doc);
-
 }
 
 function onRemove(socket, doc, cb) {

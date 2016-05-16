@@ -21,6 +21,41 @@ exports.index = function(req, res) {
   });
 };
 
+exports.notifyFb = function(req, res) {
+  if(process.env.NODE_ENV == 'production') {
+    Facebook.find({}, function(err, doc) {
+      if(err) {
+        console.log(err);
+        return res.status(400).json({'error':'facebook can\'t be notified'});
+      }else {
+        console.log(doc);
+        var tr_req = http.request({
+          host: 'yoann-diquelou.fr',
+          port: '8082',
+          path: '/tripy',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }, function(resp) {
+          resp.on('data', function(chunk){
+            console.log(chunk)
+          }).on("error", function(e){
+          console.log("Got error: " + e.message);
+        });
+      });
+      tr_req.write(JSON.stringify({"dest": doc}));
+      tr_req.end();
+      return res.status(200).json({'ok':'facebook was notified'});
+      }
+    });
+  }else {
+    console.log('Messenger platform message will not be send, it could be take as a spam');
+    return res.status(200).json({'ok':'facebook would be notified in production'});
+
+  }
+}
+
 exports.create = function(req, res) {
   var body = req.body;
   if(body.type && body.url && body.vendor && body.discount && body.initial_price && body.img && body.end_date) {

@@ -54,6 +54,10 @@ export class PromoCmp implements OnInit{
     }
   }
 
+  notifyFb(){
+    this.promo_service.notifyFb().subscribe(success => {}, error => {});
+  }
+
   /**
    * Retourne l'index d'une entreprise dans la liste des entreprises
    *

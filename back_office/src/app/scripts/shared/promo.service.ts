@@ -29,6 +29,12 @@ export class PromoService {
         return options
     }
 
+    notifyFb() {
+      let headers = this._authService.getBearerHeaders();
+      let options = new RequestOptions({ headers: headers });
+      return this._http.patch(this.base_url + 'notify',null, options)
+        .map(res => <any>res.json());
+    }
 
 
   /**
