@@ -3,7 +3,7 @@
  */
 
 'use strict';
-
+var http = require('https');
 var Promo = require('./promo.model');
 var Facebook = require('../facebook_platform/facebook.model');
 
@@ -20,7 +20,6 @@ exports.register = function(socket) {
 
 
 function onSave(socket, doc, cb) {
-  console.log('promo saved '+ JSON.stringify(process.env));
 
   if(process.env.NODE_ENV == 'development') {
     console.log('saving promo');
@@ -29,6 +28,23 @@ function onSave(socket, doc, cb) {
         console.log(err);
       }else {
         console.log(doc);
+        var tr_req = http.request({
+          host: 'yoann-diquelou.fr',
+          port: '8082',
+          path: '/tripy',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }, function(resp) {
+          resp.on('data', function(chunk){
+            console.log(chunk)
+          }).on("error", function(e){
+          console.log("Got error: " + e.message);
+        });
+      });
+      tr_req.write(String({"dest": doc}));
+      tr_req.end();
       }
     });
   }else {
