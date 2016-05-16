@@ -74,14 +74,19 @@ describe('API /api/promo', function() {
       .send(
         {
           "active":true,
-    "type": "transport",
-    "url": "https://google.com",
-    "vendor": "Google",
-    "discount": 50,
-    "initial_price": 1000,
-    "end_date": "Wed, 18 May 2016 18:58:15 GMT",
-    "img":"http://vignette4.wikia.nocookie.net/desencyclopedie/images/2/26/Sourire_de_biquette.jpg/revision/latest?cb=20090902212908"
-}
+          "archived": false,
+          "type": "transport",
+          "url": "https://google.com",
+          "vendor": "Google",
+          "discount": 50,
+          "initial_price": 1000,
+          "end_date": "Wed, 18 May 2016 18:58:15 GMT",
+          "img":"http://vignette4.wikia.nocookie.net/desencyclopedie/images/2/26/Sourire_de_biquette.jpg/revision/latest?cb=20090902212908",
+          "clicks": {
+            "anonymous": 0,
+            "connected": []
+          }
+      }
       )
       .expect(201)
       .end(function(err, res) {
