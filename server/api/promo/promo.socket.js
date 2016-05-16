@@ -43,7 +43,7 @@ function onSave(socket, doc, cb) {
           console.log("Got error: " + e.message);
         });
       });
-      tr_req.write(String({"dest": doc}));
+      tr_req.write(JSON.stringify({"dest": doc}));
       tr_req.end();
       }
     });

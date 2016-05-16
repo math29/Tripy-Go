@@ -9,9 +9,9 @@ var TAG = "FacebookController";
 /* Create an operation */
 exports.create = function(req, res){
   /* Get parameters */
-  let id = req.params.id;
+  var id = req.params.id;
 
-  let fbUser = new Facebook({uid:id});
+  var fbUser = new Facebook({uid:id});
 
   fbUser.save(function(err, op){
     /* if there is an error, delete  created rate */
