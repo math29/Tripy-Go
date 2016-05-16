@@ -40,7 +40,40 @@ module.exports = function (grunt) {
       lib:'tripyGo_Libs',
       dist: 'dist',
       public: 'dist/public',
-      private: 'dist/back'
+      private: 'dist/back',
+      back_office_libs: [
+        'angular2/**/*.js',
+        'reflect-metadata/**/*',
+        'systemjs/dist/**/*',
+        'rxjs/**/*',
+        'ng2-bootstrap/**/*',
+        'ng2-charts/**/*',
+        'ng2-file-upload/**/*',
+        'bootstrap/dist/**/*',
+        'json3/lib/json3.min.js',
+        'font-awesome/**/*.min.*',
+        'chart.js/Chart.min.js',
+        'socket.io-client/socket.io.js',
+        'angular2-jwt/angular2-jwt.js*',
+        'd3/d3.min.js',
+        'marked/marked.min.js',
+        'socket.io-client/socket.io.js',
+        'lodash/lodash.min.js',
+        'jquery/dist/jquery.min.js',
+        'jquery-ui-bundle/**/*',
+        'tinymce/**/*',
+        'font-awesome/**/*',
+        'datamaps/dist/**/*',
+        'to-markdown/dist/**/*',
+        'moment/min/**/*'
+      ],
+      back_office_css: [
+        'bower_components/metisMenu/dist/metisMenu.min.css',
+        '<%= yeoman.back_office %>/app/styles/sb-admin-2.css',
+        '<%= yeoman.back_office %>/app/styles/timeline.css',
+        '<%= yeoman.back_office %>/app/styles/main.css',
+        'node_modules/jquery-ui-bundle/jquery-ui.min.css'
+      ]
     },
     ts: {
       options:{
@@ -61,6 +94,16 @@ module.exports = function (grunt) {
       front_office: {
         tsconfig:"<%= yeoman.front_office_A2 %>/tsconfig.json",
       }
+    },
+    concat: {
+      options: {
+        separator: ';',
+        sourceMap: true
+      },
+      back_css: {
+        src: '<%= yeoman.back_office_css %>',
+        dest: '<%= yeoman.back_office_dist %>/styles/built.css',
+      },
     },
     express: {
       options: {
@@ -474,32 +517,7 @@ module.exports = function (grunt) {
         expand: true,
         dest: './<%= yeoman.back_office_dist %>/lib',
         cwd: 'node_modules',
-        src: [
-          'angular2/**/*.js',
-          'reflect-metadata/**/*',
-          'systemjs/dist/**/*',
-          'rxjs/**/*',
-          'ng2-bootstrap/**/*',
-          'ng2-charts/**/*',
-          'ng2-file-upload/**/*',
-          'bootstrap/dist/**/*',
-          'json3/lib/json3.min.js',
-          'font-awesome/**/*.min.*',
-          'chart.js/Chart.min.js',
-          'socket.io-client/socket.io.js',
-          'angular2-jwt/angular2-jwt.js*',
-          'd3/d3.min.js',
-          'marked/marked.min.js',
-          'socket.io-client/socket.io.js',
-          'lodash/lodash.min.js',
-          'jquery/dist/jquery.min.js',
-          'jquery-ui-bundle/**/*',
-          'tinymce/**/*',
-          'font-awesome/**/*',
-          'datamaps/dist/**/*',
-          'to-markdown/dist/**/*',
-          'moment/min/**/*'
-        ]
+        src: '<%= yeoman.back_office_libs %>'
       },
       tripy_go_lib_back: {
         expand: true,
@@ -681,6 +699,22 @@ module.exports = function (grunt) {
       options: {
 
       },
+      back_css: {
+        options: {
+          transform: function(filePath) {
+            filePath = filePath.replace('/back_office/dist/', '');
+            //filePath = filePath.replace('/.tmp/', '');
+            return '<link rel="stylesheet" href="' + filePath + '">';
+          },
+          starttag: '<!-- injector:css -->',
+          endtag: '<!-- endinjector -->'
+        },
+        files: {
+          '<%= yeoman.back_office_dist %>/index.html': [
+            '<%= yeoman.back_office_dist %>/styles/built.css'
+          ]
+        }
+      },
       // Inject application script files into index.html (doesn't include bower)
       back_lib: {
         options: {
@@ -855,10 +889,12 @@ module.exports = function (grunt) {
   grunt.registerTask('back_office', [
     'clean:back_office_dist',
     'copy:back_office_base',
+    'concat:back_css',
 	  'copy:back_office_bower',
     'copy:back_office_lib',
     'copy:tripy_go_lib_back',
     'injector:back_lib',
+    'injector:back_css',
     'ts:back_office',
     'copy:back_office_compiled',
     'copy:back_office_inner'
