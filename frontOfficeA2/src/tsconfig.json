@@ -32,6 +32,8 @@
         "app/components/account/profile/travels/profile_travels.ts",
         "app/components/account/signup/signup.ts",
         "app/components/cmptFooter/cmptFooter.ts",
+        "app/components/discount/components/discount.ts",
+        "app/components/discount/discounts.ts",
         "app/components/header/header.ts",
         "app/components/header/stepbar/stepbar.ts",
         "app/components/main/main.spec.ts",
@@ -45,9 +47,14 @@
         "app/components/team/about-us/about-us.ts",
         "app/components/team/contact/contact.ts",
         "app/front-office-a2.ts",
+<<<<<<< HEAD
         "app/pipes/filterRangeRate.pipe.ts",
         "app/pipes/filterTypeTransport.pipe.ts",
         "app/pipes/orderBy.pipe.ts",
+=======
+        "app/LoggedInOutlet.ts",
+        "app/services/discount.service.ts",
+>>>>>>> promo
         "app/services/rate.service.ts",
         "app/services/user.singleton.ts",
         "app/tripy_go_lib/components/md-editor/md-editor.ts",

@@ -1,7 +1,7 @@
 import {Component, OnInit} from 'angular2/core';
 import {HeaderCmp} from './components/header/header';
 import {LoginCmp} from './+login/index';
-import {HomeCmp} from './components/home/home';
+import {HomeCmp} from './+home/components/home.component';
 import {MongoCmp} from './components/mongo/mongo';
 import {TimelinesCmp} from './components/timelines/timelines';
 import {LogCmp} from './components/log/log';
@@ -13,6 +13,7 @@ import {TransportTypeCmp} from './components/transportType/transportType';
 import {TransportCmp} from './components/transports/transport';
 import {CompanyCmp} from './components/company/company';
 import {TransportComparatorCmp} from './components/transportComparators/transportComparator';
+import {PromoCmp} from './+promo/index';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {UserSingleton} from './singletons/user.singleton';
@@ -39,6 +40,7 @@ import {LoggedInRouterOutlet} from './LoggedInOutlet';
   { path: '/transportTypes', name: 'TransportTypes', component: TransportTypeCmp},
   { path: '/transports', name: 'Transports', component: TransportCmp},
   { path: '/transports/comparators', name: 'TransportComparator', component: TransportComparatorCmp},
+  { path: '/promos', name: 'Promos', component: PromoCmp},
   { path: '/users', name:'Users', component: UsersCmp}
 ])
 export class Tripy_Back{
