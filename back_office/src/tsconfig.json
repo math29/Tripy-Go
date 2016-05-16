@@ -15,13 +15,6 @@
         "app/scripts/+home/components/home.component.ts",
         "app/scripts/+home/index.ts",
         "app/scripts/+login/components/login.component.ts",
-        "app/scripts/+login/index.ts",
-<<<<<<< HEAD
-        "app/scripts/LoggedInOutlet.ts",
-=======
-        "app/scripts/+promo/components/promo.component.ts",
-        "app/scripts/+promo/index.ts",
->>>>>>> promo
         "app/scripts/app.ts",
         "app/scripts/back.ts",
         "app/scripts/classes/company.ts",
