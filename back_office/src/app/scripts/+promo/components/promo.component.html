@@ -127,7 +127,7 @@
               <p><strong>Clicks anonymes: </strong>{{promo.clicks.anonymous}}</p>
               <p><strong>Clicks connectés: </strong>{{promo.clicks.connected.length}}</p><br />
               <a href="{{promo.url}}">Voir la promo</a>
-              <p><button class="btn btn-primary" role="button" (click)="editAPromo(promo)"><i class="fa fa-edit"></i>Editer</button> <button class="btn btn-default" role="button"><i class="fa fa-delete"></i>Supprimer</button></p>
+              <p><button class="btn btn-primary" role="button" (click)="editAPromo(promo)"><i class="fa fa-edit"></i>Editer</button> <button class="btn btn-default" (click)="archivePromo(promo)" role="button"><i class="fa fa-delete"></i>Supprimer</button></p>
             </div>
           </div>
         </div>

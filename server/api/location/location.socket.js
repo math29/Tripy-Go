@@ -5,7 +5,6 @@
 'use strict';
 
 var Location = require('./location.model');
-
 exports.register = function(socket) {
   Location.schema.post('save', function (doc) {
     onSave(socket, doc);

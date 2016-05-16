@@ -63,10 +63,10 @@ export class PromoService {
    *
    * @param operation: Promotion à archiver
    */
-  archivePromo(promo:any){
+  archivePromo(promo:string){
     let headers = this._authService.getBearerHeaders();
     let options = new RequestOptions({ headers: headers });
-    return this._http.delete(this.base_url + '/' + promo._id, options);
+    return this._http.delete(this.base_url +  promo, options);
   }
 
 }

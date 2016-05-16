@@ -16,7 +16,6 @@ export class LoggedInRouterOutlet extends RouterOutlet {
       '': true,
       '/login': true
     };
-    console.log(this);
   }
 
   activate(instruction: ComponentInstruction) {

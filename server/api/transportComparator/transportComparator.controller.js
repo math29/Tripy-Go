@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var logger = require('../../config/logger.js');
 var TransportComparator = require('./transportComparator.model');
 var Rate = require('../rate/rate.model');
 var mongoose = require('mongoose');
@@ -92,8 +93,7 @@ function populate(doc, req, res){
       {path: 'comments.user', ref: 'User', select:'-salt -hashedPassword -email -provider'},
       {path: 'comments.rate', ref: 'Rate'}
     ], function(err, result){
-      if(err)console.err(err);
-      console.log(result);
+      if(err)logger.err(err);
       return res.status(200).json(result);
     });
 }
@@ -118,7 +118,7 @@ function filterComments(doc, req, res){
       {path: 'comments.user', ref: 'User', select:'-salt -hashedPassword -email -provider'},
       {path: 'comments.rate', ref: 'Rate'}
     ], function(err, result){
-      if(err)console.err(err);
+      if(err)logger.err(err);
 
       // On récupère seulement les commentaires du comparator
       var comments = result.comments;
