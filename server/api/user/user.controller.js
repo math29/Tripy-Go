@@ -21,9 +21,8 @@ exports.index = function(req, res) {
       logger.error("Could not find users");
       return res.status(500).send(err);
     }
-    res.status(200).json(users);
+    return res.status(200).json(users);
   });
-  res.status(200).json({'ok':'OK'});
 
 };
 
