@@ -100,7 +100,7 @@
                           <input type="checkbox" [(ngModel)]="preview">
                         </div>
                         <div class="col-lg-12" *ngIf="preview">
-                          <img *ngIf="editPromo.img" src="{{editPromo.img}}">
+                          <img *ngIf="editPromo.img" class="img-preview" src="{{editPromo.img}}">
                         </div>
                     </div>
                   </div>
@@ -123,6 +123,9 @@
             <div class="caption">
               <h3>{{promo.vendor}}</h3>
               <p>{{promo.initial_price}} € * {{promo.discount}}% = {{promo.initial_price * 0.01 * promo.discount}} €</p>
+              <br />
+              <p><strong>Clicks anonymes: </strong>{{promo.clicks.anonymous}}</p>
+              <p><strong>Clicks connectés: </strong>{{promo.clicks.connected.length}}</p><br />
               <a href="{{promo.url}}">Voir la promo</a>
               <p><button class="btn btn-primary" role="button" (click)="editAPromo(promo)"><i class="fa fa-edit"></i>Editer</button> <button class="btn btn-default" role="button"><i class="fa fa-delete"></i>Supprimer</button></p>
             </div>

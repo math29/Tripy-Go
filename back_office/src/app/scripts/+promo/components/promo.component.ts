@@ -7,6 +7,7 @@ import * as moment from 'moment';
 
 @Component({
   selector: 'promos',
+  styleUrls: ['scripts/+promo/components/promo.component.css'],
   templateUrl: 'scripts/+promo/components/promo.component.html',
   providers: [PromoService],
   directives: [DATEPICKER_DIRECTIVES],
