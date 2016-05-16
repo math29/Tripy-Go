@@ -72,12 +72,31 @@ exports.destroy = function(req, res) {
   });
 };
 
-exports.show = function(req, res) {
-  Promo.findOne({_id: req.params.id}, function(err, find) {
+exports.show = function(req, res, next) {
+  let promoId = req.params.id;
+  if(req.headers.authorization) {
+    console.log('some authorization exists');
+    return res.redirect('connected/'+promoId);
+  }
+  Promo.findOneAndUpdate({_id: promoId}, {"$inc": {"clicks.anonymous": 1}}, function(err, find) {
     if(err) {
-      return res.redirect('index.html');
+      console.log(err);
+      return res.redirect('../../index.html');
     }else {
       return res.redirect(find.url);
     }
-  })
+  });
+}
+
+exports.showConnected = function(req, res, next) {
+  let promoId = req.params.id;
+
+  Promo.findOneAndUpdate({_id: promoId}, {"$push": {"clicks.connected": req.user._id}}, function(err, find) {
+    if(err) {
+      console.log(err);
+      return res.redirect('../../index.html');
+    }else {
+      return res.redirect(find.url);
+    }
+  });
 }
