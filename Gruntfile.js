@@ -111,20 +111,6 @@ module.exports = function (grunt) {
           livereload: true
         }
       },
-      injectJS: {
-        files: [
-          '<%= yeoman.client %>/{app,components}/**/*.js',
-          '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
-          '!<%= yeoman.client %>/{app,components}/**/*.mock.js',
-          '!<%= yeoman.client %>/app/app.js'],
-        tasks: ['injector:scripts']
-      },
-      injectCss: {
-        files: [
-          '<%= yeoman.client %>/{app,components}/**/*.css'
-        ],
-        tasks: ['injector:css']
-      },
       mochaTest: {
         files: ['server/**/*.spec.js'],
         tasks: ['env:test', 'mochaTest']
@@ -696,30 +682,6 @@ module.exports = function (grunt) {
 
       },
       // Inject application script files into index.html (doesn't include bower)
-      scripts: {
-        options: {
-          transform: function(filePath) {
-            filePath = filePath.replace('/client/', '');
-            filePath = filePath.replace('/.tmp/', '');
-            return '<script src="' + filePath + '"></script>';
-          },
-          starttag: '<!-- injector:js -->',
-          endtag: '<!-- endinjector -->'
-        },
-        files: {
-          '<%= yeoman.client %>/index.html': [
-               [
-
-                 '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.js',
-
-                 '!{.tmp,<%= yeoman.client %>}/app/app.js',
-                 '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.spec.js',
-                 '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js'
-               ]
-            ]
-        }
-      },
-      // Inject application script files into index.html (doesn't include bower)
       back_lib: {
         options: {
           transform: function(filePath) {
@@ -733,6 +695,7 @@ module.exports = function (grunt) {
         files: {
           '<%= yeoman.back_office_dist %>/index.html': [
                [
+                 "<%= yeoman.back_office_dist %>/lib/tinymce/tinymce.min.js",
                  "<%= yeoman.back_office_dist %>/lib/jquery/dist/jquery.min.js",
                  "<%= yeoman.back_office_dist %>/lib/bootstrap/dist/js/bootstrap.min.js",
                  "<%= yeoman.back_office_dist %>/bower_components/metisMenu/dist/metisMenu.min.js",
@@ -748,7 +711,8 @@ module.exports = function (grunt) {
                  "<%= yeoman.back_office_dist %>/lib/to-markdown/dist/to-markdown.js",
                  "<%= yeoman.back_office_dist %>/lib/datamaps/dist/datamaps.world.min.js",
                  "<%= yeoman.back_office_dist %>/lib/chart.js/Chart.min.js",
-                 "<%= yeoman.back_office_dist %>/js/*.js"
+                 "<%= yeoman.back_office_dist %>/js/*.js",
+                 "<%= yeoman.back_office_dist %>/lib/jquery-ui-bundle/jquery-ui.min.js"
                ]
             ]
         }

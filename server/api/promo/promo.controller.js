@@ -5,6 +5,8 @@ var logger = require('../../config/logger');
 var TypeChecker = require('../../utils/checkObjects');
 var mongoose = require('mongoose');
 var _ = require('lodash');
+var http = require('https');
+var Facebook = require('../facebook_platform/facebook.model');
 
 /**
  * Get list of promos

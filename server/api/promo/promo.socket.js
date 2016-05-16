@@ -3,9 +3,7 @@
  */
 
 'use strict';
-var http = require('https');
 var Promo = require('./promo.model');
-var Facebook = require('../facebook_platform/facebook.model');
 
 
 exports.register = function(socket) {
