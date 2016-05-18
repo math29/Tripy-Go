@@ -1,5 +1,3 @@
-export * from './components/company/company';
-export * from './components/country/country';
 export * from './components/header/header';
 export * from './components/header/header_notification';
 export * from './components/language/language';
@@ -15,6 +13,8 @@ export * from './components/transports/transportMap';
 export * from './components/transportType/transportType';
 export * from './+users/index';
 export * from './components/utils/stats';
+export * from './+company/index';
 export * from './+home/index';
 export * from './+login/index';
 export * from './+promo/index';
+export * from './+country/index';

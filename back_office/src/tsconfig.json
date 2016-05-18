@@ -12,6 +12,10 @@
         "suppressImplicitAnyIndexErrors": true
     },
     "files": [
+        "app/scripts/+company/components/company.component.ts",
+        "app/scripts/+company/index.ts",
+        "app/scripts/+country/components/country.component.ts",
+        "app/scripts/+country/index.ts",
         "app/scripts/+home/components/home.component.ts",
         "app/scripts/+home/index.ts",
         "app/scripts/+login/components/login.component.ts",
@@ -28,8 +32,6 @@
         "app/scripts/classes/transport.ts",
         "app/scripts/classes/transportType.ts",
         "app/scripts/components.barrell.ts",
-        "app/scripts/components/company/company.ts",
-        "app/scripts/components/country/country.ts",
         "app/scripts/components/header/header_notification.ts",
         "app/scripts/components/header/header.ts",
         "app/scripts/components/home/home.ts",
