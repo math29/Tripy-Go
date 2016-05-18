@@ -13,7 +13,7 @@ export * from './components/transportComparators/transportComparator';
 export * from './components/transports/transport';
 export * from './components/transports/transportMap';
 export * from './components/transportType/transportType';
-export * from './components/users/user';
+export * from './+users/index';
 export * from './components/utils/stats';
 export * from './+home/index';
 export * from './+login/index';

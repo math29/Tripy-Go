@@ -98,7 +98,11 @@ module.exports = function (grunt) {
     concat: {
       options: {
         separator: ';',
-        sourceMap: true
+        sourceMap: true,
+        process: function(src, filepath) {
+         return '// Source: ' + filepath + '\n' +
+           src.replace(/\/\*\#.*\*\//g, '');
+       }
       },
       back_css: {
         src: '<%= yeoman.back_office_css %>',

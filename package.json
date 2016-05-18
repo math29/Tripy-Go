@@ -51,6 +51,7 @@
   "devDependencies": {
     "angular-socket-io": "~0.6.0",
     "apidoc": "~0.13.1",
+    "artillery": "^1.4.1",
     "bootstrap": "^3.3.6",
     "bootstrap-list-filter": "~0.2.2",
     "chart.js": "^1.0.2",
