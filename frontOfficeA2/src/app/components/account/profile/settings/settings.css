@@ -13,3 +13,74 @@
 .another-file-over-class { border: dotted 3px green; }
 
 html, body { height: 100%; }
+
+
+/**********************************/
+/* FORM GENERAL USER */
+/**********************************/
+
+.space {
+	margin-bottom: 15px;
+}
+
+.user-personal-info label,
+.user-change-password label,
+.user-preference label {
+	font-weight: normal;
+}
+.user-personal-info .form-control,
+.user-change-password .form-control,
+.user-preference .form-control {
+	border-radius: 0px;
+	padding: 10px;
+	height: 40px;
+}
+.user-personal-info textarea {
+	height: auto !important;
+}
+.user-personal-info button,
+.user-change-password button,
+.user-preference button,
+.user-add-card button,
+.submit-complaint button {
+	border: 0px;
+	color: #fff;
+	background: #00adef;
+	padding: 10px 20px;
+	margin-top: 20px;
+	font-weight: bold;
+}
+.user-change-password button,
+.user-preference button, 
+.user-add-card button,
+.submit-complaint button {
+	margin-top: 5px;
+}
+.user-personal-info a {
+	background: #F2676B;
+	font-weight: bold;
+	color: #fff;
+	padding: 10px 20px;
+	display: inline-block;
+	margin-top: 20px;
+}
+
+/* List Destinations prefered */
+.dest-list {
+	margin: 4px 12px;
+}
+
+.dest-list .badge {
+	cursor: pointer;
+	background: #F2676B;
+}
+
+
+.visited-country span {
+	background-size: contain;
+	background-position: 50%;
+	background-repeat: no-repeat;
+	width: 100%;
+	height: 40px;
+	margin-bottom: 15px;
+}

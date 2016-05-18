@@ -21,6 +21,7 @@
     "express": "~4.9.0",
     "express-jwt": "^3.1.0",
     "express-session": "~1.0.2",
+    "flag-icon-css": "^2.3.0",
     "font-awesome": "^4.5.0",
     "glob": "^7.0.0",
     "gridfs-stream": "^1.1.1",

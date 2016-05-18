@@ -134,6 +134,26 @@ router.get('/roles', auth.hasRole('admin'), controller.getRoles);
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 
 /**
+  * @api {put} /api/users/prefdestination/:id Add a prefered Destination
+  * @apiName PutPreferedDestination
+  * @apiGroup Users
+  *
+  * @apiParam {Object} preferedDests List Of String of Prefered Destinations
+  * @apiParam {Number} id  User Id you want to add a prefered destination
+  *
+  * @apiSuccess {User} code
+  *
+  * @apiSuccessExample Success-Response:
+  *   HTTP/1.1 Success-Response:
+  *   [
+  *    ...
+  *   ]
+  *
+  *
+  */
+router.put('/prefdestination/:id', auth.isAuthenticated(), controller.addPreferedDestination);
+
+/**
   * @api {put} /api/users/:id Substitute a user
   * @apiName SubstituteUser
   * @apiGroup Users

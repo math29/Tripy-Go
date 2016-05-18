@@ -19,6 +19,7 @@ export class Profile {
     emailUsed: boolean = false;
     step = 1;
 
-	constructor(private _authService: AuthService) {
+	constructor(private _auth: AuthService) {
+		this._auth.storeMe();
 	}
 }

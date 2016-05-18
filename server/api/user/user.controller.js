@@ -102,7 +102,7 @@ exports.update = function(req, res) {
     _id: req.params.id
   }, '-salt -hashedPassword', function(err, user, next) { // don't ever give out the password or salt
     if (err) {
-      logger.error("Could not ge user infos ME", user);
+      logger.error("Could not get user infos ME", user);
       return next(err);
     }
     if (!user) {
@@ -116,6 +116,33 @@ exports.update = function(req, res) {
     });
   });
 };
+
+// Add a Prefered Destination
+exports.addPreferedDestination = function(req, res) {
+  User.findOne({
+    _id: req.params.id
+  }, '-salt -hashedPassword', function(err, user, next){
+    if (err) {
+      logger.error("Could not get user infos ME", user);
+      return next(err);
+    }
+    if (!user) {
+      logger.warn("User not auhenticated");
+      return res.status(401).send('Unauthorized');
+    }
+    if (!req.body.preferedDests) {
+      logger.warn("No preferedDest Given");
+      return res.status(401).send('No preferedDest Given');
+    }
+
+    user.dest_prefereds = req.body.preferedDests;
+
+    user.save(function (err) {
+      if (err) { return handleError(res, err); }
+      res.json(user);
+    });
+  });
+}
 
 /**
  * Change a users role
@@ -138,9 +165,9 @@ exports.changeRole = function(req, res) {
  */
 exports.me = function(req, res) {
   var userId = req.user._id;
-  User.findOne({
-    _id: userId
-  }, '-salt -hashedPassword', function(err, user, next) { // don't ever give out the password or salt
+  User.findOne({_id: userId}, '-salt -hashedPassword')
+    .populate('travels')
+    .exec(function(err, user, next) { // don't ever give out the password or salt
     if (err) {
       logger.error("Could not ge user infos ME", user);
       return next(err);

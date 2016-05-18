@@ -572,7 +572,9 @@ module.exports = function (grunt) {
           'ng2-bootstrap/**/*',
           'moment/min/**/*',
           'ng2-file-upload/**/*',
-          'marked/marked.min.js'
+          'marked/marked.min.js',
+          'flag-icon-css/css/flag-icon.min.css',
+          'flag-icon-css/flags/**/*'
         ]
       },
       // TRIPY-GO LIBRAIRIES GLOBALES
