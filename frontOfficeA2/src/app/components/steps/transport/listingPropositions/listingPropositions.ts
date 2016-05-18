@@ -49,10 +49,6 @@ export class ListingPropositions {
 		this.options_post = new RequestOptions({ headers: _auth.getBearerHeaders() });
 		this.synchTransportsComparators();
 		this.synchTransportTypes();
-
-		// this.rangeslider.rangeSlider();
-		// console.log(get);
-			//.rangeSlider();
 	}
 
 	ngAfterViewInit() {

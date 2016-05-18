@@ -54,6 +54,7 @@
         "app/tripy_go_lib/components/rate/rate.service.ts",
         "app/tripy_go_lib/components/rate/stackRate.ts",
         "app/tripy_go_lib/components/rate/starsRate.ts",
+        "app/tripy_go_lib/components/transport-comparator/transport-comparator.ts",
         "app/tripy_go_lib/pipes/marked.ts",
         "app/tripy_go_lib/services/auth.service.ts",
         "app.ts",
