@@ -1,8 +1,8 @@
-import {Component, OnInit, OnDestroy} from 'angular2/core';
-import {NgForm} from 'angular2/common';
-import {Response} from 'angular2/http';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {NgForm} from '@angular/common';
+import {Response} from '@angular/http';
 import {UserService} from '../../services/userService';
-import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import { RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 import {OrderByPipe} from '../../pipes/orderby';
 //import {ModalCmp} from '../../tripy-lib/components/modal/modal';
 import {StarsRateCmp} from '../../tripy-lib/components/rate/starsRate';

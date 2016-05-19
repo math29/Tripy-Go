@@ -1,6 +1,6 @@
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 import {AuthService} from '../tripy-lib/services/auth.service';
-import {Http, Response, Headers, RequestOptions, URLSearchParams} from 'angular2/http';
+import {Http, Response, Headers, RequestOptions, URLSearchParams} from '@angular/http';
 import {Observable}     from 'rxjs/Observable';
 import {Transport} from '../classes/transport';
 import 'rxjs/add/operator/map'
@@ -9,6 +9,7 @@ import 'rxjs/add/operator/map'
 
 @Injectable()
 export class AgregatorService {
+  private header: Headers;
 
   constructor(private _http: Http, private _authService:AuthService) {}
 
@@ -17,17 +18,17 @@ export class AgregatorService {
    * d'effectuer une requête
    */
   getHeaders(){
-    let headers = this._authService.getBearerHeaders();
-  	  //headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
-      let options = new RequestOptions({ headers: headers });
-      return options
+    this.header = new Headers(this._authService.getBearerHeaders());
+    let options = new RequestOptions({
+      headers: this.header
+     });
+    return options
   }
 
   getHeader(){
-      let headers = this._authService.getBearerHeaders();
-    	  //headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
-        let options = new RequestOptions({ headers: headers });
-        return options
+      let header = new Headers(this._authService.getBearerHeaders());
+      let options = new RequestOptions({ headers: header });
+      return options
     }
 
 
@@ -44,7 +45,7 @@ export class AgregatorService {
       if(queryString != '')queryString +="&";
       queryString += `min_date=${agregateOptions.date.min}&max_date=${agregateOptions.date.max}`;
     }
-    let headers = this._authService.getBearerHeaders();
+    let headers = new Headers(this._authService.getBearerHeaders());
     let options = new RequestOptions({ headers: headers ,
     search: new URLSearchParams(queryString)
   }

@@ -34,7 +34,6 @@
         "app/scripts/components.barrell.ts",
         "app/scripts/components/header/header_notification.ts",
         "app/scripts/components/header/header.ts",
-        "app/scripts/components/home/home.ts",
         "app/scripts/components/language/language.ts",
         "app/scripts/components/log/log.ts",
         "app/scripts/components/mongo/mongo.ts",

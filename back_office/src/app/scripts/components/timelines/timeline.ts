@@ -1,10 +1,10 @@
-import {Component,EventEmitter, Output} from 'angular2/core';
-import {Response} from 'angular2/http';
+import {Component,EventEmitter, Output} from '@angular/core';
+import {Response} from '@angular/http';
 import {TimelineService} from '../../services/timelineService';
 import {OperationsService} from '../../services/operationsService';
 import {MarkdownPipe} from '../../tripy-lib/pipes/marked';
 
-import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import {RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 
 @Component({
   selector: 'timeline',
