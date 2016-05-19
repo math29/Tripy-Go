@@ -42,7 +42,7 @@ module.exports = function (grunt) {
       public: 'dist/public',
       private: 'dist/back',
       back_office_libs: [
-        'angular2/**/*.js',
+        '@angular/**/*.js',
         'reflect-metadata/**/*',
         'systemjs/dist/**/*',
         'rxjs/**/*',
