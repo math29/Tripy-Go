@@ -176,6 +176,34 @@ router.put('/:id', controller.update);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 
 /**
+ * @api {get} /api/users/search/:search Search users matching search params
+ * @apiVersion 0.0.0
+ * @apiName Search users by name
+ * @apiGroup Users
+ *
+ * @apiParam {string} search  name of the user
+ *
+ * @apiSuccess {User} User
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *   {
+ *      status: 200,
+ *      data:
+ *  [
+ *      {
+ *            "__v": 0,
+ *			  ...
+ *            "_id": "564cf500bbb31f62475efc31"
+ *       }
+ *  ]
+ * }
+ *
+ * @apiUse UserNotAuthorized
+ */
+router.get('/search/:search', auth.isAuthenticated(), controller.search);
+
+/**
   * @api {post} /api/users Insert a User
   * @apiName InsertUser
   * @apiGroup Users
