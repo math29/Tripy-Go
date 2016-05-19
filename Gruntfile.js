@@ -586,6 +586,7 @@ module.exports = function (grunt) {
           'angular2-jwt/*',
           'ng2-bootstrap/**/*',
           'moment/min/**/*',
+          'ng2-bootstrap/**/*',
           'ng2-file-upload/**/*',
           'marked/marked.min.js'
         ]

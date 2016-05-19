@@ -1,0 +1,9 @@
+.site {
+  margin: 5px;
+}
+
+img.siteImg {
+  max-width: 100%;
+  max-height: 100%;
+  margin 1px;
+}

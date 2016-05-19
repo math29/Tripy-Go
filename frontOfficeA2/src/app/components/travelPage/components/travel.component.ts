@@ -1,9 +1,11 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from 'angular2/core';
+import { SiteCmp } from './site.component';
+
 
 @Component({
     selector: 'travel-page',
     templateUrl: 'app/components/travelPage/components/travel.component.html',
-    directives: [],
+    directives: [ SiteCmp ],
     providers: [],
     styleUrls: ['app/components/travelPage/components/travel.component.css'],
     pipes: []
@@ -14,6 +16,8 @@ export class TravelPage implements OnInit, OnDestroy {
   // ajout d'un amis au voyage, utilisé dans l'html
   private addFriend: boolean = false;
   private participants: any;
+
+  private sites: any = [{img: 'assets/images/user.png', name:'Liligo'}];
 
   constructor() {}
 

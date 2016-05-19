@@ -1,7 +1,7 @@
 <div class="row">
   <!-- Panneau de gauche -->
   <div class="col-lg-4 col-md-4 col-xs-12">
-    <h1>Nom du voyage</h1>
+    <h1>Nom du voyage<span class="fa fa-edit right"></span></h1>
     <div class="participants">
       <h2 class="travelTitle">Participants</h2>
       <div class="find"  [class.active]="addFriend">
@@ -26,6 +26,9 @@
 
     <div class="used_site">
       <h2 class="travelTitle"><div class="titleIcon fa fa-plus-circle"></div>Sites utilisés</h2>
+      <div class="row" *ngFor="#site of sites">
+        <site [site]="site"></site>
+      </div>
     </div>
   </div>
   <!-- Fin panneau de gauche -->
