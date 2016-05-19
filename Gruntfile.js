@@ -562,8 +562,15 @@ module.exports = function (grunt) {
         dest: './frontOfficeA2/dist/vendor',
         cwd: './bower_components',
         src: [
-          'jquery/**/*',
-          'bootstrap/**/**/*',
+          'jquery/**/*'
+        ]
+      },
+      front_office_vendor_npm: {
+        expand: true,
+        dest: './frontOfficeA2/dist/vendor',
+        cwd: './node_modules',
+        src: [
+          'bootstrap/dist/**/*',
           'font-awesome/**/*'
         ]
       },
@@ -909,6 +916,7 @@ module.exports = function (grunt) {
     'copy:front_office_base',
     'copy:front_office_lib',
     'copy:front_office_vendor',
+    'copy:front_office_vendor_npm',
     'ts:front_office'
   ]);
 
