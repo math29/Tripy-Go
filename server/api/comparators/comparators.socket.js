@@ -4,7 +4,7 @@
 
 'use strict';
 
-var TransportComparator = require('./transportComparator.model');
+var TransportComparator = require('./comparators.model');
 
 exports.register = function(socket) {
   TransportComparator.schema.post('save', function (doc) {

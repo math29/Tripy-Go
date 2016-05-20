@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-var controller = require('./transportComparator.controller');
+var controller = require('./comparators.controller');
 var auth = require('../../auth/auth.service');
 
 
@@ -19,7 +19,7 @@ var router = express.Router();
 
 
 /**
- *  @apiDefine ApiParamsTransport
+ *  @apiDefine ApiParamsComparator
  *
  *
  * @apiParam {ObjectId} company 			 			Company id of the comparator
@@ -28,12 +28,12 @@ var router = express.Router();
  */
 
 /**
- * @api {get} /api/transport/comparators Request list of all transport comparators
+ * @api {get} /api/comparators Request list of all comparators
  * @apiVersion 0.0.0
- * @apiName GetTransportComparators
- * @apiGroup TransportComparator
+ * @apiName GetComparators
+ * @apiGroup Comparator
  *
- * @apiSuccess {Array} array of Transport comparators
+ * @apiSuccess {Array} array of comparators
  *
  * @apiSuccessExample Success-Response:
  *   HTTP/1.1 200 OK
@@ -62,12 +62,12 @@ var router = express.Router();
 router.get('/', auth.isAuthenticated(), controller.index);
 
 /**
- * @api {get} /api/transport/comparators/:id Get By Id
- * @apiVersion 0.0.0
- * @apiName GetTransportComparatorById
- * @apiGroup TransportComparator
+ * @api {get} /api/comparators/:id Get By Id
+ * @apiVersion 0.0.1
+ * @apiName GetComparatorById
+ * @apiGroup Comparator
  *
- * @apiParam {Number} id  Id of the target comparator transport
+ * @apiParam {String} id  Id of the target comparator
  *
  * @apiSuccess {Comparator} Comparator
  *
@@ -93,13 +93,13 @@ router.get('/', auth.isAuthenticated(), controller.index);
  *
  * @apiUse UserNotAuthorized
  */
-router.get('/:id', controller.show); //auth.isAuthenticated(),
+router.get('/:id', controller.show);
 
 /**
- * @api {get} /api/transport/comparators/comments/:id/:limit/:offset Get Comments By Id with offset
- * @apiVersion 0.0.0
- * @apiName GetTransportComparatorCommentsById
- * @apiGroup TransportComparator
+ * @api {get} /api/comparators/comments/:id/:limit/:offset Get Comments By Id with offset
+ * @apiVersion 0.0.1
+ * @apiName GetComparatorCommentsById
+ * @apiGroup Comparator
  *
  * @apiParam {Number} id  Id of the target comparator transport
  * @apiParam {Number} offset  Offset of the comment wanted
@@ -132,9 +132,9 @@ router.get('/:id', controller.show); //auth.isAuthenticated(),
 router.get('/comments/:id/:limit/:offset', auth.isAuthenticated(), controller.getComments);
 
 /**
-  * @api {post} /api/transport/comparators Insert a transport comparator
+  * @api {post} /api/comparators Insert a comparator
   * @apiName InsertTransportComparator
-  * @apiGroup TransportComparator
+  * @apiGroup Comparator
   *
   * @apiUse ApiParamsTransport
   *
@@ -151,9 +151,9 @@ router.get('/comments/:id/:limit/:offset', auth.isAuthenticated(), controller.ge
 router.post('/', auth.hasRole('admin'), controller.create);
 
 /**
-  * @api {put} /api/transport/comparators/:id Substitute a transport comparator
-  * @apiName SubstituteTransportComparator
-  * @apiGroup TransportComparator
+  * @api {put} /api/comparators/:id Substitute a comparator
+  * @apiName SubstituteComparator
+  * @apiGroup Comparator
   *
   * @apiUse ApiParamsTransport
   *
@@ -170,7 +170,7 @@ router.post('/', auth.hasRole('admin'), controller.create);
 router.put('/:id', auth.hasRole('admin'), controller.update);
 
 /**
-  * @api {patch} /api/transport/comparators/:id Substitute a transport comparator
+  * @api {patch} /api/comparators/:id Substitute a comparator
   * @apiName SubstituteTransportComparator
   * @apiGroup TransportComparator
   *
@@ -189,9 +189,9 @@ router.put('/:id', auth.hasRole('admin'), controller.update);
 router.patch('/:id', auth.hasRole('admin'), controller.update);
 
 /**
-  * @api {delete} /api/transport/comparators/:id Delete a transport comparator
-  * @apiName DeleteTransportComparator
-  * @apiGroup TransportComparator
+  * @api {delete} /api/comparators/:id Delete a comparator
+  * @apiName DeleteComparator
+  * @apiGroup Comparator
   *
   * @apiSuccess {Object} Object response
   *

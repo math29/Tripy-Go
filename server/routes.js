@@ -32,7 +32,7 @@ module.exports = function(app) {
   app.use('/api/back/facebook', require('./api/facebook_platform'));
   /* Transports */
   app.use('/api/transport/type', require('./api/transportType'));
-  app.use('/api/transport/comparators', require('./api/transportComparator'));
+  app.use('/api/comparators', require('./api/comparators'));
   app.use('/api/transport/aggregator', require('./api/transport/aggregator'));
 
 

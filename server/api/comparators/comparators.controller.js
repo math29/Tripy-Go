@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 var logger = require('../../config/logger.js');
-var TransportComparator = require('./transportComparator.model');
+var TransportComparator = require('./comparators.model');
 var Rate = require('../rate/rate.model');
 var mongoose = require('mongoose');
 

@@ -31,7 +31,7 @@ var TransportComparatorSchema = new Schema({
     }]
 });
 
-var TransportComparator = mongoose.model('TransportComparator', TransportComparatorSchema);
+var TransportComparator = mongoose.model('Comparators', TransportComparatorSchema);
 
 TransportComparatorSchema.pre('save', function(next){
   var self = this;
@@ -77,4 +77,5 @@ TransportComparatorSchema.pre('save', function(next){
 TransportComparatorSchema.post('remove', function(doc){
   Rate.remove({_id: {$in: [doc.content_rate, doc.ergo_rate] }}).exec();
 });
+
 module.exports = TransportComparator;
