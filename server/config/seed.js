@@ -3065,45 +3065,51 @@ User.find({}).remove(function() {
                 }, function(err, rate1, rate2, rate3, rate4, rate5, rate6, rate7) {
                     TransportComparator.find({}).remove(function() {
                         TransportComparator.create({
-                            type: [transportTypeId],
+                            type: ['transport'],
                             company: company._id,
-                            nbCompanies: 36,
-                            comments: [{
+                            transport: {
+                              type: [transportTypeId],
+                              nbCompanies: 36,
+                              comments: [{
                                 comment: "Très bon comparateur",
                                 user: user1._id,
                                 rate: rate1._id
-                            }, {
+                              }, {
                                 comment: "Très bon comparateur oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui",
                                 user: user1._id,
                                 rate: rate2._id
-                            }, {
+                              }, {
                                 comment: "U commentaire comme un autre",
                                 user: user1._id,
                                 rate: rate3._id
-                            }, {
+                              }, {
                                 comment: "Oui, c'est plutôt intéressant !",
                                 user: user1._id,
                                 rate: rate4._id
-                            }, {
+                              }, {
                                 comment: "Très satisfait de leurs services ! ",
                                 user: user1._id,
                                 rate: rate5._id
-                            }, {
+                              }, {
                                 comment: "hahahahahahahahahahahahaha",
                                 user: user1._id,
                                 rate: rate6._id
-                            }, {
+                              }, {
                                 comment: "Très bon ",
                                 user: user1._id,
                                 rate: rate7._id
                             }]
+                          }
                         });
 
                         TransportComparator.create({
+                          type: 'transport',
+                          company: company2._id,
+                          transport: {
                             type: [transportTypeId2],
-                            company: company2._id,
                             nbCompanies: 35,
                             comments: []
+                          }
                         });
                     })
                 });

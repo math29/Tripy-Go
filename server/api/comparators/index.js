@@ -93,7 +93,42 @@ router.get('/', auth.isAuthenticated(), controller.index);
  *
  * @apiUse UserNotAuthorized
  */
-router.get('/:id', controller.show);
+router.get('/:id', auth.isAuthenticated(), controller.show);
+/**
+ * @api {get} /api/comparators/:type Get By type
+ * @apiVersion 0.0.1
+ * @apiName GetComparatorByType
+ * @apiGroup Comparator
+ *
+ * @apiParam {String} type  Type of the target comparator
+ *
+ * @apiSuccess {Array[Comparator]} Comparators
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *    [
+ *      {
+ *            "__v": 0,
+ *            "company": {
+ *              _id:'564ceecea3300dfc3906f536',
+ *              name: 'Liligo',
+ *              url: 'https://liligo.com'
+ *            },
+ *            types: [
+ *              {
+ *               _id:'564ceecea3300dfc3906f536',
+ *               name: 'Plane',
+ *               image: '564ceecea3300dfc3906f536'
+ *              },
+ *              ...
+ *            ]
+ *            "_id": "564cf500bbb31f62475efc31"
+ *       }
+ *    ]
+ *
+ * @apiUse UserNotAuthorized
+ */
+router.get('/:type', auth.isAuthenticated(), controller.findByType);
 
 /**
  * @api {get} /api/comparators/comments/:id/:limit/:offset Get Comments By Id with offset

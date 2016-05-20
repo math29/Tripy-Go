@@ -15,8 +15,21 @@ exports.index = function(req, res) {
 };
 
 // Get a single transport comparator
-exports.show = function(req, res) {
+exports.show = function(req, res, next) {
+  if(!req.params.id) {
+    next();
+  }
   TransportComparator.findById(req.params.id, function (err, transport) {
+    if(err) { return handleError(res, err); }
+    if(!transport) { return res.status(404).send('Not Found'); }
+    populate(transport, req, res);
+    //return res.json(transport);
+  });
+};
+
+// Get a list of transport comparator by type
+exports.findByType = function(req, res) {
+  TransportComparator.find( {type: req.params.type }, function (err, transport) {
     if(err) { return handleError(res, err); }
     if(!transport) { return res.status(404).send('Not Found'); }
     populate(transport, req, res);
