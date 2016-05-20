@@ -68,7 +68,6 @@
         "app/scripts/shared/promo.service.ts",
         "app/scripts/singletons/user.singleton.ts",
         "app/scripts/tripy-lib/components/md-editor/md-editor.ts",
-        "app/scripts/tripy-lib/components/modal/modal.ts",
         "app/scripts/tripy-lib/components/rate/rate.service.ts",
         "app/scripts/tripy-lib/components/rate/stackRate.ts",
         "app/scripts/tripy-lib/components/rate/starsRate.ts",
