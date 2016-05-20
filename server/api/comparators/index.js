@@ -93,7 +93,7 @@ router.get('/', auth.isAuthenticated(), controller.index);
  *
  * @apiUse UserNotAuthorized
  */
-router.get('/:id', auth.isAuthenticated(), controller.show);
+router.get('/:id', auth.isAuthenticated(), [controller.show, controller.findByType]);
 /**
  * @api {get} /api/comparators/:type Get By type
  * @apiVersion 0.0.1
@@ -128,7 +128,6 @@ router.get('/:id', auth.isAuthenticated(), controller.show);
  *
  * @apiUse UserNotAuthorized
  */
-router.get('/:type', auth.isAuthenticated(), controller.findByType);
 
 /**
  * @api {get} /api/comparators/comments/:id/:limit/:offset Get Comments By Id with offset

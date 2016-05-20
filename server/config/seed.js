@@ -10,7 +10,7 @@ var Country = require('../api/country/country.model');
 var Company = require('../api/company/company.model');
 var Transport = require('../api/transport/transport.model');
 var TransportType = require('../api/transportType/transportType.model');
-var TransportComparator = require('../api/comparators/comparators.model');
+var Comparator = require('../api/comparators/comparators.model');
 var Travel = require('../api/travel/travel.model');
 var Location = require('../api/location/location.model');
 var Rate = require('../api/rate/rate.model');
@@ -3063,12 +3063,12 @@ User.find({}).remove(function() {
                     score: 0,
                     type: "Stack"
                 }, function(err, rate1, rate2, rate3, rate4, rate5, rate6, rate7) {
-                    TransportComparator.find({}).remove(function() {
-                        TransportComparator.create({
-                            type: ['transport'],
+                    Comparator.find({}).remove(function() {
+                        Comparator.create({
+                            types: ['transport'],
                             company: company._id,
                             transport: {
-                              type: [transportTypeId],
+                              types: [transportTypeId],
                               nbCompanies: 36,
                               comments: [{
                                 comment: "Très bon comparateur",
@@ -3102,11 +3102,11 @@ User.find({}).remove(function() {
                           }
                         });
 
-                        TransportComparator.create({
-                          type: 'transport',
+                        Comparator.create({
+                          types: ['transport'],
                           company: company2._id,
                           transport: {
-                            type: [transportTypeId2],
+                            types: [transportTypeId2],
                             nbCompanies: 35,
                             comments: []
                           }

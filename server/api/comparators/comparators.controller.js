@@ -16,24 +16,26 @@ exports.index = function(req, res) {
 
 // Get a single transport comparator
 exports.show = function(req, res, next) {
-  if(!req.params.id) {
+  console.log('HERE');
+  if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    console.log('redirect');
     next();
+  } else {
+    TransportComparator.findById(req.params.id, function (err, transport) {
+      if(err) { return handleError(res, err); }
+      if(!transport) { return res.status(404).send('Not Found'); }
+      populate(transport, req, res);
+      //return res.json(transport);
+    });
   }
-  TransportComparator.findById(req.params.id, function (err, transport) {
-    if(err) { return handleError(res, err); }
-    if(!transport) { return res.status(404).send('Not Found'); }
-    populate(transport, req, res);
-    //return res.json(transport);
-  });
 };
-
-// Get a list of transport comparator by type
+// get comparator by type
 exports.findByType = function(req, res) {
-  TransportComparator.find( {type: req.params.type }, function (err, transport) {
+  console.log('HERE 1');
+  TransportComparator.find( {types: {$in: [req.params.id]} }, function (err, transport) {
     if(err) { return handleError(res, err); }
     if(!transport) { return res.status(404).send('Not Found'); }
     populate(transport, req, res);
-    //return res.json(transport);
   });
 };
 
@@ -100,11 +102,11 @@ exports.destroy = function(req, res) {
 function populate(doc, req, res){
   TransportComparator.populate(doc, [
       {path:'company', ref:'Company'},
-      {path:'type', ref:'TransportType'},
-      {path: 'ergo_rate', ref: 'Rate'},
-      {path: 'content_rate', ref: 'Rate'},
-      {path: 'comments.user', ref: 'User', select:'-salt -hashedPassword -email -provider'},
-      {path: 'comments.rate', ref: 'Rate'}
+      {path:'transport.types', ref:'TransportType'},
+      {path: 'transport.ergo_rate', ref: 'Rate'},
+      {path: 'transport.content_rate', ref: 'Rate'},
+      {path: 'transport.comments.user', ref: 'User', select:'-salt -hashedPassword -email -provider'},
+      {path: 'transport.comments.rate', ref: 'Rate'}
     ], function(err, result){
       if(err)logger.err(err);
       return res.status(200).json(result);

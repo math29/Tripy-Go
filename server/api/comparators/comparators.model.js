@@ -10,7 +10,7 @@ var logger = require('../../config/logger');
 
 
 var ComparatorSchema = new Schema({
-  types: [{type: String, required: true}],
+  types: [{type: String}],
   company:{
     type: Schema.Types.ObjectId,
     ref: 'Company',
@@ -18,17 +18,19 @@ var ComparatorSchema = new Schema({
     index: {unique: true}
   },
   transport: {
-    type: [{
-      type: Schema.Types.ObjectId,
-      ref: 'TransportType',
-    }],
+    types: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'TransportType',
+      }
+    ],
     nbCompanies: Number,
-    ergo_rate: {type: Schema.Types.ObjectId, ref: 'Rate'},
-    content_rate: {type: Schema.Types.ObjectId, ref: 'Rate'},
+    ergo_rate: {type: mongoose.Schema.Types.ObjectId, ref: 'Rate'},
+    content_rate: {type: mongoose.Schema.Types.ObjectId, ref: 'Rate'},
     comments : [{
         comment: {type: String},
-        user: {type: Schema.Types.ObjectId, ref: 'User'},
-        rate: {type: Schema.Types.ObjectId, ref: 'Rate'}
+        user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+        rate: {type: mongoose.Schema.Types.ObjectId, ref: 'Rate'}
       }]
     }
 });
@@ -46,8 +48,10 @@ ComparatorSchema.pre('save', function(next){
           next(new Error('Impossible de créer le vote'));
         }
         /* To check when add types */
-        self[self.type[0]].ergo_rate = r1;
-        self[self.type[0]].content_rate = r2;
+        if(self.types[0] === 'transport') {
+          self.transport.ergo_rate = r1;
+          self.transport.content_rate = r2;
+        }
         next();
   });
 });
