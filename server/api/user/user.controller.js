@@ -181,9 +181,9 @@ exports.me = function(req, res) {
 };
 
 /**
- * Get User Visited Countries
+ * Automatic update User Visited Countries
  */
- exports.getUpdateVisetedCountries = function(req, res){
+ exports.putAutomaticUpdateVisetedCountries = function(req, res){
   var userId = req.params.id;
   User.findOne({_id: userId}, '-salt -hashedPassword')
     .populate('travels')
@@ -227,6 +227,42 @@ exports.me = function(req, res) {
           });
         });
     });
+ }
+
+ /**
+ * Add or remove a Visited Country
+ */
+ exports.putUpdateVisetedCountries = function(req, res){
+  var userId = req.params.id;
+  var country = req.body.country;
+
+  if(!country || country == ""){
+    logger.warn("Country not founded in body");
+    return res.status(401).send('Need a country code');
+  }
+
+  User.findOne({_id: userId}, '-salt -hashedPassword', function(err, user, next){
+    if (err) {
+      logger.error("Could not ge user", user);
+      return next(err);
+    }
+    if (!user) {
+      logger.warn("User not auhenticated");
+      return res.status(401).send('Unauthorized');
+    }
+
+    if(user.visited_countries.indexOf(country) > -1){
+      logger.warn("Country already added");
+      return res.status(401).send('This country is already in visited countries of this user');
+    }
+
+    user.visited_countries.push(country);
+    
+    user.save(function (err) {
+      if (err) { return handleError(res, err); }
+      res.json(user);
+    });
+  });
  }
 
 /**
