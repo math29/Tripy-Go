@@ -80,8 +80,13 @@
           <div class="panel panel-default">
             <div class="panel-body">
               <div class="row">
-                <div class="col-md-3 col-sm-3 visited-country">
-                  <span class="flag-icon flag-icon-gr"></span>
+                <div class="col-md-3 col-sm-3 col-lg-3 col-xs-4 visited-country" *ngFor="#visited_country of visited_countries">
+                  <span class="flag-icon" [ngClass]="visited_country"></span>
+                </div>
+                <div class="col-md-3 col-sm-3 col-lg-3 col-xs-4 visited-country add-visited-country">
+                  <div>
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                  </div>
                 </div>
               </div>
             </div>

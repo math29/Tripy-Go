@@ -32,6 +32,7 @@
     "method-override": "~1.0.0",
     "mongodb": "^2.0.48",
     "mongoose": "^4.0.3",
+    "mongoose-deep-populate": "^3.0.0",
     "morgan": "~1.0.0",
     "node-geo-distance": "^1.2.0",
     "passport": "~0.2.0",

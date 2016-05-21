@@ -30,10 +30,9 @@ export class Settings implements OnInit {
     email: Control;
     dest_prefered: Control;
 
+    visited_countries: Array<string> = [];
     dest_prefereds: Array<string>;
     autocomplete_d: any;
-
-    visitedCountries: Array<string>;
 
     user_info_message: String;
 
@@ -63,6 +62,9 @@ export class Settings implements OnInit {
 		};
 
 		this.options = new RequestOptions({ headers: _auth.getBearerHeaders() });
+
+		// Update Visited Countries
+		this.updateVisitedCountries();
 	}
 
 	updateUser() {
@@ -124,7 +126,9 @@ export class Settings implements OnInit {
 		this.dest_prefereds = user.dest_prefereds;
 	}
 
+	// *******************************************************************************************
 	// PREFERED PLACES
+	// *******************************************************************************************
 	updatePrefPlaces() {
 		let user = this._auth.getMe();
 		this._http.put('/api/users/prefdestination/' + user._id, JSON.stringify({ preferedDests: this.dest_prefereds }), this.options)
@@ -142,11 +146,11 @@ export class Settings implements OnInit {
 
 	addPrefPlace(){
 		if (this.dest_prefereds.length < 3 && this.dest_prefereds.length > -1) {
-			console.log('here')
 			let place = this.autocomplete_d.getPlace();
-			this.dest_prefereds.push(place.formatted_address);
-			// _this.departure_place = place;
-			this.updatePrefPlaces();
+			if (place){
+				this.dest_prefereds.push(place.formatted_address);
+				this.updatePrefPlaces();
+			}
 		}
 	}
 
@@ -155,6 +159,23 @@ export class Settings implements OnInit {
 			this.dest_prefereds.splice(index, 1);
 			this.updatePrefPlaces();
 		}
+	}
+
+	// *******************************************************************************************
+	// VISITED COUNTRIES
+	// *******************************************************************************************
+	updateVisitedCountries(){
+		this._http.put('/api/users/update/visited/countries/' + this._auth.getMe()._id, JSON.stringify(this._auth.getMe()), this.options)
+			.map(res => res.json())
+			.subscribe(
+				user => {
+					for (let i = 0; i < user.visited_countries.length; i++){
+						this.visited_countries.push("flag-icon-" + user.visited_countries[i]);
+					}
+					this._auth.user = user;
+					this._auth.storeMe();
+				}
+			);
 	}
 
     // *******************************************************************************************

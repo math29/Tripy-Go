@@ -181,6 +181,55 @@ exports.me = function(req, res) {
 };
 
 /**
+ * Get User Visited Countries
+ */
+ exports.getUpdateVisetedCountries = function(req, res){
+  var userId = req.params.id;
+  User.findOne({_id: userId}, '-salt -hashedPassword')
+    .populate('travels')
+    .exec(function(err, user, next){
+      if (err) {
+        logger.error("Could not ge user", user);
+        return next(err);
+      }
+      if (!user) {
+        logger.warn("User not auhenticated");
+        return res.status(401).send('Unauthorized');
+      }
+      User.deepPopulate(user,[
+          'travels.transports.departure.country',
+          'travels.transports.arrival.country'
+        ],function(err, user){
+          // Instanciation si première complétion
+          if(!user.visited_countries){
+            user.visited_countries = [];
+          }
+          if(user.travels){
+            // On récupère la liste des pays visités
+            for(var i = 0; i<user.travels.length; i++){
+              var travel = user.travels[i];
+              for(var j=0; j<travel.transports.length; j++){
+                var transport = travel.transports[j];
+                var dep_code = transport.departure.country.country_code.toLowerCase();
+                var arr_code = transport.arrival.country.country_code.toLowerCase();
+                if(user.visited_countries.indexOf(dep_code) == -1){
+                  user.visited_countries.push(dep_code);
+                }
+                if(user.visited_countries.indexOf(arr_code) == -1){
+                  user.visited_countries.push(arr_code);
+                }
+              }
+            }
+          }
+          user.save(function (err) {
+            if (err) { return handleError(res, err); }
+            res.json(user);
+          });
+        });
+    });
+ }
+
+/**
  * Récupére l'ensemble des roles que l'administrateur peut assigner
  */
 exports.getRoles = function(req, res){

@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 var UserSchema = new Schema({
   name: String,
@@ -17,6 +18,7 @@ var UserSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Travel'
   }],
+  visited_countries: [String],
   dest_prefereds: [String],
   hashedPassword: String,
   provider: String,
@@ -26,6 +28,13 @@ var UserSchema = new Schema({
   google: {},
   github: {},
   picture: String
+});
+
+UserSchema.plugin(deepPopulate, {
+  whitelist: [
+    'travels.transports.departure.country',
+    'travels.transports.arrival.country'
+  ]
 });
 
 /**

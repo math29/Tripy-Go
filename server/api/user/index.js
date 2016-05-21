@@ -169,7 +169,7 @@ router.put('/prefdestination/:id', auth.isAuthenticated(), controller.addPrefere
   *      }
   *
   */
-router.put('/:id', controller.update);
+router.put('/:id', auth.isAuthenticated(), controller.update);
 
 /**
  * @api {get} /api/users/:id Get By Id
@@ -194,6 +194,21 @@ router.put('/:id', controller.update);
  * @apiUse UserNotAuthorized
  */
 router.get('/:id', auth.isAuthenticated(), controller.show);
+
+/**
+ * @api {put} /api/users/update/visited/countries/:id Get User's visited countries
+ * @apiVersion 0.0.0
+ * @apiName GetUsersVisitedCountries
+ * @apiGroup Users
+ *
+ * @apiParam {Number} id  Id of the target user
+ *
+ * @apiSuccess {User} User
+ *
+ *
+ * @apiUse UserNotAuthorized
+ */
+router.put('/update/visited/countries/:id', auth.isAuthenticated(), controller.getUpdateVisetedCountries);
 
 /**
   * @api {post} /api/users Insert a User
