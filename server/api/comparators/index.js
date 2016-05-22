@@ -61,6 +61,18 @@ var router = express.Router();
  */
 router.get('/', auth.isAuthenticated(), controller.index);
 
+
+/**
+ * @api {get} /api/comparators/search/:name Search comparator
+ * @apiVersion 0.0.1
+ * @apiName SearchComparator
+ * @apiGroup Comparator
+ *
+ * @apiParam {String} name name of the comparator
+ *
+ * TODO
+ **/
+//router.get('/search/:name', auth.isAuthenticated(), controller.search);
 /**
  * @api {get} /api/comparators/:id Get By Id
  * @apiVersion 0.0.1
@@ -192,7 +204,7 @@ router.get('/:id', auth.isAuthenticated(), [controller.show, controller.findByTy
  *      },
  *      "_id":"5741c1c8fe4b79f8034c2125"
  *    }
- *  ]  
+ *  ]
  *
  * @apiUse UserNotAuthorized
  */
