@@ -80,15 +80,21 @@ router.get('/', auth.isAuthenticated(), controller.index);
  *              name: 'Liligo',
  *              url: 'https://liligo.com'
  *            },
- *            types: [
- *              {
- *               _id:'564ceecea3300dfc3906f536',
- *               name: 'Plane',
- *               image: '564ceecea3300dfc3906f536'
- *              },
- *              ...
- *            ]
- *            "_id": "564cf500bbb31f62475efc31"
+ *            types: ['transport'],
+ *            transport: {
+ *              types: [
+ *                {
+ *                _id:'564ceecea3300dfc3906f536',
+ *                name: 'Plane',
+ *                image: '564ceecea3300dfc3906f536'
+ *                },
+ *                ...
+ *              ]
+ *              "_id": "564cf500bbb31f62475efc31",
+ *              content_rate: {_id: '564ceecea3300dfc3906f536', score: 0, raters: []},
+ *              ergo_rate: {_id: '564ceecea3300dfc3906f536', score: 0, raters: []},
+ *              comments: []
+ *          }
  *       }
  *
  * @apiUse UserNotAuthorized
@@ -114,15 +120,21 @@ router.get('/:id', auth.isAuthenticated(), [controller.show, controller.findByTy
  *              name: 'Liligo',
  *              url: 'https://liligo.com'
  *            },
- *            types: [
- *              {
- *               _id:'564ceecea3300dfc3906f536',
- *               name: 'Plane',
- *               image: '564ceecea3300dfc3906f536'
- *              },
- *              ...
- *            ]
- *            "_id": "564cf500bbb31f62475efc31"
+ *            types: ['transport'],
+ *            transport: {
+ *              types: [
+ *                {
+ *                _id:'564ceecea3300dfc3906f536',
+ *                name: 'Plane',
+ *                image: '564ceecea3300dfc3906f536'
+ *                },
+ *                ...
+ *              ]
+ *              "_id": "564cf500bbb31f62475efc31",
+ *              content_rate: {_id: '564ceecea3300dfc3906f536', score: 0, raters: []},
+ *              ergo_rate: {_id: '564ceecea3300dfc3906f536', score: 0, raters: []},
+ *              comments: []
+ *          }
  *       }
  *    ]
  *
@@ -143,23 +155,44 @@ router.get('/:id', auth.isAuthenticated(), [controller.show, controller.findByTy
  *
  * @apiSuccessExample Success-Response:
  *   HTTP/1.1 200 OK
+ *    [
  *      {
- *            "__v": 0,
- *            "company": {
- *              _id:'564ceecea3300dfc3906f536',
- *              name: 'Liligo',
- *              url: 'https://liligo.com'
- *            },
- *            types: [
- *              {
- *               _id:'564ceecea3300dfc3906f536',
- *               name: 'Plane',
- *               image: '564ceecea3300dfc3906f536'
- *              },
- *              ...
- *            ]
- *            "_id": "564cf500bbb31f62475efc31"
- *       }
+ *      "comment":"hahahahahahahahahahahahaha",
+ *      "user": {
+ *        "_id":"5741c1c7fe4b79f8034c2017",
+ *        "name":"Test User",
+ *        "__v":0,
+ *        "travels":[],
+ *        "role":"user"
+ *      },
+ *      "rate": {
+ *        "_id":"5741c1c8fe4b79f8034c2122",
+ *        "score":0,
+ *        "type":"Stack",
+ *        "__v":0,
+ *        "raters":[]
+ *      },
+ *    "_id":"5741c1c8fe4b79f8034c2126"
+ *    },
+ *    {
+ *      "comment":"Très bon ",
+ *      "user":{
+ *        "_id":"5741c1c7fe4b79f8034c2017",
+ *        "name":"Test User",
+ *        "__v":0,
+ *        "travels":[],
+ *        "role":"user"
+ *      },
+ *      "rate": {
+ *        "_id":"5741c1c8fe4b79f8034c2123",
+ *        "score":0,
+ *        "type":"Stack",
+ *        "__v":0,
+ *        "raters":[]
+ *      },
+ *      "_id":"5741c1c8fe4b79f8034c2125"
+ *    }
+ *  ]  
  *
  * @apiUse UserNotAuthorized
  */
