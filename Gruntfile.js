@@ -742,17 +742,14 @@ module.exports = function (grunt) {
         files: {
           '<%= yeoman.back_office_dist %>/index.html': [
                [
+                 "<%= yeoman.back_office_dist %>/js/angular2-polyfills.js",
                  "<%= yeoman.back_office_dist %>/lib/tinymce/tinymce.min.js",
                  "<%= yeoman.back_office_dist %>/lib/jquery/dist/jquery.min.js",
                  "<%= yeoman.back_office_dist %>/lib/bootstrap/dist/js/bootstrap.min.js",
                  "<%= yeoman.back_office_dist %>/bower_components/metisMenu/dist/metisMenu.min.js",
                  "<%= yeoman.back_office_dist %>/bower_components/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.2.0.min.js",
                  "<%= yeoman.back_office_dist %>/bower_components/bootstrap-iconpicker/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js",
-                 "<%= yeoman.back_office_dist %>/lib/systemjs/dist/system.js",
-                 "<%= yeoman.back_office_dist %>/lib/angular2/bundles/angular2-polyfills.js",
-                 "<%= yeoman.back_office_dist %>/lib/angular2/bundles/angular2.min.js",
-                 "<%= yeoman.back_office_dist %>/lib/angular2/bundles/http.min.js",
-                 "<%= yeoman.back_office_dist %>/lib/angular2/bundles/router.min.js",
+                 "<%= yeoman.back_office_dist %>/lib/systemjs/dist/system.src.js",
                  "<%= yeoman.back_office_dist %>/lib/d3/d3.min.js",
                  "<%= yeoman.back_office_dist %>/lib/marked/marked.min.js",
                  "<%= yeoman.back_office_dist %>/lib/to-markdown/dist/to-markdown.js",
