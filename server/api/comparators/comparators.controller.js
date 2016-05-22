@@ -95,14 +95,14 @@ exports.search = function(req, res) {
   var re = new RegExp(req.params.name, 'i');
 
   TransportComparator.find({})
-    .populate('company')
+    .populate('company', 'name img _id')
     .exec(function(err, comparators) {
       if(err) {
         return res.status(400).json({status: 400, data: 'Impossible de trouver un comparateur'});
       }
       comparators = comparators.filter( function(doc) {
         return doc.company.name.match(re);
-      })
+      });
       return res.status(200).json(comparators);
     })
 }
