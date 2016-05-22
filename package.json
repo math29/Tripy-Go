@@ -115,7 +115,7 @@
     "karma-script-launcher": "~0.1.0",
     "marked": "^0.3.5",
     "ng2-bootstrap": "1.0.14",
-    "ng2-charts": "^1.0.0-beta.0",
+    "ng2-charts": "1.0.0-beta.0",
     "ng2-file-upload": "1.0.0-beta.1",
     "open": "~0.0.4",
     "phantomjs-prebuilt": "^2.1.5",
