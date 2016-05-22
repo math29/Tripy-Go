@@ -1,0 +1,22 @@
+<div class="col-sm-6 col-md-4">
+  <div class="dl">
+    <div class="brand">
+        <h2>
+            {{discount.vendor}}
+        </h2>
+        <img class="discount-img" src="{{discount.img}}">
+    </div>
+    <div class="discount alizarin">
+        - {{discount.discount}} %
+    </div>
+    <div class="descr">
+      <strong>
+        <span class="old-price"><s>{{ discount.initial_price }} €</s> </span><span class="new-price">{{ discount.initial_price * 0.01 * discount.discount}} €</span>
+      </strong>
+
+      </div>
+      <div class="coupon midnight-blue">
+        <a data-toggle="collapse" (click)="navigateTo()" class="open-code" >Voir l'offre</a>
+      </div>
+    </div>
+</div>

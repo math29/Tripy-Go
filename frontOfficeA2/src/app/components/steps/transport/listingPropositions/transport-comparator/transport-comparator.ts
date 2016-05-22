@@ -26,14 +26,14 @@ export class TransportComparatorCmp {
 	private number_comments: number;
 
 	private travel_id: string;
-  
+
 	constructor(private _auth: AuthService, private _http: Http, private params: RouteParams) {
 		this.options_post = new RequestOptions({ headers: _auth.getBearerHeaders() });
 		this.travel_id = this.params.get('id');
 	}
 
 	ngOnInit(){
-		this.number_comments = this.comparator.comments.length;
+		this.number_comments = this.comparator.transport.comments.length;
 		this.synchComments();
 	}
 
@@ -45,10 +45,10 @@ export class TransportComparatorCmp {
 	}
 
 	synchComments() {
-		this._http.get(`/api/transport/comparators/comments/${this.comparator._id}/${this.comment_limit}/${this.comment_offset}`, this.options_post)
+		this._http.get(`/api/comparators/comments/transport/${this.comparator._id}/${this.comment_limit}/${this.comment_offset}`, this.options_post)
 			.map(res => res.json())
 			.subscribe(comments => {
-				this.viewedComments = comments;
+				this.comparator.transport.comments = comments;
 			});
 	}
 

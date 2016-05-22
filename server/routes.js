@@ -23,13 +23,16 @@ module.exports = function(app) {
   app.use('/api/operations', require('./api/operation'));
   app.use('/api/rate', require('./api/rate'));
   app.use('/api/timeline', require('./api/timeline'));
+  app.use('/api/promos', require('./api/promo'));
+
   /* database info api */
   app.use('/api/back/db', require('./api/dbAPI'));
   app.use('/api/back/log', require('./api/log'));
   app.use('/api/company', require('./api/company'));
+  app.use('/api/back/facebook', require('./api/facebook_platform'));
   /* Transports */
   app.use('/api/transport/type', require('./api/transportType'));
-  app.use('/api/transport/comparators', require('./api/transportComparator'));
+  app.use('/api/comparators', require('./api/comparators'));
   app.use('/api/transport/aggregator', require('./api/transport/aggregator'));
 
 

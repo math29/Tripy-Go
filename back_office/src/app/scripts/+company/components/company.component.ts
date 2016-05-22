@@ -18,7 +18,7 @@ const fileAPI = "/api/files";
   directives: [ROUTER_DIRECTIVES, FILE_UPLOAD_DIRECTIVES],
   pipes: []
 })
-export class CompanyCmp{
+export class CompanyCmp implements OnInit{
     private errors: any=[];
     private messages: any=[];
 

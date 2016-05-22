@@ -1,0 +1,13 @@
+  <div class="col-md-4 col-xs-4 col-lg-4 site">
+    <img class="siteImg" src="{{site.img}}" />
+  </div>
+  <div class="col-md-3 col-xs-3 col-lg-3 rates" *ngIf="rates.length > 0">
+    <div *ngFor="#rate of rates">
+      <rating [(ngModel)]="rate.value"
+              (onHover)="hoveringOver($event)" (onLeave)="resetStar($event)"
+              ></rating>
+    </div>
+  </div>
+  <div class="col-md-7 col-xs-7 col-lg-7">
+    Commentaire
+  </div>

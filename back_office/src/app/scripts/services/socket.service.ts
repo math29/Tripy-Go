@@ -23,9 +23,9 @@ export class SocketService {
     this.config.reconnectionDelay = 1000;
 
     if(localStorage.getItem('env') == 'prod'){
-		this.url = 'http://tripygo-breizher.rhcloud.com';
+		    this.url = 'http://tripygo-breizher.rhcloud.com';
     }
-	this.socket = io.connect(this.url, this.config);
+	   this.socket = io.connect(this.url, this.config);
 
 
     this.socketObservable$ = new Observable(observer => this.socketObserver = observer).share();

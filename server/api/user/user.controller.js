@@ -21,8 +21,9 @@ exports.index = function(req, res) {
       logger.error("Could not find users");
       return res.status(500).send(err);
     }
-    res.status(200).json(users);
+    return res.status(200).json(users);
   });
+
 };
 
 /**
@@ -42,6 +43,19 @@ exports.create = function (req, res) {
     res.json({ token: jwtToken });
   });
 };
+
+exports.search = function(req, res) {
+  var re = new RegExp(req.params.search, 'i');
+
+  User.find().or([{"name": {$regex: re}}, {"fname": {$regex: re}}]).select({ name: 1, fname: 1, picture: 1 })
+    .limit(5)
+    .exec(function( err, users) {
+        if(err) {
+          return res.status(400).json({status: 400, data: 'Impossible de trouver la personne'});
+        }
+        return res.status(200).json({status: 200, data: users});
+    });
+}
 
 /**
  * Get a single user

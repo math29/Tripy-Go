@@ -81,13 +81,13 @@ export class ListingPropositions {
 	// Get the all list of transports comparators and store it into comparators vars
 	// ***************************************
 	synchTransportsComparators() {
-		this._http.get('/api/transport/comparators', this.options_post)
+		this._http.get('/api/comparators/transport', this.options_post)
 			.map(res => res.json())
 			.subscribe(comparators => {
 				// Need to Do this for filtring
 				for (var i = 0; i < comparators.length; i++){
-					comparators[i].ergo_score = comparators[i].ergo_rate.score;
-					comparators[i].content_score = comparators[i].content_rate.score;
+					comparators[i].ergo_score = comparators[i].transport.ergo_rate.score;
+					comparators[i].content_score = comparators[i].transport.content_rate.score;
 				}
 				this.comparators = comparators;
 			});
@@ -116,7 +116,7 @@ export class ListingPropositions {
 
 	updateCheckedOptions(option, event) {
 		this.filterTypeMap[option] = event.target.checked;
-		
+
 		// update checked options
 		this.updateOptions();
 	}
@@ -137,7 +137,7 @@ export class ListingPropositions {
 
 	onOrderDirChange(deviceValue) {
 		this.orderDir = deviceValue;
-	}	
+	}
 }
 
 // Transports Comparator Schema that we will manipulate

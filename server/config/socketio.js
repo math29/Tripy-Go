@@ -20,6 +20,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/promo/promo.socket').register(socket);
   require('../api/timeline/timeline.socket').register(socket);
   require('../api/operation/operation.socket').register(socket);
   require('../api/location/location.socket').register(socket);

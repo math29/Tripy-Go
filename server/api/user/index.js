@@ -196,6 +196,7 @@ router.put('/:id', auth.isAuthenticated(), controller.update);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 
 /**
+<<<<<<< HEAD
  * @api {put} /api/users/update/automatic/visited/countries/:id Get User's visited countries
  * @apiVersion 0.0.0
  * @apiName GetUsersVisitedCountries
@@ -224,6 +225,34 @@ router.put('/update/automatic/visited/countries/:id', auth.isAuthenticated(), co
  * @apiUse UserNotAuthorized
  */
 router.put('/update/visited/countries/:id', auth.isAuthenticated(), controller.putUpdateVisetedCountries);
+
+/**
+ * @api {get} /api/users/search/:search Search users matching search params
+ * @apiVersion 0.0.0
+ * @apiName Search users by name
+ * @apiGroup Users
+ *
+ * @apiParam {string} search  name of the user
+ *
+ * @apiSuccess {User} User
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *   {
+ *      status: 200,
+ *      data:
+ *  [
+ *      {
+ *            "__v": 0,
+ *			  ...
+ *            "_id": "564cf500bbb31f62475efc31"
+ *       }
+ *  ]
+ * }
+ *
+ * @apiUse UserNotAuthorized
+ */
+router.get('/search/:search', auth.isAuthenticated(), controller.search);
 
 /**
   * @api {post} /api/users Insert a User
