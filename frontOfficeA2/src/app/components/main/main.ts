@@ -295,7 +295,7 @@ export class Main implements AfterViewInit, OnInit {
 			.find('.depart_date')
 			.datepicker({ 
 				minDate: -0,
-				maxDate: "+3M",
+				maxDate: "+3Y",
 				onClose: function(selectedDate) {
 					_this.date_dep_temp = selectedDate;
 					$(".return_date").datepicker("option", "minDate", selectedDate);
@@ -310,7 +310,7 @@ export class Main implements AfterViewInit, OnInit {
 			.find('.return_date')
 			.datepicker({
 				minDate: -0,
-				maxDate: "+3M",
+				maxDate: "+3Y",
 				onClose: function(selectedDate) {
 					_this.date_arr_temp = selectedDate;
 					$(".depart_date").datepicker("option", "maxDate", selectedDate);

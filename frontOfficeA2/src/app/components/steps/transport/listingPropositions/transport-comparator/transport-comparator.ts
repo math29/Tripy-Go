@@ -15,6 +15,7 @@ import { AuthService } from '../../../../../tripy_go_lib/services/auth.service';
 })
 export class TransportComparatorCmp {
 	private comparator: any;
+	private viewedComments: any;
 
 	private options_post: RequestOptions;
 
@@ -32,9 +33,15 @@ export class TransportComparatorCmp {
 	}
 
 	ngOnInit(){
-		console.log(this.comparator);
 		this.number_comments = this.comparator.transport.comments.length;
 		this.synchComments();
+	}
+
+	dump(){
+		console.log(this.comment_offset);
+		console.log(this.comment_limit);
+		console.log("Comment limit : " + this.comment_limit);
+		console.log("Number comments : " + this.number_comments);
 	}
 
 	synchComments() {

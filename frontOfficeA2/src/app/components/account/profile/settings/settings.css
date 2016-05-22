@@ -13,3 +13,47 @@
 .another-file-over-class { border: dotted 3px green; }
 
 html, body { height: 100%; }
+
+
+/**********************************/
+/* FORM GENERAL USER */
+/**********************************/
+
+.space {
+	margin-bottom: 15px;
+}
+
+.user-personal-info label,
+.user-change-password label,
+.user-preference label {
+	font-weight: normal;
+}
+
+.user-change-password .form-control,
+.user-preference .form-control {
+	border-radius: 0px;
+	padding: 10px;
+	height: 40px;
+}
+
+.user-personal-info textarea {
+	height: auto !important;
+}
+
+.user-change-password button,
+.user-preference button,
+.user-add-card button,
+.submit-complaint button {
+	border: 0px;
+	color: #fff;
+	background: #00adef;
+	padding: 10px 20px;
+	margin-top: 20px;
+	font-weight: bold;
+}
+.user-change-password button,
+.user-preference button, 
+.user-add-card button,
+.submit-complaint button {
+	margin-top: 5px;
+}
