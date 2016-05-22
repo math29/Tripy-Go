@@ -36,8 +36,6 @@
 'deaf',
 'deafness',
 'envira',
-'fa',
-'first-order',
 'font-awesome',
 'gitlab',
 'glide',
