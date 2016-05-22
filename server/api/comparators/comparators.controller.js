@@ -92,9 +92,19 @@ exports.destroy = function(req, res) {
 };
 
 exports.search = function(req, res) {
-  //var re = new RegExp(req.params.search, 'i');
+  var re = new RegExp(req.params.name, 'i');
 
-  //Comparator.populate('company').find({name:''})
+  TransportComparator.find({})
+    .populate('company')
+    .exec(function(err, comparators) {
+      if(err) {
+        return res.status(400).json({status: 400, data: 'Impossible de trouver un comparateur'});
+      }
+      comparators = comparators.filter( function(doc) {
+        return doc.company.name.match(re);
+      })
+      return res.status(200).json(comparators);
+    })
 }
 /**
  * Populate the comparator with company and transport types
