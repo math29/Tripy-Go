@@ -11,8 +11,8 @@ iframe {
 .timeline-sidebar{
 	position: absolute;
 	right: 0px;
-	top: 55px;
-	bottom: 87px;
+	top: 57px;
+	bottom: 81px;
 	overflow: scroll;
 	overflow-x:hidden;
 	transition: width 2s;
