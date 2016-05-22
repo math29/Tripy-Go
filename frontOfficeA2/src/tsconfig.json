@@ -23,11 +23,13 @@
         "rewriteTsconfig": true
     },
     "files": [
+        "app/LoggedInOutlet.ts",
         "app/components/account/login/login.spec.ts",
         "app/components/account/login/login.ts",
         "app/components/account/profile/overview/overview.ts",
         "app/components/account/profile/profile.ts",
         "app/components/account/profile/settings/generalesInfos/generalesInfos.ts",
+        "app/components/account/profile/settings/password/password.ts",
         "app/components/account/profile/settings/settings.ts",
         "app/components/account/profile/travels/profile_travels.ts",
         "app/components/account/signup/signup.ts",
@@ -51,7 +53,6 @@
         "app/components/travelPage/index.ts",
         "app/components/travelPage/services/travel.service.ts",
         "app/front-office-a2.ts",
-        "app/LoggedInOutlet.ts",
         "app/pipes/filterRangeRate.pipe.ts",
         "app/pipes/filterTypeTransport.pipe.ts",
         "app/pipes/orderBy.pipe.ts",

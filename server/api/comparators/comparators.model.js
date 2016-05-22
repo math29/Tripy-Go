@@ -24,7 +24,7 @@ var ComparatorSchema = new Schema({
         ref: 'TransportType',
       }
     ],
-    nbCompanies: Number,
+    nbCompanies: {type: Number, default: -1},
     ergo_rate: {type: mongoose.Schema.Types.ObjectId, ref: 'Rate'},
     content_rate: {type: mongoose.Schema.Types.ObjectId, ref: 'Rate'},
     comments : [{
