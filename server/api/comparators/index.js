@@ -70,9 +70,41 @@ router.get('/', auth.isAuthenticated(), controller.index);
  *
  * @apiParam {String} name name of the comparator
  *
- * TODO
+ * @apiSuccess {Comparator} Comparator
+ *
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 200 OK
+ *
+ *    [
+ *      {
+ *            "__v": 0,
+ *            "company": {
+ *              _id:'564ceecea3300dfc3906f536',
+ *              name: 'Liligo',
+ *              url: 'https://liligo.com'
+ *            },
+ *            types: ['transport'],
+ *            transport: {
+ *              types: [
+ *                {
+ *                _id:'564ceecea3300dfc3906f536',
+ *                name: 'Plane',
+ *                image: '564ceecea3300dfc3906f536'
+ *                },
+ *                ...
+ *              ]
+ *              "_id": "564cf500bbb31f62475efc31",
+ *              content_rate: {_id: '564ceecea3300dfc3906f536', score: 0, raters: []},
+ *              ergo_rate: {_id: '564ceecea3300dfc3906f536', score: 0, raters: []},
+ *              comments: []
+ *          }
+ *       }
+ *    ]
+ *
+ * @apiUse UserNotAuthorized
  **/
-//router.get('/search/:name', auth.isAuthenticated(), controller.search);
+router.get('/search/:name', auth.isAuthenticated(), controller.search);
+
 /**
  * @api {get} /api/comparators/:id Get By Id
  * @apiVersion 0.0.1

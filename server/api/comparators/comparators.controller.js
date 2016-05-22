@@ -91,6 +91,11 @@ exports.destroy = function(req, res) {
   });
 };
 
+exports.search = function(req, res) {
+  //var re = new RegExp(req.params.search, 'i');
+
+  //Comparator.populate('company').find({name:''})
+}
 /**
  * Populate the comparator with company and transport types
  *
