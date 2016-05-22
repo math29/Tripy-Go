@@ -27,6 +27,7 @@ export class GeneralesInfos implements OnInit {
 
     visited_countries: Array<string> = [];
     vCFormVisible = false;
+    vCFormCountries: Array<any> = [];
     dest_prefereds: Array<string>;
     autocomplete_d: any;
 
@@ -50,6 +51,7 @@ export class GeneralesInfos implements OnInit {
 
 		// Update Visited Countries
 		this.updateVisitedCountries();
+		this.updateVisitedCountryForm();
 	}
 
     // POPULATING USER UPDATE FORM
@@ -116,12 +118,38 @@ export class GeneralesInfos implements OnInit {
 			);
 	}
 
-	addVisitedCountry() {
-		console.log("Add visited country");
+	addVisitedCountry(countrySelected) {
+		console.log(countrySelected);
+		this._http.put('/api/users/update/visited/countries/' + this._auth.getMe()._id, JSON.stringify({country: countrySelected}), this.options)
+			.map(res => res.json())
+			.subscribe(
+			user => {
+				console.log(user);
+				this.visited_countries = [];
+				for (let i = 0; i < user.visited_countries.length; i++) {
+					this.visited_countries.push("flag-icon-" + user.visited_countries[i]);
+				}
+				this._auth.user = user;
+				this._auth.storeMe();
+			}
+			);
+	}
+
+	updateVisitedCountryForm(){
+		this._http.get('/api/countries/', this.options)
+			.map(res => res.json())
+			.subscribe(
+			countries => {
+				this.vCFormCountries = countries;
+				console.log(this.vCFormCountries);
+			}
+			);
 	}
 
 
+	// *****************************
 	// Update User 
+	// ****************************
 	updateUser() {
 		if (this.userUpdateForm.valid) {
 			let user = this.userUpdateForm.value;

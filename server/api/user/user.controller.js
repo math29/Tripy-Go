@@ -234,7 +234,7 @@ exports.me = function(req, res) {
  */
  exports.putUpdateVisetedCountries = function(req, res){
   var userId = req.params.id;
-  var country = req.body.country;
+  var country = req.body.country.toLowerCase();
 
   if(!country || country == ""){
     logger.warn("Country not founded in body");

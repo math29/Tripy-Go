@@ -45,15 +45,23 @@
                 <i class="fa fa-plus" aria-hidden="true"></i>
               </div>
             </div>
-            <div *ngIf="vCFormVisible" class="col-md-12 col-sm-12 col-lg-12 col-xs-12 visited-country-form">
-              <form (submit)="addVisitedCountry()">
-                <select class="form-control">
-                  <option>blahh</option>
-                  <option>fjshu</option>
-                </select>
-              </form>
-            </div>
           </div>
+        </div>
+        <div *ngIf="vCFormVisible" class="panel-footer visited-country-form">
+          <form (submit)="addVisitedCountry(countrySelected.value)">
+            <div class="row">
+              <div class="col-md-8 col-sm-8">
+                <select #countrySelected class="form-control">
+                  <option *ngFor="#country of vCFormCountries" [value]="country.country_code">{{ country.country_name }}</option>
+                </select>
+              </div>
+              <div class="col-md-4 col-sm-4">
+                <button type="submit">
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
