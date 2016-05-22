@@ -65,7 +65,8 @@ module.exports = function (grunt) {
         'font-awesome/**/*',
         'datamaps/dist/**/*',
         'to-markdown/dist/**/*',
-        'moment/min/**/*'
+        'moment/min/**/*',
+        'reflect-metadata/**/*'
       ],
       back_office_css: [
         'bower_components/metisMenu/dist/metisMenu.min.css',
@@ -579,7 +580,7 @@ module.exports = function (grunt) {
         dest: './frontOfficeA2/dist/lib',
         cwd: './node_modules',
         src: [
-          'angular2/bundles/**/*',
+          '@angular/**/*',
           'reflect-metadata/Reflect.js',
           'systemjs/dist/**/*',
           'rxjs/**/*',

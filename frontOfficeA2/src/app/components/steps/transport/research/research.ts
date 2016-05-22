@@ -1,8 +1,8 @@
 /// <reference path="../../../../../../../typings/jquery/jquery.d.ts" />
 
-import {Component, OnInit, ElementRef} from 'angular2/core';
-import { RouterLink, RouteParams } from 'angular2/router';
-import { Http, RequestOptions, Headers } from 'angular2/http';
+import {Component, OnInit, ElementRef} from '@angular/core';
+import { RouterLink, RouteParams } from '@angular/router-deprecated';
+import { Http, RequestOptions, Headers } from '@angular/http';
 import { Timeline } from '../../timeline/timeline';
 import { AuthService } from '../../../../tripy_go_lib/services/auth.service';
 
@@ -46,7 +46,7 @@ export class Research implements OnInit {
 	}
 
 	// ***************************************
-	// Openning and closing timeline 
+	// Openning and closing timeline
 	// ***************************************
 	timelineSizing(){
 		this.opened = !this.opened;

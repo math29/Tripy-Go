@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from 'angular2/core';
-import { Http, RequestOptions, Headers } from 'angular2/http';
-import { RouterLink, RouteParams } from 'angular2/router';
+import {Component, Input, OnInit} from '@angular/core';
+import { Http, RequestOptions, Headers } from '@angular/http';
+import { RouterLink, RouteParams } from '@angular/router-deprecated';
 import { TransportComparatorComment } from './transport-comparator-comment/transport-comparator-comment';
 import { AuthService } from '../../../../../tripy_go_lib/services/auth.service';
 
@@ -25,7 +25,7 @@ export class TransportComparatorCmp {
 	private number_comments: number;
 
 	private travel_id: string;
-  
+
 	constructor(private _auth: AuthService, private _http: Http, private params: RouteParams) {
 		this.options_post = new RequestOptions({ headers: _auth.getBearerHeaders() });
 		this.travel_id = this.params.get('id');

@@ -58,9 +58,9 @@
 
         <script src="lib/systemjs/dist/system.src.js"></script>
         <script src="lib/rxjs/bundles/Rx.js"></script>
-        <script src="lib/angular2/bundles/angular2.dev.js"></script>
+        <!--<script src="lib/angular2/bundles/angular2.dev.js"></script>
         <script src="lib/angular2/bundles/http.dev.js"></script>
-        <script src="lib/angular2/bundles/router.dev.js"></script>
+        <script src="lib/angular2/bundles/router.dev.js"></script>-->
         <script>
             System.config({
                 packages: {
@@ -79,9 +79,25 @@
                     },
                     'marked':{
                       defaultExtension: 'js'
-                    }
+                    },
+                    '@angular/core' : {defaultExtension: 'js', main: 'index.js'},
+                    '@angular/common'  : {defaultExtension: 'js', main: 'index.js'},
+                    '@angular/compiler'                : {defaultExtension: 'js', main: 'index.js'},
+                    '@angular/router'                  : {defaultExtension: 'js', main: 'index.js'},
+                    '@angular/router-deprecated'       : {defaultExtension: 'js', main: 'index.js'},
+                    '@angular/http': {defaultExtension: 'js', main: 'index.js'},
+                    '@angular/platform-browser': {defaultExtension: 'js', main: 'index.js'},
+                    '@angular/platform-browser-dynamic': {defaultExtension: 'js', main: 'index.js'}
                 },
                 map: {
+                  '@angular': 'lib/@angular',
+                  '@angular/platform-browser-dynamic': 'lib/@angular/platform-browser-dynamic',
+                  '@angular/platform-browser': 'lib/@angular/platform-browser',
+                  '@angular/compiler': 'lib/@angular/compiler',
+                  '@angular/core':'lib/@angular/core',
+                  '@angular/common':'lib/@angular/common',
+                  '@angular/http':'lib/@angular/http',
+                  '@angular/router-deprecated': 'lib/@angular/router-deprecated',
                     "angular2-jwt": "lib/angular2-jwt",
                     "ng2-bootstrap": "lib/ng2-bootstrap",
                     "moment": 'lib/moment/min/moment.min.js',
