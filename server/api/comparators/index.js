@@ -130,7 +130,7 @@ router.get('/:id', auth.isAuthenticated(), [controller.show, controller.findByTy
  */
 
 /**
- * @api {get} /api/comparators/comments/:id/:limit/:offset Get Comments By Id with offset
+ * @api {get} /api/comparators/comments/:type/:id/:limit/:offset Get Comments By Id with offset
  * @apiVersion 0.0.1
  * @apiName GetComparatorCommentsById
  * @apiGroup Comparator
@@ -163,7 +163,7 @@ router.get('/:id', auth.isAuthenticated(), [controller.show, controller.findByTy
  *
  * @apiUse UserNotAuthorized
  */
-router.get('/comments/:id/:limit/:offset', auth.isAuthenticated(), controller.getComments);
+router.get('/comments/:type/:id/:limit/:offset', auth.isAuthenticated(), controller.getComments);
 
 /**
   * @api {post} /api/comparators Insert a comparator

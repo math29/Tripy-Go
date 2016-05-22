@@ -40,7 +40,7 @@ exports.findByType = function(req, res) {
 };
 
 exports.getComments = function(req, res) {
-  TransportComparator.findById(req.params.id, function (err, transport) {
+  TransportComparator.findOne({_id: req.params.id, types: {$in: [req.params.type]}}, function (err, transport) {
     if(err) { return handleError(res, err); }
     if(!transport) { return res.status(404).send('Not Found'); }
     filterComments(transport, req, res);
@@ -130,13 +130,13 @@ function filterComments(doc, req, res){
   if(!offset) { return res.status(404).send('No Offset given'); }
 
   TransportComparator.populate(doc, [
-      {path: 'comments.user', ref: 'User', select:'-salt -hashedPassword -email -provider'},
-      {path: 'comments.rate', ref: 'Rate'}
+      {path: req.params.type + '.comments.user', ref: 'User', select:'-salt -hashedPassword -email -provider'},
+      {path: req.params.type + '.comments.rate', ref: 'Rate'}
     ], function(err, result){
       if(err)logger.err(err);
 
       // On récupère seulement les commentaires du comparator
-      var comments = result.comments;
+      var comments = result[req.params.type].comments;
 
       // Puis on les tris dans l'ordre descendant
       comments.sort(compareCommentsDESC);

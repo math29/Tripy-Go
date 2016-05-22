@@ -37,16 +37,15 @@ export class Research implements OnInit {
 	// Get the selected comparator and store it into comparator vars
 	// ***************************************
 	getComparator(id:String) {
-		this._http.get('/api/transport/comparators/' + id, this.options_post)
+		this._http.get('/api/comparators/' + id, this.options_post)
 			.map(res => res.json())
 			.subscribe(comparator => {
 				this.comparator = comparator;
-				console.log(this.comparator);
 			});
 	}
 
 	// ***************************************
-	// Openning and closing timeline 
+	// Openning and closing timeline
 	// ***************************************
 	timelineSizing(){
 		this.opened = !this.opened;
