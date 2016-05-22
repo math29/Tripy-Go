@@ -16,7 +16,6 @@ exports.index = function(req, res) {
 
 // Get a single transport comparator
 exports.show = function(req, res, next) {
-  console.log('HERE');
   if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
     console.log('redirect');
     next();
@@ -31,7 +30,6 @@ exports.show = function(req, res, next) {
 };
 // get comparator by type
 exports.findByType = function(req, res) {
-  console.log('HERE 1');
   TransportComparator.find( {types: {$in: [req.params.id]} }, function (err, transport) {
     if(err) { return handleError(res, err); }
     if(!transport) { return res.status(404).send('Not Found'); }
