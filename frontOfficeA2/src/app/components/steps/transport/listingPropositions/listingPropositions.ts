@@ -79,6 +79,7 @@ export class ListingPropositions {
 				content_range.val(ui.value);
 			}
         });
+				console.log(this.filterTypeChecked);
 	}
 
 	// ***************************************

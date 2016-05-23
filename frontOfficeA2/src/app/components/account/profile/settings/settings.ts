@@ -39,12 +39,12 @@ export class Settings implements AfterViewInit, OnInit {
 
     options: RequestOptions;
 
-    uploader: FileUploader = new FileUploader({ url: fileAPI });
+    uploader: FileUploader;
 	hasBaseDropZoneOver: boolean = false;
 	hasAnotherDropZoneOver: boolean = false;
 
 	constructor(private _auth: AuthService, fb: FormBuilder, private _http: Http, private el: ElementRef) {
-		console.log(_auth.getMe());
+		 this.uploader = new FileUploader({ url: fileAPI, queueLimit: 1 });
 		// Initializing forms
 		this.name = fb.control('', Validators.compose([]));
 		this.fname = fb.control('', Validators.compose([]));
