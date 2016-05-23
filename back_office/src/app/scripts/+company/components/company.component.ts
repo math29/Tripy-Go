@@ -1,9 +1,9 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import {NgForm} from '@angular/common';
+import {NgForm, FORM_DIRECTIVES, CORE_DIRECTIVES} from '@angular/common';
 import {Response} from '@angular/http';
 import {CompanyService} from '../../services/company';
 import {CountryService} from '../../services/countryService';
-import {RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
+import { ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 import { FILE_UPLOAD_DIRECTIVES, FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import {SocketService} from '../../services/socket.service';
 
@@ -15,7 +15,7 @@ const fileAPI = "/api/files";
   selector: 'companies',
   templateUrl: 'views/components/company/main.html',
   providers: [CompanyService, CountryService],
-  directives: [ROUTER_DIRECTIVES, FILE_UPLOAD_DIRECTIVES],
+  directives: [ROUTER_DIRECTIVES, FILE_UPLOAD_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES],
   pipes: []
 })
 export class CompanyCmp implements OnInit{
@@ -29,12 +29,14 @@ export class CompanyCmp implements OnInit{
     /*
      * Uploader
      */
-    uploader: FileUploader = new FileUploader({ url: fileAPI });
+    uploader: FileUploader ;
     hasBaseDropZoneOver: boolean = false;
     hasAnotherDropZoneOver: boolean = false;
 
-    constructor(private _companyService: CompanyService, private _countryService: CountryService, private socketService: SocketService){
-      let host = window.location.origin;
+    constructor(private _companyService: CompanyService,
+      private _countryService: CountryService,
+      private socketService: SocketService){
+      this.uploader = new FileUploader({ url: fileAPI, queueLimit: 1 });
 
       // Necessary to not have an error
   		//this.uploader.queueLimit = 1;
@@ -183,5 +185,8 @@ export class CompanyCmp implements OnInit{
       this._companyService.deleteCompany(company).subscribe();
     }
 
+      public fileOverAnother(e:any):void {
+        this.hasAnotherDropZoneOver = e;
+      }
 
 }
