@@ -9,7 +9,12 @@
         "experimentalDecorators": true,
         "removeComments": false,
         "noImplicitAny": false,
-        "suppressImplicitAnyIndexErrors": true
+        "suppressImplicitAnyIndexErrors": true,
+        "declaration": false,
+        "mapRoot": "",
+        "noEmitOnError": true,
+        "rootDir": ".",
+        "sourceRoot": "/"
     },
     "files": [
         "app/scripts/+company/components/company.component.ts",

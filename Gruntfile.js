@@ -42,7 +42,7 @@ module.exports = function (grunt) {
       public: 'dist/public',
       private: 'dist/back',
       back_office_libs: [
-        '@angular/**/*.js',
+        '@angular/**/*',
         'reflect-metadata/**/*',
         'systemjs/dist/**/*',
         'rxjs/**/*',
@@ -750,6 +750,7 @@ module.exports = function (grunt) {
                  "<%= yeoman.back_office_dist %>/bower_components/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.2.0.min.js",
                  "<%= yeoman.back_office_dist %>/bower_components/bootstrap-iconpicker/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js",
                  "<%= yeoman.back_office_dist %>/lib/systemjs/dist/system.src.js",
+                 "<%= yeoman.back_office_dist %>/lib/rxjs/bundles/Rx.js",
                  "<%= yeoman.back_office_dist %>/lib/d3/d3.min.js",
                  "<%= yeoman.back_office_dist %>/lib/marked/marked.min.js",
                  "<%= yeoman.back_office_dist %>/lib/to-markdown/dist/to-markdown.js",
