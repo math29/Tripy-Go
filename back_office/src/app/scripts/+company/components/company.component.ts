@@ -86,8 +86,6 @@ export class CompanyCmp implements OnInit{
 
     updateCompanyPicture(responsePath: any) {
       this.companyEdit.img = "/api/files/" + responsePath.file._id ;
-      // "/api/files/" + $scope.user.picture + "?_ts=" + new Date().getTime();
-      console.log(this.companyEdit.img);
     }
 
     fileOverBase(e: any) {
@@ -135,7 +133,7 @@ export class CompanyCmp implements OnInit{
         {
           this.companies = data;
         },
-        errors => console.log(errors));
+        errors => console.error(errors));
     }
 
     getCountries(){
@@ -144,7 +142,7 @@ export class CompanyCmp implements OnInit{
         {
           this.countries = data;
         },
-        errors => console.log(errors));
+        errors => console.error(errors));
     }
 
 
