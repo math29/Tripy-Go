@@ -42,7 +42,6 @@ export class CompanyCmp implements OnInit{
   		//this.uploader.queueLimit = 1;
   		this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
   			let responsePath = JSON.parse(response);
-        console.log(responsePath);
   			this.updateCompanyPicture(responsePath);// the url will be in the response
   		};
 
