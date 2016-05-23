@@ -1,6 +1,6 @@
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 import {AuthService} from '../tripy-lib/services/auth.service';
-import {Http, Response, Headers, RequestOptions} from 'angular2/http';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Observable}     from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
 
@@ -17,14 +17,14 @@ export class TransportTypeService {
    * d'effectuer une requête
    */
   getHeaders(){
-    let headers = this._authService.getBearerHeaders();
+    let headers = new Headers(this._authService.getBearerHeaders());
   	  //headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
       let options = new RequestOptions({ headers: headers });
       return options
   }
 
   getHeader(){
-      let headers = this._authService.getBearerHeaders();
+      let headers = new Headers(this._authService.getBearerHeaders());
     	  //headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
         let options = new RequestOptions({ headers: headers });
         return options
@@ -36,9 +36,7 @@ export class TransportTypeService {
    * Récupère les timelines
    */
   getTransportTypes(){
-    let headers = this._authService.getBearerHeaders();
-    let options = new RequestOptions({ headers: headers });
-    return this._http.get(this.base_url, options)
+    return this._http.get(this.base_url, this.getHeaders())
             .map(res => <any> res.json());
   }
 
@@ -46,16 +44,14 @@ export class TransportTypeService {
    * Sauvegarde une opération en base
    */
   saveTransportType(transportType:any){
-    let headers = this._authService.getBearerHeaders();
-    let options = new RequestOptions({ headers: headers });
     //let body = JSON.stringify({code: language.code, name: language.name, note: language.note});
     let body = JSON.stringify(transportType);
     // l'opération existe déjà
     console.log(body);
     if(transportType._id !== undefined && transportType._id !== ""){
-      return this._http.put(this.base_url + transportType._id, body, options).map(res => <any> res.json());
+      return this._http.put(this.base_url + transportType._id, body, this.getHeaders()).map(res => <any> res.json());
     }else{
-      return this._http.post(this.base_url + transportType.name, body, options).map(res => <any> res.json());
+      return this._http.post(this.base_url + transportType.name, body, this.getHeaders()).map(res => <any> res.json());
     }
   }
 
@@ -65,9 +61,7 @@ export class TransportTypeService {
    * @param operation: Compagnie à supprimer
    */
   deleteTransportType(transportType:any){
-    let headers = this._authService.getBearerHeaders();
-    let options = new RequestOptions({ headers: headers });
-    return this._http.delete(this.base_url +  transportType._id, options);
+    return this._http.delete(this.base_url +  transportType._id, this.getHeaders());
   }
 
 

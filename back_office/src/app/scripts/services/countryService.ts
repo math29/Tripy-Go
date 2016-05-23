@@ -1,6 +1,6 @@
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 import {AuthService} from '../tripy-lib/services/auth.service';
-import {Http, Response, Headers, RequestOptions} from 'angular2/http';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Observable}     from 'rxjs/Observable';
 import {Country} from '../classes/country';
 import 'rxjs/add/operator/map'
@@ -14,30 +14,10 @@ export class CountryService {
   constructor(private _http: Http, private _authService:AuthService) {}
 
   /**
-   * Récupére le cookie d'autorisation, puis crée le header qui permet
-   * d'effectuer une requête
-   */
-  getHeaders(){
-    let headers = this._authService.getBearerHeaders();
-  	  //headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
-      let options = new RequestOptions({ headers: headers });
-      return options
-  }
-
-  getHeader(){
-      let headers = this._authService.getBearerHeaders();
-    	  //headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
-        let options = new RequestOptions({ headers: headers });
-        return options
-    }
-
-
-
-  /**
    * Récupère les timelines
    */
   getCountries(){
-    let headers = this._authService.getBearerHeaders();
+    let headers = new Headers(this._authService.getBearerHeaders());
     let options = new RequestOptions({ headers: headers });
     return this._http.get(this.base_url, options)
             .map(res => <any> res.json());
@@ -47,7 +27,7 @@ export class CountryService {
    * Sauvegarde une opération en base
    */
   saveCountry(country:Country){
-    let headers = this._authService.getBearerHeaders();
+    let headers = new Headers(this._authService.getBearerHeaders());
     let options = new RequestOptions({ headers: headers });
     //let body = JSON.stringify({code: language.code, name: language.name, note: language.note});
     let body = JSON.stringify(country);
@@ -65,7 +45,7 @@ export class CountryService {
    * @param operation: Opération à supprimer
    */
   deleteCountry(country:Country){
-    let headers = this._authService.getBearerHeaders();
+    let headers = new Headers(this._authService.getBearerHeaders());
     let options = new RequestOptions({ headers: headers });
     return this._http.delete(this.base_url + '/' + country._id, options);
   }

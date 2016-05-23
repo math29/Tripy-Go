@@ -1,8 +1,8 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit} from '@angular/core';
 import {Item, SidebarElementCmp} from './sidebar_element';
 import {UserSingleton} from '../../singletons/user.singleton';
 import {AuthService} from '../../tripy-lib/services/auth.service';
-import {Location, RouteConfig, RouterLink, Router,Route,  ROUTER_DIRECTIVES} from 'angular2/router';
+import {RouteConfig, RouterLink, Router,Route,  ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 
 @Component({
   selector: 'sidebar',

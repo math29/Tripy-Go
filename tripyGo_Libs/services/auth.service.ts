@@ -1,7 +1,7 @@
-import {Injectable, EventEmitter} from 'angular2/core';
-import {Http, Response, Headers, RequestOptions} from 'angular2/http';
+import {Injectable, EventEmitter} from '@angular/core';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import {Router} from 'angular2/router';
+import {Router} from '@angular/router-deprecated';
 import 'rxjs/add/operator/share';
 
 // DONT MODIFY THIS FILE IF YOU ARE NOT IN REAL TRIPYGO LIB FOLDER (./)

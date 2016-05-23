@@ -42,7 +42,7 @@ module.exports = function (grunt) {
       public: 'dist/public',
       private: 'dist/back',
       back_office_libs: [
-        'angular2/**/*.js',
+        '@angular/**/*',
         'reflect-metadata/**/*',
         'systemjs/dist/**/*',
         'rxjs/**/*',
@@ -65,7 +65,8 @@ module.exports = function (grunt) {
         'font-awesome/**/*',
         'datamaps/dist/**/*',
         'to-markdown/dist/**/*',
-        'moment/min/**/*'
+        'moment/min/**/*',
+        'reflect-metadata/**/*'
       ],
       back_office_css: [
         'bower_components/metisMenu/dist/metisMenu.min.css',
@@ -562,8 +563,15 @@ module.exports = function (grunt) {
         dest: './frontOfficeA2/dist/vendor',
         cwd: './bower_components',
         src: [
-          'jquery/**/*',
-          'bootstrap/**/**/*',
+          'jquery/**/*'
+        ]
+      },
+      front_office_vendor_npm: {
+        expand: true,
+        dest: './frontOfficeA2/dist/vendor',
+        cwd: './node_modules',
+        src: [
+          'bootstrap/dist/**/*',
           'font-awesome/**/*'
         ]
       },
@@ -572,13 +580,14 @@ module.exports = function (grunt) {
         dest: './frontOfficeA2/dist/lib',
         cwd: './node_modules',
         src: [
-          'angular2/bundles/**/*',
+          '@angular/**/*',
           'reflect-metadata/Reflect.js',
           'systemjs/dist/**/*',
           'rxjs/**/*',
           'angular2-jwt/*',
           'ng2-bootstrap/**/*',
           'moment/min/**/*',
+          'ng2-bootstrap/**/*',
           'ng2-file-upload/**/*',
           'marked/marked.min.js'
         ]
@@ -741,17 +750,15 @@ module.exports = function (grunt) {
         files: {
           '<%= yeoman.back_office_dist %>/index.html': [
                [
+                 "<%= yeoman.back_office_dist %>/js/angular2-polyfills.js",
                  "<%= yeoman.back_office_dist %>/lib/tinymce/tinymce.min.js",
                  "<%= yeoman.back_office_dist %>/lib/jquery/dist/jquery.min.js",
                  "<%= yeoman.back_office_dist %>/lib/bootstrap/dist/js/bootstrap.min.js",
                  "<%= yeoman.back_office_dist %>/bower_components/metisMenu/dist/metisMenu.min.js",
                  "<%= yeoman.back_office_dist %>/bower_components/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.6.5.min.js",
                  "<%= yeoman.back_office_dist %>/bower_components/bootstrap-iconpicker/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js",
-                 "<%= yeoman.back_office_dist %>/lib/systemjs/dist/system.js",
-                 "<%= yeoman.back_office_dist %>/lib/angular2/bundles/angular2-polyfills.js",
-                 "<%= yeoman.back_office_dist %>/lib/angular2/bundles/angular2.min.js",
-                 "<%= yeoman.back_office_dist %>/lib/angular2/bundles/http.min.js",
-                 "<%= yeoman.back_office_dist %>/lib/angular2/bundles/router.min.js",
+                 "<%= yeoman.back_office_dist %>/lib/systemjs/dist/system.src.js",
+                 "<%= yeoman.back_office_dist %>/lib/rxjs/bundles/Rx.js",
                  "<%= yeoman.back_office_dist %>/lib/d3/d3.min.js",
                  "<%= yeoman.back_office_dist %>/lib/marked/marked.min.js",
                  "<%= yeoman.back_office_dist %>/lib/to-markdown/dist/to-markdown.js",
@@ -918,6 +925,7 @@ module.exports = function (grunt) {
     'copy:front_office_base',
     'copy:front_office_lib',
     'copy:front_office_vendor',
+    'copy:front_office_vendor_npm',
     'ts:front_office'
   ]);
 

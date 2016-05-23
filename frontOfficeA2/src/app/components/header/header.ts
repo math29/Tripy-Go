@@ -1,5 +1,5 @@
-import {Component, OnInit} from 'angular2/core';
-import { ROUTER_DIRECTIVES, Router } from 'angular2/router';
+import {Component, OnInit} from '@angular/core';
+import { ROUTER_DIRECTIVES, Router } from '@angular/router-deprecated';
 
 import { AuthService } from '../../tripy_go_lib/services/auth.service'
 import { Stepbar } from './stepbar/stepbar';

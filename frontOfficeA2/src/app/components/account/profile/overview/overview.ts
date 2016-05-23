@@ -1,7 +1,7 @@
-import {Component} from 'angular2/core';
-import { RouterLink } from 'angular2/router';
+import {Component} from '@angular/core';
+import { RouterLink } from '@angular/router-deprecated';
 // import { FormBuilder, ControlGroup, Validators, Control } from 'angular2/common';
-import { Http, Headers } from 'angular2/http';
+import { Http, Headers } from '@angular/http';
 import { AuthService } from '../../../../tripy_go_lib/services/auth.service';
 
 @Component({

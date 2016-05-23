@@ -1,9 +1,9 @@
-import {Component, OnInit, OnDestroy} from 'angular2/core';
-import {NgForm} from 'angular2/common';
-import {Response} from 'angular2/http';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {NgForm, FORM_DIRECTIVES, CORE_DIRECTIVES} from '@angular/common';
+import {Response} from '@angular/http';
 import {CompanyService} from '../../services/company';
 import {CountryService} from '../../services/countryService';
-import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import { ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 import { FILE_UPLOAD_DIRECTIVES, FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import {SocketService} from '../../services/socket.service';
 
@@ -15,7 +15,7 @@ const fileAPI = "/api/files";
   selector: 'companies',
   templateUrl: 'views/components/company/main.html',
   providers: [CompanyService, CountryService],
-  directives: [ROUTER_DIRECTIVES, FILE_UPLOAD_DIRECTIVES],
+  directives: [ROUTER_DIRECTIVES, FILE_UPLOAD_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES],
   pipes: []
 })
 export class CompanyCmp implements OnInit{
@@ -29,18 +29,19 @@ export class CompanyCmp implements OnInit{
     /*
      * Uploader
      */
-    uploader: FileUploader = new FileUploader({ url: fileAPI });
+    uploader: FileUploader ;
     hasBaseDropZoneOver: boolean = false;
     hasAnotherDropZoneOver: boolean = false;
 
-    constructor(private _companyService: CompanyService, private _countryService: CountryService, private socketService: SocketService){
-      let host = window.location.origin;
+    constructor(private _companyService: CompanyService,
+      private _countryService: CountryService,
+      private socketService: SocketService){
+      this.uploader = new FileUploader({ url: fileAPI, queueLimit: 1 });
 
       // Necessary to not have an error
-  		this.uploader.queueLimit = 1;
+  		//this.uploader.queueLimit = 1;
   		this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
   			let responsePath = JSON.parse(response);
-        console.log(responsePath);
   			this.updateCompanyPicture(responsePath);// the url will be in the response
   		};
 
@@ -85,8 +86,6 @@ export class CompanyCmp implements OnInit{
 
     updateCompanyPicture(responsePath: any) {
       this.companyEdit.img = "/api/files/" + responsePath.file._id ;
-      // "/api/files/" + $scope.user.picture + "?_ts=" + new Date().getTime();
-      console.log(this.companyEdit.img);
     }
 
     fileOverBase(e: any) {
@@ -134,7 +133,7 @@ export class CompanyCmp implements OnInit{
         {
           this.companies = data;
         },
-        errors => console.log(errors));
+        errors => console.error(errors));
     }
 
     getCountries(){
@@ -143,7 +142,7 @@ export class CompanyCmp implements OnInit{
         {
           this.countries = data;
         },
-        errors => console.log(errors));
+        errors => console.error(errors));
     }
 
 
@@ -183,5 +182,8 @@ export class CompanyCmp implements OnInit{
       this._companyService.deleteCompany(company).subscribe();
     }
 
+      public fileOverAnother(e:any):void {
+        this.hasAnotherDropZoneOver = e;
+      }
 
 }

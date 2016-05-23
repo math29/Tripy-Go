@@ -1,9 +1,9 @@
-import {Component, OnInit, OnDestroy} from 'angular2/core';
-import {NgForm} from 'angular2/common';
-import {Response} from 'angular2/http';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {NgForm} from '@angular/common';
+import {Response} from '@angular/http';
 import {LanguageService} from '../../services/languageService';
 import {Language} from '../../classes/language';
-import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import {RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 import {OrderByPipe} from '../../pipes/orderby';
 import {SocketService} from '../../services/socket.service';
 

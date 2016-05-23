@@ -1,6 +1,6 @@
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 import {AuthService} from '../tripy-lib/services/auth.service';
-import {Http, Response, Headers, RequestOptions} from 'angular2/http';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Observable}     from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
 
@@ -17,14 +17,14 @@ export class UserService {
    * d'effectuer une requête
    */
   getHeaders(){
-    let headers = this._authService.getBearerHeaders();
+    let headers = new Headers(this._authService.getBearerHeaders());
   	  //headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
       let options = new RequestOptions({ headers: headers });
       return options
   }
 
   getHeader(){
-      let headers = this._authService.getBearerHeaders();
+      let headers = new Headers(this._authService.getBearerHeaders());
     	  //headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
         let options = new RequestOptions({ headers: headers });
         return options
@@ -36,9 +36,7 @@ export class UserService {
    * Récupère les timelines
    */
   getUsers(){
-    let headers = this._authService.getBearerHeaders();
-    let options = new RequestOptions({ headers: headers });
-    return this._http.get(this.base_url, options)
+    return this._http.get(this.base_url, this.getHeaders())
             .map(res => <any> res.json());
   }
 
@@ -46,15 +44,13 @@ export class UserService {
    * Sauvegarde une opération en base
    */
   saveUser(user:any){
-    let headers = this._authService.getBearerHeaders();
-    let options = new RequestOptions({ headers: headers });
     //let body = JSON.stringify({code: language.code, name: language.name, note: language.note});
     let body = JSON.stringify(user);
     // l'opération existe déjà
     if(user._id !== undefined && user._id !== ""){
-      return this._http.put(this.base_url + user._id, body, options).map(res => <any> res.json());
+      return this._http.put(this.base_url + user._id, body, this.getHeaders()).map(res => <any> res.json());
     }else{
-      return this._http.post(this.base_url, body, options).map(res => <any> res.json());
+      return this._http.post(this.base_url, body, this.getHeaders()).map(res => <any> res.json());
     }
   }
 
@@ -64,9 +60,7 @@ export class UserService {
    * @param operation: Compagnie à supprimer
    */
   deleteUser(user:any){
-    let headers = this._authService.getBearerHeaders();
-    let options = new RequestOptions({ headers: headers });
-    return this._http.delete(this.base_url + '/' + user._id, options);
+    return this._http.delete(this.base_url + '/' + user._id, this.getHeaders());
   }
 
   /**
@@ -75,15 +69,12 @@ export class UserService {
    * @param operation: Compagnie à supprimer
    */
   changeUserRole(user:any, role:string){
-    let headers = this._authService.getBearerHeaders();
-    let options = new RequestOptions({ headers: headers });
-    return this._http.put(this.base_url + '/' + user._id + '/' + role,null,options).map(res => <any> res.json());
+
+    return this._http.put(this.base_url + '/' + user._id + '/' + role,null,this.getHeaders()).map(res => <any> res.json());
   }
 
   getRoles(){
-    let headers = this._authService.getBearerHeaders();
-    let options = new RequestOptions({headers: headers});
-    return this._http.get(this.base_url + '/roles', options).map(res => <any> res.json());
+    return this._http.get(this.base_url + '/roles', this.getHeaders()).map(res => <any> res.json());
   }
 
 

@@ -9,7 +9,12 @@
         "experimentalDecorators": true,
         "removeComments": false,
         "noImplicitAny": false,
-        "suppressImplicitAnyIndexErrors": true
+        "suppressImplicitAnyIndexErrors": true,
+        "declaration": false,
+        "mapRoot": "",
+        "noEmitOnError": true,
+        "rootDir": ".",
+        "sourceRoot": "/"
     },
     "files": [
         "app/scripts/+company/components/company.component.ts",
@@ -35,7 +40,6 @@
         "app/scripts/components.barrell.ts",
         "app/scripts/components/header/header.ts",
         "app/scripts/components/header/header_notification.ts",
-        "app/scripts/components/home/home.ts",
         "app/scripts/components/language/language.ts",
         "app/scripts/components/log/log.ts",
         "app/scripts/components/mongo/mongo.ts",
@@ -73,7 +77,7 @@
         "app/scripts/tripy-lib/components/rate/starsRate.ts",
         "app/scripts/tripy-lib/pipes/marked.ts",
         "app/scripts/tripy-lib/services/auth.service.ts",
-        "../../typings/angular2/angular2.d.ts",
+        "../../typings/browser.d.ts",
         "../../typings/d3/d3.d.ts",
         "../../typings/es6-collections/es6-collections.d.ts",
         "../../typings/es6-promise/es6-promise.d.ts",
@@ -83,6 +87,7 @@
         "../../typings/jquery/jquery.d.ts",
         "../../typings/jqueryui/jqueryui.d.ts",
         "../../typings/lodash/lodash.d.ts",
+        "../../typings/main.d.ts",
         "../../typings/marked/marked.d.ts",
         "../../typings/moment/moment-node.d.ts",
         "../../typings/moment/moment.d.ts",

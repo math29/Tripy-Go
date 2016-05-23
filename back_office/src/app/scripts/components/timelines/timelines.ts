@@ -1,5 +1,5 @@
-import {Component, OnInit, OnDestroy} from 'angular2/core';
-import {Response} from 'angular2/http';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Response} from '@angular/http';
 import {StatsCmp} from '../utils/stats';
 import {TimelineService} from '../../services/timelineService';
 import {OperationsService} from '../../services/operationsService';
@@ -7,7 +7,7 @@ import {TimelineCmp} from './timeline';
 import {MarkdownPipe} from '../../tripy-lib/pipes/marked';
 import {MdEditor} from '../../tripy-lib/components/md-editor/md-editor';
 
-import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import {RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 import {SocketService} from '../../services/socket.service';
 
 declare var to_markdown:any;

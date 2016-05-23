@@ -1,12 +1,12 @@
-import {Component} from 'angular2/core';
-import {Response} from 'angular2/http';
+import {Component} from '@angular/core';
+import {Response} from '@angular/http';
 //import {PAGINATION_PROVIDERS} from 'ng2-bootstrap/ng2-bootstrap';
 import {LogService} from '../../services/log.service';
 import {OrderByPipe} from '../../pipes/orderby';
 import {FilterLogPipe} from '../../pipes/filter';
 import {SelectLevelPipe} from '../../pipes/selectLevel';
 import {CHART_DIRECTIVES} from 'ng2-charts/ng2-charts';
-import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import {RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 
 @Component({
   selector: 'log',

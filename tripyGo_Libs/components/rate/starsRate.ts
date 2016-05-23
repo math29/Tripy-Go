@@ -1,7 +1,7 @@
-import {Component, OnInit, OnDestroy} from 'angular2/core';
-import {Response} from 'angular2/http';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Response} from '@angular/http';
 import {RateService} from './rate.service';
-import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import {RouterLink, Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 
 @Component({
   selector: 'stars-rate',
