@@ -1,5 +1,5 @@
-import {Injectable} from 'angular2/core';
-import { Http, RequestOptions, Headers } from 'angular2/http';
+import {Injectable} from '@angular/core';
+import { Http, RequestOptions, Headers } from '@angular/http';
 import { AuthService } from '../tripy_go_lib/services/auth.service';
 
 @Injectable()

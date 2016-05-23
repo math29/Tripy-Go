@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from 'angular2/core';
-import { Http, RequestOptions, Headers } from 'angular2/http';
+import {Component, Input, OnInit} from '@angular/core';
+import { Http, RequestOptions, Headers } from '@angular/http';
 import { AuthService } from '../../../../../../tripy_go_lib/services/auth.service';
 import { RateService } from '../../../../../../services/rate.service';
 
@@ -16,7 +16,7 @@ export class TransportComparatorComment {
 	private comment: any;
 	private rate_side: String;
 	private options_post: RequestOptions;
-  
+
 	constructor(private _auth: AuthService, private _http: Http, private _rate: RateService) {
 		this.options_post = new RequestOptions({ headers: _auth.getBearerHeaders() });
 	}

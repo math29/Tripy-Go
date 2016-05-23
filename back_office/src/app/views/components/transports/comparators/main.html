@@ -1,5 +1,5 @@
 <!-- Errors -->
-<div  *ngFor="#error of errors" class="alert alert-danger" role="alert">
+<div  *ngFor="let error of errors" class="alert alert-danger" role="alert">
   <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
   <span class="sr-only">Error:</span>
   {{error}}
@@ -7,7 +7,7 @@
 </div>
 
 <!-- messages -->
-<div  *ngFor="#message of messages" class="alert alert-success" role="alert">
+<div  *ngFor="let message of messages" class="alert alert-success" role="alert">
   <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
   <span class="sr-only">Success:</span>
   {{message}}
@@ -31,7 +31,7 @@
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" style="position: relative" aria-labelledby="dropdownMenu1">
-            <li *ngFor="#company of companies">
+            <li *ngFor="let company of companies">
               <div (click)="selectCompany(company)">
                 <img src="{{company.img}}" style="width:50px; height:50px;">{{company.name}}
               </div>
@@ -47,7 +47,7 @@
         <div class="form-group">
           <label class="control-label col-sm-2" for="code">Type de transport:</label>
           <div class="col-sm-10">
-            <div *ngFor="#type of transportTypes" ><span class="fa {{type.img}}"></span>{{type.name}} <button *ngIf="!typeInArray(type)" (click)="addType(type)" class="fa fa-plus">Ajouter</button> <button *ngIf="typeInArray(type)" (click)="removeType(type)" class="fa fa-minus">Supprimer</button></div>
+            <div *ngFor="let type of transportTypes" ><span class="fa {{type.img}}"></span>{{type.name}} <button *ngIf="!typeInArray(type)" (click)="addType(type)" class="fa fa-plus">Ajouter</button> <button *ngIf="typeInArray(type)" (click)="removeType(type)" class="fa fa-minus">Supprimer</button></div>
           </div>
         </div>
         <div class="form-group">
@@ -82,10 +82,11 @@
           </tr>
           </thead>
           <tbody>
-          <!--<tr *ngFor="#language of languages |filter:query |orderBy:orderType+orderby" ng-class="getClassFromInfo(language)">-->
-          <tr *ngFor="#comparator of comparators">
+          <!--<tr *ngFor="let language of languages |filter:query |orderBy:orderType+orderby" ng-class="getClassFromInfo(language)">-->
+          <tr *ngFor="let comparator of comparators">
             <td>{{comparator.company.name}}</td>
-            <td><span *ngFor="#type of comparator.transport.types"><span class="fa {{type.img}}"></span>{{type.name}}<br/></span></td>
+
+            <td><span *ngFor="let type of comparator.transport.types"><span class="fa {{type.img}}"></span>{{type.name}}<br/></span></td>
             <td>{{comparator.nbCompanies}}</td>
             <td *ngIf="comparator.transport.ergo_rate.raters.length > 0">{{comparator.ergo_rate.score}}</td><td *ngIf="comparator.transport.ergo_rate.raters.length == 0">Pas de votes</td>
             <td *ngIf="comparator.transport.content_rate.raters.length > 0">{{comparator.content_rate.score}}</td><td *ngIf="comparator.transport.content_rate.raters.length == 0">Pas de votes</td>

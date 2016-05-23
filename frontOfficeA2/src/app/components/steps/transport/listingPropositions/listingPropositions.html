@@ -10,7 +10,7 @@
 <div class="row">
 	<div class="container">
 		<div class="col-md-9 hotel-listing">
-			<div *ngFor="#comparator of (comparators | typeTransport:filterTypeChecked | rangeRate:ergonomyRange:contentRange | orderBy: [orderDir.concat(order)] )">
+			<div *ngFor="let comparator of (comparators | typeTransport:filterTypeChecked | rangeRate:ergonomyRange:contentRange | orderBy: [orderDir.concat(order)] )">
 				<div class="col-md-12 col-sm-12">
 					<comparator [comparator]="comparator"></comparator>
 				</div>
@@ -38,7 +38,7 @@
 					<form #filterForm = "ngForm">
 						<h5><i class="fa fa-dashboard"></i> Moyens de transports</h5>
 						<ul class="filterType">
-							<li *ngFor="#type of transportTypes">
+							<li *ngFor="let type of transportTypes">
 								<input type="checkbox" name="filterType"
 									value="{{ type.name }}"
 									id="{{ type._id }}"

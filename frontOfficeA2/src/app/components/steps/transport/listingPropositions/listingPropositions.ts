@@ -1,10 +1,10 @@
 /// <reference path="../../../../../../../typings/jquery/jquery.d.ts" />
 /// <reference path="../../../../../../../typings/jqrangeslider/jqrangeslider.d.ts" />
 
-import {Component, ElementRef, ViewChild, AfterViewInit, ViewEncapsulation} from 'angular2/core';
-import { RouterLink, RouteParams } from 'angular2/router';
-import { NgForm } from 'angular2/common';
-import { Http, RequestOptions, Headers } from 'angular2/http';
+import {Component, ElementRef, ViewChild, AfterViewInit, ViewEncapsulation} from '@angular/core';
+import { RouterLink, RouteParams } from '@angular/router-deprecated';
+import { NgForm } from '@angular/common';
+import { Http, RequestOptions, Headers } from '@angular/http';
 import { AuthService } from '../../../../tripy_go_lib/services/auth.service';
 import { TransportComparatorCmp } from './transport-comparator/transport-comparator';
 
@@ -75,6 +75,7 @@ export class ListingPropositions {
 				content_range.val(ui.value);
 			}
         });
+				console.log(this.filterTypeChecked);
 	}
 
 	// ***************************************

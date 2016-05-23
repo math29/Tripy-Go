@@ -1,11 +1,11 @@
 /// <reference path="../../app.ts"/>
 /// <reference path="../../../../../../typings/socket.io-client/socket.io-client.d.ts" />
 
-import {Component, OnInit, ElementRef,OnDestroy} from 'angular2/core';
-import {NgForm} from 'angular2/common';
-import {Response} from 'angular2/http';
+import {Component, OnInit, ElementRef,OnDestroy} from '@angular/core';
+import {NgForm} from '@angular/common';
+import {Response} from '@angular/http';
 import {TransportTypeService} from '../../services/transportTypeService';
-import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import {RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 import {SocketService} from '../../services/socket.service';
 
 //declare var jQuery: JQueryStatic;

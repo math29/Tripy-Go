@@ -1,5 +1,5 @@
 /// <reference path="../../../../../typings/socket.io-client/socket.io-client.d.ts" />
-import { Injectable } from 'angular2/core';
+import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 
 import * as _ from 'lodash';

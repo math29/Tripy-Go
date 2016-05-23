@@ -1,12 +1,12 @@
-import {Component, OnInit, OnDestroy} from 'angular2/core';
-import {NgForm} from 'angular2/common';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {NgForm} from '@angular/common';
 import {AuthService} from '../../tripy-lib/services/auth.service';
-import {Response} from 'angular2/http';
+import {Response} from '@angular/http';
 import {LanguageService} from '../../services/languageService';
 import {CountryService} from '../../services/countryService';
 import {Language} from '../../classes/language';
 import {Country} from '../../classes/country';
-import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import {RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 import {OrderByPipe} from '../../pipes/orderby';
 import {SocketService} from '../../services/socket.service';
 

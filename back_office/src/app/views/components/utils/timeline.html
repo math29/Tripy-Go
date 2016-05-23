@@ -1,6 +1,6 @@
 <div class="panel-body">
   <ul class="timeline" *ngIf="timelines">
-    <li *ngFor="#operation of timelines[timelineIndex].operations; #i = index" [class]="getClass(i)">
+    <li *ngFor="let operation of timelines[timelineIndex].operations; let i = index" [class]="getClass(i)">
 
       <div class="timeline-badge"><i class="fa fa-check"></i>
       </div>

@@ -1,10 +1,10 @@
 /// <reference path="../../../../../../typings/jquery/jquery.d.ts" />
 
-import {Component, OnInit, ElementRef,OnDestroy} from 'angular2/core';
-import {NgForm} from 'angular2/common';
-import {Response, Http} from 'angular2/http';
+import {Component, OnInit, ElementRef,OnDestroy} from '@angular/core';
+import {NgForm} from '@angular/common';
+import {Response, Http} from '@angular/http';
 import {TransportMapCmp} from './transportMap';
-import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import {RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 import{AgregatorService} from '../../services/agregator';
 import {DATEPICKER_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 

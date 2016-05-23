@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from 'angular2/core';
-import { Rating } from 'ng2-bootstrap/ng2-bootstrap';
-import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
+import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
+import { RatingComponent } from 'ng2-bootstrap/ng2-bootstrap';
+import {CORE_DIRECTIVES, FORM_DIRECTIVES} from '@angular/common';
 
 
 @Component({
     selector: 'site',
     templateUrl: 'app/components/travelPage/components/site.component.html',
-    directives: [Rating, CORE_DIRECTIVES, FORM_DIRECTIVES],
+    directives: [RatingComponent, CORE_DIRECTIVES, FORM_DIRECTIVES],
     providers: [],
     styleUrls: ['app/components/travelPage/components/site.component.css'],
     pipes: []

@@ -1,6 +1,6 @@
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 import {AuthService} from '../tripy-lib/services/auth.service';
-import {Http, Response, Headers, RequestOptions} from 'angular2/http';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Observable}     from 'rxjs/Observable';
 import {Company} from '../classes/company';
 import 'rxjs/add/operator/map'
@@ -18,14 +18,14 @@ export class CompanyService {
    * d'effectuer une requête
    */
   getHeaders(){
-    let headers = this._authService.getBearerHeaders();
+    let headers = new Headers(this._authService.getBearerHeaders());
   	  //headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
       let options = new RequestOptions({ headers: headers });
       return options
   }
 
   getHeader(){
-      let headers = this._authService.getBearerHeaders();
+      let headers = new Headers(this._authService.getBearerHeaders());
     	  //headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
         let options = new RequestOptions({ headers: headers });
         return options
@@ -37,7 +37,7 @@ export class CompanyService {
    * Récupère les timelines
    */
   getCompanies(){
-    let headers = this._authService.getBearerHeaders();
+    let headers = new Headers(this._authService.getBearerHeaders());
     let options = new RequestOptions({ headers: headers });
     return this._http.get(this.base_url, options)
             .map(res => <any> res.json());
@@ -47,7 +47,7 @@ export class CompanyService {
    * Sauvegarde une opération en base
    */
   saveCompany(company:Company){
-    let headers = this._authService.getBearerHeaders();
+    let headers = new Headers(this._authService.getBearerHeaders());
     let options = new RequestOptions({ headers: headers });
     //let body = JSON.stringify({code: language.code, name: language.name, note: language.note});
     let body = JSON.stringify(company);
@@ -65,7 +65,7 @@ export class CompanyService {
    * @param operation: Compagnie à supprimer
    */
   deleteCompany(company:Company){
-    let headers = this._authService.getBearerHeaders();
+    let headers = new Headers(this._authService.getBearerHeaders());
     let options = new RequestOptions({ headers: headers });
     return this._http.delete(this.base_url + '/' + company._id, options);
   }

@@ -1,5 +1,5 @@
-import { Component, OnInit } from 'angular2/core';
-import { ROUTER_DIRECTIVES, Router } from 'angular2/router';
+import { Component, OnInit } from '@angular/core';
+import { ROUTER_DIRECTIVES, Router } from '@angular/router-deprecated';
 import { Promo } from './components/discount';
 import { DiscountService } from '../../services/discount.service';
 

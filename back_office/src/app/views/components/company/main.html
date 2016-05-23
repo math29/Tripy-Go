@@ -1,5 +1,5 @@
 <!-- Errors -->
-<div  *ngFor="#error of errors" class="alert alert-danger" role="alert">
+<div  *ngFor="let error of errors" class="alert alert-danger" role="alert">
   <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
   <span class="sr-only">Error:</span>
   {{error}}
@@ -7,7 +7,7 @@
 </div>
 
 <!-- messages -->
-<div  *ngFor="#message of messages" class="alert alert-success" role="alert">
+<div  *ngFor="let message of messages" class="alert alert-success" role="alert">
   <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
   <span class="sr-only">Success:</span>
   {{message}}
@@ -40,7 +40,7 @@
           <label class="control-label col-sm-2" for="code">Pays de l'entreprise:</label>
           <div class="col-sm-10">
             <select class="form-control" [ngModel]="companyEdit.country" (ngModelChange)="onChangeCountry($event)">
-              <option *ngFor="#country of countries" [value]="country._id">{{country.country_name}}</option>
+              <option *ngFor="let country of countries" [value]="country._id">{{country.country_name}}</option>
             </select>
           </div>
         </div>
@@ -57,7 +57,7 @@
 
         <div class="form-group">
           <div class="col-md-12">
-              <div ng2-file-drop
+              <div ng2FileDrop
                    [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
                    (fileOver)="fileOverBase($event)"
                    [uploader]="uploader"
@@ -66,10 +66,10 @@
               </div>
 
               Ou ici
-              <input type="file" ng2-file-select [uploader]="uploader" />
+              <input type="file" ng2FileSelect [uploader]="uploader" />
           </div>
           <div class="col-md-12 text-center" style="margin-bottom: 40px">
-            <div *ngFor="#item of uploader.queue">
+            <div *ngFor="let item of uploader.queue">
               <button type="button" class="btn btn-success btn-xs"
                       (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
                   <span class="glyphicon glyphicon-upload"></span> Upload
@@ -115,8 +115,8 @@
           </tr>
           </thead>
           <tbody>
-          <!--<tr *ngFor="#language of languages |filter:query |orderBy:orderType+orderby" ng-class="getClassFromInfo(language)">-->
-          <tr *ngFor="#company of companies">
+          <!--<tr *ngFor="let language of languages |filter:query |orderBy:orderType+orderby" ng-class="getClassFromInfo(language)">-->
+          <tr *ngFor="let company of companies">
             <td><img src="{{company.img}}" class="tableImg"></td>
             <td>{{company.name}}</td>
             <td>{{company.url}}</td>

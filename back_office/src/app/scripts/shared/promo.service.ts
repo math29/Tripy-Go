@@ -1,6 +1,6 @@
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 import {AuthService} from '../tripy-lib/services/auth.service';
-import {Http, Headers, RequestOptions} from 'angular2/http';
+import {Http, Headers, RequestOptions} from '@angular/http';
 import 'rxjs/add/operator/map'
 
 
@@ -16,23 +16,21 @@ export class PromoService {
    * d'effectuer une requête
    */
   getHeaders(){
-    let headers = this._authService.getBearerHeaders();
+    let headers = new Headers(this._authService.getBearerHeaders());
   	  //headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
       let options = new RequestOptions({ headers: headers });
       return options
   }
 
   getHeader(){
-      let headers = this._authService.getBearerHeaders();
+      let headers = new Headers(this._authService.getBearerHeaders());
     	  //headers.append('Authorization', 'Bearer '+ Cookie.getCookie('token'));
         let options = new RequestOptions({ headers: headers });
         return options
     }
 
     notifyFb() {
-      let headers = this._authService.getBearerHeaders();
-      let options = new RequestOptions({ headers: headers });
-      return this._http.patch(this.base_url + 'notify',null, options)
+      return this._http.patch(this.base_url + 'notify',null, this.getHeaders())
         .map(res => <any>res.json());
     }
 
@@ -41,9 +39,7 @@ export class PromoService {
    * Récupère les promotions
    */
   getPromos(){
-    let headers = this._authService.getBearerHeaders();
-    let options = new RequestOptions({ headers: headers });
-    return this._http.get(this.base_url, options)
+    return this._http.get(this.base_url, this.getHeaders())
             .map(res => <any> res.json());
   }
 
@@ -51,16 +47,14 @@ export class PromoService {
    * Sauvegarde une opération en base
    */
   savePromo(promo:any){
-    let headers = this._authService.getBearerHeaders();
-    let options = new RequestOptions({ headers: headers });
     //let body = JSON.stringify({code: language.code, name: language.name, note: language.note});
     let body = JSON.stringify(promo);
     console.log('body: '+ body);
     // l'opération existe déjà
     if(promo._id !== undefined && promo._id !== ""){
-      return this._http.put(this.base_url + promo._id, body, options).map(res => <any> res.json());
+      return this._http.put(this.base_url + promo._id, body, this.getHeaders()).map(res => <any> res.json());
     }else{
-      return this._http.post(this.base_url, body, options).map(res => <any> res.json());
+      return this._http.post(this.base_url, body, this.getHeaders()).map(res => <any> res.json());
     }
   }
 
@@ -70,9 +64,7 @@ export class PromoService {
    * @param operation: Promotion à archiver
    */
   archivePromo(promo:string){
-    let headers = this._authService.getBearerHeaders();
-    let options = new RequestOptions({ headers: headers });
-    return this._http.delete(this.base_url +  promo, options);
+    return this._http.delete(this.base_url +  promo, this.getHeaders());
   }
 
 }

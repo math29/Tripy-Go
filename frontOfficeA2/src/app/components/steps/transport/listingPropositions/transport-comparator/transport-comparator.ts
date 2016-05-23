@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from 'angular2/core';
-import { Http, RequestOptions, Headers } from 'angular2/http';
-import { RouterLink, RouteParams } from 'angular2/router';
+import {Component, Input, OnInit} from '@angular/core';
+import { Http, RequestOptions, Headers } from '@angular/http';
+import { RouterLink, RouteParams } from '@angular/router-deprecated';
 import { TransportComparatorComment } from './transport-comparator-comment/transport-comparator-comment';
 import { AuthService } from '../../../../../tripy_go_lib/services/auth.service';
 

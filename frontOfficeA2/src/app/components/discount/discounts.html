@@ -8,7 +8,7 @@
   <section id="labels">
     <div class="container">
   	   <div class="row">
-         <discount *ngFor="#discount of discounts" [discount]="discount"></discount>
+         <discount *ngFor="let discount of discounts" [discount]="discount"></discount>
        </div>
      </div>
    </section>

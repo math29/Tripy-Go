@@ -1,7 +1,7 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit} from '@angular/core';
 
-import { RouteConfig, Router } from 'angular2/router';
-import { HTTP_PROVIDERS } from 'angular2/http';
+import { RouteConfig, Router } from '@angular/router-deprecated';
+import { HTTP_PROVIDERS } from '@angular/http';
 
 import {LoggedInRouterOutlet} from './LoggedInOutlet';
 import { AuthService } from './tripy_go_lib/services/auth.service';

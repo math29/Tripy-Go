@@ -1,6 +1,6 @@
-import { Injectable } from 'angular2/core';
+import { Injectable } from '@angular/core';
 import { AuthService } from '../../../tripy_go_lib/services/auth.service';
-import { Http } from 'angular2/http';
+import { Http } from '@angular/http';
 
 @Injectable()
 export class TravelService {
