@@ -41,7 +41,7 @@
         <div class="form-group">
           <label class="control-label col-sm-2" for="nb_companies">Nombre de compagnies comparées:</label>
           <div class="col-sm-10">
-            <input type="number" step="1" min="0" class="form-control" id="nbCompanies" [(ngModel)]="transportComparatorEdit.nbCompanies" placeholder="1">
+            <input type="number" step="1" min="0" class="form-control" id="nbCompanies" [(ngModel)]="transportComparatorEdit.transport.nbCompanies" placeholder="nombre d'entreprises comparées">
           </div>
         </div>
         <div class="form-group">
@@ -85,10 +85,10 @@
           <!--<tr *ngFor="#language of languages |filter:query |orderBy:orderType+orderby" ng-class="getClassFromInfo(language)">-->
           <tr *ngFor="#comparator of comparators">
             <td>{{comparator.company.name}}</td>
-            <td><span *ngFor="#type of comparator.type"><span class="fa {{type.img}}"></span>{{type.name}}<br/></span></td>
+            <td><span *ngFor="#type of comparator.transport.types"><span class="fa {{type.img}}"></span>{{type.name}}<br/></span></td>
             <td>{{comparator.nbCompanies}}</td>
-            <td *ngIf="comparator.ergo_rate.raters.length > 0">{{comparator.ergo_rate.score}}</td><td *ngIf="comparator.ergo_rate.raters.length == 0">Pas de votes</td>
-            <td *ngIf="comparator.content_rate.raters.length > 0">{{comparator.content_rate.score}}</td><td *ngIf="comparator.content_rate.raters.length == 0">Pas de votes</td>
+            <td *ngIf="comparator.transport.ergo_rate.raters.length > 0">{{comparator.ergo_rate.score}}</td><td *ngIf="comparator.transport.ergo_rate.raters.length == 0">Pas de votes</td>
+            <td *ngIf="comparator.transport.content_rate.raters.length > 0">{{comparator.content_rate.score}}</td><td *ngIf="comparator.transport.content_rate.raters.length == 0">Pas de votes</td>
             <td><a (click)="edit(comparator)" class="trash"><span class="glyphicon glyphicon-edit pull-right"></span></a></td>
             <td><a (click)="deleteComparator(comparator)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a></td>
           </tr>
