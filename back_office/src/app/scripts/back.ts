@@ -37,7 +37,7 @@ export class Tripy_Back{
   errorMessage: any;
 
   constructor(private _authService:AuthService, private _router: Router){
-    localStorage.setItem('env', 'dev');
+    localStorage.setItem('env', 'prod');
   }
 
   ngOnInit(){
