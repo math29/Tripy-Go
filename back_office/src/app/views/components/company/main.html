@@ -115,7 +115,7 @@
           </tr>
           </thead>
           <tbody>
-          <!--<tr *ngFor="#language of languages |filter:query |orderBy:orderType+orderby" ng-class="getClassFromInfo(language)">-->
+          <!--<tr *ngFor="let language of languages |filter:query |orderBy:orderType+orderby" ng-class="getClassFromInfo(language)">-->
           <tr *ngFor="let company of companies">
             <td><img src="{{company.img}}" class="tableImg"></td>
             <td>{{company.name}}</td>

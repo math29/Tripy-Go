@@ -67,7 +67,7 @@
 		</div>
 	</div>
 	<div *ngIf="comments" class="col-md-12 col-sm-12 clear-padding list-comments">
-		<div *ngFor="#comment of comparator.comments">
+		<div *ngFor="let comment of comparator.comments">
 			<comparatorComment [comment]="comment"></comparatorComment>
 		</div>
 		<div *ngIf="comment_offset > 0" class="previous-comments comments-arrow" (click)="previousComments()">

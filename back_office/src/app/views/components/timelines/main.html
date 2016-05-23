@@ -8,7 +8,7 @@
   <!-- /.row -->
 
   <!-- Errors -->
-  <div  *ngFor="#error of errors" class="alert alert-danger" role="alert">
+  <div  *ngFor="let error of errors" class="alert alert-danger" role="alert">
     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
     <span class="sr-only">Error:</span>
     {{error}}
@@ -16,7 +16,7 @@
   </div>
 
   <!-- messages -->
-  <div  *ngFor="#message of messages" class="alert alert-success" role="alert">
+  <div  *ngFor="let message of messages" class="alert alert-success" role="alert">
     <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
     <span class="sr-only">Success:</span>
     {{message}}
@@ -87,7 +87,7 @@
                   <tr><td class="col-lg-8">Nom de la timeline</td><td class="col-lg-2">Action</td></tr>
                   </thead>
                   <tbody>
-                  <tr *ngFor="#timeline of timelines">
+                  <tr *ngFor="let timeline of timelines">
                     <td>{{timeline.name}}</td>
                     <td><a class="glyphicon glyphicon-plus" *ngIf="!isTimelineOnOperation(timeline, operationEdit)" (click)="addToTimeline(timeline)"></a>
                       <a class="glyphicon glyphicon-minus" (click)="removeFromTimeline(timeline, operationEdit)" *ngIf="isTimelineOnOperation(timeline, operationEdit)"></a>
@@ -116,7 +116,7 @@
 
     <div *ngIf="timelines.length > 1">
       <select>
-        <option *ngFor="#timeline of timelines">{{timeline.name}}</option>
+        <option *ngFor="let timeline of timelines">{{timeline.name}}</option>
       </select>
     </div>
 
@@ -140,7 +140,7 @@
         <div class="panel-heading">
           <i class="fa fa-bell fa-fw"></i> Opérations
         </div>
-        <div class="row" *ngFor="#operation of operations">
+        <div class="row" *ngFor="let operation of operations">
           <div class="col-lg-9"><i class="glyphicon glyphicon-exclamation-sign"></i>{{operation.title}}</div>
           <div class="col-lg-1"><a (click)="editOperation(operation)" class="trash"><span class="glyphicon glyphicon-edit pull-right"></span></a></div>
           <div class="col-lg-1"><a (click)="deleteOperation(operation)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a></div>
