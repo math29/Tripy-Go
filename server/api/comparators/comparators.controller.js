@@ -151,9 +151,13 @@ exports.destroyByType = function(req, res) {
     var index = _.findIndex(comparator.types, function(o){return o == req.params.type});
     if(index != -1) {
       var t = req.params.type;
+
+      if( t == 'transport') {
+        Rate.remove({_id: {$in : [comparator.transport.content_rate, comparator.transport.ergo_rate]}}, function(err){});
+      }
       comparator[ t ] = undefined;
       comparator.types.splice(index, 1);
-    }
+     }
     comparator.save(function(err) {
       if(err) {
         return handleError(res, err);

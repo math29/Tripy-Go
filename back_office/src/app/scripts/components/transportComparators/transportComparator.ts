@@ -55,18 +55,32 @@ export class TransportComparatorCmp{
      * @param data données du comparateur
      */
     onSaveComparator(data: any) {
-      data.company = _.find(this.companies, { '_id': data.company });
-      for(let i = 0; i < data.transport.types.length; i++){
-        data.transport.types[i] = _.find(this.transportTypes, { '_id': data.transport.types[i] });
-      }
-      let index = this.getComparatorIndex(data._id);
+      if(_.findIndex(data.types, function(o){ return o == 'transport'}) != -1) {
+        let company;
+        if(typeof data.company == 'object' || typeof data.company == 'Object') {
+          company = _.find(this.companies, { '_id': data.company._id });
+        } else {
+          company = _.find(this.companies, { '_id': data.company });
+        }
+        if(company) {
+          data.company = company;
+        }
+        for(let i = 0; i < data.transport.types.length; i++){
+          data.transport.types[i] = _.find(this.transportTypes, { '_id': data.transport.types[i] });
+        }
+        let index = this.getComparatorIndex(data._id);
 
-      if(index > -1){
-        this.comparators[index] = data;
-      }else{
-        this.comparators.push(data);
+        if(index > -1){
+          this.comparators[index] = data;
+        }else{
+          this.comparators.push(data);
+        }
+      } else {
+        let index = this.getComparatorIndex(data._id);
+        if(index != -1) {
+          this.comparators.splice(index, 1);
+        }
       }
-
     }
 
     /**
