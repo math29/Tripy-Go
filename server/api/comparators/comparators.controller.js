@@ -144,27 +144,21 @@ exports.destroy = function(req, res) {
 
 // Deletes a transport comparator from the DB.
 exports.destroyByType = function(req, res) {
-  Comparator.find({_id:req.params.id}, function(err, comparator) {
+  Comparator.findById(req.params.id, function(err, comparator) {
     if(err) {
       return handleError(res, err);
     }
     var index = _.findIndex(comparator.types, function(o){return o == req.params.type});
     if(index != -1) {
-      delete comparator[req.params.type];
+      var t = req.params.type;
+      comparator[ t ] = undefined;
       comparator.types.splice(index, 1);
     }
-    console.log('before');
-    console.log(comparator);
-    comparator = new Comparator(comparator);
-    console.log('after');
-    console.log(comparator);
-    comparator.save(function(err, doc) {
+    comparator.save(function(err) {
       if(err) {
-        console.log('err: ' + JSON.stringify(err));
         return handleError(res, err);
       }
-      console.log(JSON.stringify(doc));
-      return res.status(200).json(doc);
+      return res.status(200).json(comparator);
     })
   });
 };
