@@ -1,10 +1,10 @@
 /// <reference path="../../../../../../../../typings/jquery/jquery.d.ts" />
 /// <reference path="../../../../../../../../typings/jquery.ui.datetimepicker/jquery.ui.datetimepicker.d.ts" />
 
-import {Component, OnInit, ElementRef} from 'angular2/core';
-import { RouterLink } from 'angular2/router';
-import { FormBuilder, ControlGroup, Validators, Control, FORM_DIRECTIVES, NgClass, NgStyle, CORE_DIRECTIVES } from 'angular2/common';
-import { Http, Headers, RequestOptions } from 'angular2/http';
+import {Component, OnInit, ElementRef} from '@angular/core';
+import { RouterLink } from '@angular/router-deprecated';
+import { FormBuilder, ControlGroup, Validators, Control, FORM_DIRECTIVES, NgClass, NgStyle, CORE_DIRECTIVES } from '@angular/common';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { AuthService } from '../../../../../tripy_go_lib/services/auth.service';
 
 declare var google: any;
@@ -33,7 +33,7 @@ export class GeneralesInfos implements OnInit {
 
     user_info_message: String;
 
-    options: RequestOptions; 
+    options: RequestOptions;
 
 	constructor(private _auth: AuthService, fb: FormBuilder, private _http: Http, private el: ElementRef) {
 		// Initializing forms
@@ -148,7 +148,7 @@ export class GeneralesInfos implements OnInit {
 
 
 	// *****************************
-	// Update User 
+	// Update User
 	// ****************************
 	updateUser() {
 		if (this.userUpdateForm.valid) {

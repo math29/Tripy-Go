@@ -262,6 +262,25 @@ router.get('/comments/:type/:id/:limit/:offset', auth.isAuthenticated(), control
 router.post('/', auth.hasRole('admin'), controller.create);
 
 /**
+  * @api {post} /api/comparators/:type Insert a comparator with his new type
+  * @apiName InsertTransportComparatorWithType
+  * @apiGroup Comparator
+  *
+  * @apiUse ApiParamsTransport
+  *
+  * @apiSuccess {Object} Object response
+  *
+  * @apiSuccessExample Success-Response:
+  *   HTTP/1.1 201 Created:
+  *      {
+  *            "__v": 0,
+  *            "_id": "564cf500bbb31f62475efc31"
+  *       }
+  *
+  */
+router.post('/:type', auth.hasRole('admin'), controller.insertByType);
+
+/**
   * @api {put} /api/comparators/:id Substitute a comparator
   * @apiName SubstituteComparator
   * @apiGroup Comparator
@@ -279,6 +298,25 @@ router.post('/', auth.hasRole('admin'), controller.create);
   *
   */
 router.put('/:id', auth.hasRole('admin'), controller.update);
+
+/**
+  * @api {put} /api/comparators/:type/:id Update a comparator by type
+  * @apiName UpdateComparator
+  * @apiGroup Comparator
+  *
+  * @apiUse ApiParamsTransport
+  *
+  * @apiSuccess {Object} Object response
+  *
+  * @apiSuccessExample Success-Response:
+  *   HTTP/1.1 201 Created:
+  *      {
+  *          "__v": 0,
+  *          "_id": "564cf49161e7bc8345166168"
+  *      }
+  *
+  */
+router.put('/:type/:id', auth.hasRole('admin'), controller.updateByType);
 
 /**
   * @api {patch} /api/comparators/:id Substitute a comparator
@@ -300,7 +338,7 @@ router.put('/:id', auth.hasRole('admin'), controller.update);
 router.patch('/:id', auth.hasRole('admin'), controller.update);
 
 /**
-  * @api {delete} /api/comparators/:id Delete a comparator
+  * @api {delete} /api/comparators/:id Delete a comparator completely
   * @apiName DeleteComparator
   * @apiGroup Comparator
   *
@@ -313,5 +351,21 @@ router.patch('/:id', auth.hasRole('admin'), controller.update);
   *
   */
 router.delete('/:id', auth.hasRole('admin'), controller.destroy);
+
+/**
+  * @api {delete} /api/comparators/:type/:id Delete a comparator
+  * @apiName DeleteComparatorByType
+  * @apiGroup Comparator
+  *
+  * @apiSuccess {Object} Object response
+  *
+  * @apiSuccessExample Success-Response:
+  *   HTTP/1.1 204 No Content:
+  *      {
+  *     }
+  *
+  */
+router.delete('/:type/:id', auth.hasRole('admin'), controller.destroyByType);
+
 
 module.exports = router;
