@@ -4,8 +4,13 @@
     <h1>Nom du voyage<span class="fa fa-edit right"></span></h1>
     <div class="participants">
       <h2 class="travelTitle">Participants</h2>
-      <div class="find"  [class.active]="addFriend">
-        <input type="text" placeholder="ajouter un amis" />
+      <div class="find"  [class.active]="addFriends">
+        <input type="text" placeholder="ajouter un ami" [(ngModel)]="friendSearch" (keyup)="searchRequest()"/>
+        <ul>
+          <li *ngFor="let member of search" (click)="addFriend(member)">
+            <img src="{{member.img}}" class="friend-img" />{{member.name}}
+          </li>
+        </ul>
       </div>
 
       <!-- Photo des utilisateurs -->
@@ -16,7 +21,7 @@
               <img src="{{user.picture}}" class="userPic" />
             </div>
             <div class="col-md-2 col-lg-4 col-xs-2 participant">
-              <div (click)="addFriend = !addFriend"><img class="addIcon" src="/assets/fonts/plus.svg" /></div>
+              <div (click)="addFriends = !addFriends"><img class="addIcon" src="/assets/fonts/plus.svg" /></div>
             </div>
           </div>
         </div>
