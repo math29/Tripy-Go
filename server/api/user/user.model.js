@@ -27,7 +27,7 @@ var UserSchema = new Schema({
   twitter: {},
   google: {},
   github: {},
-  picture: String
+  picture: {type: String, default:'assets/images/user.png'}
 });
 
 UserSchema.plugin(deepPopulate, {

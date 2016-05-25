@@ -7,8 +7,8 @@
       <div class="find"  [class.active]="addFriends">
         <input type="text" placeholder="ajouter un ami" [(ngModel)]="friendSearch" (keyup)="searchRequest()"/>
         <ul>
-          <li *ngFor="let member of search" (click)="addFriend(member)">
-            <img src="{{member.img}}" class="friend-img" />{{member.name}}
+          <li *ngFor="let member of search" (click)="addFriend(member)" class="memberFind">
+            <img src="{{member.picture}}" class="friend-img" /><span>{{member.name}}</span>
           </li>
         </ul>
       </div>

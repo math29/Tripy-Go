@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
 import { SiteCmp } from './site.component';
+import { MemberService } from '../services/member.service';
 
 
 @Component({
     selector: 'travel-page',
     templateUrl: 'app/components/travelPage/components/travel.component.html',
     directives: [ SiteCmp ],
-    providers: [],
+    providers: [ MemberService ],
     styleUrls: ['app/components/travelPage/components/travel.component.css'],
     pipes: []
 })
@@ -17,10 +18,11 @@ export class TravelPage implements OnInit, OnDestroy {
   private addFriends: boolean = false;
   private participants: any;
   private search: any;
+  private friendSearch: string;
 
   private sites: any = [{img: 'assets/images/user.png', name:'Liligo'}];
 
-  constructor() {}
+  constructor(private memberService : MemberService) {}
 
   ngOnInit() {
     this.participants = [];
@@ -28,7 +30,14 @@ export class TravelPage implements OnInit, OnDestroy {
   }
 
   searchRequest() {
-    
+    if(this.friendSearch.length > 0) {
+    this.memberService.searchMember(this.friendSearch)
+      .subscribe(success => {
+        this.search = success.data;
+      }, error => {});
+    }else {
+      this.search = [];
+    }
   }
 
   ngOnDestroy() {
