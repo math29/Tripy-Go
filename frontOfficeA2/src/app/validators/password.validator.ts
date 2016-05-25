@@ -27,11 +27,23 @@ export class PasswordValidator {
 	        //     numSpecials++;
 	    }
 
-	    if (numUpper < 1 || numLower < 1 || numNums < 1 /*|| numSpecials < 2*/) {
-			return {
+		if (numUpper < 1 || numLower < 1 || numNums < 1 /*|| numSpecials < 2*/) {
+			let error: ValidationResult = {
 				"checkComplexityPwd": true
+			};
+
+		    if (numUpper < 1) {
+				error["upper"] = true;
+		    }
+			if (numLower < 1){
+				error["lower"] = true;
 			}
-	    }
+			if (numNums < 1){
+				error["numbers"] = true;
+			}
+			return error;
+		}
+
 		return null;
  	}
  
