@@ -3,10 +3,9 @@ import { Control} from '@angular/common';
 interface ValidationResult {
  [key:string]:boolean;
 }
+
 export class PasswordValidator {
- 
 	static checkComplexityPwd(control: Control): ValidationResult { 
-		console.log(control.value);
    		let anUpperCase = /[A-Z]/;
 	    let aLowerCase = /[a-z]/;
 	    let aNumber = /[0-9]/;
@@ -46,5 +45,4 @@ export class PasswordValidator {
 
 		return null;
  	}
- 
 }

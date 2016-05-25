@@ -28,6 +28,8 @@ export class UpdatePassword {
 	repeatNewPwd: Control;
   	options: RequestOptions;
 
+	message: string = "";
+
 	constructor(private _auth: AuthService, fb: FormBuilder, private _http: Http) {
 		// Initializing forms
 		this.actualPwd = fb.control('', Validators.compose([
@@ -70,5 +72,18 @@ export class UpdatePassword {
 		return {
 			areEqual: true
 		};
+	}
+
+	changePwd(){
+		let request = {
+			oldPassword: this.pwdUpdateForm.value.actualPwd,
+			newPassword: this.pwdUpdateForm.value.passwords.newPwd
+		};
+
+		this._http.put(`/api/users/${this._auth.getMe()._id}/password`, JSON.stringify(request), this.options)
+		.map(res => res.json())
+		.subscribe(response => {
+			this.message = "Nouveau Mot de passe enregistré"
+			});
 	}
 }
