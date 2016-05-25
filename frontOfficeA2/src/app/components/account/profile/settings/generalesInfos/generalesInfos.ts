@@ -58,7 +58,6 @@ export class GeneralesInfos implements OnInit {
 
 	populateUserForm() {
 		let user = this._auth.getMe();
-		console.log(user);
 
 		// Populate differents user form fields
 		this.name.updateValue(user.name);
@@ -119,12 +118,10 @@ export class GeneralesInfos implements OnInit {
 	}
 
 	addVisitedCountry(countrySelected) {
-		console.log(countrySelected);
 		this._http.put('/api/users/update/visited/countries/' + this._auth.getMe()._id, JSON.stringify({country: countrySelected}), this.options)
 			.map(res => res.json())
 			.subscribe(
 			user => {
-				console.log(user);
 				this.visited_countries = [];
 				for (let i = 0; i < user.visited_countries.length; i++) {
 					this.visited_countries.push("flag-icon-" + user.visited_countries[i]);
@@ -141,7 +138,6 @@ export class GeneralesInfos implements OnInit {
 			.subscribe(
 			countries => {
 				this.vCFormCountries = countries;
-				console.log(this.vCFormCountries);
 			}
 			);
 	}
@@ -157,8 +153,6 @@ export class GeneralesInfos implements OnInit {
 			// Destination prefered synchro
 			delete user.dest_prefered;
 			user.dest_prefereds = this.dest_prefereds;
-
-			console.log(user);
 
 			// Let's begin persisting processus of the new Travel with the Locations persisting
 			this._http.put('/api/users/' + this._auth.getMe()._id, JSON.stringify(user), this.options)

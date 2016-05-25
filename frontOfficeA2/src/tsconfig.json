@@ -66,6 +66,7 @@
         "app/tripy_go_lib/components/rate/starsRate.ts",
         "app/tripy_go_lib/pipes/marked.ts",
         "app/tripy_go_lib/services/auth.service.ts",
+        "app/validators/password.validator.ts",
         "app.ts",
         "../../typings/angular2/angular2.d.ts",
         "../../typings/browser.d.ts",

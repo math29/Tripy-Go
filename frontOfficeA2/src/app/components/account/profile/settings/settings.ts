@@ -7,7 +7,10 @@ import { FormBuilder, ControlGroup, Validators, Control, FORM_DIRECTIVES, NgClas
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { AuthService } from '../../../../tripy_go_lib/services/auth.service';
 import { FILE_UPLOAD_DIRECTIVES, FileUploader } from 'ng2-file-upload/ng2-file-upload';
+
 import { GeneralesInfos } from './generalesInfos/generalesInfos';
+import { UpdatePassword } from './password/password';
+
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/Rx';
 
@@ -22,7 +25,7 @@ const fileAPI = "/api/files";
 		'app/components/account/profile/settings/settings.css'
 	],
 	providers: [],
-	directives: [RouterLink, FILE_UPLOAD_DIRECTIVES, FORM_DIRECTIVES, NgClass, NgStyle, CORE_DIRECTIVES, GeneralesInfos],
+	directives: [RouterLink, FILE_UPLOAD_DIRECTIVES, FORM_DIRECTIVES, NgClass, NgStyle, CORE_DIRECTIVES, GeneralesInfos, UpdatePassword],
 	pipes: []
 })
 export class Settings implements AfterViewInit, OnInit{

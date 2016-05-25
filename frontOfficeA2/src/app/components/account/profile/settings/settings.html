@@ -45,39 +45,7 @@
       <generalesInfos></generalesInfos>
     </div>
   </div>
-  <div class="user-change-password">
-    <h4>Change Password</h4>
-    <div class="change-password-body">
-      <form class="form" name="form" ng-submit="changePassword(form)" novalidate>
-        <div class="col-md-12" class="form-group">
-          <label>Old Password</label>
-          <input type="password" placeholder="Old Password" class="form-control" name="password" ng-model="user.oldPassword" mongoose-error>
-          <!-- <p class="help-block" ng-show="form.password.$error.mongoose">
-            {{ errors.other }}
-          </p> -->
-        </div>
-        <div class="col-md-12" class="form-group">
-          <label>New Password</label>
-          <input type="password" name="newPassword" placeholder="New Password" class="form-control" ng-model="user.newPassword" ng-minlength="3" required>
-          <p class="help-block" ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
-            Password must be at least 3 characters.
-          </p>
-        </div>
-        <div class="col-md-12" class="form-group">
-          <label>Confirm Password</label>
-          <input type="password" placeholder="Confirm Password" class="form-control" ng-model="user.confirm_password" name="confirm_password" required data-password-verify="user.newPassword">
-          <div ng-show="form.confirm_password.$error.required">
-            Field required!</div>
-          <div ng-show="form.confirm_password.$error.passwordVerify">
-            Fields are not equal!</div>
-        </div>
-        <div class="col-md-12 text-center">
-            <p class="help-block"> {{ message }} </p>
-            <button type="submit">SAVE CHANGES</button>
-        </div>
-      </form>
-    </div>
-  </div>
+  <changePassword></changePassword>
 </div>
 <div class="col-md-6">
   <div class="user-personal-info">

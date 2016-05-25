@@ -30,7 +30,7 @@
         </span>
       </div>
       <ul class="list-group">
-        <li *ngFor="let dest of dest_prefereds; #i = index" class="list-group-item dest-list">
+        <li *ngFor="let dest of dest_prefereds; let i = index" class="list-group-item dest-list">
           <span class="badge" (click)="rmPrefPlace(i)"><i class="fa fa-times" aria-hidden="true"></i></span>
           {{ dest }}
         </li>
