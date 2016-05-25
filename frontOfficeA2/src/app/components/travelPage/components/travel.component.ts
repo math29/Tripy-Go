@@ -1,14 +1,16 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
+import { RouterLink, RouteParams } from '@angular/router-deprecated';
 import { SiteCmp } from './site.component';
 import { MemberService } from '../services/member.service';
 import { SiteService } from '../services/site.service';
+import { TravelService } from '../services/travel.service';
 
 
 @Component({
     selector: 'travel-page',
     templateUrl: 'app/components/travelPage/components/travel.component.html',
     directives: [ SiteCmp ],
-    providers: [ MemberService , SiteService ],
+    providers: [ MemberService , SiteService , TravelService],
     styleUrls: ['app/components/travelPage/components/travel.component.css'],
     pipes: []
 })
@@ -29,7 +31,13 @@ export class TravelPage implements OnInit, OnDestroy {
 
   private sites: any = [{img: 'assets/images/user.png', name:'Liligo'}];
 
-  constructor(private memberService : MemberService, private siteService: SiteService) {}
+  constructor(private memberService : MemberService,
+    private siteService: SiteService,
+    private travelService : TravelService,
+     private params: RouteParams) {
+    this.travelService.getThisOne(params.get('travel_id'))
+      .subscribe(success => {console.log('success')}, error => { console.log('error')});
+  }
 
   ngOnInit() {
     this.participants = [];

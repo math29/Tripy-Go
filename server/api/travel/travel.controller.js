@@ -34,6 +34,7 @@ exports.get_by_user_id = function(req, res) {
 
 var save_travel = function(req, res) {
   delete req.body.date_created;
+  req.body.author = req.user._id;
   Travel.create(req.body, function(err, travel) {
     if(err) { return handleError(res, err); }
     if(travel.author){

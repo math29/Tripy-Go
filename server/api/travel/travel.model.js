@@ -14,7 +14,8 @@ var TravelSchema = new Schema({
   date_created: { type: Date, default: Date.now },
   author: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: true
   },
   budget: Number,
   nbTravellers: Number,
