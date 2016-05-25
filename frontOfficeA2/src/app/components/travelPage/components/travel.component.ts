@@ -1,13 +1,14 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
 import { SiteCmp } from './site.component';
 import { MemberService } from '../services/member.service';
+import { SiteService } from '../services/site.service';
 
 
 @Component({
     selector: 'travel-page',
     templateUrl: 'app/components/travelPage/components/travel.component.html',
     directives: [ SiteCmp ],
-    providers: [ MemberService ],
+    providers: [ MemberService , SiteService ],
     styleUrls: ['app/components/travelPage/components/travel.component.css'],
     pipes: []
 })
@@ -16,13 +17,19 @@ export class TravelPage implements OnInit, OnDestroy {
   @Input() name: any;
   // ajout d'un amis au voyage, utilisé dans l'html
   private addFriends: boolean = false;
+  private addSite : boolean = false;
+
   private participants: any;
+
   private search: any;
+  private sitesRetrieved : any;
+
   private friendSearch: string;
+  private siteSearch : string;
 
   private sites: any = [{img: 'assets/images/user.png', name:'Liligo'}];
 
-  constructor(private memberService : MemberService) {}
+  constructor(private memberService : MemberService, private siteService: SiteService) {}
 
   ngOnInit() {
     this.participants = [];
@@ -37,6 +44,19 @@ export class TravelPage implements OnInit, OnDestroy {
       }, error => {});
     }else {
       this.search = [];
+    }
+  }
+
+  searchSiteRequest() {
+    if(this.siteSearch.length > 0) {
+    this.siteService.search(this.siteSearch)
+      .subscribe(success => {
+        this.sitesRetrieved = success;
+      }, error => {
+        console.log('error');
+      });
+    }else {
+      this.sitesRetrieved = [];
     }
   }
 
