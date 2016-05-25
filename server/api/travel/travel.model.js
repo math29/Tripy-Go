@@ -6,6 +6,7 @@ var logger = require('../../config/logger.js');
 
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 var TravelSchema = new Schema({
   name: String,
@@ -25,6 +26,14 @@ var TravelSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Transport'
   }]
+});
+
+TravelSchema.plugin(deepPopulate,
+{
+  whitelist: [
+    'transports.departure.country',
+    'transports.arrival.country'
+  ]
 });
 
 module.exports = mongoose.model('Travel', TravelSchema);

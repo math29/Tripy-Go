@@ -14,7 +14,8 @@ exports.index = function(req, res) {
 
 // Get a single travel
 exports.show = function(req, res) {
-  Travel.findById(req.params.id, function (err, travel) {
+  Travel.findById(req.params.id)
+    .deepPopulate('creator transports.arrival.country transport.departure.country', function (err, travel) {
     if(err) { return handleError(res, err); }
     if(!travel) { return res.status(404).send('Not Found'); }
     return res.json(travel);

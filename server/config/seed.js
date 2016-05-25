@@ -16,6 +16,8 @@ var Location = require('../api/location/location.model');
 var Rate = require('../api/rate/rate.model');
 var Timeline = require('../api/timeline/timeline.model');
 var Operation = require('../api/operation/operation.model');
+var mongoose = require('mongoose');
+
 
 Thing.find({}).remove(function() {
     Thing.create({
@@ -2984,13 +2986,18 @@ Travel.find({}).remove(function() {
     Travel.create({
         name: "Voyage en Turquie",
         budget: 3000,
-        nbTravellers: 3
+        nbTravellers: 3,
+        author: new mongoose.Types.ObjectId(),
     }, function(err, travel) {
+      if(err) {
+        console.error(err);
+      }
         setTimeout(function() {
             Transport.find({}, function(err, transports) {
-                travel.transports.push(transports[0]);
-                travel.save();
-                console.log('finished populating travels');
+              if(!travel.transports) travel.transports = [];
+              travel.transports.push(transports[0]);
+              travel.save();
+              console.log('finished populating travels');
             });
         }, 4000);
     });
