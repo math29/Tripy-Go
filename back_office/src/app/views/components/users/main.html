@@ -1,5 +1,5 @@
 <!-- Errors -->
-<div  *ngFor="#error of errors" class="alert alert-danger" role="alert">
+<div  *ngFor="let error of errors" class="alert alert-danger" role="alert">
   <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
   <span class="sr-only">Error:</span>
   {{error}}
@@ -7,7 +7,7 @@
 </div>
 
 <!-- messages -->
-<div  *ngFor="#message of messages" class="alert alert-success" role="alert">
+<div  *ngFor="let message of messages" class="alert alert-success" role="alert">
   <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
   <span class="sr-only">Success:</span>
   {{message}}
@@ -40,7 +40,7 @@
           <div class="col-sm-10">
           <input type="text" *ngIf="roles.indexOf(userEdit.role) == -1" class="form-control" id="role" [ngModel]="userEdit.role" placeholder="Entrez le rôle de l'utilisateur" disabled>
           <select class="form-control" *ngIf="roles.indexOf(userEdit.role) > -1" [(ngModel)]="userEdit.role">
-            <option *ngFor="#role of roles">{{role}}</option>
+            <option *ngFor="let role of roles">{{role}}</option>
           </select>
           </div>
         </div>
@@ -65,7 +65,7 @@
           </thead>
           <tbody>
             <!-- |filter:query |orderBy:orderType+orderby-->
-          <tr *ngFor="#user of users " class="getClassFromInfo(user)">
+          <tr *ngFor="let user of users " class="getClassFromInfo(user)">
             <td>{{user._id}}</td>
             <td>{{user.name}}</td>
             <td>{{user.email}}</td>

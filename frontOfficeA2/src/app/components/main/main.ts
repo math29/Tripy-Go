@@ -1,15 +1,15 @@
 /// <reference path="../../../../../typings/jquery/jquery.d.ts" />
 /// <reference path="../../../../../typings/jquery.ui.datetimepicker/jquery.ui.datetimepicker.d.ts" />
 
-import {Component, ElementRef, AfterViewInit, OnInit, EventEmitter } from 'angular2/core';
+import {Component, ElementRef, AfterViewInit, OnInit, EventEmitter } from '@angular/core';
 import { DATEPICKER_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
-import { FormBuilder, ControlGroup, Validators, Control } from 'angular2/common';
-import { Http, Headers, RequestOptions } from 'angular2/http';
-import { Router } from 'angular2/router';
+import { FormBuilder, ControlGroup, Validators, Control } from '@angular/common';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import { Router } from '@angular/router-deprecated';
 import { AuthService } from '../../tripy_go_lib/services/auth.service';
 
-import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/map'
 
 declare var jQuery: JQueryStatic;
 declare var google: any;
@@ -75,7 +75,7 @@ export class Main implements AfterViewInit, OnInit {
 		});
 		this.options_post = new RequestOptions({ headers: headers_post });
 
-		this.options_post = new RequestOptions({ headers: _auth.getBearerHeaders() });
+		this.options_post = new RequestOptions({ headers: new Headers(_auth.getBearerHeaders()) });
     }
 
     // *******************************************************************************************
@@ -293,7 +293,7 @@ export class Main implements AfterViewInit, OnInit {
 		let _this = this;
 		jQuery(this.el.nativeElement)
 			.find('.depart_date')
-			.datepicker({ 
+			.datepicker({
 				minDate: -0,
 				maxDate: "+3Y",
 				onClose: function(selectedDate) {

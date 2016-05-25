@@ -1,9 +1,9 @@
 /// <reference path="../../../../../../typings/d3/d3.d.ts" />
 
-import {Component, Directive, ViewChild, ElementRef, Renderer, Input} from 'angular2/core';
+import {Component, Directive, ViewChild, ElementRef, Renderer, Input} from '@angular/core';
 
 
-import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
+import {CORE_DIRECTIVES, FORM_DIRECTIVES} from '@angular/common';
 
 declare var d3:any;
 declare var Datamap: any;

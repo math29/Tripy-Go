@@ -1,6 +1,6 @@
-import {Component, Input, OnChanges, SimpleChange} from 'angular2/core';
-import { RouterLink } from 'angular2/router';
-import { Http, RequestOptions } from 'angular2/http';
+import {Component, Input, OnChanges, SimpleChange} from '@angular/core';
+import { RouterLink } from '@angular/router-deprecated';
+import { Http, RequestOptions } from '@angular/http';
 import { AuthService } from '../../../tripy_go_lib/services/auth.service';
 import { MarkdownPipe } from '../../../tripy_go_lib/pipes/marked';
 import { RateService } from '../../../services/rate.service';

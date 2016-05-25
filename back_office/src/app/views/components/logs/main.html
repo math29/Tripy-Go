@@ -1,5 +1,5 @@
 <!-- Errors -->
-<div  *ngFor="#error of errors" class="alert alert-danger" role="alert">
+<div  *ngFor="let error of errors" class="alert alert-danger" role="alert">
   <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
   <span class="sr-only">Error:</span>
   {{error}}
@@ -7,7 +7,7 @@
 </div>
 
 <!-- messages -->
-<div  *ngFor="#message of messages" class="alert alert-success" role="alert">
+<div  *ngFor="let message of messages" class="alert alert-success" role="alert">
   <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
   <span class="sr-only">Success:</span>
   {{message}}
@@ -35,12 +35,12 @@
         <label class="control-label col-sm-2" for="orderby">Trier par:</label>
         <div class="col-sm-2">
           <select class="form-control" id="orderby" [(ngModel)]="orderby" disabled>
-            <option *ngFor="#option of keys">{{option}}</option>
+            <option *ngFor="let option of keys">{{option}}</option>
           </select>
         </div>
         <div class="col-sm-2">
           <select class="form-control" [(ngModel)]="orderType" disabled>
-            <option *ngFor="#option of orderOptions">{{option}}</option>
+            <option *ngFor="let option of orderOptions">{{option}}</option>
           </select>
         </div>
         <div class="col-sm-2">
@@ -99,7 +99,7 @@
           </thead>
           <tbody>
           <!--  |filter:query |orderBy:orderType+orderby -->
-          <tr *ngFor="#log of logs | filterLog:query | selectLevel:level" class="getClassFromInfo(log)">
+          <tr *ngFor="let log of logs | filterLog:query | selectLevel:level" class="getClassFromInfo(log)">
             <td>{{log.timestamp}}</td>
             <td>{{log.level}}</td>
             <td>{{log.message}}</td>
@@ -110,7 +110,7 @@
         </table>
       </div>
       <div *ngIf="pagination">
-      <ul class="pagination" *ngFor="#item of range(pagination.maxPage); #i = index ">
+      <ul class="pagination" *ngFor="let item of range(pagination.maxPage); let i = index ">
         <li><a (click)="get()">{{i+1}}</a></li>
       </ul>
       </div>

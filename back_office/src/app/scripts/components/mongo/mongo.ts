@@ -1,7 +1,7 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit} from '@angular/core';
 import {StatsCmp} from '../utils/stats';
 import {MongoService} from '../../services/mongo.service';
-import {Location, RouteConfig, RouterLink, Router,Route,  ROUTER_DIRECTIVES} from 'angular2/router';
+import {RouteConfig, RouterLink, Router,Route,  ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 
 @Component({
   selector: 'mongo',

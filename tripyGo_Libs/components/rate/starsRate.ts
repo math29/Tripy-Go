@@ -1,7 +1,7 @@
-import {Component, OnInit, OnDestroy} from 'angular2/core';
-import {Response} from 'angular2/http';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Response} from '@angular/http';
 import {RateService} from './rate.service';
-import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import {RouterLink, Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 
 @Component({
   selector: 'stars-rate',
@@ -12,7 +12,7 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
                     <div class="col-xs-12 col-md-6 text-center">
                         <h1 class="rating-num">{{rate.score | number:'1.1-2'}}</h1>
                         <div class="rating">
-                            <span *ngFor="#i of range()">
+                            <span *ngFor="let i of range()">
                               <span *ngIf="i==1" class="glyphicon glyphicon-star star"></span>
                               <span *ngIf="i==0" class="glyphicon glyphicon-star-empty star"></span>
                             </span>
@@ -24,7 +24,7 @@ import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angu
                         </div>
                     </div>
                     <div class="col-xs-12 col-md-6" >
-                        <div class="row rating-desc" *ngFor="#star of rate.stars">
+                        <div class="row rating-desc" *ngFor="let star of rate.stars">
                             <div class="col-xs-3 col-md-3 text-right">
                                 <span class="glyphicon glyphicon-star"></span>{{star.star}}
                             </div>

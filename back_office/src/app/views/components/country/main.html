@@ -1,5 +1,5 @@
 <!-- Errors -->
-<div  *ngFor="#error of errors" class="alert alert-danger" role="alert">
+<div  *ngFor="let error of errors" class="alert alert-danger" role="alert">
   <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
   <span class="sr-only">Error:</span>
   {{error}}
@@ -7,7 +7,7 @@
 </div>
 
 <!-- messages -->
-<div  *ngFor="#message of messages" class="alert alert-success" role="alert">
+<div  *ngFor="let message of messages" class="alert alert-success" role="alert">
   <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
   <span class="sr-only">Success:</span>
   {{message}}
@@ -71,7 +71,7 @@
           <label class="control-label col-sm-2" for="continent">Continent: </label>
           <div class="col-sm-10">
             <select [(ngModel)]="edit_country.continent" name="continent" class="form-control">
-              <option *ngFor="#continent of continentList" [value]="continent">{{continent}}</option>
+              <option *ngFor="let continent of continentList" [value]="continent">{{continent}}</option>
             </select>
           </div>
         </div>
@@ -85,7 +85,7 @@
           <label class="control-label col-sm-2" for="languages">Langues: </label>
           <div class="col-sm-10">
             <select class="form-control">
-              <option *ngFor="#langue of languages">{{langue.name}}</option>
+              <option *ngFor="let langue of languages">{{langue.name}}</option>
             </select>
           </div>
         </div>
@@ -110,12 +110,12 @@
         <label class="control-label col-sm-2" for="orderby">Order by:</label>
         <div class="col-sm-2">
           <select class="form-control" id="orderby" [(ngModel)]="orderby">
-            <option *ngFor="#option of keys">{{option}}</option>
+            <option *ngFor="let option of keys">{{option}}</option>
           </select>
         </div>
         <div class="col-sm-2">
           <select class="form-control" [(ngModel)]="orderType">
-            <option *ngFor="#option of orderOptions">{{option}}</option>
+            <option *ngFor="let option of orderOptions">{{option}}</option>
           </select>
         </div>
       </div>
@@ -151,7 +151,7 @@
           </thead>
           <tbody>
           <!--  |filter:query |orderBy:orderType+orderby -->
-          <tr *ngFor="#country of countries" ng-class="getClassFromInfo(country)">
+          <tr *ngFor="let country of countries" ng-class="getClassFromInfo(country)">
             <td>{{country.country_code}}</td>
             <td>{{country.cca3}}</td>
             <td>{{country.calling_code}}</td>

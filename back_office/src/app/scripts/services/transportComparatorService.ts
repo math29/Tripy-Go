@@ -1,6 +1,6 @@
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 import {AuthService} from '../tripy-lib/services/auth.service';
-import {Http, Response, Headers, RequestOptions} from 'angular2/http';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Observable}     from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
 
@@ -16,7 +16,7 @@ export class TransportComparatorService{
    * Récupère la liste des comparateurs de transports
    */
   getComparators(){
-    let headers = this._authService.getBearerHeaders();
+    let headers = new Headers(this._authService.getBearerHeaders());
     let options = new RequestOptions({ headers: headers });
     return this._http.get(this.base_url, options)
             .map(res => <any> res.json());
@@ -26,7 +26,7 @@ export class TransportComparatorService{
    * Crée un comparateur
    */
   createComparator(comparator:any){
-    let headers = this._authService.getBearerHeaders();
+    let headers = new Headers(this._authService.getBearerHeaders());
     let options = new RequestOptions({ headers: headers });
     return this._http.post(this.base_url, JSON.stringify(comparator), options);
 
@@ -38,7 +38,7 @@ export class TransportComparatorService{
    * @param comparator comparateur à modifier
    */
   updateComparator(comparator:any){
-    let headers = this._authService.getBearerHeaders();
+    let headers = new Headers(this._authService.getBearerHeaders());
     let options = new RequestOptions({ headers: headers });
     return this._http.put(this.base_url + '/' + comparator._id , JSON.stringify(comparator), options)
             .map(res => <any> res.json());
@@ -50,7 +50,7 @@ export class TransportComparatorService{
    * @param comparator comparateur de transport
    */
   removeComparator(comparator: any){
-    let headers = this._authService.getBearerHeaders();
+    let headers = new Headers(this._authService.getBearerHeaders());
     let options = new RequestOptions({ headers: headers });
     return this._http.delete(this.base_url + '/' + comparator._id ,options);
   }

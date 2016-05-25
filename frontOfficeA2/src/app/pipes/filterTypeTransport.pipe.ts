@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from 'angular2/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
 	name: 'typeTransport'
@@ -9,6 +9,9 @@ export class filterTypeTransport implements PipeTransform {
 
 		if (allComparators){
 			// Si aucun filtre
+			if(!checked) {
+				return allComparators.filter(comparator => true);
+			}
 			if (checked.length == 0) {
 				return allComparators.filter(comparator => true)
 			}

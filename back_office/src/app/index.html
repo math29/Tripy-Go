@@ -79,11 +79,26 @@ System.config({
     },
     'trypy-lib': {
       'defaultExtension': 'js'
-    }
+    },
+    '@angular/core' : {defaultExtension: 'js', main: 'index.js'},
+    '@angular/common'  : {defaultExtension: 'js', main: 'index.js'},
+    '@angular/compiler'                : {defaultExtension: 'js', main: 'index.js'},
+    '@angular/router'                  : {defaultExtension: 'js', main: 'index.js'},
+    '@angular/router-deprecated'       : {defaultExtension: 'js', main: 'index.js'},
+    '@angular/http': {defaultExtension: 'js', main: 'index.js'},
+    '@angular/platform-browser': {defaultExtension: 'js', main: 'index.js'},
+    '@angular/platform-browser-dynamic': {defaultExtension: 'js', main: 'index.js'}
   },
 
       map: {
-        angular2: 'lib/angular2',
+        '@angular': 'lib/@angular',
+        '@angular/platform-browser-dynamic': 'lib/@angular/platform-browser-dynamic',
+        '@angular/platform-browser': 'lib/@angular/platform-browser',
+        '@angular/compiler': 'lib/@angular/compiler',
+        '@angular/core':'lib/@angular/core',
+        '@angular/common':'lib/@angular/common',
+        '@angular/http':'lib/@angular/http',
+        '@angular/router-deprecated': 'lib/@angular/router-deprecated',
         rxjs: 'lib/rxjs',
         moment: 'lib/moment/min/moment.min.js',
         'ng2-charts': 'lib/ng2-charts',

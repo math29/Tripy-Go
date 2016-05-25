@@ -1,6 +1,6 @@
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 import {AuthService} from '../tripy-lib/services/auth.service';
-import {Http, Response, Headers, RequestOptions} from 'angular2/http';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Observable}     from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
 
@@ -17,14 +17,14 @@ export class OperationsService {
    * d'effectuer une requête
    */
   getHeaders(){
-    let headers = this._authService.getBearerHeaders();
+    let headers = new Headers(this._authService.getBearerHeaders());
 
       let options = new RequestOptions({ headers: headers });
       return options
   }
 
   getHeader(){
-     let headers = this._authService.getBearerHeaders();
+     let headers = new Headers(this._authService.getBearerHeaders());
 
         let options = new RequestOptions({ headers: headers });
         return options

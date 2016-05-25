@@ -1,10 +1,10 @@
-import {Component, OnInit, OnDestroy} from 'angular2/core';
-import {Response} from 'angular2/http';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Response} from '@angular/http';
 import {TransportComparatorService} from '../../services/transportComparatorService';
 import {TransportTypeService} from '../../services/transportTypeService';
 import {CompanyService} from '../../services/company';
 
-import {Location, RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import {RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 import {SocketService} from '../../services/socket.service';
 import * as _ from 'lodash';
 

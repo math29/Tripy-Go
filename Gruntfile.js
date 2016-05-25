@@ -42,7 +42,7 @@ module.exports = function (grunt) {
       public: 'dist/public',
       private: 'dist/back',
       back_office_libs: [
-        'angular2/**/*.js',
+        '@angular/**/*',
         'reflect-metadata/**/*',
         'systemjs/dist/**/*',
         'rxjs/**/*',
@@ -65,7 +65,8 @@ module.exports = function (grunt) {
         'font-awesome/**/*',
         'datamaps/dist/**/*',
         'to-markdown/dist/**/*',
-        'moment/min/**/*'
+        'moment/min/**/*',
+        'reflect-metadata/**/*'
       ],
       back_office_css: [
         'bower_components/metisMenu/dist/metisMenu.min.css',
@@ -579,7 +580,7 @@ module.exports = function (grunt) {
         dest: './frontOfficeA2/dist/lib',
         cwd: './node_modules',
         src: [
-          'angular2/bundles/**/*',
+          '@angular/**/*',
           'reflect-metadata/Reflect.js',
           'systemjs/dist/**/*',
           'rxjs/**/*',
@@ -591,6 +592,14 @@ module.exports = function (grunt) {
           'marked/marked.min.js',
           'flag-icon-css/css/flag-icon.min.css',
           'flag-icon-css/flags/**/*'
+        ]
+      },
+      upgrade_bootstrap_iconpicker: {
+        expand: true,
+        dest: './<%= yeoman.back_office.dist %>/bower_components/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset',
+        cwd: './localUpgrade/bootstrap-iconpicker',
+        src: [
+          '**/*'
         ]
       },
       // TRIPY-GO LIBRAIRIES GLOBALES
@@ -743,17 +752,15 @@ module.exports = function (grunt) {
         files: {
           '<%= yeoman.back_office_dist %>/index.html': [
                [
+                 "<%= yeoman.back_office_dist %>/js/angular2-polyfills.js",
                  "<%= yeoman.back_office_dist %>/lib/tinymce/tinymce.min.js",
                  "<%= yeoman.back_office_dist %>/lib/jquery/dist/jquery.min.js",
                  "<%= yeoman.back_office_dist %>/lib/bootstrap/dist/js/bootstrap.min.js",
                  "<%= yeoman.back_office_dist %>/bower_components/metisMenu/dist/metisMenu.min.js",
-                 "<%= yeoman.back_office_dist %>/bower_components/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.2.0.min.js",
+                 "<%= yeoman.back_office_dist %>/bower_components/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.6.5.min.js",
                  "<%= yeoman.back_office_dist %>/bower_components/bootstrap-iconpicker/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js",
-                 "<%= yeoman.back_office_dist %>/lib/systemjs/dist/system.js",
-                 "<%= yeoman.back_office_dist %>/lib/angular2/bundles/angular2-polyfills.js",
-                 "<%= yeoman.back_office_dist %>/lib/angular2/bundles/angular2.min.js",
-                 "<%= yeoman.back_office_dist %>/lib/angular2/bundles/http.min.js",
-                 "<%= yeoman.back_office_dist %>/lib/angular2/bundles/router.min.js",
+                 "<%= yeoman.back_office_dist %>/lib/systemjs/dist/system.src.js",
+                 "<%= yeoman.back_office_dist %>/lib/rxjs/bundles/Rx.js",
                  "<%= yeoman.back_office_dist %>/lib/d3/d3.min.js",
                  "<%= yeoman.back_office_dist %>/lib/marked/marked.min.js",
                  "<%= yeoman.back_office_dist %>/lib/to-markdown/dist/to-markdown.js",
@@ -906,6 +913,7 @@ module.exports = function (grunt) {
     'concat:back_css',
 	  'copy:back_office_bower',
     'copy:back_office_lib',
+    'copy:upgrade_bootstrap_iconpicker',
     'copy:tripy_go_lib_back',
     'injector:back_lib',
     'injector:back_css',
