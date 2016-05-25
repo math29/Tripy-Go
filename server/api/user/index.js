@@ -134,6 +134,26 @@ router.get('/roles', auth.hasRole('admin'), controller.getRoles);
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 
 /**
+  * @api {put} /api/users/prefdestination/:id Add a prefered Destination
+  * @apiName PutPreferedDestination
+  * @apiGroup Users
+  *
+  * @apiParam {Object} preferedDests List Of String of Prefered Destinations
+  * @apiParam {Number} id  User Id you want to add a prefered destination
+  *
+  * @apiSuccess {User} code
+  *
+  * @apiSuccessExample Success-Response:
+  *   HTTP/1.1 Success-Response:
+  *   [
+  *    ...
+  *   ]
+  *
+  *
+  */
+router.put('/prefdestination/:id', auth.isAuthenticated(), controller.addPreferedDestination);
+
+/**
   * @api {put} /api/users/:id Substitute a user
   * @apiName SubstituteUser
   * @apiGroup Users
@@ -149,7 +169,7 @@ router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
   *      }
   *
   */
-router.put('/:id', controller.update);
+router.put('/:id', auth.isAuthenticated(), controller.update);
 
 /**
  * @api {get} /api/users/:id Get By Id
@@ -174,6 +194,37 @@ router.put('/:id', controller.update);
  * @apiUse UserNotAuthorized
  */
 router.get('/:id', auth.isAuthenticated(), controller.show);
+
+/**
+<<<<<<< HEAD
+ * @api {put} /api/users/update/automatic/visited/countries/:id Get User's visited countries
+ * @apiVersion 0.0.0
+ * @apiName GetUsersVisitedCountries
+ * @apiGroup Users
+ *
+ * @apiParam {Number} id  Id of the target user
+ *
+ * @apiSuccess {User} User
+ *
+ *
+ * @apiUse UserNotAuthorized
+ */
+router.put('/update/automatic/visited/countries/:id', auth.isAuthenticated(), controller.putAutomaticUpdateVisetedCountries);
+
+/**
+ * @api {put} /api/users/update/visited/countries/:id Get User's visited countries
+ * @apiVersion 0.0.0
+ * @apiName GetUsersVisitedCountries
+ * @apiGroup Users
+ *
+ * @apiParam {Number} id  Id of the target user
+ *
+ * @apiSuccess {User} User
+ *
+ *
+ * @apiUse UserNotAuthorized
+ */
+router.put('/update/visited/countries/:id', auth.isAuthenticated(), controller.putUpdateVisetedCountries);
 
 /**
  * @api {get} /api/users/search/:search Search users matching search params

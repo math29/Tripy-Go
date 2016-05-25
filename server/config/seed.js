@@ -10,7 +10,7 @@ var Country = require('../api/country/country.model');
 var Company = require('../api/company/company.model');
 var Transport = require('../api/transport/transport.model');
 var TransportType = require('../api/transportType/transportType.model');
-var TransportComparator = require('../api/transportComparator/transportComparator.model');
+var Comparator = require('../api/comparators/comparators.model');
 var Travel = require('../api/travel/travel.model');
 var Location = require('../api/location/location.model');
 var Rate = require('../api/rate/rate.model');
@@ -3063,47 +3063,53 @@ User.find({}).remove(function() {
                     score: 0,
                     type: "Stack"
                 }, function(err, rate1, rate2, rate3, rate4, rate5, rate6, rate7) {
-                    TransportComparator.find({}).remove(function() {
-                        TransportComparator.create({
-                            type: [transportTypeId],
+                    Comparator.find({}).remove(function() {
+                        Comparator.create({
+                            types: ['transport'],
                             company: company._id,
-                            nbCompanies: 36,
-                            comments: [{
+                            transport: {
+                              types: [transportTypeId],
+                              nbCompanies: 36,
+                              comments: [{
                                 comment: "Très bon comparateur",
                                 user: user1._id,
                                 rate: rate1._id
-                            }, {
+                              }, {
                                 comment: "Très bon comparateur oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui oui",
                                 user: user1._id,
                                 rate: rate2._id
-                            }, {
+                              }, {
                                 comment: "U commentaire comme un autre",
                                 user: user1._id,
                                 rate: rate3._id
-                            }, {
+                              }, {
                                 comment: "Oui, c'est plutôt intéressant !",
                                 user: user1._id,
                                 rate: rate4._id
-                            }, {
+                              }, {
                                 comment: "Très satisfait de leurs services ! ",
                                 user: user1._id,
                                 rate: rate5._id
-                            }, {
+                              }, {
                                 comment: "hahahahahahahahahahahahaha",
                                 user: user1._id,
                                 rate: rate6._id
-                            }, {
+                              }, {
                                 comment: "Très bon ",
                                 user: user1._id,
                                 rate: rate7._id
                             }]
+                          }
                         });
 
-                        TransportComparator.create({
-                            type: [transportTypeId2],
-                            company: company2._id,
+                        Comparator.create({
+                          types: ['transport'],
+                          company: company2._id,
+                          transport: {
+                            types: [transportTypeId2],
                             nbCompanies: 35,
                             comments: []
+                          }
                         });
                     })
                 });

@@ -8,7 +8,7 @@ import 'rxjs/add/operator/map'
 
 @Injectable()
 export class TransportComparatorService{
-  public base_url = '/api/transport/comparators';
+  public base_url = '/api/comparators/transport';
 
   constructor(private _http: Http, private _authService:AuthService) {}
 

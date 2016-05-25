@@ -30,12 +30,6 @@ var adminJS = {
   password:'admin'
 }
 
-var fOperation = {
-   title:'test',
-   step:1,
-   content:'contenu'
- }
-
 var token = "";
 var tokenAdmin = "";
 
@@ -53,16 +47,17 @@ adminUser.save(function(){
     .send(adminJS)
     .end(function(err, res){
     tokenAdmin = res.body.token;
+
   });
 });
 
 
 
-describe('GET /api/transportComparator', function() {
+describe('GET /api/comparators', function() {
 
-  it('should respond with JSON array', function(done) {
+  /*it('should respond with JSON array', function(done) {
     request(app)
-      .get('/api/transport/comparators')
+      .get('/api/comparators')
       .set({'Authorization': 'Bearer '+tokenAdmin})
       .expect(200)
       .expect('Content-Type', /json/)
@@ -71,5 +66,5 @@ describe('GET /api/transportComparator', function() {
         res.body.should.be.instanceof(Object);
         done();
       });
-  });
+  });*/
 });

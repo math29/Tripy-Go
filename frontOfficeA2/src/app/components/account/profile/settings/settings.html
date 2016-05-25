@@ -40,62 +40,40 @@
 
 <div class="col-md-6">
   <div class="user-personal-info">
-    <h4>Personal Information</h4>
+    <h4>Informations générales</h4>
     <div class="user-info-body">
-      <form class="form" name="personal_infos_form" (submit)="updateUser()" [ngFormModel]="userUpdateForm" novalidate>
-        <div class="col-md-6 col-sm-6">
-          <label>Prénom</label>
-          <input type="text" name="fname" placeholder="First Name" class="form-control" ngControl="fname">
+      <generalesInfos></generalesInfos>
+    </div>
+  </div>
+  <div class="user-change-password">
+    <h4>Change Password</h4>
+    <div class="change-password-body">
+      <form class="form" name="form" ng-submit="changePassword(form)" novalidate>
+        <div class="col-md-12" class="form-group">
+          <label>Old Password</label>
+          <input type="password" placeholder="Old Password" class="form-control" name="password" ng-model="user.oldPassword" mongoose-error>
+          <!-- <p class="help-block" ng-show="form.password.$error.mongoose">
+            {{ errors.other }}
+          </p> -->
         </div>
-        <div class="col-md-6 col-sm-6">
-          <label>Nom</label>
-          <input type="text" name="lname" required placeholder="Last Name" class="form-control" ngControl="name">
+        <div class="col-md-12" class="form-group">
+          <label>New Password</label>
+          <input type="password" name="newPassword" placeholder="New Password" class="form-control" ng-model="user.newPassword" ng-minlength="3" required>
+          <p class="help-block" ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
+            Password must be at least 3 characters.
+          </p>
         </div>
-        <div class="clearfix"></div>
-        <!-- <div class="col-md-12">
-          <label>Email-ID</label>
-          <input type="email" name="email" required placeholder="lenore@example.com" class="form-control">
-        </div> -->
-        <div class="col-md-12">
-          <label>Téléphone</label>
-          <input type="text" name="phone" placeholder="ex:+33631067282" class="form-control" ngControl="phone">
+        <div class="col-md-12" class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" placeholder="Confirm Password" class="form-control" ng-model="user.confirm_password" name="confirm_password" required data-password-verify="user.newPassword">
+          <div ng-show="form.confirm_password.$error.required">
+            Field required!</div>
+          <div ng-show="form.confirm_password.$error.passwordVerify">
+            Fields are not equal!</div>
         </div>
-
-        <div class="col-md-12">
-          <div class="search-col-padding">
-            <label>Date de naissance</label>
-            <input type="text" id="departure_date" name="birthday" class="form-control" placeholder="DD/MM/YYYY">
-          </div>
-        </div>
-
-        <div class="clearfix"></div>
-
-        <div class="col-md-12">
-          <label>Adresse</label>
-          <textarea placeholder="Rue - Voie - lieu dit" id="current-address" class="form-control" rows="5" ngControl="address"></textarea>
-          <div class="col-md-6 col-sm-6 col-xs-6 clear-padding">
-            <input type="text" name="zipcode" class="form-control" placeholder="Zip Code" ngControl="zipcode">
-          </div>
-          <div class="col-md-6 col-sm-6 col-xs-6">
-            <input type="text" name="city" class="form-control" placeholder="Ville" ngControl="city">
-          </div>
-          <div class="col-md-6 col-sm-6 clear-padding">
-            <select class="form-control" name="country" ngControl="country">
-              <option>Australia</option>
-              <option>India</option>
-              <option>USA</option>
-              <option>UK</option>
-            </select>
-          </div>
-        </div>
-        <div class="text-center">
-          <p class="help-block">{{ user_info_message }}</p>
-        </div>
-        <div class="col-md-6 col-sm-6 col-xs-6 text-center">
-           <button type="submit">SAUVEGARDER</button>
-        </div>
-        <div class="col-md-6 col-sm-6 col-xs-6 text-center">
-          <a href="#">ANNULER</a>
+        <div class="col-md-12 text-center">
+            <p class="help-block"> {{ message }} </p>
+            <button type="submit">SAVE CHANGES</button>
         </div>
       </form>
     </div>

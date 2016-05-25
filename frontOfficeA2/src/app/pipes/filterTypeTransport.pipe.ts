@@ -17,8 +17,8 @@ export class filterTypeTransport implements PipeTransform {
 			}
 
 			return allComparators.filter(comparator => {
-				for (let i = 0; i < comparator.type.length; i++){
-					if (checked.indexOf(comparator.type[0].name) > -1) {
+				for (let i = 0; i < comparator.transport.types.length; i++){
+					if (checked.indexOf(comparator.transport.types[0].name) > -1) {
 						return true;
 					}
 				}

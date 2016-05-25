@@ -35,7 +35,6 @@ export class Timeline {
 			.subscribe(timeline => {
 				this.instance = timeline;
 				this.updateRateDesign();
-				console.log(this.instance);
 			})
 	}
 

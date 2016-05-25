@@ -27,7 +27,6 @@ export class OrderBy implements PipeTransform {
     }
 
     transform(input:any, [config = '+']): any{
-        console.log(config);
         if(!Array.isArray(input)) return input;
 
         if(!Array.isArray(config) || (Array.isArray(config) && config.length == 1)){

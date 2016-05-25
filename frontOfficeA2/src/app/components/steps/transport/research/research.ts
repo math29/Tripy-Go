@@ -37,11 +37,10 @@ export class Research implements OnInit {
 	// Get the selected comparator and store it into comparator vars
 	// ***************************************
 	getComparator(id:String) {
-		this._http.get('/api/transport/comparators/' + id, this.options_post)
+		this._http.get('/api/comparators/' + id, this.options_post)
 			.map(res => res.json())
 			.subscribe(comparator => {
 				this.comparator = comparator;
-				console.log(this.comparator);
 			});
 	}
 
@@ -66,7 +65,6 @@ export class Research implements OnInit {
 
 	ngOnInit() {
 		this.getComparator(this.params.get('comparator_id'));
-		console.log(this.params);
 		this.travel_id = this.params.get('comparator_id');
 		this.iframe_height = window.innerHeight -87 -50;
 		this.openTimeline();

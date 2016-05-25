@@ -589,7 +589,9 @@ module.exports = function (grunt) {
           'moment/min/**/*',
           'ng2-bootstrap/**/*',
           'ng2-file-upload/**/*',
-          'marked/marked.min.js'
+          'marked/marked.min.js',
+          'flag-icon-css/css/flag-icon.min.css',
+          'flag-icon-css/flags/**/*'
         ]
       },
       upgrade_bootstrap_iconpicker: {

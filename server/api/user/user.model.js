@@ -4,9 +4,11 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 var UserSchema = new Schema({
   name: String,
+  fname: String,
   email: { type: String, lowercase: true },
   role: {
     type: String,
@@ -16,6 +18,8 @@ var UserSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Travel'
   }],
+  visited_countries: [String],
+  dest_prefereds: [String],
   hashedPassword: String,
   provider: String,
   salt: String,
@@ -23,14 +27,14 @@ var UserSchema = new Schema({
   twitter: {},
   google: {},
   github: {},
-  fname: String,  // NEW
-  phone: String,  // NEW
-  birthday: Date, // NEW
-  address: String,  // NEW
-  zipcode: Number,  // NEW
-  city: String,  // NEW
-  country: String,  // NEW
-  picture: String // NEW
+  picture: String
+});
+
+UserSchema.plugin(deepPopulate, {
+  whitelist: [
+    'travels.transports.departure.country',
+    'travels.transports.arrival.country'
+  ]
 });
 
 /**

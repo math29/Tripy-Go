@@ -14,8 +14,9 @@ import { SiteCmp } from './site.component';
 export class TravelPage implements OnInit, OnDestroy {
   @Input() name: any;
   // ajout d'un amis au voyage, utilisé dans l'html
-  private addFriend: boolean = false;
+  private addFriends: boolean = false;
   private participants: any;
+  private search: any;
 
   private sites: any = [{img: 'assets/images/user.png', name:'Liligo'}];
 
@@ -26,8 +27,14 @@ export class TravelPage implements OnInit, OnDestroy {
     this.participants.push({name: 'Yoann Diquélou', picture: '/assets/images/user.png'});
   }
 
+  searchRequest() {
+    
+  }
 
   ngOnDestroy() {
   }
 
+  addFriend(member: any) {
+    alert(JSON.stringify(member));
+  }
 }
