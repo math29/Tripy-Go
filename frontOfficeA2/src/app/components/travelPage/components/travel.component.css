@@ -99,7 +99,14 @@ h2.travelTitle {
   padding: 0px;
 }
 
-.friend-img {
-  width: 40px;
-  radius: 20px;
+@media only screen and (min-width: 400px) {
+  .friend-img {
+    width: 50px;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .friend-img {
+    width: 100px;
+  }
 }
