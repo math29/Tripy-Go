@@ -66,6 +66,26 @@ exports.findById = function (req, res, next) {
   });
 };
 
+// récupére mon vote pour un vote donné
+exports.myRate = function(req, res) {
+  Rate.findById(req.params.rateId, function(err, rate) {
+    if(err) {
+      return res.status(400).json({status: 400, data: 'Error while retrieving rate'});
+    }
+    if(rate == null){
+      return res.status(404).json({status: 404, data:'Le vote n\'existe pas'});
+    }
+    var myRat = _.find(rate.raters, function(o){
+      console.log(JSON.stringify(o) + ' my Id: '+ req.user._id);
+      return o.user == String(req.user._id)});
+    if(myRat) {
+      return res.status(200).json({status: 200, data: myRat});
+    }else {
+      return res.status(204).json({status: 204, data: 'You haven\'t rate'});
+    }
+  });
+};
+
 function transformStarResult(result){
   var classes = ["danger","warning","info","success","success"]
   var stars = [];

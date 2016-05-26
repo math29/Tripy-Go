@@ -101,7 +101,7 @@ export class TravelPage implements OnInit, OnDestroy {
         }
       },
       error => {
-        alert('ERROR');
+        console.log('unable to add this site');
       }
     )
   }
