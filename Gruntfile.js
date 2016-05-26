@@ -581,6 +581,7 @@ module.exports = function (grunt) {
         cwd: './node_modules',
         src: [
           '@angular/**/*',
+          'angular2-google-maps/**/*',
           'reflect-metadata/Reflect.js',
           'systemjs/dist/**/*',
           'rxjs/**/*',

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
 import { RouterLink, RouteParams } from '@angular/router-deprecated';
+import {ANGULAR2_GOOGLE_MAPS_DIRECTIVES, ANGULAR2_GOOGLE_MAPS_PROVIDERS} from 'angular2-google-maps/core';
+
 import { SiteCmp } from './site.component';
 import { MemberService } from '../services/member.service';
 import { SiteService } from '../services/site.service';
@@ -10,8 +12,8 @@ import * as _ from 'lodash';
 @Component({
     selector: 'travel-page',
     templateUrl: 'app/components/travelPage/components/travel.component.html',
-    directives: [ SiteCmp ],
-    providers: [ MemberService , SiteService , TravelService],
+    directives: [ SiteCmp, ANGULAR2_GOOGLE_MAPS_DIRECTIVES ],
+    providers: [ MemberService , SiteService , TravelService, ANGULAR2_GOOGLE_MAPS_PROVIDERS],
     styleUrls: ['app/components/travelPage/components/travel.component.css'],
     pipes: []
 })
@@ -33,6 +35,9 @@ export class TravelPage implements OnInit, OnDestroy {
   private sites: any;
 
   private localTravel : any;
+  lat: number = 51.223858;
+  lng: number = 7.225982;
+  private markers: any = [];
 
   constructor(private memberService : MemberService,
     private siteService: SiteService,
@@ -46,7 +51,17 @@ export class TravelPage implements OnInit, OnDestroy {
         }
         this.sites = success.sites;
         this.localTravel = success;
+        this.lat = success.transports[0].departure.loc[0];
+        this.lng = success.transports[0].departure.loc[1];
+        this.createMarkers();
       }, error => { console.log('error')});
+  }
+
+  createMarkers() {
+      for(let i = 0; i < this.localTravel.transports.length; i++) {
+        this.markers.push({lat: this.localTravel.transports[i].departure.loc[0],lng: this.localTravel.transports[i].departure.loc[1], label: this.localTravel.transports[i].departure.name });
+        this.markers.push({lat: this.localTravel.transports[i].arrival.loc[0], lng: this.localTravel.transports[i].arrival.loc[1], label: this.localTravel.transports[i].arrival.name});
+      }
   }
 
   ngOnInit() {

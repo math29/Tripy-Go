@@ -110,3 +110,11 @@ h2.travelTitle {
     width: 100px;
   }
 }
+
+.sebm-google-map-container {
+height: 400px;
+}
+
+.noMargin {
+  margin: 0px;
+}

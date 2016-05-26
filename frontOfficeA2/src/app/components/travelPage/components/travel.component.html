@@ -1,6 +1,6 @@
 <div class="row">
   <!-- Panneau de gauche -->
-  <div class="col-lg-4 col-md-4 col-xs-12">
+  <div class="col-lg-4 col-md-4 col-xs-12 noMargin">
     <h1>Nom du voyage<span class="fa fa-edit right"></span></h1>
     <div class="participants">
       <h2 class="travelTitle">Participants</h2>
@@ -48,8 +48,24 @@
   </div>
   <!-- Fin panneau de gauche -->
   <!-- panneau de droite -->
-  <div class="col-lg-8 col-md-8 col-xs-12">
+  <div class="col-lg-8 col-md-8 col-xs-12 noMargin">
     <h1>Afficher carte</h1>
+    <sebm-google-map
+[latitude]="lat"
+[longitude]="lng"
+[zoom]="zoom"
+[disableDefaultUI]="false"
+[zoomControl]="true"
+>
+<sebm-google-map-marker
+*ngFor="let m of markers; let i = index"
+(markerClick)="clickedMarker(m.label, i)"
+[latitude]="m.lat"
+[longitude]="m.lng"
+[label]="m.label"
+[markerDraggable]="m.draggable"
+(dragEnd)="markerDragEnd(m, $event)"></sebm-google-map-marker
+></sebm-google-map>
   </div>
   <!-- fin du panneau de droite -->
 </div>
