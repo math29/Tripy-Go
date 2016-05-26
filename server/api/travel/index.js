@@ -268,4 +268,24 @@ router.delete('/:id', auth.isAuthenticated(), controller.destroy);
  */
 router.put('/addPartner/:id/:userId', auth.isAuthenticated(), controller.addPartner);
 
+/**
+ * @api {put} /api/travels/site/:type/:siteId/:travelId Add a site used for a travel
+ * @apiName addUsedSite
+ * @apiGroup Travels
+ *
+ * @apiParam {String} type of site used (transport, hotel, ...)
+ * @apiParam {String} id of the site
+ * @apiParam {String} travelId id of the travel where we want to add the site
+ *
+ * @apiSuccess {Object} object response
+ *
+ * @apiSuccessExample Success-Response:
+ *    HTTP/1.1 201 Content added:
+ *      {
+ *        status: 201,
+ *        data: "Site added"
+ *      }
+ */
+ router.put('/site/:type/:siteId/:travelId', auth.isAuthenticated(), controller.addSite);
+
 module.exports = router;

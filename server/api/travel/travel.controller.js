@@ -100,6 +100,46 @@ exports.destroy = function(req, res) {
   });
 };
 
+exports.addSite = function(req, res) {
+  Travel.findOne({_id: req.params.travelId,
+    $or: [{'author': req.user._id}, {'partner.user': {$in: [req.user._id]}}]},
+    function(err, travel) {
+      if(err) {
+        return handleError(err, res);
+      }
+      var siteIndex = _.findIndex(travel.sites, function(o){return o.site_id == req.params.siteId;});
+
+      // si le site existe déjà
+      if(siteIndex != -1) {
+        // je vérifie qu'il n'est pas utilisé pour le même type de prestation
+        var prestation = _.findIndex(travel.sites, function(o){return o.used_type == req.params.type});
+        if(prestation != -1) {
+          return res.status(200).json({status: 200, data:'Le site est déjà utilisé pour ce type de prestation'});
+        } else {
+          travel.sites[siteIndex].used_type.push(req.params.type);
+          travel.save(function(err) {
+            if(err) {
+              return handleError(err, res);
+            }
+            return res.status(201).json({status: 200, data: 'La nouvelle prestation à bien été ajoutée'});
+          })
+        }
+      }
+      if(!travel.sites) {
+        travel.sites = [];
+      }
+      travel.sites.push({site_id: req.params.siteId, used_type: [req.params.type]});
+      travel.save(function(err) {
+        if(err) {
+          return handleError(err, res);
+        }
+        return res.status(201).json({status:201, data: 'Le site à bien été ajouté au voyage'});
+      })
+    }
+  )
+
+}
+
 function handleError(res, err) {
   return res.status(500).send(err);
 }
