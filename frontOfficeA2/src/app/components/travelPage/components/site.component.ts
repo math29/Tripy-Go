@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
 import { RatingComponent } from 'ng2-bootstrap/ng2-bootstrap';
 import {CORE_DIRECTIVES, FORM_DIRECTIVES} from '@angular/common';
+import { SiteService } from '../services/site.service';
 
 
 @Component({
@@ -16,14 +17,22 @@ export class SiteCmp implements OnInit, OnDestroy {
   @Input() site: any;
   public max:number = 5;
   public isReadonly:boolean = false;
+  private siteContent : any;
 
   public overStar:number;
   public percent:number;
   private rates: any = [];
 
-  constructor() {}
+  constructor(private siteService : SiteService) {
+
+  }
 
   ngOnInit() {
+    this.siteService.getThisSite(this.site.site_id)
+      .subscribe(success => {
+        this.siteContent = success;
+      }, error => {console.log('error');}
+    );
   }
 
   ngOnDestroy() {

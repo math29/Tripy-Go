@@ -30,7 +30,9 @@ export class TravelPage implements OnInit, OnDestroy {
   private friendSearch: string;
   private siteSearch : string;
 
-  private sites: any = [{img: 'assets/images/user.png', name:'Liligo'}];
+  private sites: any;
+
+  private localTravel : any;
 
   constructor(private memberService : MemberService,
     private siteService: SiteService,
@@ -40,9 +42,10 @@ export class TravelPage implements OnInit, OnDestroy {
       .subscribe(success => {
         this.participants.push({user: {name: success.author.name, picture: success.author.picture}, status:'author'});
         for(let i = 0; i < success.partners.length; i++) {
-          console.log(success.partners[i]);
           this.participants.push(success.partners[i]);
         }
+        this.sites = success.sites;
+        this.localTravel = success;
       }, error => { console.log('error')});
   }
 
@@ -88,6 +91,19 @@ export class TravelPage implements OnInit, OnDestroy {
     }else {
       this.sitesRetrieved = [];
     }
+  }
+
+  addThisSite(site : any) {
+    this.travelService.addUsedSite(this.localTravel._id, site._id, 'transport')
+      .subscribe(success => {
+        if(success.status == 201) {
+          this.sites.push({site_id:site._id, used_type:['transport']});
+        }
+      },
+      error => {
+        alert('ERROR');
+      }
+    )
   }
 
   ngOnDestroy() {

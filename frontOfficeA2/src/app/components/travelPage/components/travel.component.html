@@ -36,7 +36,7 @@
       <div class="find"  [class.active]="addSite">
         <input type="text" placeholder="ajouter un site utilisé" [(ngModel)]="siteSearch" (keyup)="searchSiteRequest()"/>
         <ul>
-          <li *ngFor="let site of sitesRetrieved" (click)="addFriend(member)" class="memberFind">
+          <li *ngFor="let site of sitesRetrieved" (click)="addThisSite(site)" class="memberFind">
             <img src="{{site.company.img}}" class="friend-img" /><span>{{site.company.name}}</span>
           </li>
         </ul>
