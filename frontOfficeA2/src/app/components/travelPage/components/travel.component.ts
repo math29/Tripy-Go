@@ -4,6 +4,7 @@ import { SiteCmp } from './site.component';
 import { MemberService } from '../services/member.service';
 import { SiteService } from '../services/site.service';
 import { TravelService } from '../services/travel.service';
+import * as _ from 'lodash';
 
 
 @Component({
@@ -54,6 +55,7 @@ export class TravelPage implements OnInit, OnDestroy {
         if(success.status == 201) {
           this.participants.push({user: {name: partner.name, picture: partner.picture}, status: 'waiting'});
           this.addFriends = false;
+          this.friendSearch = '';
         } else {
           alert('NOK');
         }
@@ -66,6 +68,8 @@ export class TravelPage implements OnInit, OnDestroy {
     if(this.friendSearch.length > 0) {
     this.memberService.searchMember(this.friendSearch)
       .subscribe(success => {
+        let users = success.data;
+        this.search = [];
         this.search = success.data;
       }, error => {});
     }else {
