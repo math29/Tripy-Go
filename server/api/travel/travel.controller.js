@@ -15,12 +15,32 @@ exports.index = function(req, res) {
 // Get a single travel
 exports.show = function(req, res) {
   Travel.findById(req.params.id)
-    .deepPopulate('creator transports.arrival.country transport.departure.country', function (err, travel) {
+    .populate('author partners.user', '-hashedPassword -salt')
+    .deepPopulate('transports.arrival.country transports.departure.country partners.user.picture')
+    .exec(function (err, travel) {
     if(err) { return handleError(res, err); }
     if(!travel) { return res.status(404).send('Not Found'); }
     return res.json(travel);
   });
 };
+
+exports.addPartner = function(req, res) {
+  var updateObj = {user: req.params.userId, status: 'waiting'};
+  Travel.update({_id: req.params.id,
+    $or: [{ 'author':req.user._id }, {'partners.user': { $in : [req.user._id]}}],
+    'partners.user': {$nin: [req.params.user_id]}},
+    {$push: {'partners': updateObj}}, function(err, travel) {
+    if(err) {
+      return handleError(err, res);
+    }
+    console.log(travel);
+    if(travel.nModified > 1) {
+      return res.status(201).json({status: 201, data: 'User added'});
+    }else {
+      return res.status(204).json({status: 204, data: 'Can\'t add friend'});
+    }
+  });
+}
 
 exports.get_by_user_id = function(req, res) {
   User.findById(req.params.id, function(err, user){

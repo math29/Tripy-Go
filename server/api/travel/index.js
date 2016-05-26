@@ -249,4 +249,23 @@ router.patch('/:id', controller.update);
   */
 router.delete('/:id', auth.isAuthenticated(), controller.destroy);
 
+/**
+ * @api {put} /api/travels/addPartner/:id/:userId Add a partner to travel
+ * @apiName addPartner
+ * @apiGroup Travels
+ *
+ * @apiParam {String} id  Id of the travel
+ * @apiParam {String} userId  Id of the friend we want to add to the travel
+ *
+ * @apiSuccess {Object} Object response
+ *
+ * @apiSuccessExample Success-Response:
+ *    HTTP/1.1 201 Content added:
+ *    {
+ *      status: 201,
+ *      data: "User added"
+ *    }
+ */
+router.put('/addPartner/:id/:userId', auth.isAuthenticated(), controller.addPartner);
+
 module.exports = router;

@@ -19,7 +19,7 @@ var TravelSchema = new Schema({
     required: true
   },
   budget: Number,
-  nbTravellers: Number,
+  partners: [ {user:{type: Schema.Types.ObjectId, ref: 'User', required: true}, status: {type: String, default: 'waiting'}}],
   date_departure: Date,
   date_return: Date,
   transports: [{

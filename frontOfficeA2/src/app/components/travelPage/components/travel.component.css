@@ -27,7 +27,7 @@
 
 .find.active {
   opacity: 1;
-  max-height: 100px;
+  max-height: 100%;
   transform-origin: 50% 50%;
   transition: max-height 400ms ease-in; /* for expansion */
 }

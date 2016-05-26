@@ -7,7 +7,7 @@
       <div class="find"  [class.active]="addFriends">
         <input type="text" placeholder="ajouter un ami" [(ngModel)]="friendSearch" (keyup)="searchRequest()"/>
         <ul>
-          <li *ngFor="let member of search" (click)="addFriend(member)" class="memberFind">
+          <li *ngFor="let member of search" (click)="addPartner(member)" class="memberFind">
             <img src="{{member.picture}}" class="friend-img" /><span>{{member.name}}</span>
           </li>
         </ul>
@@ -16,9 +16,11 @@
       <!-- Photo des utilisateurs -->
       <div class="row">
         <div class="col-lg-12 col-md-12 col-xs-12">
-          <div class="row">
-            <div *ngFor="let user of participants" class="col-md-2 col-lg-4 col-xs-2 participant">
-              <img src="{{user.picture}}" class="userPic" />
+          <div class="row" *ngIf="participants.length > 0">
+            <div *ngFor="let partner of participants" class="col-md-2 col-lg-4 col-xs-2 participant">
+              <div *ngIf="partner.user">
+                <img src="{{partner.user.picture}}" class="userPic" />{{partner.user.name}}
+              </div>
             </div>
             <div class="col-md-2 col-lg-4 col-xs-2 participant">
               <div (click)="addFriends = !addFriends"><img class="addIcon" src="/assets/fonts/plus.svg" /></div>

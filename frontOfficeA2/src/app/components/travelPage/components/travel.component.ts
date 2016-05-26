@@ -21,7 +21,7 @@ export class TravelPage implements OnInit, OnDestroy {
   private addFriends: boolean = false;
   private addSite : boolean = false;
 
-  private participants: any;
+  private participants: any = [];
 
   private search: any;
   private sitesRetrieved : any;
@@ -36,12 +36,30 @@ export class TravelPage implements OnInit, OnDestroy {
     private travelService : TravelService,
      private params: RouteParams) {
     this.travelService.getThisOne(params.get('travel_id'))
-      .subscribe(success => {console.log('success')}, error => { console.log('error')});
+      .subscribe(success => {
+        this.participants.push({user: {name: success.author.name, picture: success.author.picture}, status:'author'});
+        for(let i = 0; i < success.partners.length; i++) {
+          console.log(success.partners[i]);
+          this.participants.push(success.partners[i]);
+        }
+      }, error => { console.log('error')});
   }
 
   ngOnInit() {
-    this.participants = [];
-    this.participants.push({name: 'Yoann Diquélou', picture: '/assets/images/user.png'});
+  }
+
+  addPartner(partner : any) {
+    this.travelService.addPartner( this.params.get('travel_id'), partner._id)
+      .subscribe(success => {
+        if(success.status == 201) {
+          this.participants.push({user: {name: partner.name, picture: partner.picture}, status: 'waiting'});
+          this.addFriends = false;
+        } else {
+          alert('NOK');
+        }
+      }, error => {
+        alert('Error');
+      })
   }
 
   searchRequest() {
