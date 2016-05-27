@@ -83,7 +83,13 @@ export class UpdatePassword {
 		this._http.put(`/api/users/${this._auth.getMe()._id}/password`, JSON.stringify(request), this.options)
 		.map(res => res.json())
 		.subscribe(response => {
-			this.message = "Nouveau Mot de passe enregistré"
+			if(response.status == 200){
+				this.message = "Nouveau Mot de passe enregistré";
+			}else if(response.status == 202){
+				this.message = "Mauvais mot de passe renseigné"; 
+			}
+			},error => {
+				this.message = "Erreur, réessayez plus tard";
 			});
 	}
 }
