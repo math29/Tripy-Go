@@ -47,7 +47,7 @@ export class TravelPage implements OnInit, OnDestroy {
      private params: RouteParams) {
     this.travelService.getThisOne(params.get('travel_id'))
       .subscribe(success => {
-        this.participants.push({user: {name: success.author.name, picture: success.author.picture}, status:'author'});
+        this.participants.push({user: {name: success.author.name, picture: success.author.picture, _id: success.author._id}, status:'author'});
         for(let i = 0; i < success.partners.length; i++) {
           this.participants.push(success.partners[i]);
         }
@@ -102,7 +102,7 @@ export class TravelPage implements OnInit, OnDestroy {
     this.travelService.addPartner( this.params.get('travel_id'), partner._id)
       .subscribe(success => {
         if(success.status == 201) {
-          this.participants.push({user: {name: partner.name, picture: partner.picture}, status: 'waiting'});
+          this.participants.push({user: {name: partner.name, picture: partner.picture, _id: partner._id}, status: 'waiting'});
           this.addFriends = false;
           this.friendSearch = '';
         } else {
@@ -119,7 +119,16 @@ export class TravelPage implements OnInit, OnDestroy {
       .subscribe(success => {
         let users = success.data;
         this.search = [];
+        for(let i = 0; i < success.data.length; i++) {
+          for(let j = 0; j < this.participants.length; j++) {
+            if(this.participants[j].user._id == success.data[i]._id) {
+              success.data.splice(i, 1);
+              break;
+            }
+          }
+        }
         this.search = success.data;
+
       }, error => {});
     }else {
       this.search = [];
