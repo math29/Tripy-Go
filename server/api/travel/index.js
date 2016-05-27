@@ -288,4 +288,23 @@ router.put('/addPartner/:id/:userId', auth.isAuthenticated(), controller.addPart
  */
  router.put('/site/:type/:siteId/:travelId', auth.isAuthenticated(), controller.addSite);
 
+/**
+ * @api {put} /api/travels/name/:id/:name Rename travel
+ * @apiName renameTravel
+ * @apiGroup travels
+ *
+ * @apiParam {string} id id of the travel
+ * @apiParam {string} name name of the travel
+ *
+ * @apiSuccess {Object} object response
+ *
+ * @apiSuccessExample Success-Response:
+ *    HTTP/1.1 200 OK
+ *    {
+ *      status: 200,
+ *      data: 'Travel renamed'
+ *    }
+ */
+ router.put('/name/:id/:name', auth.isAuthenticated(), controller.setName);
+
 module.exports = router;

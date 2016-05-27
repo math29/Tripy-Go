@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 
 // import google map
 declare var google : any;
+declare var $ : any;
 
 
 @Component({
@@ -32,6 +33,7 @@ export class TravelPage implements OnInit, OnDestroy {
 
   private friendSearch: string;
   private siteSearch : string;
+  private travel_name : string;
 
   private sites: any;
   private map : any;
@@ -57,6 +59,9 @@ export class TravelPage implements OnInit, OnDestroy {
         this.lng = success.transports[0].departure.loc[1];
         this.map.setCenter({lat: this.lat, lng: this.lng});
         this.createMarkers();
+        if(! this.localTravel.name) {
+          $('#myModal').modal('show');
+        }
       }, error => { console.log('error')});
   }
 
@@ -172,5 +177,14 @@ export class TravelPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+  }
+
+  updateName(){
+    this.travelService.setName(this.localTravel._id, this.travel_name)
+      .subscribe(success => {
+        this.localTravel.name = this.travel_name;
+        this.travel_name = '';
+        $('#myModal').modal('hide');
+      }, error => {});
   }
 }

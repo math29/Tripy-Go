@@ -1,7 +1,7 @@
 <div class="row">
   <!-- Panneau de gauche -->
-  <div class="col-lg-4 col-md-4 col-xs-12 noMargin">
-    <h1>Nom du voyage<span class="fa fa-edit right"></span></h1>
+  <div class="col-lg-4 col-md-4 col-xs-12 noMargin" *ngIf="localTravel">
+    <h1>{{localTravel.name}}<span class="fa fa-edit right"></span></h1>
     <div class="participants">
       <h2 class="travelTitle">Participants</h2>
       <div class="find"  [class.active]="addFriends">
@@ -54,4 +54,23 @@
     </div>
   </div>
   <!-- fin du panneau de droite -->
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Nom de voyage</h4>
+      </div>
+      <div class="modal-body">
+        <h2>Choisissez un nom pour votre voyage:</h2>
+        <input type="text" [(ngModel)]="travel_name" class="form-control"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-primary" (click)="updateName()">Sauvegarder</button>
+      </div>
+    </div>
+  </div>
 </div>

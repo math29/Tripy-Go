@@ -33,11 +33,10 @@ exports.addPartner = function(req, res) {
     if(err) {
       return handleError(err, res);
     }
-    console.log(travel);
-    if(travel.nModified > 1) {
+    if(travel.nModified >= 1) {
       return res.status(201).json({status: 201, data: 'User added'});
     }else {
-      return res.status(204).json({status: 204, data: 'Can\'t add friend'});
+      return res.status(200).json({status: 204, data: 'Can\'t add friend'});
     }
   });
 }
@@ -138,6 +137,16 @@ exports.addSite = function(req, res) {
     }
   )
 
+}
+
+exports.setName = function(req, res) {
+  Travel.update({_id: req.params.id, $or: [{author: req.user._id}, {'partners.user': {$in: [req.user._id]}}]},
+    {$set: {'name': req.params.name}}, function(err, travel) {
+      if(err) {
+        return handleError(err, res);
+      }
+      return res.status(200).json({status: 200, data: 'Name updated'});
+    })
 }
 
 function handleError(res, err) {

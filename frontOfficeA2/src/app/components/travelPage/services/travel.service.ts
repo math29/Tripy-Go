@@ -43,4 +43,9 @@ export class TravelService {
     return this.http.put(`${this.base_url}/site/${type}/${site_id}/${travel_id}`, null, this.postOptions)
       .map(res => <any>res.json());
   }
+
+  setName(travel_id : string, travel_name : string) {
+    return this.http.put(`${this.base_url}/name/${travel_id}/${travel_name}`, null, this.postOptions)
+      .map(res => <any>res.json());
+  }
 }
