@@ -140,6 +140,14 @@ export class TravelPage implements OnInit, OnDestroy {
     this.siteService.search(this.siteSearch)
       .subscribe(success => {
         this.sitesRetrieved = success;
+        for(let i = 0; i < success.length; i++) {
+          for(let j = 0; j < this.sites.length; j++) {
+            if(success[i]._id == this.sites[j].site_id) {
+              success.splice(i, 1);
+              break;
+            }
+          }
+        }
       }, error => {
         console.log('error');
       });
@@ -164,9 +172,5 @@ export class TravelPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-  }
-
-  addFriend(member: any) {
-    alert(JSON.stringify(member));
   }
 }
