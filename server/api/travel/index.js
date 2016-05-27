@@ -249,4 +249,62 @@ router.patch('/:id', controller.update);
   */
 router.delete('/:id', auth.isAuthenticated(), controller.destroy);
 
+/**
+ * @api {put} /api/travels/addPartner/:id/:userId Add a partner to travel
+ * @apiName addPartner
+ * @apiGroup Travels
+ *
+ * @apiParam {String} id  Id of the travel
+ * @apiParam {String} userId  Id of the friend we want to add to the travel
+ *
+ * @apiSuccess {Object} Object response
+ *
+ * @apiSuccessExample Success-Response:
+ *    HTTP/1.1 201 Content added:
+ *    {
+ *      status: 201,
+ *      data: "User added"
+ *    }
+ */
+router.put('/addPartner/:id/:userId', auth.isAuthenticated(), controller.addPartner);
+
+/**
+ * @api {put} /api/travels/site/:type/:siteId/:travelId Add a site used for a travel
+ * @apiName addUsedSite
+ * @apiGroup Travels
+ *
+ * @apiParam {String} type of site used (transport, hotel, ...)
+ * @apiParam {String} id of the site
+ * @apiParam {String} travelId id of the travel where we want to add the site
+ *
+ * @apiSuccess {Object} object response
+ *
+ * @apiSuccessExample Success-Response:
+ *    HTTP/1.1 201 Content added:
+ *      {
+ *        status: 201,
+ *        data: "Site added"
+ *      }
+ */
+ router.put('/site/:type/:siteId/:travelId', auth.isAuthenticated(), controller.addSite);
+
+/**
+ * @api {put} /api/travels/name/:id/:name Rename travel
+ * @apiName renameTravel
+ * @apiGroup travels
+ *
+ * @apiParam {string} id id of the travel
+ * @apiParam {string} name name of the travel
+ *
+ * @apiSuccess {Object} object response
+ *
+ * @apiSuccessExample Success-Response:
+ *    HTTP/1.1 200 OK
+ *    {
+ *      status: 200,
+ *      data: 'Travel renamed'
+ *    }
+ */
+ router.put('/name/:id/:name', auth.isAuthenticated(), controller.setName);
+
 module.exports = router;

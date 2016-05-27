@@ -243,6 +243,27 @@ router.get('/:id', auth.isAuthenticated(), [controller.show, controller.findByTy
 router.get('/comments/:type/:id/:limit/:offset', auth.isAuthenticated(), controller.getComments);
 
 /**
+ * @api {get} /api/comparators/myComment/:type/:id
+ *
+ * @apiParam {string} id  Id of the target comparator transport
+ * @apiParam {string} type  type of comparator
+ *
+ * @apiSuccess {Comparator} Comparator
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *    {
+ *      comment: 'Mon super commentaire',
+ *      user: ObjectId('dfbgvfdsgftef345678'),
+ *      rate:  ObjectId('dfbgvfdsgftef345678')
+ *    }
+ *
+ */
+router.get('/myComment/:type/:id', auth.isAuthenticated(), controller.getMyComment);
+
+router.post('/comment/:type/:id', auth.isAuthenticated(), controller.comment);
+
+/**
   * @api {post} /api/comparators Insert a comparator
   * @apiName InsertTransportComparator
   * @apiGroup Comparator

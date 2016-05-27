@@ -1,14 +1,14 @@
 <div class="row">
   <!-- Panneau de gauche -->
-  <div class="col-lg-4 col-md-4 col-xs-12">
-    <h1>Nom du voyage<span class="fa fa-edit right"></span></h1>
+  <div class="col-lg-4 col-md-4 col-xs-12 noMargin" *ngIf="localTravel">
+    <h1>{{localTravel.name}}<span class="fa fa-edit right"></span></h1>
     <div class="participants">
       <h2 class="travelTitle">Participants</h2>
       <div class="find"  [class.active]="addFriends">
         <input type="text" placeholder="ajouter un ami" [(ngModel)]="friendSearch" (keyup)="searchRequest()"/>
         <ul>
-          <li *ngFor="let member of search" (click)="addFriend(member)">
-            <img src="{{member.img}}" class="friend-img" />{{member.name}}
+          <li *ngFor="let member of search" (click)="addPartner(member)" class="memberFind">
+            <img src="{{member.picture}}" class="friend-img" /><span>{{member.name}}</span>
           </li>
         </ul>
       </div>
@@ -16,9 +16,11 @@
       <!-- Photo des utilisateurs -->
       <div class="row">
         <div class="col-lg-12 col-md-12 col-xs-12">
-          <div class="row">
-            <div *ngFor="let user of participants" class="col-md-2 col-lg-4 col-xs-2 participant">
-              <img src="{{user.picture}}" class="userPic" />
+          <div class="row" *ngIf="participants.length > 0">
+            <div *ngFor="let partner of participants" class="col-md-2 col-lg-4 col-xs-2 participant">
+              <div *ngIf="partner.user">
+                <img src="{{partner.user.picture}}" class="userPic" />{{partner.user.name}}
+              </div>
             </div>
             <div class="col-md-2 col-lg-4 col-xs-2 participant">
               <div (click)="addFriends = !addFriends"><img class="addIcon" src="/assets/fonts/plus.svg" /></div>
@@ -30,7 +32,15 @@
     </div>
 
     <div class="used_site">
-      <h2 class="travelTitle"><div class="titleIcon fa fa-plus-circle"></div>Sites utilisés</h2>
+      <h2 class="travelTitle"><div (click)="addSite = !addSite" class="titleIcon fa fa-plus-circle"></div>Sites utilisés</h2>
+      <div class="find"  [class.active]="addSite">
+        <input type="text" placeholder="ajouter un site utilisé" [(ngModel)]="siteSearch" (keyup)="searchSiteRequest()"/>
+        <ul>
+          <li *ngFor="let site of sitesRetrieved" (click)="addThisSite(site)" class="memberFind">
+            <img src="{{site.company.img}}" class="friend-img" /><span>{{site.company.name}}</span>
+          </li>
+        </ul>
+      </div>
       <div class="row" *ngFor="let site of sites">
         <site [site]="site"></site>
       </div>
@@ -38,8 +48,29 @@
   </div>
   <!-- Fin panneau de gauche -->
   <!-- panneau de droite -->
-  <div class="col-lg-8 col-md-8 col-xs-12">
-    <h1>Afficher carte</h1>
+  <div class="col-lg-8 col-md-8 col-xs-12 noMargin">
+    <div id="map">
+
+    </div>
   </div>
   <!-- fin du panneau de droite -->
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Nom de voyage</h4>
+      </div>
+      <div class="modal-body">
+        <h2>Choisissez un nom pour votre voyage:</h2>
+        <input type="text" [(ngModel)]="travel_name" class="form-control"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-primary" (click)="updateName()">Sauvegarder</button>
+      </div>
+    </div>
+  </div>
 </div>

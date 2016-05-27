@@ -51,7 +51,14 @@
         "app/components/travelPage/components/site.component.ts",
         "app/components/travelPage/components/travel.component.ts",
         "app/components/travelPage/index.ts",
+<<<<<<< HEAD
         "app/components/travelPage/services/member.service.ts",
+=======
+        "app/components/travelPage/services/index.ts",
+        "app/components/travelPage/services/member.service.ts",
+        "app/components/travelPage/services/rate.service.ts",
+        "app/components/travelPage/services/site.service.ts",
+>>>>>>> my-travel
         "app/components/travelPage/services/travel.service.ts",
         "app/front-office-a2.ts",
         "app/pipes/filterRangeRate.pipe.ts",

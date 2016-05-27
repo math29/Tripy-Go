@@ -45,6 +45,58 @@ exports.getComments = function(req, res) {
   });
 };
 
+exports.getMyComment = function(req, res) {
+  Comparator.findOne({_id: req.params.id, types: {$in: [req.params.type]}}, function(err, comparator) {
+    if(err) {return handleError(res, err);}
+    if(!comparator) { return res.status(404).json({status: 404, data:'Not found'})}
+    for(var i = 0; i < comparator.transport.comments.length; i++) {
+      console.log(comparator.transport.comments[i].user + ' ' + req.user._id);
+      if(comparator.transport.comments[i].user == String(req.user._id)) {
+        return res.status(200).json({status: 200, data: comparator.transport.comments[i]});
+
+      }
+    }
+    return res.status(200).json({status: 204, data: 'No comment yet'});
+  })
+}
+
+exports.comment = function(req, res) {
+  Comparator.findOne({_id: req.params.id, types: {$in: [req.params.type]}}, function(err, comparator) {
+    if(err){return handleError(res, err);}
+    for(var i = 0; i < comparator[req.params.type].comments.length; i++) {
+      console.log(comparator.transport.comments[i].user + ' ' + req.user._id + ' equals: '+ (comparator[req.params.type].comments[i].user == String(req.user._id)));
+
+      if(comparator[req.params.type].comments[i].user == String(req.user._id)) {
+        console.log('here');
+        comparator[req.params.type].comments[i].comment = req.body.comment;
+        comparator.save(function(err) {
+          if(err){return handleError(res, err);}
+          return res.status(200).json({status: 200, data: 'Comment updated'});
+
+        });
+        return;
+      }
+    }
+    var rate = new Rate({score:0, type: 'Stars'});
+    rate.save(function(err, r) {
+      if(err){return handleError(res, err);}
+      comparator[req.params.type].comments.push({
+        comment: req.body.comment,
+        rate: r._id,
+        user: req.user._id
+      });
+      comparator.save(function(err) {
+        if(err){
+          return handleError(res, err);
+        }
+        return res.status(201).json({status: 201, data: 'Comment added'});
+      });
+    });
+
+
+
+  })
+}
 
 // Creates a new transport comparator in the DB.
 function create(req, res) {
