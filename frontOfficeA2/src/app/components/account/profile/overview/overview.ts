@@ -17,5 +17,6 @@ export class Overview {
 
 	constructor(private _auth: AuthService) {
 		this.user = _auth.getMe();
+		console.log(this.user);
 	}
 }
