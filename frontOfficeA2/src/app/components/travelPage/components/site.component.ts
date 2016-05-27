@@ -40,6 +40,7 @@ export class SiteCmp implements OnInit, OnDestroy {
       .subscribe(success => {
         this.siteContent = success;
         this.getMyRates();
+        this.getMyComment();
       }, error => {console.log('error');}
     );
   }
@@ -68,6 +69,22 @@ export class SiteCmp implements OnInit, OnDestroy {
         }
         this.previous_rate = JSON.parse(JSON.stringify(this.rates));
       }, error => console.log('error content: '+ JSON.stringify(error)));
+  }
+
+  getMyComment() {
+    this.siteService.getMyComment('transport', this.site.site_id)
+      .subscribe(success => {
+        if(success.status == 200) {
+          this.comment = success.data.comment;
+        }else {
+          this.comment = '';
+        }
+      }, error => {});
+  }
+
+  commentThisSite() {
+    this.siteService.commentThisSite('transport', this.site.site_id, this.comment)
+      .subscribe(success => {}, error => {});
   }
 
   public hoveringOver(value:number):void {

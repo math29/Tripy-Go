@@ -20,5 +20,5 @@
   </div>
   <div class="col-md-12 col-xs-12 col-lg-4">
     <textarea [(ngModel)]="comment"></textarea>
-    <button class="btn btn-submit" *ngIf="comment">Commenter</button>
+    <button class="btn btn-submit" *ngIf="comment" (click)="commentThisSite()">Commenter</button>
   </div>

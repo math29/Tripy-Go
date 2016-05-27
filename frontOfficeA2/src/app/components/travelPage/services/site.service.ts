@@ -23,4 +23,21 @@ export class SiteService {
     return this.http.get(`${this.base_url}/${id}`, this.postOptions)
       .map(res => <any>res.json());
   }
+
+  /**
+   * Get user comment for a comparator in specified type
+   *
+   * @param {type} type of comparator
+   * @param {id} id of the comparator
+   *
+   */
+  getMyComment(type : string, id : string) {
+    return this.http.get(`${this.base_url}/myComment/${type}/${id}`, this.postOptions)
+      .map(res => <any>res.json());
+  }
+
+  commentThisSite(type:string, id: string, comment: string) {
+    return this.http.post(`${this.base_url}/comment/${type}/${id}`, JSON.stringify({comment: comment}), this.postOptions)
+      .map(res => <any>res.json());
+  }
 }
