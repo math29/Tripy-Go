@@ -17,7 +17,6 @@
 .find {
   opacity: 0;
   width: 100%;
-  overflow: hidden;
   max-height: 0px;
   transition: max-height 300ms cubic-bezier(0, .6, .6, 1); /* for collapsing */
 }
@@ -28,7 +27,7 @@
 
 .find.active {
   opacity: 1;
-  max-height: 100px;
+  max-height: 100%;
   transform-origin: 50% 50%;
   transition: max-height 400ms ease-in; /* for expansion */
 }
@@ -80,4 +79,43 @@ h2.travelTitle {
 
 .right {
   float: right;
+}
+
+.memberFind {
+  padding: 0px;
+  margin: 0px;
+}
+
+.find li {
+  list-style: none;
+  background-image:none;
+  background-repeat:none;
+  background-position:0;
+  background-color: #eeeeee;
+  border: 1px solid grey;
+}
+.find ul
+{
+  padding: 0px;
+}
+
+@media only screen and (min-width: 400px) {
+  .friend-img {
+    width: 50px;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .friend-img {
+    width: 100px;
+  }
+}
+
+#map {
+height: 400px;
+}
+
+.noMargin {
+  margin: 0px;
+  padding: 0px;
 }

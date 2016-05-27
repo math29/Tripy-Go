@@ -82,6 +82,8 @@ router.get('/:id', auth.isAuthenticated(), controller.findById);
  * @apiUse UserNotAuthorized
  */
 router.post('/vote/:side/:id', auth.isAuthenticated(), controller.vote);
+
+router.get('/myRate/:rateId', auth.isAuthenticated(), controller.myRate);
 /**
  * @api {delete} /api/rate/:id delete rate with specific ID
  * @apiVersion 1.0.0

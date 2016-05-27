@@ -30,7 +30,7 @@ exports.findById = function (req, res, next) {
       return next(err);
     }
     if (!rate){
-      return res.status(204).send('No Content');
+      return res.status(204).json({status: 204, data: 'No Content'});
     }
     if(rate.type === 'Stars'){
       if(rate.raters.length > 0){
@@ -62,6 +62,25 @@ exports.findById = function (req, res, next) {
 
     }else{
       return res.status(200).json(rate);
+    }
+  });
+};
+
+// récupére mon vote pour un vote donné
+exports.myRate = function(req, res) {
+  Rate.findById(req.params.rateId, function(err, rate) {
+    if(err) {
+      return res.status(400).json({status: 400, data: 'Error while retrieving rate'});
+    }
+    if(rate == null){
+      return res.status(404).json({status: 404, data:'Le vote n\'existe pas'});
+    }
+    var myRat = _.find(rate.raters, function(o){
+      return o.user == String(req.user._id)});
+    if(myRat) {
+      return res.status(200).json({status: 200, data: myRat});
+    }else {
+      return res.status(200).json({status: 204, data: 'You haven\'t rate'});
     }
   });
 };

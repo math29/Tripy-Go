@@ -6,6 +6,7 @@ var Rate = require('../rate/rate.model');
 var Company = require('../company/company.model');
 var TransportType = require('../transportType/transportType.model');
 var logger = require('../../config/logger');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 
 
@@ -35,6 +36,11 @@ var ComparatorSchema = new Schema({
     }
 });
 
+ComparatorSchema.plugin(deepPopulate, {
+  whitelist: [
+    'company.picture'
+  ]
+});
 var Comparator = mongoose.model('Comparators', ComparatorSchema);
 
 ComparatorSchema.pre('save', function(next){

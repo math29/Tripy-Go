@@ -1,6 +1,6 @@
 <div class="tab-pane fade in">
 	<div class="col-md-12">
-		<div class="item-entry" *ngFor="let travel of travels">
+		<div class="item-entry" *ngFor="let travel of travels" (click)="navigateTo(travel)">
 			<span>{{ travel.name }}</span>
 			<div class="item-content">
 				<div class="item-body">
@@ -19,7 +19,7 @@
 						<p><a href="#">Cancel</a></p>
 					</div>
 				</div>
-				<div class="item-footer"> 
+				<div class="item-footer">
 					<p><strong>Dates :</strong> {{ travel.date_departure }}<strong> - </strong> {{ travel.date_return }}</p>
 				</div>
 				<div class="clearfix"></div>

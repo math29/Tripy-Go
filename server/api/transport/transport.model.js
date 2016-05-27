@@ -30,7 +30,7 @@ var TransportSchema = new Schema({
 TransportSchema.pre('save', function(next){
   var self = this;
   Location.find({_id: {$in: [self.departure, self.arrival]}}, function(err, locations){
-    console.log(JSON.stringify(locations));
+    if(!locations[1])locations[1] = locations[0];
     geo.vincenty({latitude: locations[0].loc[0], longitude: locations[0].loc[1]},
       {latitude: locations[1].loc[0], longitude: locations[1].loc[1]}, function(dist) {
         self.distance = dist / 1000;
