@@ -50,22 +50,9 @@
   <!-- panneau de droite -->
   <div class="col-lg-8 col-md-8 col-xs-12 noMargin">
     <h1>Afficher carte</h1>
-    <sebm-google-map
-[latitude]="lat"
-[longitude]="lng"
-[zoom]="zoom"
-[disableDefaultUI]="false"
-[zoomControl]="true"
->
-<sebm-google-map-marker
-*ngFor="let m of markers; let i = index"
-(markerClick)="clickedMarker(m.label, i)"
-[latitude]="m.lat"
-[longitude]="m.lng"
-[label]="m.label"
-[markerDraggable]="m.draggable"
-(dragEnd)="markerDragEnd(m, $event)"></sebm-google-map-marker
-></sebm-google-map>
+    <div id="map">
+      
+    </div>
   </div>
   <!-- fin du panneau de droite -->
 </div>

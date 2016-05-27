@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
 import { RouterLink, RouteParams } from '@angular/router-deprecated';
-import {ANGULAR2_GOOGLE_MAPS_DIRECTIVES, ANGULAR2_GOOGLE_MAPS_PROVIDERS} from 'angular2-google-maps/core';
 
 import { SiteCmp } from './site.component';
 import { MemberService } from '../services/member.service';
@@ -8,16 +7,18 @@ import { SiteService } from '../services/site.service';
 import { TravelService } from '../services/travel.service';
 import * as _ from 'lodash';
 
+// import google map
+declare var google : any;
+
 
 @Component({
     selector: 'travel-page',
     templateUrl: 'app/components/travelPage/components/travel.component.html',
-    directives: [ SiteCmp, ANGULAR2_GOOGLE_MAPS_DIRECTIVES ],
-    providers: [ MemberService , SiteService , TravelService, ANGULAR2_GOOGLE_MAPS_PROVIDERS],
+    directives: [ SiteCmp ],
+    providers: [ MemberService , SiteService , TravelService],
     styleUrls: ['app/components/travelPage/components/travel.component.css'],
     pipes: []
 })
-
 export class TravelPage implements OnInit, OnDestroy {
   @Input() name: any;
   // ajout d'un amis au voyage, utilisé dans l'html
@@ -33,6 +34,7 @@ export class TravelPage implements OnInit, OnDestroy {
   private siteSearch : string;
 
   private sites: any;
+  private map : any;
 
   private localTravel : any;
   lat: number = 51.223858;
@@ -53,18 +55,47 @@ export class TravelPage implements OnInit, OnDestroy {
         this.localTravel = success;
         this.lat = success.transports[0].departure.loc[0];
         this.lng = success.transports[0].departure.loc[1];
+        this.map.setCenter({lat: this.lat, lng: this.lng});
         this.createMarkers();
       }, error => { console.log('error')});
   }
 
   createMarkers() {
       for(let i = 0; i < this.localTravel.transports.length; i++) {
-        this.markers.push({lat: this.localTravel.transports[i].departure.loc[0],lng: this.localTravel.transports[i].departure.loc[1], label: this.localTravel.transports[i].departure.name });
+        /*this.markers.push({lat: this.localTravel.transports[i].departure.loc[0],lng: this.localTravel.transports[i].departure.loc[1], label: this.localTravel.transports[i].departure.name });
         this.markers.push({lat: this.localTravel.transports[i].arrival.loc[0], lng: this.localTravel.transports[i].arrival.loc[1], label: this.localTravel.transports[i].arrival.name});
+*/
+        let marker = new google.maps.Marker({
+            position: {lat: this.localTravel.transports[i].departure.loc[0],lng: this.localTravel.transports[i].departure.loc[1]},
+            map: this.map,
+            title: 'Hello World!'
+          });
+
+          let marker1 = new google.maps.Marker({
+              position: {lat: this.localTravel.transports[i].arrival.loc[0],lng: this.localTravel.transports[i].arrival.loc[1]},
+              map: this.map,
+              title: 'Hello World!'
+            });
+
+            let flightPlanCoordinates = [
+    marker.position,marker1.position
+  ];
+  let flightPath = new google.maps.Polyline({
+    path: flightPlanCoordinates,
+    geodesic: true,
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
+        flightPath.setMap(this.map);
       }
   }
 
   ngOnInit() {
+    this.map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: -34.397, lng: 150.644},
+    zoom: 8
+  });
   }
 
   addPartner(partner : any) {
@@ -113,6 +144,8 @@ export class TravelPage implements OnInit, OnDestroy {
       .subscribe(success => {
         if(success.status == 201) {
           this.sites.push({site_id:site._id, used_type:['transport']});
+          this.siteSearch = '';
+          this.addSite = false;
         }
       },
       error => {
