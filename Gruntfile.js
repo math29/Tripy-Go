@@ -589,6 +589,7 @@ module.exports = function (grunt) {
           'ng2-bootstrap/**/*',
           'moment/min/**/*',
           'ng2-bootstrap/**/*',
+          'ng2-notifications/**/*',
           'ng2-file-upload/**/*',
           'marked/marked.min.js',
           'flag-icon-css/css/flag-icon.min.css',
