@@ -18,7 +18,7 @@ function onConnect(socket) {
   socket.on('info', function (data) {
     logger.info('[%s] %s', socket.address,JSON.stringify(data, null, 2));
   });
-
+  console.log(JSON.stringify(socket.id));
   // Insert sockets below
   require('../api/promo/promo.socket').register(socket);
   require('../api/timeline/timeline.socket').register(socket);
@@ -51,6 +51,10 @@ module.exports = function (socketio) {
   //   secret: config.secrets.session,
   //   handshake: true
   // }));
+  socketio.use(require('socketio-jwt').authorize({
+    secret : config.secrets.session,
+    handshake: true
+  }));
 
   socketio.on('connection', function (socket) {
     socket.address = socket.handshake.address !== null ?
