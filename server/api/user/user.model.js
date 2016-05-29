@@ -18,6 +18,7 @@ var UserSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Travel'
   }],
+  connected: {type: Boolean, default: false},
   visited_countries: [String],
   dest_prefereds: [String],
   hashedPassword: String,

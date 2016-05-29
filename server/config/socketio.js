@@ -6,10 +6,18 @@
 
 var config = require('./environment');
 var logger = require('./logger');
+var Member = require('../api/user/user.model');
 
 // When the user disconnects.. perform this
 function onDisconnect(socket) {
   socket.emit('disconnected');
+  Member.update({_id: socket.decoded_token._id}, {$set: {'connected': false}},
+    function(err, up){
+      if(err) {
+        logger.error(err);
+      }
+    }
+);
 }
 
 // When the user connects.. perform this
@@ -18,7 +26,7 @@ function onConnect(socket) {
   socket.on('info', function (data) {
     logger.info('[%s] %s', socket.address,JSON.stringify(data, null, 2));
   });
-  console.log(JSON.stringify(socket.id));
+  console.log(JSON.stringify(socket.decoded_token._id));
   // Insert sockets below
   require('../api/promo/promo.socket').register(socket);
   require('../api/timeline/timeline.socket').register(socket);
@@ -34,6 +42,14 @@ function onConnect(socket) {
   require('../api/transportType/transportType.socket').register(socket);
   require('../api/company/company.socket').register(socket);
   require('../api/comparators/comparators.socket').register(socket);
+
+  Member.update({_id: socket.decoded_token._id}, {$set: {'connected': true}},
+    function(err, up){
+      if(err) {
+        logger.error(err);
+      }
+    }
+);
 }
 
 module.exports = function (socketio) {
@@ -51,12 +67,15 @@ module.exports = function (socketio) {
   //   secret: config.secrets.session,
   //   handshake: true
   // }));
-  socketio.use(require('socketio-jwt').authorize({
-    secret : config.secrets.session,
-    handshake: true
-  }));
 
-  socketio.on('connection', function (socket) {
+
+  socketio.on('connection', require('socketio-jwt').authorize({
+    secret: config.secrets.session,
+    timeout: 15000
+  })).on('authenticated', function (socket) {
+    console.log('auth');
+    console.log(socket.decoded_token); // bar
+
     socket.address = socket.handshake.address !== null ?
             socket.handshake.address.address + ':' + socket.handshake.address.port :
             process.env.DOMAIN;

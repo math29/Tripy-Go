@@ -20,12 +20,12 @@ export class SocketService {
     this.config.path = '/socket.io-client';
     this.config.reconnection = true;
     this.config.reconnectionDelay = 1000;
-
+    this.config.query = 'token='+localStorage.getItem('jwt');
     if(localStorage.getItem('env') == 'prod'){
 		    this.url = 'http://tripygo-breizher.rhcloud.com';
     }
 	   this.socket = io.connect(this.url, this.config);
-
+     this.socket.emit('authenticate', {token: localStorage.getItem('jwt')});
 
     this.socketObservable$ = new Observable(observer => this.socketObserver = observer).share();
   }
