@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {HeaderNotificationCmp} from './header_notification';
 import {SidebarCmp} from '../sidebar/sidebar';
 import { RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
-import {AuthService} from '../../tripy-lib/services/auth.service';
+import {AuthService} from '../../tripy-lib/index';
 
 @Component({
   selector: 'header',

@@ -6,7 +6,7 @@ import {NgForm} from '@angular/common';
 import {Response} from '@angular/http';
 import {TransportTypeService} from '../../services/transportTypeService';
 import {RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
-import {SocketService} from '../../services/socket.service';
+import {SocketService} from '../../tripy-lib/index';
 
 //declare var jQuery: JQueryStatic;
 //declare var $: JQueryStatic;

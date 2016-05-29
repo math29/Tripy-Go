@@ -8,7 +8,7 @@ import {Language} from '../../classes/language';
 import {Country} from '../../classes/country';
 import {RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 import {OrderByPipe} from '../../pipes/orderby';
-import {SocketService} from '../../services/socket.service';
+import {SocketService } from '../../tripy-lib/index';
 
 
 @Component({

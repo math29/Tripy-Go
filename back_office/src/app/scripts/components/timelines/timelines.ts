@@ -8,7 +8,7 @@ import {MarkdownPipe} from '../../tripy-lib/pipes/marked';
 import {MdEditor} from '../../tripy-lib/components/md-editor/md-editor';
 
 import {RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
-import {SocketService} from '../../services/socket.service';
+import {SocketService} from '../../tripy-lib/index';
 
 declare var to_markdown:any;
 

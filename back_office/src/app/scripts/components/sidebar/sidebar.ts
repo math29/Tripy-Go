@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Item, SidebarElementCmp} from './sidebar_element';
 import {UserSingleton} from '../../singletons/user.singleton';
-import {AuthService} from '../../tripy-lib/services/auth.service';
+import {AuthService} from '../../tripy-lib/index';
 import {RouteConfig, RouterLink, Router,Route,  ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 
 @Component({
@@ -64,7 +64,7 @@ export class SidebarCmp{
       this.items.push(transportAgregator);
       this.items.push(transportComparator);
       if(this.isAdminInfo()){
-        this.items.push(mongo);
+        //this.items.push(mongo);
         this.items.push(logs);
       }
   }

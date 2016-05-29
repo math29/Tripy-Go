@@ -5,7 +5,7 @@ import {CompanyService} from '../../services/company';
 import {CountryService} from '../../services/countryService';
 import { ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 import { FILE_UPLOAD_DIRECTIVES, FileUploader } from 'ng2-file-upload/ng2-file-upload';
-import {SocketService} from '../../services/socket.service';
+import {SocketService} from '../../tripy-lib/index';
 
 import * as _ from 'lodash';
 const fileAPI = "/api/files";
