@@ -20,19 +20,29 @@ export class SocketService {
     this.config.path = '/socket.io-client';
     this.config.reconnection = true;
     this.config.reconnectionDelay = 1000;
-    this.config.query = 'token='+localStorage.getItem('jwt');
     if(localStorage.getItem('env') == 'prod'){
 		    this.url = 'http://tripygo-breizher.rhcloud.com';
     }
-	   this.socket = io.connect(this.url, this.config);
-     this.socket.emit('authenticate', {token: localStorage.getItem('jwt')});
+  }
 
+  connexion(){
+    this.config.query = 'token='+localStorage.getItem('jwt');
+    this.socket = io.connect(this.url, this.config);
+    this.socket.emit('authenticate', {token: localStorage.getItem('jwt')});
+
+    this.socket.on('notifications', (data: any) => {
+      console.log(data);
+    })
     this.socketObservable$ = new Observable(observer => this.socketObserver = observer).share();
+
   }
 
 
 
   addListener(channel){
+    if(!this.socket) {
+      this.connexion();
+    }
     if(!_.find(this.listening, function(o){return o == channel;})){
       this.listening.push(channel);
       this.socket.on(channel, (data:any) => {

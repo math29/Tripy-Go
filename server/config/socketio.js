@@ -7,15 +7,19 @@
 var config = require('./environment');
 var logger = require('./logger');
 var Member = require('../api/user/user.model');
+var connected = {};
 
 // When the user disconnects.. perform this
 function onDisconnect(socket) {
   socket.emit('disconnected');
-  Member.update({_id: socket.decoded_token._id}, {$set: {'connected': false}},
-    function(err, up){
+  delete connected[socket.decoded_token._id];
+  Member.findById(socket.decoded_token._id,
+    function(err, user){
       if(err) {
         logger.error(err);
       }
+      user.connected = false;
+      user.save(function(err){});
     }
 );
 }
@@ -42,12 +46,15 @@ function onConnect(socket) {
   require('../api/transportType/transportType.socket').register(socket);
   require('../api/company/company.socket').register(socket);
   require('../api/comparators/comparators.socket').register(socket);
+  require('../api/user/user.socket').register(socket, connected);
 
-  Member.update({_id: socket.decoded_token._id}, {$set: {'connected': true}},
-    function(err, up){
+  Member.findById(socket.decoded_token._id,
+    function(err, user){
       if(err) {
         logger.error(err);
       }
+      user.connected = true;
+      user.save(function(err){});
     }
 );
 }
@@ -68,7 +75,6 @@ module.exports = function (socketio) {
   //   handshake: true
   // }));
 
-
   socketio.on('connection', require('socketio-jwt').authorize({
     secret: config.secrets.session,
     timeout: 15000
@@ -76,6 +82,7 @@ module.exports = function (socketio) {
     console.log('auth');
     console.log(socket.decoded_token); // bar
 
+    connected[socket.decoded_token._id] = socket;
     socket.address = socket.handshake.address !== null ?
             socket.handshake.address.address + ':' + socket.handshake.address.port :
             process.env.DOMAIN;

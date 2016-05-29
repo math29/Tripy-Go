@@ -34,6 +34,14 @@ exports.addPartner = function(req, res) {
       return handleError(err, res);
     }
     if(travel.nModified >= 1) {
+      User.findById(req.params.userId, function(err, user) {
+        if(err){
+          console.log(err);
+        }else {
+        user.notifications.push({title:'Nouveau voyage', body:'Un ami souhaite vous ajouter à son voyage', link:''});
+        user.save(function(err){if(err){}});
+        }
+      });
       return res.status(201).json({status: 201, data: 'User added'});
     }else {
       return res.status(200).json({status: 204, data: 'Can\'t add friend'});
