@@ -26,6 +26,7 @@ exports.show = function(req, res) {
 
 exports.addPartner = function(req, res) {
   var updateObj = {user: req.params.userId, status: 'waiting'};
+  console.log(JSON.stringify(req.user));
   Travel.update({_id: req.params.id,
     $or: [{ 'author':req.user._id }, {'partners.user': { $in : [req.user._id]}}],
     'partners.user': {$nin: [req.params.user_id]}},
@@ -38,7 +39,7 @@ exports.addPartner = function(req, res) {
         if(err){
           console.log(err);
         }else {
-        user.notifications.push({title:'Nouveau voyage', body:'Un ami souhaite vous ajouter à son voyage', link:'', template: 'trip-ack'});
+        user.notifications.push({title:'Nouveau voyage', body: req.user.name + ' souhaite vous ajouter à son voyage', link: req.params.id, template: 'trip-ack'});
         user.save(function(err){if(err){}});
         }
       });

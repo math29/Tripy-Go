@@ -19,5 +19,7 @@ router.get('/', auth.isAuthenticated(), controller.show);
 
 router.post('/:id', auth.isAuthenticated(), controller.acknowledge);
 
+router.post('/:status/:travelId', auth.isAuthenticated(), controller.tripAck);
+
 
 module.exports = router;
