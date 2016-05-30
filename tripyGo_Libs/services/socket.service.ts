@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 
 import * as _ from 'lodash';
@@ -7,7 +7,7 @@ import * as io from 'socket.io-client';
 declare var Push : any;
 
 @Injectable()
-export class SocketService {
+export class SocketService implements OnDestroy{
   //
   private socket: any;
   private listening: string[] = [];
@@ -21,10 +21,9 @@ export class SocketService {
     this.config.path = '/socket.io-client';
     this.config.reconnection = true;
     this.config.reconnectionDelay = 1000;
-    if(localStorage.getItem('env') == 'prod'){
-		    this.url = 'http://tripygo-breizher.rhcloud.com';
-    }
+    this.url = window.location.origin;
     this.socket = io.connect(this.url, this.config);
+    this.socket.removeAllListeners();
     this.socketObservable$ = new Observable(observer => this.socketObserver = observer).share();
     if(localStorage.getItem('jwt')) {
       this.connexion();
@@ -33,6 +32,7 @@ export class SocketService {
 
   connexion(){
     this.config.query = 'token='+localStorage.getItem('jwt');
+    this.socket.removeAllListeners();
     this.socket.disconnect();
     this.socket = io.connect(this.url, this.config);
     this.socket.emit('authenticate', {token: localStorage.getItem('jwt')});
@@ -44,8 +44,8 @@ export class SocketService {
       }
       this.socketObserver.next({channel:'notifications', data: data});
 
-    })
-
+    });
+    console.log(this.socket);
   }
 
   createNotification(title: string, body: string, img: string) {
@@ -83,8 +83,10 @@ export class SocketService {
     }
   }
 
-  exit(){
-
+  ngOnDestroy(){
+    this.socket.removeAllListeners();
+    this.socket.disconnect();
+    alert('destroyed');
   }
 
 }

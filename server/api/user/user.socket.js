@@ -8,7 +8,8 @@ var User = require('./user.model');
 
 exports.register = function(socket, connected) {
   User.schema.post('save', function (doc) {
-    console.log('save');
+    console.log('save ' + doc._id);
+    console.log('id: '+ socket.id + ' '+socket.decoded_token._id);
     onSave(socket, doc, connected);
   });
   User.schema.post('update', function (doc) {
@@ -21,7 +22,6 @@ exports.register = function(socket, connected) {
 };
 
 function onSave(socket, doc, connected) {
-  console.log(doc);
   if(doc.notifications.length > 0) {
     console.log('emit notification');
     if(connected[doc._id]){

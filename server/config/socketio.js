@@ -11,15 +11,19 @@ var connected = {};
 
 // When the user disconnects.. perform this
 function onDisconnect(socket) {
-  socket.emit('disconnected');
+  //socket.emit('disconnected');
+  socket.removeAllListeners();
   delete connected[socket.decoded_token._id];
+  socket.disconnect();
   Member.findById(socket.decoded_token._id,
     function(err, user){
       if(err) {
         logger.error(err);
       }
-      user.connected = false;
-      user.save(function(err){});
+      if(user){
+        user.connected = false;
+        user.save(function(err){});
+      }
     }
 );
 }
@@ -53,13 +57,17 @@ function onConnect(socket) {
       if(err) {
         logger.error(err);
       }
-      user.connected = true;
-      user.save(function(err){});
+      if(user){
+        user.connected = true;
+        user.save(function(err){});
+      }
+
     }
 );
 }
 
 module.exports = function (socketio) {
+  console.log("EXPORT");
   // socket.io (v1.x.x) is powered by debug.
   // In order to see all the debug output, set DEBUG (in server/config/local.env.js) to including the desired scope.
   //
@@ -77,7 +85,7 @@ module.exports = function (socketio) {
 
   socketio.on('connection', require('socketio-jwt').authorize({
     secret: config.secrets.session,
-    timeout: 15000
+    timeout: 5000
   })).on('authenticated', function (socket) {
     console.log('auth');
     console.log(socket.decoded_token); // bar

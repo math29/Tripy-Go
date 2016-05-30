@@ -38,7 +38,7 @@ exports.addPartner = function(req, res) {
         if(err){
           console.log(err);
         }else {
-        user.notifications.push({title:'Nouveau voyage', body:'Un ami souhaite vous ajouter à son voyage', link:''});
+        user.notifications.push({title:'Nouveau voyage', body:'Un ami souhaite vous ajouter à son voyage', link:'', template: 'trip-ack'});
         user.save(function(err){if(err){}});
         }
       });
