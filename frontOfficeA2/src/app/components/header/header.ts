@@ -2,23 +2,32 @@ import {Component, OnInit} from '@angular/core';
 import { ROUTER_DIRECTIVES, Router } from '@angular/router-deprecated';
 
 import { AuthService } from '../../tripy_go_lib/services/auth.service'
+import { NotificationCmp } from './notification/notification.component';
 import { Stepbar } from './stepbar/stepbar';
+import { SocketService } from '../../tripy_go_lib/services/socket.service';
 
 @Component({
 	selector: 'header',
 	templateUrl: 'app/components/header/header.html',
 	styleUrls: ['app/components/header/header.css'],
 	providers: [],
-	directives: [ROUTER_DIRECTIVES, Stepbar],
+	directives: [ROUTER_DIRECTIVES, Stepbar, NotificationCmp],
 	pipes: []
 })
 export class Header {
 	routesStepBar: any;
 	step: number = 0;
 	_router: Router;
+	notifications: any = [];
 
-	constructor(private _auth: AuthService, _router: Router) {
+	constructor(private _auth: AuthService, _router: Router, private socketService: SocketService) {
 		this._router = _router;
+		this.socketService.socketObservable$.subscribe(updateCompany => {
+			let response = updateCompany;
+			if(response.channel == 'notifications'){
+				this.notifications = response.data;
+			}
+		});
 	}
 
 	ngOnInit() {

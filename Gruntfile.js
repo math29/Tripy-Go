@@ -57,7 +57,6 @@ module.exports = function (grunt) {
         'angular2-jwt/angular2-jwt.js*',
         'd3/d3.min.js',
         'marked/marked.min.js',
-        'socket.io-client/socket.io.js',
         'lodash/lodash.min.js',
         'jquery/dist/jquery.min.js',
         'jquery-ui-bundle/**/*',
@@ -66,7 +65,8 @@ module.exports = function (grunt) {
         'datamaps/dist/**/*',
         'to-markdown/dist/**/*',
         'moment/min/**/*',
-        'reflect-metadata/**/*'
+        'reflect-metadata/**/*',
+        'push.js/push.min.js'
       ],
       back_office_css: [
         'bower_components/metisMenu/dist/metisMenu.min.css',
@@ -594,7 +594,9 @@ module.exports = function (grunt) {
           'marked/marked.min.js',
           'flag-icon-css/css/flag-icon.min.css',
           'flag-icon-css/flags/**/*',
-          'push.js/push.min.js'
+          'push.js/push.min.js',
+          'lodash/lodash.min.js',
+          'socket.io-client/socket.io.js'
         ]
       },
       upgrade_bootstrap_iconpicker: {
@@ -770,7 +772,8 @@ module.exports = function (grunt) {
                  "<%= yeoman.back_office_dist %>/lib/datamaps/dist/datamaps.world.min.js",
                  "<%= yeoman.back_office_dist %>/lib/chart.js/Chart.min.js",
                  "<%= yeoman.back_office_dist %>/js/*.js",
-                 "<%= yeoman.back_office_dist %>/lib/jquery-ui-bundle/jquery-ui.min.js"
+                 "<%= yeoman.back_office_dist %>/lib/jquery-ui-bundle/jquery-ui.min.js",
+                 "<%= yeoman.back_office_dist %>/lib/push.js/push.min.js"
                ]
             ]
         }

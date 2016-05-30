@@ -84,6 +84,12 @@
                     'angular2-google-maps': {
                       defaultExtension: 'js'
                     },
+                    'lodash': {
+                      defaultExtension: 'js'
+                    },
+                    'socket.io-client':{
+                      defaultExtension: 'js'
+                    },
                     'ng2-notifications': {defaultExtension:'js'},
                     '@angular/core' : {defaultExtension: 'js', main: 'index.js'},
                     '@angular/common'  : {defaultExtension: 'js', main: 'index.js'},
@@ -109,7 +115,9 @@
                     "ng2-file-upload": "lib/ng2-file-upload",
                     'ng2-bootstrap': 'lib/ng2-bootstrap',
                     'marked':'lib/marked/marked.min.js',
-                    'ng2-notifications': 'lib/ng2-notifications'
+                    'ng2-notifications': 'lib/ng2-notifications',
+                    'lodash': 'lib/lodash/lodash.min.js',
+                    'socket.io-client':'lib/socket.io-client/socket.io.js'
                 }
             });
             System.import('frontOfficeA2/src/app.js').then(null, console.error.bind(console));

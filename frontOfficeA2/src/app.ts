@@ -2,6 +2,8 @@ import {bootstrap} from '@angular/platform-browser-dynamic';
 import { provide } from '@angular/core';
 import { FORM_PROVIDERS } from '@angular/common';
 import { AuthService } from './app/tripy_go_lib/services/auth.service';
+import { SocketService} from './app/tripy_go_lib/services/socket.service';
+
 import {
 	ROUTER_PROVIDERS,
 	ROUTER_PRIMARY_COMPONENT
@@ -18,6 +20,7 @@ bootstrap(FrontOfficeA2App, [
     ROUTER_PROVIDERS,
     HTTP_PROVIDERS,
     AuthService,
+		SocketService,
     provide(AuthHttp, {
 		useFactory: (http) => {
 			return new AuthHttp(new AuthConfig({

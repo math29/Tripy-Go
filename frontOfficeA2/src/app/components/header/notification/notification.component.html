@@ -1,0 +1,10 @@
+<div class="notification" *ngIf="notification">
+  <h3>{{notification.title}}</h3>
+  <p>
+    {{notification.body}}
+  </p>
+  
+  <div class="selector" *ngIf="notification.type == 'trip-ack'">
+    <span class="glyphicon glyphicon-ok"></span><span class="glyphicon glyphicon-remove"> </span>
+  </div>
+</div>
