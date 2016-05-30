@@ -5,7 +5,6 @@ import { HTTP_PROVIDERS } from '@angular/http';
 
 import {LoggedInRouterOutlet} from './LoggedInOutlet';
 import { AuthService } from './tripy_go_lib/services/auth.service';
-import { PushNotificationComponent } from 'ng2-notifications/ng2-notifications';
 
 
 // Import Components
@@ -27,7 +26,7 @@ import { TravelPage } from './components/travelPage/index';
   templateUrl: 'app/front-office-a2.html',
   styleUrls: ['app/components/front-office-a2.css'],
   providers: [HTTP_PROVIDERS],
-  directives: [Header, CmptFooter, LoggedInRouterOutlet, PushNotificationComponent],
+  directives: [Header, CmptFooter, LoggedInRouterOutlet],
   pipes: []
 })
 @RouteConfig([
