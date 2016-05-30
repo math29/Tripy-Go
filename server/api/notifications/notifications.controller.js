@@ -49,6 +49,12 @@ exports.tripAck = function(req, res) {
           if(indexNotif != -1) {
             user.notifications.splice(indexNotif, 1);
           }
+          var participants = [];
+          for(var i = 0; i < travel.partners.length; i++) {
+            if(travel.partners[i].status == 'OK')participants.push(travel.partners[i].user);
+          }
+          participants.push(travel.author);
+          notifyOtherTripys(true, user.name, travel._id, [travel.author]);
           user.save(function(err){});
           return res.status(201).json({status: 201, data:'Vous avez accepté le voyage'});
         });
@@ -62,7 +68,9 @@ exports.tripAck = function(req, res) {
             user.notifications.splice(indexNotif, 1);
           }
           user.save(function(err){});
+
           travel.partners.splice(index, 1);
+          notifyOtherTripys(false, user.name, travel._id, [travel.author]);
           travel.save(function(err) {});
           return res.status(200).json({status: 200, data: 'Vous avez refusé l\'invitation'});
         })
@@ -73,6 +81,36 @@ exports.tripAck = function(req, res) {
       return res.status(400).json({status: 400, data: 'Le voyage n\'existe pas, ou vous n\'y êtes pas convié'});
     }
   })
+}
+
+function notifyOtherTripys(success, new_name, travelId, ids){
+  if(success){
+    User.find({_id: {$in: ids}}, function(err, users){
+      if(err){
+          return
+      }
+      for(var i = 0; i< users.length; i++) {
+        users[i].notifications.push(
+          {title: 'Nouveau partenaire',
+          body: new_name + ' viens de rejoindre votre voyage',
+          link: '/travel/'+travelId});
+        users[i].save(function(err){});
+      }
+    });
+  }else {
+    User.findOne({_id: {$in: [ids]}}, function(err, user){
+      if(err){
+          return
+      }
+
+        user.notifications.push(
+          {title: 'Nouveau partenaire',
+          body: new_name + ' viens de refuser votre invitation',
+          link: '/travel/'+travelId});
+        user.save(function(err){});
+    });
+  }
+
 }
 
 function handleError(res, err) {
