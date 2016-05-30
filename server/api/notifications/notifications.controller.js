@@ -17,7 +17,7 @@ exports.show = function(req, res) {
 
 // L'utilisateur dit qu'il à bien vu la notification
 exports.acknowledge = function(req, res) {
-  User.update({_id: req.user._id , template:'normal'}, {$pull :{'notifications': { _id: req.params.id}}}, function(err, updated) {
+  User.update({_id: req.user._id , 'notifications.template':'normal'}, {$pull :{'notifications': { _id: req.params.id}}}, function(err, updated) {
     if(err) {
       handleError(res, err);
     }
@@ -31,9 +31,9 @@ exports.tripAck = function(req, res) {
       return handleError(res, err);
     }
     if(travel) {
+      var index = _.findIndex(travel.partners, function(o) {return o.user == req.user._id});
       if(req.params.status == 'OK') {
-        var index = _.findIndex(travel.partners, function(o) {
-          return o.user == req.user._id});
+
         if(index != -1) {
           travel.partners[index].status = 'OK';
         }
@@ -53,7 +53,19 @@ exports.tripAck = function(req, res) {
           return res.status(201).json({status: 201, data:'Vous avez accepté le voyage'});
         });
       }else if(req.params.status == 'NOK') {
-
+        User.findById(req.user._id, function(err, user) {
+          if(err) {
+            return handleError(res, err);
+          }
+          var indexNotif = _.find(user.notifications, function(o){return o.link == travel._id});
+          if(indexNotif != -1) {
+            user.notifications.splice(indexNotif, 1);
+          }
+          user.save(function(err){});
+          travel.partners.splice(index, 1);
+          travel.save(function(err) {});
+          return res.status(200).json({status: 200, data: 'Vous avez refusé l\'invitation'});
+        })
       }else {
         return res.status(500).json({status: 500, data: 'Je ne comprends pas votre réponse'});
       }
