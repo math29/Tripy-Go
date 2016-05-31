@@ -10,8 +10,8 @@ var events = ['save', 'remove'];
 
 exports.register = function(socket, connected) {
   User.schema.post('save', function (doc) {
-    console.log('save ' + doc._id);
-    console.log('id: '+ socket.id + ' '+socket.decoded_token._id);
+    //console.log('save ' + doc._id);
+    //console.log('id: '+ socket.id + ' '+socket.decoded_token._id);
     onSave(socket, doc, connected);
   });
 
@@ -24,7 +24,7 @@ exports.register = function(socket, connected) {
 function onSave(socket, doc, connected) {
   //return function(){
     if(doc.notifications.length > 0) {
-      console.log('emit notification');
+      //console.log('emit notification');
       if(connected[doc._id]){
         connected[doc._id].emit('notifications', doc.notifications);
       }
