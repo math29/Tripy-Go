@@ -48,6 +48,11 @@ export class Header {
 		});
 	}
 
+	/**
+	 * Aquitte une notification
+	 *
+	 * @param notification : notificiation à aquitter
+	 */
 	ackNotif( notification : any) {
 		if(notification.template != 'trip-ack') {
 			this.notificationService.ackNotification(notification._id)
@@ -55,6 +60,9 @@ export class Header {
 					for(let i = 0; i < this.notifications.length; i++) {
 						if(this.notifications[i]._id == notification._id) {
 							this.notifications.splice(i, 1);
+							if(notification.link) {
+								this._router.navigateByUrl(notification.link);
+							}
 							return;
 						}
 					}
