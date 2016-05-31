@@ -15,6 +15,7 @@ export class SocketService implements OnDestroy{
   socketObservable$: Observable<any>;
   socketObserver: any;
   private config: SocketIOClient.ConnectOpts;
+  private notifications : any = [];
 
   constructor() {
     this.config = {};
@@ -38,14 +39,31 @@ export class SocketService implements OnDestroy{
     this.socket.emit('authenticate', {token: localStorage.getItem('jwt')});
 
     this.socket.on('notifications', (data: any) => {
-      console.log(data);
-      for(let i = 0; i < data.length; i++) {
-        this.createNotification(data[i].title, data[i].body, '');
+      let new_notifs = this.addNotifications(data);
+      for(let i = 0; i < new_notifs.length; i++) {
+        this.createNotification(new_notifs[i].title, new_notifs[i].body, '');
       }
       this.socketObserver.next({channel:'notifications', data: data});
 
     });
-    console.log(this.socket);
+  }
+
+  /**
+   * Filter to show only new notifications
+   *
+   * @param {data} notifications received by socket
+   * @return new notifications array
+   */
+  addNotifications(data : any) : any{
+    let newNotifs = [];
+    for(let i = 0; i < data.length; i++) {
+      let index = _.findIndex(this.notifications, function(o){return o['_id'] == data[i]['_id'];});
+      if(index == -1) {
+        newNotifs.push(data[i]);
+        this.notifications.push(data[i]);
+      }
+    }
+    return newNotifs;
   }
 
   createNotification(title: string, body: string, img: string) {
