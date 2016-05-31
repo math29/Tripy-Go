@@ -114,9 +114,6 @@ function notifyOtherTripys(success, new_name, travelId, ids){
 
     });
   }
-
-}
-
 function handleError(res, err) {
   return res.status(500).json({status: 500 , data: err});
 }
