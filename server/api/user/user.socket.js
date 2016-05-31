@@ -6,19 +6,19 @@
 
 var User = require('./user.model');
 
+var events = ['save', 'remove'];
+
 exports.register = function(socket, connected) {
   User.schema.post('save', function (doc) {
     console.log('save ' + doc._id);
     console.log('id: '+ socket.id + ' '+socket.decoded_token._id);
     onSave(socket, doc, connected);
   });
-  User.schema.post('update', function (doc) {
-    console.log('update');
-      onSave(socket, doc, connected);
-    });
+
   User.schema.post('remove', function (doc) {
     onRemove(socket, doc);
   });
+
 };
 
 function onSave(socket, doc, connected) {

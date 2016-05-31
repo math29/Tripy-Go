@@ -22,6 +22,7 @@ export class SocketService implements OnDestroy{
     this.config.path = '/socket.io-client';
     this.config.reconnection = true;
     this.config.reconnectionDelay = 1000;
+    this.config.forceNew = true;
     this.url = window.location.origin;
     this.socket = io.connect(this.url, this.config);
     this.socket.removeAllListeners();

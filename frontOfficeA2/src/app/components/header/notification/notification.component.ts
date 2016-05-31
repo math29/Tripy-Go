@@ -7,7 +7,7 @@ import { TravelService } from '../../travelPage/services/travel.service';
     templateUrl: 'app/components/header/notification/notification.component.html',
     directives: [],
     providers: [ TravelService],
-    styleUrls: [],
+    styleUrls: ['app/components/header/notification/notification.component.css'],
     pipes: []
 })
 
