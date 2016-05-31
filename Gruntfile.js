@@ -740,6 +740,32 @@ module.exports = function (grunt) {
       options: {
 
       },
+      front_css_dev: {
+        options: {
+          transform: function(filePath) {
+            filePath = filePath.replace('/frontOfficeA2/dist/', '');
+            return '<link rel="stylesheet" href="' + filePath + '">';
+          },
+          starttag: '<!-- injector:css -->',
+          endtag: '<!-- endinjector -->'
+        },
+        files: {
+          '<%= yeoman.front_office_dist %>/index.html': ['<%= yeoman.front_office_css %>']
+        }
+      },
+      front_css_dist: {
+        options: {
+          transform: function(filePath) {
+            filePath = filePath.replace('./frontOfficeA2/src/', '');
+            return '<link rel="stylesheet" href="' + filePath + '">';
+          },
+          starttag: '<!-- injector:css -->',
+          endtag: '<!-- endinjector -->'
+        },
+        files: {
+          '<%= yeoman.front_office_dist %>/index.html': ['<%= yeoman.front_office_dist %>/assets/css/built.css']
+        }
+      },
       back_css: {
         options: {
           transform: function(filePath) {
@@ -941,15 +967,32 @@ module.exports = function (grunt) {
     'copy:back_office_inner'
   ]);
 
-  grunt.registerTask('front_office', [
-    'copy:tripy_go_lib',
-    'copy:front_office_base',
-    'copy:front_office_lib',
-    'copy:front_office_vendor',
-    'copy:front_office_vendor_npm',
-    'concat:front_css',
-    'ts:front_office'
-  ]);
+  grunt.registerTask('front_office', function(target) {
+    console.log('target: ' + target);
+    if(target == 'dist') {
+      return grunt.task.run([
+        'copy:tripy_go_lib',
+        'copy:front_office_base',
+        'copy:front_office_lib',
+        'copy:front_office_vendor',
+        'copy:front_office_vendor_npm',
+        'concat:front_css',
+        'injector:front_css_dist',
+        'ts:front_office'
+      ]);
+    }else {
+      return grunt.task.run([
+        'copy:tripy_go_lib',
+        'copy:front_office_base',
+        'copy:front_office_lib',
+        'copy:front_office_vendor',
+        'copy:front_office_vendor_npm',
+        'injector:front_css_dev',
+        'ts:front_office'
+      ]);
+    }
+
+  });
 
   grunt.registerTask('build', [
     'clean:dist',
@@ -957,7 +1000,7 @@ module.exports = function (grunt) {
     'injector',
     // 'wiredep',
     'useminPrepare',
-    'front_office',
+    'front_office:dist',
     'back_office',
     'autoprefixer',
     'copy:dist',
