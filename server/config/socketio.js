@@ -34,7 +34,7 @@ function onConnect(socket) {
   socket.on('info', function (data) {
     logger.info('[%s] %s', socket.address,JSON.stringify(data, null, 2));
   });
-  console.log(JSON.stringify(socket.decoded_token._id));
+  //console.log(JSON.stringify(socket.decoded_token._id));
   // Insert sockets below
   require('../api/promo/promo.socket').register(socket);
   require('../api/timeline/timeline.socket').register(socket);
@@ -67,7 +67,6 @@ function onConnect(socket) {
 }
 
 module.exports = function (socketio) {
-  console.log("EXPORT");
   // socket.io (v1.x.x) is powered by debug.
   // In order to see all the debug output, set DEBUG (in server/config/local.env.js) to including the desired scope.
   //
@@ -87,8 +86,8 @@ module.exports = function (socketio) {
     secret: config.secrets.session,
     timeout: 5000
   })).on('authenticated', function (socket) {
-    console.log('auth');
-    console.log(socket.decoded_token); // bar
+    //console.log('auth');
+    //console.log(socket.decoded_token); // bar
 
     connected[socket.decoded_token._id] = socket;
     socket.address = socket.handshake.address !== null ?
