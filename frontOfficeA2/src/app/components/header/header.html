@@ -21,7 +21,7 @@
               <a href="#" class="dropdown-toggle transition-effect" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-bell"></span> <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li *ngFor="let notification of notifications">
-                    <notification [notification]="notification"></notification>
+                    <notification [notification]="notification" (click)="ackNotif(notification)"></notification>
                 </li>
                 <li><a href="" [routerLink]="['AboutUs']">L'équipe</a></li>
                 <li><a href="#">Le concept</a></li>

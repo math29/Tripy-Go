@@ -5,6 +5,7 @@ import { AuthService } from '../../tripy_go_lib/services/auth.service'
 import { NotificationCmp } from './notification/notification.component';
 import { Stepbar } from './stepbar/stepbar';
 import { SocketService } from '../../tripy_go_lib/services/socket.service';
+import { NotificationService } from '../../services/notifications.service';
 
 @Component({
 	selector: 'header',
@@ -20,7 +21,7 @@ export class Header {
 	_router: Router;
 	notifications: any = [];
 
-	constructor(private _auth: AuthService, _router: Router, private socketService: SocketService) {
+	constructor(private _auth: AuthService, _router: Router, private socketService: SocketService, private notificationService : NotificationService) {
 		this._router = _router;
 		this.socketService.socketObservable$.subscribe(updateCompany => {
 			let response = updateCompany;
@@ -45,5 +46,20 @@ export class Header {
 					this.step = i+1;
 			}
 		});
+	}
+
+	ackNotif( notification : any) {
+		if(notification.template != 'trip-ack') {
+			this.notificationService.ackNotification(notification._id)
+				.subscribe(success => {
+					for(let i = 0; i < this.notifications.length; i++) {
+						if(this.notifications[i]._id == notification._id) {
+							this.notifications.splice(i, 1);
+							return;
+						}
+					}
+				}, error => {});
+		}
+
 	}
 }

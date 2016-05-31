@@ -22,12 +22,14 @@ exports.register = function(socket, connected) {
 };
 
 function onSave(socket, doc, connected) {
-  if(doc.notifications.length > 0) {
-    console.log('emit notification');
-    if(connected[doc._id]){
-      connected[doc._id].emit('notifications', doc.notifications);
+  //return function(){
+    if(doc.notifications.length > 0) {
+      console.log('emit notification');
+      if(connected[doc._id]){
+        connected[doc._id].emit('notifications', doc.notifications);
+      }
     }
-  }
+  //}
 }
 
 /**

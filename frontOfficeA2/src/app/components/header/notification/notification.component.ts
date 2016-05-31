@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
+import { TravelService } from '../../travelPage/services/travel.service';
 
 @Component({
     selector: 'notification',
     templateUrl: 'app/components/header/notification/notification.component.html',
     directives: [],
-    providers: [],
+    providers: [ TravelService],
     styleUrls: [],
     pipes: []
 })
@@ -12,7 +13,7 @@ import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angu
 export class NotificationCmp implements OnInit, OnDestroy {
   @Input() notification: any;
 
-  constructor() {}
+  constructor(private travelService: TravelService) {}
 
   ngOnInit() {
   }
@@ -20,4 +21,21 @@ export class NotificationCmp implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
+  acceptTravel(travel_id : string) : void{
+    this.travelService.replyTravel(true, travel_id)
+      .subscribe(success => {
+
+      }, error => {
+
+      });
+  }
+
+  rejectTravel(travel_id : string) {
+    this.travelService.replyTravel(false, travel_id)
+      .subscribe(success => {
+
+      }, error => {
+
+      });
+  }
 }
