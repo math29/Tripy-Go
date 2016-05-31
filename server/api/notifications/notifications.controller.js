@@ -84,30 +84,26 @@ exports.tripAck = function(req, res) {
 }
 
 function notifyOtherTripys(success, new_name, travelId, ids){
-  if(success){
     User.find({_id: {$in: ids}}, function(err, users){
       if(err){
           return
       }
-      for(var i = 0; i< users.length; i++) {
-        users[i].notifications.push(
-          {title: 'Nouveau partenaire',
-          body: new_name + ' viens de rejoindre votre voyage',
-          link: '/travel/'+travelId});
-        users[i].save(function(err){});
-      }
-    });
-  }else {
-    User.findOne({_id: {$in: [ids]}}, function(err, user){
-      if(err){
-          return
-      }
-
+      if(success) {
+        for(var i = 0; i< users.length; i++) {
+          users[i].notifications.push(
+            {title: 'Nouveau partenaire',
+            body: new_name + ' viens de rejoindre votre voyage',
+            link: '/travel/'+travelId});
+          users[i].save(function(err){});
+        }
+      } else {
         user.notifications.push(
           {title: 'Nouveau partenaire',
           body: new_name + ' viens de refuser votre invitation',
           link: '/travel/'+travelId});
         user.save(function(err){});
+      }
+
     });
   }
 
