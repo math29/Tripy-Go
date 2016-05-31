@@ -743,7 +743,7 @@ module.exports = function (grunt) {
       front_css_dev: {
         options: {
           transform: function(filePath) {
-            filePath = filePath.replace('/frontOfficeA2/dist/', '');
+            filePath = filePath.replace('./frontOfficeA2/src/', '');
             return '<link rel="stylesheet" href="' + filePath + '">';
           },
           starttag: '<!-- injector:css -->',
@@ -879,7 +879,6 @@ module.exports = function (grunt) {
       'copy:tripy_go_lib',
       'front_office',
       'back_office',
-      'injector',
       // 'wiredep',
       'autoprefixer',
       'express:dev',
@@ -915,7 +914,6 @@ module.exports = function (grunt) {
         'clean:server',
         'env:all',
         'concurrent:test',
-        'injector',
         'autoprefixer',
         'karma'
       ]);
@@ -927,7 +925,6 @@ module.exports = function (grunt) {
         'env:all',
         'env:test',
         'concurrent:test',
-        'injector',
         'wiredep',
         'autoprefixer',
         'express:dev',
@@ -997,21 +994,13 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'concurrent:dist',
-    'injector',
-    // 'wiredep',
     'useminPrepare',
     'front_office:dist',
     'back_office',
     'autoprefixer',
     'copy:dist',
-    /*'cdnify',
-    'cssmin',
-    'uglify',
-    'rev',
-    'usemin',*/
     'mkdir',
     'touch'
-    //'useminBack'
   ]);
 
 
