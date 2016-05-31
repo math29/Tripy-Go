@@ -74,6 +74,15 @@ module.exports = function (grunt) {
         '<%= yeoman.back_office %>/app/styles/timeline.css',
         '<%= yeoman.back_office %>/app/styles/main.css',
         'node_modules/jquery-ui-bundle/jquery-ui.min.css'
+      ],
+      front_office_css: [
+        '<%= yeoman.front_office_A2 %>/assets/css/animate.min.css',
+        '<%= yeoman.front_office_A2 %>/assets/css/bootstrap-select.min.css',
+        '<%= yeoman.front_office_A2 %>/assets/css/owl.carousel.css',
+        '<%= yeoman.front_office_A2 %>/assets/css/owl-carousel-theme.css',
+        '<%= yeoman.front_office_A2 %>/assets/css/flexslider.css',
+        '<%= yeoman.front_office_A2 %>/assets/css/style.css',
+        '<%= yeoman.front_office_A2 %>/assets/css/light.css'
       ]
     },
     ts: {
@@ -98,10 +107,10 @@ module.exports = function (grunt) {
     },
     concat: {
       options: {
-        separator: ';',
-        sourceMap: true,
+        separator: '\n',
+        sourceMap: false,
         process: function(src, filepath) {
-         return '// Source: ' + filepath + '\n' +
+         return '/* Source: ' + filepath + '*/\n' +
            src.replace(/\/\*\#.*\*\//g, '');
        }
       },
@@ -109,6 +118,10 @@ module.exports = function (grunt) {
         src: '<%= yeoman.back_office_css %>',
         dest: '<%= yeoman.back_office_dist %>/styles/built.css',
       },
+      front_css: {
+        src: '<%= yeoman.front_office_css %>',
+        dest: '<%= yeoman.front_office_dist %>/assets/css/built.css'
+      }
     },
     express: {
       options: {
@@ -934,6 +947,7 @@ module.exports = function (grunt) {
     'copy:front_office_lib',
     'copy:front_office_vendor',
     'copy:front_office_vendor_npm',
+    'concat:front_css',
     'ts:front_office'
   ]);
 
