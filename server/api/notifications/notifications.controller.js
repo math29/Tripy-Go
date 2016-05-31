@@ -83,6 +83,14 @@ exports.tripAck = function(req, res) {
   })
 }
 
+/**
+ * Notify other partners
+ *
+ * @param {success} does the user accept or reject the offer
+ * @param {new_name} name of the user
+ * @param { travelId } id of the travel
+ * @param {ids} array of id of other partners
+ */
 function notifyOtherTripys(success, new_name, travelId, ids){
     User.find({_id: {$in: ids}}, function(err, users){
       if(err){
