@@ -100,10 +100,10 @@ exports.changePassword = function(req, res) {
       user.password = newPass;
       user.save(function(err) {
         if (err) return validationError(res, err);
-        res.status(200).send('OK');
+        res.status(200).json({data: 'OK', status: 200});
       });
     } else {
-      res.status(403).send('Forbidden');
+      res.status(202).json({data: 'No accepted', status: 202});
     }
   });
 };

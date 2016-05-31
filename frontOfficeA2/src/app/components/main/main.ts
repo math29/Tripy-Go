@@ -140,6 +140,7 @@ export class Main implements AfterViewInit, OnInit {
 						.subscribe(response => {
 							// Find the Short Code Country
 							var country_code = self.getCountryCode(response);
+							console.log(response);
 
 							self._http.get('/api/countries/country_code/' + country_code, self.options_post)
 								.map(res => res.json())
