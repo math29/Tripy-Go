@@ -60,6 +60,7 @@ export class Header {
 					for(let i = 0; i < this.notifications.length; i++) {
 						if(this.notifications[i]._id == notification._id) {
 							this.notifications.splice(i, 1);
+							// on redirige l'utilisateur vers le lien associé à la notification
 							if(notification.link) {
 								this._router.navigateByUrl(notification.link);
 							}

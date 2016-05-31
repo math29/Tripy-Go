@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
+import { ROUTER_DIRECTIVES, Router } from '@angular/router-deprecated';
 import { TravelService } from '../../travelPage/services/travel.service';
 
 @Component({
@@ -13,7 +14,7 @@ import { TravelService } from '../../travelPage/services/travel.service';
 export class NotificationCmp implements OnInit, OnDestroy {
   @Input() notification: any;
 
-  constructor(private travelService: TravelService) {}
+  constructor(private travelService: TravelService, private router: Router) {}
 
   ngOnInit() {
   }
@@ -24,7 +25,7 @@ export class NotificationCmp implements OnInit, OnDestroy {
   acceptTravel(travel_id : string) : void{
     this.travelService.replyTravel(true, travel_id)
       .subscribe(success => {
-
+        this.router.navigateByUrl(`/travel/${travel_id}`);
       }, error => {
 
       });
