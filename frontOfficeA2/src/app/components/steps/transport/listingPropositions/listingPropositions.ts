@@ -8,9 +8,7 @@ import { Http, RequestOptions, Headers } from '@angular/http';
 import { AuthService } from '../../../../tripy_go_lib/services/auth.service';
 import { TransportComparatorCmp } from './transport-comparator/transport-comparator';
 
-import { filterTypeTransport } from '../../../../pipes/filterTypeTransport.pipe';
-import { filterRangeRate } from '../../../../pipes/filterRangeRate.pipe';
-import { OrderBy } from '../../../../pipes/orderBy.pipe';
+import { FilterComparatorsService } from '../../../../services/filterComparators.service';
 
 declare var jQuery: any;
 declare var $: any;
@@ -23,13 +21,13 @@ declare var $: any;
 		'app/components/steps/transport/listingPropositions/listingPropositions.css'
 	],
     encapsulation: ViewEncapsulation.None,
-	providers: [],
-	directives: [RouterLink, TransportComparatorCmp],
-	pipes: [filterTypeTransport, filterRangeRate, OrderBy]
+	providers: [FilterComparatorsService],
+	directives: [RouterLink, TransportComparatorCmp]
 })
 export class ListingPropositions {
 	travel_id: String;
 	comparators: Array<TransportComparator>;
+	allComparators: Array<TransportComparator>;
 
 	options_post: RequestOptions;
 
@@ -43,7 +41,7 @@ export class ListingPropositions {
 	order: string = 'content_score';
 	orderDir: string = '-';
 
-	constructor(private el: ElementRef, private params: RouteParams, private _http: Http, private _auth: AuthService) {
+	constructor(private el: ElementRef, private params: RouteParams, private _http: Http, private _auth: AuthService, private filter: FilterComparatorsService) {
 		this.travel_id = params.get('id');
 
 		this.options_post = new RequestOptions({ headers: _auth.getBearerHeaders() });
@@ -61,6 +59,7 @@ export class ListingPropositions {
 			slide: (event, ui) => {
 				this.ergonomyRange = ui.values;
 				ergonomy_range.val(ui.value);
+				this.exec_filter();
 			}
         });
 
@@ -73,9 +72,9 @@ export class ListingPropositions {
 			slide: (event, ui) => {
 				this.contentRange = ui.values;
 				content_range.val(ui.value);
+				this.exec_filter();
 			}
         });
-				console.log(this.filterTypeChecked);
 	}
 
 	// ***************************************
@@ -90,6 +89,7 @@ export class ListingPropositions {
 					comparators[i].ergo_score = comparators[i].transport.ergo_rate.score;
 					comparators[i].content_score = comparators[i].transport.content_rate.score;
 				}
+				this.allComparators = comparators;
 				this.comparators = comparators;
 			});
 	}
@@ -129,15 +129,26 @@ export class ListingPropositions {
 				this.filterTypeChecked.push(x);
 			}
 		}
+		this.exec_filter();
 	}
 
 	// Order
 	onOrderChange(deviceValue) {
 		this.order = deviceValue;
+		this.exec_filter();
 	}
 
 	onOrderDirChange(deviceValue) {
 		this.orderDir = deviceValue;
+		this.exec_filter();
+	}
+
+	// EXEC FILTER
+	exec_filter(){
+		this.comparators = this.filter.exec(
+			this.allComparators, this.ergonomyRange,
+			this.contentRange, this.filterTypeChecked,
+			this.order, this.orderDir);
 	}
 }
 

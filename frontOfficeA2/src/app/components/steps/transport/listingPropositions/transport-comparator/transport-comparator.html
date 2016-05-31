@@ -44,7 +44,7 @@
 			</div>
 		</div>
 		<!-- *ngIf="comments" -->
-		<div class="col-md-2 col-sm-2 booking-box clear-padding text-center" (click)="dump()">
+		<div class="col-md-2 col-sm-2 booking-box clear-padding text-center">
 			<div class="rating-box">
 				<i class="fa fa-star"></i>
 				<i class="fa fa-star"></i>
@@ -67,7 +67,6 @@
 		</div>
 	</div>
 	<div *ngIf="comments" class="col-md-12 col-sm-12 clear-padding list-comments">
-
 		<div *ngFor="let comment of comparator.transport.comments">
 			<comparatorComment [comment]="comment"></comparatorComment>
 		</div>

@@ -6,7 +6,7 @@
     "title": "API to travel all around the world"
   },
   "dependencies": {
-    "angular2-jwt": "^0.1.12",
+    "angular2-jwt": "^0.1.14",
     "body-parser": "~1.5.0",
     "busboy-body-parser": "0.0.9",
     "composable-middleware": "^0.3.0",
@@ -125,7 +125,7 @@
     "karma-requirejs": "~0.2.1",
     "karma-script-launcher": "~0.1.0",
     "marked": "^0.3.5",
-    "ng2-bootstrap": "^1.0.14",
+    "ng2-bootstrap": "^1.0.16",
     "ng2-charts": "^1.0.3",
     "ng2-file-upload": "1.0.3",
     "open": "~0.0.4",
@@ -138,7 +138,7 @@
     "time-grunt": "~0.3.1",
     "tinymce": "^4.3.12",
     "to-markdown": "^3.0.0",
-    "typescript": "^1.7.5",
+    "typescript": "^1.8.9",
     "typings": "^0.6.10"
   },
   "engines": {

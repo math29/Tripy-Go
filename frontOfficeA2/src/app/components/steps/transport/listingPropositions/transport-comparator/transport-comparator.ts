@@ -37,13 +37,6 @@ export class TransportComparatorCmp {
 		this.synchComments();
 	}
 
-	dump(){
-		console.log(this.comment_offset);
-		console.log(this.comment_limit);
-		console.log("Comment limit : " + this.comment_limit);
-		console.log("Number comments : " + this.number_comments);
-	}
-
 	synchComments() {
 		this._http.get(`/api/comparators/comments/transport/${this.comparator._id}/${this.comment_limit}/${this.comment_offset}`, this.options_post)
 			.map(res => res.json())

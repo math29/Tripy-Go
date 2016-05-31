@@ -8,7 +8,8 @@
 /*********************************************************
 	TABLE OF CONTENTS
 	1. START WITH CONTENT
-	2. ADVICE SECTION CONTENT
+	2. HOW IT WORKS CONTENT
+	3. ADVICE SECTION CONTENT
 **********************************************************/
 
 /*********************************************************
@@ -200,23 +201,36 @@
 
 
 /*********************************************************
-			2. ADVICE SECTION CONTENT
+			2. HOW IT WORKS CONTENT
+**********************************************************/
+.work-step i {
+	background: none;
+	color: #f9676b;
+}
+
+.work-step h3 {
+	margin-bottom: 30px;
+}
+
+@media screen and (min-width: 1000px) {
+    .work-step h3 {
+		margin-bottom: 50px;
+	}
+}
+
+.work-step i img {
+	height: 70px;
+	width: 80px;
+}
+
+
+/*********************************************************
+			3. ADVICE SECTION CONTENT
 **********************************************************/
 
 .top-advice {
 	padding: 60px 0px;
 	color: #fff;
-}
-
-.top-advice .work-step i ,
-.top-advice .work-step .first-step:after,
-.top-advice .work-step .second-step:before{
-	background: #00adef !important;
-}
-
-.top-advice .work-step .second-step:after,
-.top-advice .work-step .third-step:before {
-	display: none;
 }
 
 #advice-row {
