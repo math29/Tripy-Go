@@ -2,22 +2,29 @@
  * Broadcast updates to client when the model changes
  */
 
-'use strict';
+ 'use strict';
 
-var Location = require('./location.model');
+ var LocationEvents = require('./location.event');
+ var events = ['save' , 'remove'];
+
 exports.register = function(socket) {
-  Location.schema.post('save', function (doc) {
-    onSave(socket, doc);
-  });
-  Location.schema.post('remove', function (doc) {
-    onRemove(socket, doc);
-  });
+  for(var i = 0, eventsLength = events.length; i < eventsLength; i++) {
+    var event = events[i];
+    var listener = createListener( 'location:' + event, socket);
+
+    LocationEvents.on(event, listener);
+    socket.on('disconnect', removeListener(event, listener));
+  }
+};
+
+function createListener(event, socket) {
+  return function(doc) {
+    socket.emit(event, doc);
+  }
 }
 
-function onSave(socket, doc, cb) {
-  socket.emit('location:save', doc);
-}
-
-function onRemove(socket, doc, cb) {
-  socket.emit('location:remove', doc);
+function removeListener(event, listener) {
+  return function() {
+    LocationEvents.removeListener(event, listener);
+  }
 }

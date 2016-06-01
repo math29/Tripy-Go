@@ -8,12 +8,7 @@ var TravelEvents = require('./travel.event');
 var events = ['save' , 'remove'];
 
 exports.register = function(socket, connected) {
-  /*Travel.schema.post('save', function (doc) {
-    onSave(socket, doc, connected);
-  });
-  Travel.schema.post('remove', function (doc) {
-    onRemove(socket, doc, connected);
-  });*/
+
   for(var i = 0, eventsLength = events.length; i < eventsLength; i++) {
     var event = events[i];
     var listener = createListener( 'travel:' + event, socket);

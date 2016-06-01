@@ -124,7 +124,6 @@ export class TravelPage implements OnInit, OnDestroy {
         // travel will not be removed for moment
         break;
       case 'travel:save':
-        console.log(socketResponse.data);
         this.onTravelChange(socketResponse.data);
         break;
       default:

@@ -4,24 +4,27 @@
 
 'use strict';
 
-var Timeline = require('./timeline.model');
+var TimelineEvents = require('./timeline.event');
+var events = ['save' , 'remove'];
 
 exports.register = function(socket) {
-  Timeline.schema.post('save', function (doc) {
-    onSave(socket, doc);
-  });
-  Timeline.schema.post('remove', function (doc) {
-    onRemove(socket, doc);
-  });
-  Timeline.schema.post('findOneAndUpdate', function(doc){
-    onSave(socket, doc);
-  });
+  for(var i = 0, eventsLength = events.length; i < eventsLength; i++) {
+    var event = events[i];
+    var listener = createListener( 'timeline:' + event, socket);
+
+    TimelineEvents.on(event, listener);
+    socket.on('disconnect', removeListener(event, listener));
+  }
 };
 
-function onSave(socket, doc) {
-  socket.emit('timeline:save', doc);
+function createListener(event, socket) {
+  return function(doc) {
+    socket.emit(event, doc);
+  }
 }
 
-function onRemove(socket, doc) {
-  socket.emit('timeline:remove', doc);
+function removeListener(event, listener) {
+  return function() {
+    TimelineEvents.removeListener(event, listener);
+  }
 }
