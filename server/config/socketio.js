@@ -42,7 +42,7 @@ function onConnect(socket) {
   require('../api/location/location.socket').register(socket);
   require('../api/transport/transport.socket').register(socket);
   require('../api/hashtag/hashtag.socket').register(socket);
-  require('../api/travel/travel.socket').register(socket);
+  require('../api/travel/travel.socket').register(socket, connected);
 
   require('../api/thing/thing.socket').register(socket);
   require('../api/language/language.socket').register(socket);
