@@ -3,5 +3,5 @@
 }
 
 .router-outlet {
-	min-height: calc(100% - 55px - 81px);
+	min-height: calc(100% - 57px - 81px);
 }

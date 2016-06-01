@@ -36,7 +36,10 @@ export class TravelPage implements OnInit, OnDestroy {
   private travel_name : string;
 
   private sites: any;
+
   private map : any;
+  private map_width: string = "70%";
+  private side_width: string = "30%";
 
   private localTravel : any;
   lat: number = 51.223858;
@@ -60,7 +63,7 @@ export class TravelPage implements OnInit, OnDestroy {
         this.map.setCenter({lat: this.lat, lng: this.lng});
         this.createMarkers();
         if(! this.localTravel.name) {
-          $('#myModal').modal('show');
+          this.lunchUpdateForm();
         }
       }, error => { console.log('error')});
   }
@@ -177,6 +180,10 @@ export class TravelPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+  }
+
+  lunchUpdateForm(){
+    $('#myModal').modal('show');
   }
 
   updateName(){
