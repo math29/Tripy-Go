@@ -5,6 +5,8 @@ import { SiteCmp } from './site.component';
 import { MemberService } from '../services/member.service';
 import { SiteService } from '../services/site.service';
 import { TravelService } from '../services/travel.service';
+import { SocketService } from '../../../tripy_go_lib/services/socket.service';
+
 import * as _ from 'lodash';
 
 // import google map
@@ -46,6 +48,7 @@ export class TravelPage implements OnInit, OnDestroy {
   constructor(private memberService : MemberService,
     private siteService: SiteService,
     private travelService : TravelService,
+    private socketService : SocketService,
      private params: RouteParams) {
     this.travelService.getThisOne(params.get('travel_id'))
       .subscribe(success => {
@@ -101,6 +104,63 @@ export class TravelPage implements OnInit, OnDestroy {
     center: {lat: -34.397, lng: 150.644},
     zoom: 8
   });
+
+  this.socketService.addListener('travel:remove');
+  this.socketService.addListener('travel:save');
+  this.socketService.socketObservable$.subscribe(socketResponse => {
+    switch(socketResponse.channel){
+      case 'travel:remove':
+        // travel will not be removed for moment
+        break;
+      case 'travel:save':
+        console.log('response: '+ JSON.stringify(socketResponse.data));
+        this.onTravelChange(socketResponse.data);
+        break;
+      default:
+    }
+  });
+  }
+
+  /* comparaison du voyage avant et après,
+   * pour ajouter, supprimer ou modifier le voyage en question
+   */
+  onTravelChange(new_travel : any) {
+    // check that it's the same travel that we are watching
+    if(new_travel._id != this.localTravel._id) {
+      return;
+    }
+    // update travel name
+    if(new_travel != this.localTravel.name) {
+      this.localTravel.name = new_travel.name;
+    }
+    // si les sites différent
+    if(! _.isEqual(new_travel.sites, this.localTravel.sites)) {
+      // liste des sites à ajouter
+      let notInOld = [];
+      let toRemove = [];
+      for(let i = 0 ; i < new_travel.sites.length; i++) {
+        let siteIndex = _.findIndex(this.localTravel.sites, function(o) { return o['site_id'] == new_travel.sites[i].site_id});
+        if(siteIndex == -1) {
+          notInOld.push(new_travel.sites[i]);
+        }
+      }
+      let self = this;
+      for(let i = 0; i < this.localTravel.sites.length; i++) {
+
+        let siteIndex = _.findIndex(new_travel.sites, function(o) {return o['site_id'] == self.localTravel.sites[i].site_id;});
+        if(siteIndex == -1){
+          toRemove.push(i);
+        }
+      }
+      // suppression des sites supprimés
+      for( let i = 0; i < toRemove.length; i++) {
+        this.localTravel.sites.splice(toRemove[i], 1);
+      }
+      for(let i = 0; i < notInOld.length; i++) {
+        console.log(notInOld[i]);
+        this.localTravel.sites.push(notInOld[i]);
+      }
+     }
   }
 
   addPartner(partner : any) {
