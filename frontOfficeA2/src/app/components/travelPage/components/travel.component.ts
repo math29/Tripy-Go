@@ -116,8 +116,8 @@ export class TravelPage implements OnInit, OnDestroy {
     zoom: 8
   });
 
-  this.socketService.addListener('travel:remove');
-  this.socketService.addListener('travel:save');
+  //this.socketService.addListener('travel:remove');
+  //this.socketService.addListener('travel:save');
   this.socketService.socketObservable$.subscribe(socketResponse => {
     switch(socketResponse.channel){
       case 'travel:remove':
@@ -147,13 +147,12 @@ export class TravelPage implements OnInit, OnDestroy {
 
       this.participants = [];
       this.participants.push({user: {name: this.localTravel.author.name, picture: this.localTravel.author.picture, _id: this.localTravel.author._id}, status:'author'});
-      console.log(new_travel.partners);
-      console.log(new_travel.partners.length);
+
       this.localTravel.partners = JSON.parse(JSON.stringify(new_travel.partners));
       for(let i = 0; i < this.localTravel.partners.length; i++){
         this.memberService.findById(this.localTravel.partners[i].user)
           .subscribe(success => {
-            let index = _.findIndex(this.participants, function(o){return o['user']._id == this.localTravel.partners[i].user});
+            let index = _.findIndex(this.participants, function(o){return o['user']._id == success._id});
             if(index == -1) {
               this.participants.push({user: {name: success.name, picture: success.picture, _id: this.localTravel.partners[i].user}, status: 'waiting'});
             }
