@@ -26,14 +26,25 @@ exports.show = function(req, res) {
 
 exports.addPartner = function(req, res) {
   var updateObj = {user: req.params.userId, status: 'waiting'};
-  Travel.update({_id: req.params.id,
+  Travel.findOne({_id: req.params.id,
     $or: [{ 'author':req.user._id }, {'partners.user': { $in : [req.user._id]}}],
     'partners.user': {$nin: [req.params.user_id]}},
-    {$push: {'partners': updateObj}}, function(err, travel) {
+     function(err, travel) {
     if(err) {
       return handleError(err, res);
     }
-    if(travel.nModified >= 1) {
+    var userIndex = _.findIndex(travel.partners, function(o) { return o.user == req.params.userId});
+    if(userIndex == -1 ) {
+      travel.partners.push(updateObj);
+      travel.save(function(err){});
+      User.findById(req.params.userId, function(err, user) {
+        if(err){
+          console.log(err);
+        }else {
+        user.notifications.push({title:'Nouveau voyage ', body: req.user.name + ' souhaite vous ajouter à son voyage' + (travel.name ? travel.name : ''), link: req.params.id, template: 'trip-ack'});
+        user.save(function(err){if(err){}});
+        }
+      });
       return res.status(201).json({status: 201, data: 'User added'});
     }else {
       return res.status(200).json({status: 204, data: 'Can\'t add friend'});
@@ -101,7 +112,7 @@ exports.destroy = function(req, res) {
 
 exports.addSite = function(req, res) {
   Travel.findOne({_id: req.params.travelId,
-    $or: [{'author': req.user._id}, {'partner.user': {$in: [req.user._id]}}]},
+    $or: [{'author': req.user._id}, {'partners.user': {$in: [req.user._id]}}]},
     function(err, travel) {
       if(err) {
         return handleError(err, res);
@@ -140,13 +151,17 @@ exports.addSite = function(req, res) {
 }
 
 exports.setName = function(req, res) {
-  Travel.update({_id: req.params.id, $or: [{author: req.user._id}, {'partners.user': {$in: [req.user._id]}}]},
-    {$set: {'name': req.params.name}}, function(err, travel) {
+  Travel.findOne({_id: req.params.id, $or: [{author: req.user._id}, {'partners.user': {$in: [req.user._id]}}]},
+    function(err, travel) {
       if(err) {
-        return handleError(err, res);
+        return handleError(res, err);
       }
+      if(req.params.name) {
+        travel.name = req.params.name;
+      }
+      travel.save(function(err){});
       return res.status(200).json({status: 200, data: 'Name updated'});
-    })
+    });
 }
 
 function handleError(res, err) {

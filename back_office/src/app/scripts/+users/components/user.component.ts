@@ -6,7 +6,7 @@ import { RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from '@angular/rout
 import {OrderByPipe} from '../../pipes/orderby';
 //import {ModalCmp} from '../../tripy-lib/components/modal/modal';
 import {StarsRateCmp} from '../../tripy-lib/components/rate/starsRate';
-import {SocketService} from '../../services/socket.service';
+import {SocketService} from '../../tripy-lib/index';
 
 @Component({
   selector: 'languages',

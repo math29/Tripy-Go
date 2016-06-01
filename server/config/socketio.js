@@ -6,10 +6,26 @@
 
 var config = require('./environment');
 var logger = require('./logger');
+var Member = require('../api/user/user.model');
+var connected = {};
 
 // When the user disconnects.. perform this
 function onDisconnect(socket) {
-  socket.emit('disconnected');
+  //socket.emit('disconnected');
+  socket.removeAllListeners();
+  delete connected[socket.decoded_token._id];
+  socket.disconnect();
+  Member.findById(socket.decoded_token._id,
+    function(err, user){
+      if(err) {
+        logger.error(err);
+      }
+      if(user){
+        user.connected = false;
+        user.save(function(err){});
+      }
+    }
+);
 }
 
 // When the user connects.. perform this
@@ -18,7 +34,7 @@ function onConnect(socket) {
   socket.on('info', function (data) {
     logger.info('[%s] %s', socket.address,JSON.stringify(data, null, 2));
   });
-
+  //console.log(JSON.stringify(socket.decoded_token._id));
   // Insert sockets below
   require('../api/promo/promo.socket').register(socket);
   require('../api/timeline/timeline.socket').register(socket);
@@ -26,7 +42,7 @@ function onConnect(socket) {
   require('../api/location/location.socket').register(socket);
   require('../api/transport/transport.socket').register(socket);
   require('../api/hashtag/hashtag.socket').register(socket);
-  require('../api/travel/travel.socket').register(socket);
+  require('../api/travel/travel.socket').register(socket, connected);
 
   require('../api/thing/thing.socket').register(socket);
   require('../api/language/language.socket').register(socket);
@@ -34,6 +50,20 @@ function onConnect(socket) {
   require('../api/transportType/transportType.socket').register(socket);
   require('../api/company/company.socket').register(socket);
   require('../api/comparators/comparators.socket').register(socket);
+  require('../api/user/user.socket').register(socket, connected);
+
+  Member.findById(socket.decoded_token._id,
+    function(err, user){
+      if(err) {
+        logger.error(err);
+      }
+      if(user){
+        user.connected = true;
+        user.save(function(err){});
+      }
+
+    }
+);
 }
 
 module.exports = function (socketio) {
@@ -52,7 +82,14 @@ module.exports = function (socketio) {
   //   handshake: true
   // }));
 
-  socketio.on('connection', function (socket) {
+  socketio.on('connection', require('socketio-jwt').authorize({
+    secret: config.secrets.session,
+    timeout: 5000
+  })).on('authenticated', function (socket) {
+    //console.log('auth');
+    //console.log(socket.decoded_token); // bar
+
+    connected[socket.decoded_token._id] = socket;
     socket.address = socket.handshake.address !== null ?
             socket.handshake.address.address + ':' + socket.handshake.address.port :
             process.env.DOMAIN;

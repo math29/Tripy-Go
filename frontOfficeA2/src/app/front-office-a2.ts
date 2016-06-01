@@ -6,6 +6,7 @@ import { HTTP_PROVIDERS } from '@angular/http';
 import {LoggedInRouterOutlet} from './LoggedInOutlet';
 import { AuthService } from './tripy_go_lib/services/auth.service';
 
+
 // Import Components
 import { Header } from './components/header/header';
 import { CmptFooter } from './components/cmptFooter/cmptFooter';

@@ -5,6 +5,8 @@ import { SiteCmp } from './site.component';
 import { MemberService } from '../services/member.service';
 import { SiteService } from '../services/site.service';
 import { TravelService } from '../services/travel.service';
+import { SocketService } from '../../../tripy_go_lib/services/socket.service';
+
 import * as _ from 'lodash';
 
 // import google map
@@ -49,6 +51,7 @@ export class TravelPage implements OnInit, OnDestroy {
   constructor(private memberService : MemberService,
     private siteService: SiteService,
     private travelService : TravelService,
+    private socketService : SocketService,
      private params: RouteParams) {
     this.travelService.getThisOne(params.get('travel_id'))
       .subscribe(success => {
@@ -69,6 +72,7 @@ export class TravelPage implements OnInit, OnDestroy {
   }
 
   createMarkers() {
+    var bounds = new google.maps.LatLngBounds();
       for(let i = 0; i < this.localTravel.transports.length; i++) {
         /*this.markers.push({lat: this.localTravel.transports[i].departure.loc[0],lng: this.localTravel.transports[i].departure.loc[1], label: this.localTravel.transports[i].departure.name });
         this.markers.push({lat: this.localTravel.transports[i].arrival.loc[0], lng: this.localTravel.transports[i].arrival.loc[1], label: this.localTravel.transports[i].arrival.name});
@@ -78,13 +82,13 @@ export class TravelPage implements OnInit, OnDestroy {
             map: this.map,
             title: 'Hello World!'
           });
-
+          bounds.extend(marker.getPosition());
           let marker1 = new google.maps.Marker({
               position: {lat: this.localTravel.transports[i].arrival.loc[0],lng: this.localTravel.transports[i].arrival.loc[1]},
               map: this.map,
               title: 'Hello World!'
             });
-
+          bounds.extend(marker1.getPosition());
             let flightPlanCoordinates = [
     marker.position,marker1.position
   ];
@@ -93,10 +97,12 @@ export class TravelPage implements OnInit, OnDestroy {
     geodesic: true,
     strokeColor: '#FF0000',
     strokeOpacity: 1.0,
-    strokeWeight: 2
+    strokeWeight: 2,
   });
         flightPath.setMap(this.map);
       }
+      this.map.fitBounds(bounds);
+
   }
 
   ngOnInit() {
@@ -104,13 +110,104 @@ export class TravelPage implements OnInit, OnDestroy {
     center: {lat: -34.397, lng: 150.644},
     zoom: 8
   });
+
+  this.socketService.addListener('travel:remove');
+  this.socketService.addListener('travel:save');
+  this.socketService.socketObservable$.subscribe(socketResponse => {
+    switch(socketResponse.channel){
+      case 'travel:remove':
+        // travel will not be removed for moment
+        break;
+      case 'travel:save':
+        this.onTravelChange(socketResponse.data);
+        break;
+      default:
+    }
+  });
+  }
+
+  /* comparaison du voyage avant et après,
+   * pour ajouter, supprimer ou modifier le voyage en question
+   */
+  onTravelChange(new_travel : any) {
+    let self = this;
+    // check that it's the same travel that we are watching
+    if(new_travel._id != this.localTravel._id) {
+      return;
+    }
+    // update travel name
+    if(new_travel != this.localTravel.name) {
+      this.localTravel.name = new_travel.name;
+    }
+    if(! _.isEqual(new_travel.partners, this.localTravel.partners)) {
+      // liste des sites à ajouter
+      let notInOld = [];
+      let toRemove = [];
+      for(let i = 0 ; i < new_travel.partners.length; i++) {
+        let partnerIndex = _.findIndex(this.localTravel.partners, function(o) { return o['_user'] == new_travel.partners[i].user});
+        if(partnerIndex == -1) {
+          notInOld.push(new_travel.partners[i]);
+        }
+      }
+      let self = this;
+      for(let i = 0; i < this.localTravel.partners.length; i++) {
+
+        let partnerIndex = _.findIndex(new_travel.partners, function(o) {return o['_user'] == self.localTravel.partners[i].user;});
+        if(partnerIndex == -1){
+          toRemove.push(i);
+        }
+      }
+      // suppression des sites supprimés
+      for( let i = 0; i < toRemove.length; i++) {
+        this.localTravel.partners.splice(toRemove[i], 1);
+        this.participants.splice(toRemove[i], 1);
+      }
+      for(let i = 0; i < notInOld.length; i++) {
+        this.localTravel.partners.push(notInOld[i]);
+        this.memberService.findById(notInOld[i].user)
+          .subscribe(success => {
+            this.participants.push({user: {name: success.name, picture: success.picture, _id: notInOld[i].user}, status: 'waiting'});
+          }, error => {});
+      }
+    }
+    // si les sites différent
+    if(! _.isEqual(new_travel.sites, this.localTravel.sites)) {
+      // liste des sites à ajouter
+      let notInOld = [];
+      let toRemove = [];
+      for(let i = 0 ; i < new_travel.sites.length; i++) {
+
+        let siteIndex = _.findIndex(this.localTravel.sites, function(o) { return o['site_id'] == new_travel.sites[i].site_id});
+        if(siteIndex == -1) {
+          notInOld.push(new_travel.sites[i]);
+        }
+      }
+      let self = this;
+      for(let i = 0; i < this.localTravel.sites.length; i++) {
+
+        let siteIndex = _.findIndex(new_travel.sites, function(o) {return o['site_id'] == self.localTravel.sites[i].site_id;});
+        if(siteIndex == -1){
+          toRemove.push(i);
+        }
+      }
+      // suppression des sites supprimés
+      for( let i = 0; i < toRemove.length; i++) {
+        this.localTravel.sites.splice(toRemove[i], 1);
+      }
+      for(let i = 0; i < notInOld.length; i++) {
+        this.localTravel.sites.push(notInOld[i]);
+      }
+     }
   }
 
   addPartner(partner : any) {
     this.travelService.addPartner( this.params.get('travel_id'), partner._id)
       .subscribe(success => {
         if(success.status == 201) {
-          this.participants.push({user: {name: partner.name, picture: partner.picture, _id: partner._id}, status: 'waiting'});
+          let indexParticipant = _.findIndex(this.participants, function(o){return o['user']._id == partner._id;});
+          if(indexParticipant == -1) {
+            this.participants.push({user: {name: partner.name, picture: partner.picture, _id: partner._id}, status: 'waiting'});
+          }
           this.addFriends = false;
           this.friendSearch = '';
         } else {
@@ -168,9 +265,13 @@ export class TravelPage implements OnInit, OnDestroy {
     this.travelService.addUsedSite(this.localTravel._id, site._id, 'transport')
       .subscribe(success => {
         if(success.status == 201) {
-          this.sites.push({site_id:site._id, used_type:['transport']});
+          let siteIndex = _.findIndex(this.localTravel.sites, function(o) { return o['site_id'] == site._id});
+          if(siteIndex == -1) {
+            this.sites.push({site_id:site._id, used_type:['transport']});
+          }
           this.siteSearch = '';
           this.addSite = false;
+          this.sites = [];
         }
       },
       error => {

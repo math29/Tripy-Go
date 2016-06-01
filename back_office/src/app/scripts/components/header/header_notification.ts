@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AuthService} from '../../tripy-lib/services/auth.service';
+import {AuthService} from '../../tripy-lib/index';
 import { RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 
 @Component({

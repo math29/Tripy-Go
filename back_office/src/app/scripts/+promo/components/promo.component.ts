@@ -1,7 +1,7 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {DATEPICKER_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 import {PromoService} from '../../shared/promo.service';
-import { SocketService } from '../../services/socket.service';
+import { SocketService } from '../../tripy-lib/index';
 
 import * as moment from 'moment';
 import * as _ from 'lodash';

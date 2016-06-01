@@ -57,7 +57,6 @@ module.exports = function (grunt) {
         'angular2-jwt/angular2-jwt.js*',
         'd3/d3.min.js',
         'marked/marked.min.js',
-        'socket.io-client/socket.io.js',
         'lodash/lodash.min.js',
         'jquery/dist/jquery.min.js',
         'jquery-ui-bundle/**/*',
@@ -66,7 +65,8 @@ module.exports = function (grunt) {
         'datamaps/dist/**/*',
         'to-markdown/dist/**/*',
         'moment/min/**/*',
-        'reflect-metadata/**/*'
+        'reflect-metadata/**/*',
+        'push.js/push.min.js'
       ],
       back_office_css: [
         'bower_components/metisMenu/dist/metisMenu.min.css',
@@ -74,6 +74,15 @@ module.exports = function (grunt) {
         '<%= yeoman.back_office %>/app/styles/timeline.css',
         '<%= yeoman.back_office %>/app/styles/main.css',
         'node_modules/jquery-ui-bundle/jquery-ui.min.css'
+      ],
+      front_office_css: [
+        '<%= yeoman.front_office_A2 %>/assets/css/animate.min.css',
+        '<%= yeoman.front_office_A2 %>/assets/css/bootstrap-select.min.css',
+        '<%= yeoman.front_office_A2 %>/assets/css/owl.carousel.css',
+        '<%= yeoman.front_office_A2 %>/assets/css/owl-carousel-theme.css',
+        '<%= yeoman.front_office_A2 %>/assets/css/flexslider.css',
+        '<%= yeoman.front_office_A2 %>/assets/css/style.css',
+        '<%= yeoman.front_office_A2 %>/assets/css/light.css'
       ]
     },
     ts: {
@@ -98,10 +107,10 @@ module.exports = function (grunt) {
     },
     concat: {
       options: {
-        separator: ';',
-        sourceMap: true,
+        separator: '\n',
+        sourceMap: false,
         process: function(src, filepath) {
-         return '// Source: ' + filepath + '\n' +
+         return '/* Source: ' + filepath + '*/\n' +
            src.replace(/\/\*\#.*\*\//g, '');
        }
       },
@@ -109,6 +118,10 @@ module.exports = function (grunt) {
         src: '<%= yeoman.back_office_css %>',
         dest: '<%= yeoman.back_office_dist %>/styles/built.css',
       },
+      front_css: {
+        src: '<%= yeoman.front_office_css %>',
+        dest: '<%= yeoman.front_office_dist %>/assets/css/built.css'
+      }
     },
     express: {
       options: {
@@ -589,10 +602,14 @@ module.exports = function (grunt) {
           'ng2-bootstrap/**/*',
           'moment/min/**/*',
           'ng2-bootstrap/**/*',
+          'ng2-notifications/**/*',
           'ng2-file-upload/**/*',
           'marked/marked.min.js',
           'flag-icon-css/css/flag-icon.min.css',
-          'flag-icon-css/flags/**/*'
+          'flag-icon-css/flags/**/*',
+          'push.js/push.min.js',
+          'lodash/lodash.min.js',
+          'socket.io-client/socket.io.js'
         ]
       },
       upgrade_bootstrap_iconpicker: {
@@ -723,6 +740,32 @@ module.exports = function (grunt) {
       options: {
 
       },
+      front_css_dev: {
+        options: {
+          transform: function(filePath) {
+            filePath = filePath.replace('./frontOfficeA2/src/', '');
+            return '<link rel="stylesheet" href="' + filePath + '">';
+          },
+          starttag: '<!-- injector:css -->',
+          endtag: '<!-- endinjector -->'
+        },
+        files: {
+          '<%= yeoman.front_office_dist %>/index.html': ['<%= yeoman.front_office_css %>']
+        }
+      },
+      front_css_dist: {
+        options: {
+          transform: function(filePath) {
+            filePath = filePath.replace('./frontOfficeA2/src/', '');
+            return '<link rel="stylesheet" href="' + filePath + '">';
+          },
+          starttag: '<!-- injector:css -->',
+          endtag: '<!-- endinjector -->'
+        },
+        files: {
+          '<%= yeoman.front_office_dist %>/index.html': ['<%= yeoman.front_office_dist %>/assets/css/built.css']
+        }
+      },
       back_css: {
         options: {
           transform: function(filePath) {
@@ -768,7 +811,8 @@ module.exports = function (grunt) {
                  "<%= yeoman.back_office_dist %>/lib/datamaps/dist/datamaps.world.min.js",
                  "<%= yeoman.back_office_dist %>/lib/chart.js/Chart.min.js",
                  "<%= yeoman.back_office_dist %>/js/*.js",
-                 "<%= yeoman.back_office_dist %>/lib/jquery-ui-bundle/jquery-ui.min.js"
+                 "<%= yeoman.back_office_dist %>/lib/jquery-ui-bundle/jquery-ui.min.js",
+                 "<%= yeoman.back_office_dist %>/lib/push.js/push.min.js"
                ]
             ]
         }
@@ -835,7 +879,6 @@ module.exports = function (grunt) {
       'copy:tripy_go_lib',
       'front_office',
       'back_office',
-      'injector',
       // 'wiredep',
       'autoprefixer',
       'express:dev',
@@ -871,7 +914,6 @@ module.exports = function (grunt) {
         'clean:server',
         'env:all',
         'concurrent:test',
-        'injector',
         'autoprefixer',
         'karma'
       ]);
@@ -883,7 +925,6 @@ module.exports = function (grunt) {
         'env:all',
         'env:test',
         'concurrent:test',
-        'injector',
         'wiredep',
         'autoprefixer',
         'express:dev',
@@ -923,33 +964,43 @@ module.exports = function (grunt) {
     'copy:back_office_inner'
   ]);
 
-  grunt.registerTask('front_office', [
-    'copy:tripy_go_lib',
-    'copy:front_office_base',
-    'copy:front_office_lib',
-    'copy:front_office_vendor',
-    'copy:front_office_vendor_npm',
-    'ts:front_office'
-  ]);
+  grunt.registerTask('front_office', function(target) {
+    console.log('target: ' + target);
+    if(target == 'dist') {
+      return grunt.task.run([
+        'copy:tripy_go_lib',
+        'copy:front_office_base',
+        'copy:front_office_lib',
+        'copy:front_office_vendor',
+        'copy:front_office_vendor_npm',
+        'concat:front_css',
+        'injector:front_css_dist',
+        'ts:front_office'
+      ]);
+    }else {
+      return grunt.task.run([
+        'copy:tripy_go_lib',
+        'copy:front_office_base',
+        'copy:front_office_lib',
+        'copy:front_office_vendor',
+        'copy:front_office_vendor_npm',
+        'injector:front_css_dev',
+        'ts:front_office'
+      ]);
+    }
+
+  });
 
   grunt.registerTask('build', [
     'clean:dist',
     'concurrent:dist',
-    'injector',
-    // 'wiredep',
     'useminPrepare',
-    'front_office',
+    'front_office:dist',
     'back_office',
     'autoprefixer',
     'copy:dist',
-    /*'cdnify',
-    'cssmin',
-    'uglify',
-    'rev',
-    'usemin',*/
     'mkdir',
     'touch'
-    //'useminBack'
   ]);
 
 

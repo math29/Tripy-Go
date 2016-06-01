@@ -6,7 +6,8 @@ import {ROUTER_PROVIDERS, ROUTER_PRIMARY_COMPONENT} from '@angular/router-deprec
 
 import {Tripy_Back} from './back';
 import {AuthService} from './tripy-lib/services/auth.service';
-import {SocketService} from './services/socket.service';
+//import {SocketService} from './services/socket.service';
+import {SocketService } from './tripy-lib/services/socket.service';
 
 
 bootstrap(Tripy_Back, [
