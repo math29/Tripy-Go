@@ -116,7 +116,6 @@ export class TravelPage implements OnInit, OnDestroy {
         // travel will not be removed for moment
         break;
       case 'travel:save':
-      console.log(socketResponse.data);
         this.onTravelChange(socketResponse.data);
         break;
       default:
@@ -173,8 +172,6 @@ export class TravelPage implements OnInit, OnDestroy {
       // liste des sites à ajouter
       let notInOld = [];
       let toRemove = [];
-      console.log(JSON.stringify(this.localTravel.sites));
-      console.log(JSON.stringify(new_travel.sites));
       for(let i = 0 ; i < new_travel.sites.length; i++) {
 
         let siteIndex = _.findIndex(this.localTravel.sites, function(o) { return o['site_id'] == new_travel.sites[i].site_id});
