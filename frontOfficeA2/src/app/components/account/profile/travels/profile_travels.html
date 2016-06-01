@@ -15,7 +15,7 @@
 					</div> -->
 					<div class="holiday-title">
 						<h3>{{ travel.name }}</h3>
-						<h5>{{ stringAsDate(travel.date_departure) | date:'d/M/y' }} &#187; {{ stringAsDate(travel.date_return) | date:'d/M/y' }}</h5>
+						<h5 *ngIf="travel.date_departure && travel.date_return">{{ stringAsDate(travel.date_departure) | date:'d/M/y' }} &#187; {{ stringAsDate(travel.date_return) | date:'d/M/y' }}</h5>
 					</div>
 				</div>
 			</div>
