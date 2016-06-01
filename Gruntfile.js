@@ -757,6 +757,7 @@ module.exports = function (grunt) {
         options: {
           transform: function(filePath) {
             filePath = filePath.replace('./frontOfficeA2/src/', '');
+            filePath = filePath.replace('./frontOfficeA2/dist/', '');
             return '<link rel="stylesheet" href="' + filePath + '">';
           },
           starttag: '<!-- injector:css -->',
