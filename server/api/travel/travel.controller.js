@@ -113,7 +113,7 @@ exports.destroy = function(req, res) {
 
 exports.addSite = function(req, res) {
   Travel.findOne({_id: req.params.travelId,
-    $or: [{'author': req.user._id}, {'partner.user': {$in: [req.user._id]}}]},
+    $or: [{'author': req.user._id}, {'partners.user': {$in: [req.user._id]}}]},
     function(err, travel) {
       if(err) {
         return handleError(err, res);
