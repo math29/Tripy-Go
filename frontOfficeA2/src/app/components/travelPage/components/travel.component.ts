@@ -173,7 +173,10 @@ export class TravelPage implements OnInit, OnDestroy {
       // liste des sites à ajouter
       let notInOld = [];
       let toRemove = [];
+      console.log(JSON.stringify(this.localTravel.sites));
+      console.log(JSON.stringify(new_travel.sites));
       for(let i = 0 ; i < new_travel.sites.length; i++) {
+
         let siteIndex = _.findIndex(this.localTravel.sites, function(o) { return o['site_id'] == new_travel.sites[i].site_id});
         if(siteIndex == -1) {
           notInOld.push(new_travel.sites[i]);
@@ -259,7 +262,10 @@ export class TravelPage implements OnInit, OnDestroy {
     this.travelService.addUsedSite(this.localTravel._id, site._id, 'transport')
       .subscribe(success => {
         if(success.status == 201) {
-          this.sites.push({site_id:site._id, used_type:['transport']});
+          let siteIndex = _.findIndex(this.localTravel.sites, function(o) { return o['site_id'] == site._id});
+          if(siteIndex == -1) {
+            this.sites.push({site_id:site._id, used_type:['transport']});
+          }
           this.siteSearch = '';
           this.addSite = false;
         }
