@@ -149,13 +149,16 @@ exports.addSite = function(req, res) {
 }
 
 exports.setName = function(req, res) {
-  Travel.update({_id: req.params.id, $or: [{author: req.user._id}, {'partners.user': {$in: [req.user._id]}}]},
-    {$set: {'name': req.params.name}}, function(err, travel) {
+  Travel.findOne({_id: req.params.id, $or: [{author: req.user._id}, {'partners.user': {$in: [req.user._id]}}]},
+    function(err, travel) {
       if(err) {
-        return handleError(err, res);
+        return handleError(res, err);
+      }
+      if(req.params.name) {
+        travel.name = req.params.name;
       }
       return res.status(200).json({status: 200, data: 'Name updated'});
-    })
+    });
 }
 
 function handleError(res, err) {
