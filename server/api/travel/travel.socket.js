@@ -5,7 +5,7 @@
 'use strict';
 
 var TravelEvents = require('./travel.event');
-var events = ['save' : 'remove'];
+var events = ['save' , 'remove'];
 
 exports.register = function(socket, connected) {
   /*Travel.schema.post('save', function (doc) {
