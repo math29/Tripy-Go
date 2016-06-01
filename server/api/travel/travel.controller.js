@@ -26,7 +26,6 @@ exports.show = function(req, res) {
 
 exports.addPartner = function(req, res) {
   var updateObj = {user: req.params.userId, status: 'waiting'};
-  console.log(JSON.stringify(req.user));
   Travel.findOne({_id: req.params.id,
     $or: [{ 'author':req.user._id }, {'partners.user': { $in : [req.user._id]}}],
     'partners.user': {$nin: [req.params.user_id]}},
@@ -37,15 +36,15 @@ exports.addPartner = function(req, res) {
     var userIndex = _.findIndex(travel.partners, function(o) { return o.user == req.params.userId});
     if(userIndex == -1 ) {
       travel.partners.push(updateObj);
+      travel.save(function(err){});
       User.findById(req.params.userId, function(err, user) {
         if(err){
           console.log(err);
         }else {
-        user.notifications.push({title:'Nouveau voyage', body: req.user.name + ' souhaite vous ajouter à son voyage', link: req.params.id, template: 'trip-ack'});
+        user.notifications.push({title:'Nouveau voyage ', body: req.user.name + ' souhaite vous ajouter à son voyage' + (travel.name ? travel.name : ''), link: req.params.id, template: 'trip-ack'});
         user.save(function(err){if(err){}});
         }
       });
-      travel.save(function(err){});
       return res.status(201).json({status: 201, data: 'User added'});
     }else {
       return res.status(200).json({status: 204, data: 'Can\'t add friend'});
