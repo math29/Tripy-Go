@@ -142,7 +142,7 @@ export class TravelPage implements OnInit, OnDestroy {
       let notInOld = [];
       let toRemove = [];
       for(let i = 0 ; i < new_travel.partners.length; i++) {
-        let partnerIndex = _.findIndex(this.localTravel.partners, function(o) { return o['_id'] == new_travel.partners[i].user});
+        let partnerIndex = _.findIndex(this.localTravel.partners, function(o) { return o['_user'] == new_travel.partners[i].user});
         if(partnerIndex == -1) {
           notInOld.push(new_travel.partners[i]);
         }
@@ -150,7 +150,7 @@ export class TravelPage implements OnInit, OnDestroy {
       let self = this;
       for(let i = 0; i < this.localTravel.partners.length; i++) {
 
-        let partnerIndex = _.findIndex(new_travel.partners, function(o) {return o['_id'] == self.localTravel.partners[i].user;});
+        let partnerIndex = _.findIndex(new_travel.partners, function(o) {return o['_user'] == self.localTravel.partners[i].user;});
         if(partnerIndex == -1){
           toRemove.push(i);
         }
@@ -161,7 +161,7 @@ export class TravelPage implements OnInit, OnDestroy {
         this.participants.splice(toRemove[i], 1);
       }
       for(let i = 0; i < notInOld.length; i++) {
-        //this.localTravel.partners.push(notInOld[i]);
+        this.localTravel.partners.push(notInOld[i]);
         this.memberService.findById(notInOld[i].user)
           .subscribe(success => {
             this.participants.push({user: {name: success.name, picture: success.picture, _id: notInOld[i].user}, status: 'waiting'});
@@ -204,7 +204,10 @@ export class TravelPage implements OnInit, OnDestroy {
     this.travelService.addPartner( this.params.get('travel_id'), partner._id)
       .subscribe(success => {
         if(success.status == 201) {
-          this.participants.push({user: {name: partner.name, picture: partner.picture, _id: partner._id}, status: 'waiting'});
+          let indexParticipant = _.findIndex(this.participants, function(o){return o['user']._id == partner._id;});
+          if(indexParticipant == -1) {
+            this.participants.push({user: {name: partner.name, picture: partner.picture, _id: partner._id}, status: 'waiting'});
+          }
           this.addFriends = false;
           this.friendSearch = '';
         } else {
@@ -268,6 +271,7 @@ export class TravelPage implements OnInit, OnDestroy {
           }
           this.siteSearch = '';
           this.addSite = false;
+          this.sites = [];
         }
       },
       error => {
