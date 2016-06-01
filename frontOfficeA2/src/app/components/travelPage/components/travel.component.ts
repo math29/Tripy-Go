@@ -271,7 +271,7 @@ export class TravelPage implements OnInit, OnDestroy {
           }
           this.siteSearch = '';
           this.addSite = false;
-          this.sites = [];
+          this.sitesRetrieved = [];
         }
       },
       error => {
