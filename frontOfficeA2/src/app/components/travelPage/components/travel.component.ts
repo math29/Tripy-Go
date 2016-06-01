@@ -63,7 +63,7 @@ export class TravelPage implements OnInit, OnDestroy {
         this.localTravel = success;
         this.lat = success.transports[0].departure.loc[0];
         this.lng = success.transports[0].departure.loc[1];
-        this.map.setCenter({lat: this.lat, lng: this.lng});
+        //this.map.setCenter({lat: this.lat, lng: this.lng});
         this.createMarkers();
         if(! this.localTravel.name) {
           this.lunchUpdateForm();
@@ -74,35 +74,35 @@ export class TravelPage implements OnInit, OnDestroy {
   createMarkers() {
     var bounds = new google.maps.LatLngBounds();
       for(let i = 0; i < this.localTravel.transports.length; i++) {
-        /*this.markers.push({lat: this.localTravel.transports[i].departure.loc[0],lng: this.localTravel.transports[i].departure.loc[1], label: this.localTravel.transports[i].departure.name });
-        this.markers.push({lat: this.localTravel.transports[i].arrival.loc[0], lng: this.localTravel.transports[i].arrival.loc[1], label: this.localTravel.transports[i].arrival.name});
-*/
+
         let marker = new google.maps.Marker({
             position: {lat: this.localTravel.transports[i].departure.loc[0],lng: this.localTravel.transports[i].departure.loc[1]},
             map: this.map,
             title: 'Hello World!'
           });
-          bounds.extend(marker.getPosition());
-          let marker1 = new google.maps.Marker({
-              position: {lat: this.localTravel.transports[i].arrival.loc[0],lng: this.localTravel.transports[i].arrival.loc[1]},
-              map: this.map,
-              title: 'Hello World!'
-            });
-          bounds.extend(marker1.getPosition());
-            let flightPlanCoordinates = [
-    marker.position,marker1.position
-  ];
-  let flightPath = new google.maps.Polyline({
-    path: flightPlanCoordinates,
-    geodesic: true,
-    strokeColor: '#FF0000',
-    strokeOpacity: 1.0,
-    strokeWeight: 2,
-  });
+
+        bounds.extend(marker.getPosition());
+        let marker1 = new google.maps.Marker({
+          position: {lat: this.localTravel.transports[i].arrival.loc[0],lng: this.localTravel.transports[i].arrival.loc[1]},
+          map: this.map,
+          title: 'Hello World!'
+        });
+
+        bounds.extend(marker1.getPosition());
+        let flightPlanCoordinates = [
+          marker.position,marker1.position
+        ];
+
+        let flightPath = new google.maps.Polyline({
+          path: flightPlanCoordinates,
+          geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2,
+        });
         flightPath.setMap(this.map);
       }
       this.map.fitBounds(bounds);
-
   }
 
   ngOnInit() {
@@ -144,15 +144,14 @@ export class TravelPage implements OnInit, OnDestroy {
       let notInOld = [];
       let toRemove = [];
       for(let i = 0 ; i < new_travel.partners.length; i++) {
-        let partnerIndex = _.findIndex(this.localTravel.partners, function(o) { return o['_user'] == new_travel.partners[i].user});
+        let partnerIndex = _.findIndex(this.localTravel.partners, function(o) { return o['user']._id == new_travel.partners[i].user._id});
         if(partnerIndex == -1) {
           notInOld.push(new_travel.partners[i]);
         }
       }
       let self = this;
       for(let i = 0; i < this.localTravel.partners.length; i++) {
-
-        let partnerIndex = _.findIndex(new_travel.partners, function(o) {return o['_user'] == self.localTravel.partners[i].user;});
+        let partnerIndex = _.findIndex(new_travel.partners, function(o) {return o['user']._id == self.localTravel.partners[i].user._id;});
         if(partnerIndex == -1){
           toRemove.push(i);
         }
