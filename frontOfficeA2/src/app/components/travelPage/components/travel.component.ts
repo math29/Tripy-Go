@@ -71,6 +71,11 @@ export class TravelPage implements OnInit, OnDestroy {
       }, error => { console.log('error')});
   }
 
+  /**
+   *
+   * Marqueurs des points de départ et d'arrivée des différents transports
+   *
+   */
   createMarkers() {
     var bounds = new google.maps.LatLngBounds();
       for(let i = 0; i < this.localTravel.transports.length; i++) {
@@ -139,64 +144,29 @@ export class TravelPage implements OnInit, OnDestroy {
     if(new_travel != this.localTravel.name) {
       this.localTravel.name = new_travel.name;
     }
-    if(! _.isEqual(new_travel.partners, this.localTravel.partners)) {
-      // liste des sites à ajouter
-      let notInOld = [];
-      let toRemove = [];
-      for(let i = 0 ; i < new_travel.partners.length; i++) {
-        let partnerIndex = _.findIndex(this.localTravel.partners, function(o) { return o['user']._id == new_travel.partners[i].user._id});
-        if(partnerIndex == -1) {
-          notInOld.push(new_travel.partners[i]);
-        }
-      }
-      let self = this;
-      for(let i = 0; i < this.localTravel.partners.length; i++) {
-        let partnerIndex = _.findIndex(new_travel.partners, function(o) {return o['user']._id == self.localTravel.partners[i].user._id;});
-        if(partnerIndex == -1){
-          toRemove.push(i);
-        }
-      }
-      // suppression des sites supprimés
-      for( let i = 0; i < toRemove.length; i++) {
-        this.localTravel.partners.splice(toRemove[i], 1);
-        this.participants.splice(toRemove[i], 1);
-      }
-      for(let i = 0; i < notInOld.length; i++) {
-        this.localTravel.partners.push(notInOld[i]);
-        this.memberService.findById(notInOld[i].user)
+
+      this.participants = [];
+      this.participants.push({user: {name: this.localTravel.author.name, picture: this.localTravel.author.picture, _id: this.localTravel.author._id}, status:'author'});
+      console.log(new_travel.partners);
+      console.log(new_travel.partners.length);
+      this.localTravel.partners = JSON.parse(JSON.stringify(new_travel.partners));
+      for(let i = 0; i < this.localTravel.partners.length; i++){
+        this.memberService.findById(this.localTravel.partners[i].user)
           .subscribe(success => {
-            this.participants.push({user: {name: success.name, picture: success.picture, _id: notInOld[i].user}, status: 'waiting'});
+            let index = _.findIndex(this.participants, function(o){return o['user']._id == this.localTravel.partners[i].user});
+            if(index == -1) {
+              this.participants.push({user: {name: success.name, picture: success.picture, _id: this.localTravel.partners[i].user}, status: 'waiting'});
+            }
           }, error => {});
       }
-    }
+    //}
     // si les sites différent
-    if(! _.isEqual(new_travel.sites, this.localTravel.sites)) {
-      // liste des sites à ajouter
-      let notInOld = [];
-      let toRemove = [];
-      for(let i = 0 ; i < new_travel.sites.length; i++) {
+    this.localTravel.sites = new_travel.sites;
+    this.sites = [];
+    for(let i = 0; i < this.localTravel.sites.length; i++) {
+      this.sites.push({site_id:this.localTravel.sites[i].site_id, used_type:['transport']});
+    }
 
-        let siteIndex = _.findIndex(this.localTravel.sites, function(o) { return o['site_id'] == new_travel.sites[i].site_id});
-        if(siteIndex == -1) {
-          notInOld.push(new_travel.sites[i]);
-        }
-      }
-      let self = this;
-      for(let i = 0; i < this.localTravel.sites.length; i++) {
-
-        let siteIndex = _.findIndex(new_travel.sites, function(o) {return o['site_id'] == self.localTravel.sites[i].site_id;});
-        if(siteIndex == -1){
-          toRemove.push(i);
-        }
-      }
-      // suppression des sites supprimés
-      for( let i = 0; i < toRemove.length; i++) {
-        this.localTravel.sites.splice(toRemove[i], 1);
-      }
-      for(let i = 0; i < notInOld.length; i++) {
-        this.localTravel.sites.push(notInOld[i]);
-      }
-     }
   }
 
   addPartner(partner : any) {
@@ -209,8 +179,12 @@ export class TravelPage implements OnInit, OnDestroy {
           }
           this.addFriends = false;
           this.friendSearch = '';
+          this.search = [];
         } else {
-          alert('NOK');
+          console.log('error person already exist');
+          this.addFriends = false;
+          this.friendSearch = '';
+          this.search = [];
         }
       }, error => {
         alert('Error');

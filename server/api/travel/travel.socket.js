@@ -23,8 +23,10 @@ function onSave(socket, doc, connected) {
 }
 
 function isAllowed(socket, doc, connected) {
+  console.log(JSON.stringify(doc));
   if(connected[doc.author]){
     if(socket.decoded_token._id == doc.author) {
+      console.log('to author');
       return connected[doc.author];
     }
   }
@@ -38,16 +40,6 @@ function isAllowed(socket, doc, connected) {
   return;
 }
 
-/*function onSave(socket, doc, connected) {
-  //return function(){
-    if(doc.notifications.length > 0) {
-      //console.log('emit notification');
-      if(connected[doc._id]){
-        connected[doc._id].emit('notifications', doc.notifications);
-      }
-    }
-  //}
-}*/
 function onRemove(socket, doc) {
   socket.emit('travel:remove', doc);
 }
