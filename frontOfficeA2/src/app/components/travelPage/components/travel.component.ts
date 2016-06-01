@@ -113,7 +113,6 @@ export class TravelPage implements OnInit, OnDestroy {
         // travel will not be removed for moment
         break;
       case 'travel:save':
-        console.log('response: '+ JSON.stringify(socketResponse.data));
         this.onTravelChange(socketResponse.data);
         break;
       default:
@@ -125,6 +124,7 @@ export class TravelPage implements OnInit, OnDestroy {
    * pour ajouter, supprimer ou modifier le voyage en question
    */
   onTravelChange(new_travel : any) {
+    let self = this;
     // check that it's the same travel that we are watching
     if(new_travel._id != this.localTravel._id) {
       return;
@@ -132,6 +132,37 @@ export class TravelPage implements OnInit, OnDestroy {
     // update travel name
     if(new_travel != this.localTravel.name) {
       this.localTravel.name = new_travel.name;
+    }
+    if(! _.isEqual(new_travel.partners, this.localTravel.partners)) {
+      // liste des sites à ajouter
+      let notInOld = [];
+      let toRemove = [];
+      for(let i = 0 ; i < new_travel.partners.length; i++) {
+        let partnerIndex = _.findIndex(this.localTravel.partners, function(o) { return o['_id'] == new_travel.partners[i].user});
+        if(partnerIndex == -1) {
+          notInOld.push(new_travel.partners[i]);
+        }
+      }
+      let self = this;
+      for(let i = 0; i < this.localTravel.partners.length; i++) {
+
+        let partnerIndex = _.findIndex(new_travel.partners, function(o) {return o['_id'] == self.localTravel.partners[i].user;});
+        if(partnerIndex == -1){
+          toRemove.push(i);
+        }
+      }
+      // suppression des sites supprimés
+      for( let i = 0; i < toRemove.length; i++) {
+        this.localTravel.partners.splice(toRemove[i], 1);
+        this.participants.splice(toRemove[i], 1);
+      }
+      for(let i = 0; i < notInOld.length; i++) {
+        //this.localTravel.partners.push(notInOld[i]);
+        this.memberService.findById(notInOld[i].user)
+          .subscribe(success => {
+            this.participants.push({user: {name: success.name, picture: success.picture, _id: notInOld[i].user}, status: 'waiting'});
+          }, error => {});
+      }
     }
     // si les sites différent
     if(! _.isEqual(new_travel.sites, this.localTravel.sites)) {
@@ -157,7 +188,6 @@ export class TravelPage implements OnInit, OnDestroy {
         this.localTravel.sites.splice(toRemove[i], 1);
       }
       for(let i = 0; i < notInOld.length; i++) {
-        console.log(notInOld[i]);
         this.localTravel.sites.push(notInOld[i]);
       }
      }

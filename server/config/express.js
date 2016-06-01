@@ -24,7 +24,7 @@ var busboyBodyParser = require('busboy-body-parser');
 
 module.exports = function(app) {
   var env = app.get('env');
-  var development_cache = 600;
+  var development_cache = 0;
   var production_cache = 86400000;
 
   app.set('views', config.root + '/server/views');
