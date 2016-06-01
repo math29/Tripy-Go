@@ -4,16 +4,36 @@
 
 'use strict';
 
-var Travel = require('./travel.model');
+var TravelEvents = require('./travel.event');
+var events = ['save' : 'remove'];
 
 exports.register = function(socket, connected) {
-  Travel.schema.post('save', function (doc) {
+  /*Travel.schema.post('save', function (doc) {
     onSave(socket, doc, connected);
   });
   Travel.schema.post('remove', function (doc) {
     onRemove(socket, doc, connected);
-  });
+  });*/
+  for(var i = 0, eventsLength = events.length; i < eventsLength; i++) {
+    var event = events[i];
+    var listener = createListener( 'travel:' + event, socket);
+
+    TravelEvents.on(event, listener);
+    socket.on('disconnect', removeListener(event, listener));
+  }
 };
+
+function createListener(event, socket) {
+  return function(doc) {
+    socket.emit(event, doc);
+  }
+}
+
+function removeListener(event, listener) {
+  return function() {
+    TravelEvents.removeListener(event, listener);
+  }
+}
 
 function onSave(socket, doc, connected) {
   var sock = isAllowed(socket, doc, connected);

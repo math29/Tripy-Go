@@ -116,8 +116,8 @@ export class TravelPage implements OnInit, OnDestroy {
     zoom: 8
   });
 
-  //this.socketService.addListener('travel:remove');
-  //this.socketService.addListener('travel:save');
+  this.socketService.addListener('travel:remove');
+  this.socketService.addListener('travel:save');
   this.socketService.socketObservable$.subscribe(socketResponse => {
     switch(socketResponse.channel){
       case 'travel:remove':
