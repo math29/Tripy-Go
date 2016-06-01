@@ -69,6 +69,7 @@ export class TravelPage implements OnInit, OnDestroy {
   }
 
   createMarkers() {
+    var bounds = new google.maps.LatLngBounds();
       for(let i = 0; i < this.localTravel.transports.length; i++) {
         /*this.markers.push({lat: this.localTravel.transports[i].departure.loc[0],lng: this.localTravel.transports[i].departure.loc[1], label: this.localTravel.transports[i].departure.name });
         this.markers.push({lat: this.localTravel.transports[i].arrival.loc[0], lng: this.localTravel.transports[i].arrival.loc[1], label: this.localTravel.transports[i].arrival.name});
@@ -78,13 +79,13 @@ export class TravelPage implements OnInit, OnDestroy {
             map: this.map,
             title: 'Hello World!'
           });
-
+          bounds.extend(marker.getPosition());
           let marker1 = new google.maps.Marker({
               position: {lat: this.localTravel.transports[i].arrival.loc[0],lng: this.localTravel.transports[i].arrival.loc[1]},
               map: this.map,
               title: 'Hello World!'
             });
-
+          bounds.extend(marker1.getPosition());
             let flightPlanCoordinates = [
     marker.position,marker1.position
   ];
@@ -93,10 +94,12 @@ export class TravelPage implements OnInit, OnDestroy {
     geodesic: true,
     strokeColor: '#FF0000',
     strokeOpacity: 1.0,
-    strokeWeight: 2
+    strokeWeight: 2,
   });
         flightPath.setMap(this.map);
       }
+      this.map.fitBounds(bounds);
+
   }
 
   ngOnInit() {
