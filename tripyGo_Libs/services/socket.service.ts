@@ -25,7 +25,7 @@ export class SocketService implements OnDestroy{
     this.config.forceNew = true;
     this.url = window.location.origin;
     if(this.url.indexOf('tripy-go.fr') != -1) {
-      this.url = 'http://tripygo-breizher.rhcloud.com:8080';
+      this.url = 'http://tripygo-breizher.rhcloud.com:8000';
     }
     this.socket = io.connect(this.url, this.config);
     this.socket.removeAllListeners();
