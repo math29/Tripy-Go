@@ -65,7 +65,7 @@
           </thead>
           <tbody>
             <!-- |filter:query |orderBy:orderType+orderby-->
-          <tr *ngFor="let user of users " class="getClassFromInfo(user)">
+          <tr *ngFor="let user of users " class="getClassFromInfo(user)" [class.success]="user.connected">
             <td>{{user._id}}</td>
             <td>{{user.name}}</td>
             <td>{{user.email}}</td>
