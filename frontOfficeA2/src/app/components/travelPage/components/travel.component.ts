@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
-import { RouterLink, RouteParams } from '@angular/router-deprecated';
+import { RouterLink, RouteParams, Router } from '@angular/router-deprecated';
 
 import { SiteCmp } from './site.component';
 import { MemberService } from '../services/member.service';
@@ -52,6 +52,7 @@ export class TravelPage implements OnInit, OnDestroy {
     private siteService: SiteService,
     private travelService : TravelService,
     private socketService : SocketService,
+    private router : Router,
      private params: RouteParams) {
     this.travelService.getThisOne(params.get('travel_id'))
       .subscribe(success => {
@@ -69,6 +70,10 @@ export class TravelPage implements OnInit, OnDestroy {
           this.lunchUpdateForm();
         }
       }, error => { console.log('error')});
+  }
+
+  navigateTo(event : any) : void{
+    this.router.navigate(['ResearchTransport', {comparator_id: event, travel_id: this.localTravel._id}]);
   }
 
   /**

@@ -10,6 +10,9 @@
             <div class="comment-site" *ngIf="comment == ''" (click)="comment_view = !comment_view">
                 <i class="fa fa-comments-o fa-2x" aria-hidden="true"></i>
             </div>
+            <div class="navigate-site" (click)="navigateTo()">
+                <i class="fa fa-chevron-right fa-2x" aria-hidden="true"></i>
+            </div>
             <div class="holiday-title" *ngIf="siteContent">
                 <h3>{{siteContent.company.name}}</h3>
                 <h5>
