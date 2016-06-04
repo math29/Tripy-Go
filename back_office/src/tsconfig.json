@@ -25,6 +25,8 @@
         "app/scripts/+home/index.ts",
         "app/scripts/+login/components/login.component.ts",
         "app/scripts/+login/index.ts",
+        "app/scripts/+mail/components/mail.component.ts",
+        "app/scripts/+mail/index.ts",
         "app/scripts/+promo/components/promo.component.ts",
         "app/scripts/+promo/index.ts",
         "app/scripts/+users/components/user.component.ts",
