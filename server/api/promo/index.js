@@ -33,7 +33,7 @@ var router = express.Router();
  *
  * @apiUse UserNotAuthorized
  */
-router.get('/', controller.index);
+router.get('/', auth.optionalAuth(),controller.index);
 
 /**
  * @api {post} /api/promo Create a promo
