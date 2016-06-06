@@ -55,14 +55,12 @@ exports.index = function(req, res) {
               if(locationsArray == []){
                 return res.status(500).send("ERROR");
               }
-              console.log(locationsArray);
               for(var l = 0; l < aggregation.length; l++){
                 var localAg = aggregation[l];
                 localAg.departure = locationsArray[_.findIndex(locationsArray, function(o) { return String(o._id) == String(localAg._id); })];
                 delete localAg._id;
 
                 for(var j = 0 ; j < localAg.dest.length; j++){
-                  console.log('J: '+j + ' obj: '+ localAg.dest[j]);
                   var fi = _.find(locationsArray, function(o) {
                     return String(o._id) == String(localAg.dest[j]); });
                   if(fi){
@@ -72,8 +70,6 @@ exports.index = function(req, res) {
 
               }
               return res.status(200).send(aggregation);
-
-              console.log("OK");
             })
           });
   //return res.status(200).send("[]");

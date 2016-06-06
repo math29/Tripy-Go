@@ -35,6 +35,12 @@ export class TransportMapCmp {
   public initMap(){
     document.getElementById('map').innerHTML = "";
     this.map = new Datamap({element: document.getElementById('map'),
+    done: function(datamap){
+      datamap.svg.call(d3.behavior.zoom().on("zoom",redraw));
+      function redraw() {
+        datamap.svg.selectAll("g").attr("transform", "translate(" + d3.event.translate +")scale(" + d3.event.scale + ")");
+      }
+    },
     fills: {
     defaultFill: 'rgb(90, 150, 200)',
     departure: '#00adef',
@@ -47,19 +53,30 @@ export class TransportMapCmp {
     this.initData();
   }
 
-
+  /**
+   * Normalise la taille d'une location
+   *
+   */
+  private normalize(size, max) {
+    return size / max * 40;
+  }
 
   public initData(){
     this.map = null;
     this.initMap();
-    console.log("init data");
     let paths = [];
     let cities = [];
+
+    let maxLength = 0;
+    for(let i = 0; i < this._data.length; i++) {
+      maxLength = Math.max(maxLength, this._data[i].dest.length);
+    }
+
     for(let i = 0; i < this._data.length; i++){
       cities.push({name: this._data[i].departure.name,
         latitude: this._data[i].departure.loc[0],
         longitude: this._data[i].departure.loc[1],
-        radius: 10 * this._data[i].dest.length,
+        radius: this.normalize(this._data[i].dest.length, maxLength),
         fillKey: 'departure'
       });
       for(let j = 0; j < this._data[i].dest.length; j++){
