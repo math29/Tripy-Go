@@ -76,7 +76,6 @@
         "app/tripy_go_lib/services/socket.service.ts",
         "app/validators/password.validator.ts",
         "app.ts",
-        "../../typings/angular2/angular2.d.ts",
         "../../typings/browser.d.ts",
         "../../typings/d3/d3.d.ts",
         "../../typings/es6-collections/es6-collections.d.ts",

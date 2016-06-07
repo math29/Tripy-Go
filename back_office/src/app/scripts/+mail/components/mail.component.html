@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="row">
+      <div class="col-lg-12">
+        <input type="text" [(ngModel)]="destinataire" class="form-control" placeholder="destinataire"/>
+      </div>
+      <div class="col-lg-12">
+        <input type="text" [(ngModel)]="subject" class="form-control" placeholder="sujet" />
+      </div>
+      <div class="col-lg-12">
+        <md-editor id="contentEditor" (contentChanged)="descriptionChanged($event)"></md-editor>
+      </div>
+    </div>
+    <button type="submit" class="form-control" (click)="sendMail()">Envoyer</button>
+  </div>
+</div>

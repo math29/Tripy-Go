@@ -15,6 +15,7 @@ import { SiteService, RateService } from '../services/index';
 
 export class SiteCmp implements OnInit, OnDestroy {
   @Input() site: any;
+  @Output() navigationEvent = new EventEmitter();
   public max:number = 5;
   public isReadonly:boolean = false;
   private siteContent : any;
@@ -100,6 +101,14 @@ export class SiteCmp implements OnInit, OnDestroy {
       this.previous_rate[rate] = this.rates[rate];
     }
     this.overStar = void 0;
+  }
+
+  /**
+   * Navigate to this site with the timeline
+   *
+   */
+  navigateTo() {
+    this.navigationEvent.emit(this.site.site_id);
   }
 
 }

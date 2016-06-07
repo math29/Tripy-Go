@@ -103,10 +103,14 @@ exports.destroy = function(req, res) {
   Travel.findById(req.params.id, function (err, travel) {
     if(err) { return handleError(res, err); }
     if(!travel) { return res.status(404).send('Not Found'); }
-    travel.remove(function(err) {
-      if(err) { return handleError(res, err); }
-      return res.status(204).send('No Content');
-    });
+    if(travel.author == req.user._id) {
+      travel.remove(function(err) {
+        if(err) { return handleError(res, err); }
+        return res.status(200).json({status: 200, data: 'Voyage supprimé'});
+      });
+    } else {
+      return res.status(400).json({status: 400, data: 'Vous n\'avez pas les droits pour supprimer ce voyage'});
+    }
   });
 };
 
