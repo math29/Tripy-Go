@@ -12,7 +12,8 @@ var LocationSchema = new Schema({
   loc: {
     type: [Number],  // [<longitude>, <latitude>]
     index: '2d'      // create the geospatial index
-  }
+  },
+  imgUrl: String
 });
 
 module.exports = mongoose.model('Location', LocationSchema);
