@@ -2,7 +2,7 @@
     <div class="holiday-header-wrapper">
         <div class="holiday-header">
             <div class="holiday-img" *ngIf="siteContent">
-                <img src="{{siteContent.company.img}}" alt="{{siteContent.company.name}}">
+                <img class="siteImg" src="{{siteContent.company.img}}" alt="{{siteContent.company.name}}">
             </div>
             <div class="holiday-price" *ngIf="rates.ergo_rate == 0 && rates.content_rate == 0">
                 <p>Votez!</p>

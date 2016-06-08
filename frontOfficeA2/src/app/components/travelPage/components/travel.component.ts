@@ -40,8 +40,8 @@ export class TravelPage implements OnInit, OnDestroy {
   private sites: any;
 
   private map : any;
-  private map_width: string = "70%";
-  private side_width: string = "30%";
+  private map_width: string = "60%";
+  private side_width: string = "40%";
 
   private localTravel : any;
   lat: number = 51.223858;
