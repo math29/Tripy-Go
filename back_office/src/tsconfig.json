@@ -80,8 +80,11 @@
         "app/scripts/tripy-lib/index.ts",
         "app/scripts/tripy-lib/pipes/marked.ts",
         "app/scripts/tripy-lib/services/auth.service.ts",
+<<<<<<< HEAD
         "app/scripts/tripy-lib/services/google.service.ts",
         "app/scripts/tripy-lib/services/socket.service.ts",
+=======
+>>>>>>> development
         "../../typings/angular2/angular2.d.ts",
         "../../typings/browser.d.ts",
         "../../typings/d3/d3.d.ts",
