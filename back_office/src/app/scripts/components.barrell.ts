@@ -18,4 +18,3 @@ export * from './+home/index';
 export * from './+login/index';
 export * from './+promo/index';
 export * from './+country/index';
-export * from './+mail/index';
