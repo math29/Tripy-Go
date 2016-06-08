@@ -163,7 +163,9 @@ export class Main implements AfterViewInit, OnInit {
 											self.departure_place = location_id;
 											nbReqs--;
 											if (!nbReqs) self.persistTransport();
-											this.google_service.populateLocation(location_id, response.place_id);
+
+											// Asynchonus call to host google img
+											// this.google_service.populateLocation(location_id, response.place_id);
 										},
 										error => {
 											console.log("Il faudrait gérer ici l'ajout du pars manquant !");
