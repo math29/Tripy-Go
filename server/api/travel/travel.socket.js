@@ -4,16 +4,31 @@
 
 'use strict';
 
-var Travel = require('./travel.model');
+var TravelEvents = require('./travel.event');
+var events = ['save' , 'remove'];
 
 exports.register = function(socket, connected) {
-  Travel.schema.post('save', function (doc) {
-    onSave(socket, doc, connected);
-  });
-  Travel.schema.post('remove', function (doc) {
-    onRemove(socket, doc, connected);
-  });
+
+  for(var i = 0, eventsLength = events.length; i < eventsLength; i++) {
+    var event = events[i];
+    var listener = createListener( 'travel:' + event, socket);
+
+    TravelEvents.on(event, listener);
+    socket.on('disconnect', removeListener(event, listener));
+  }
 };
+
+function createListener(event, socket) {
+  return function(doc) {
+    socket.emit(event, doc);
+  }
+}
+
+function removeListener(event, listener) {
+  return function() {
+    TravelEvents.removeListener(event, listener);
+  }
+}
 
 function onSave(socket, doc, connected) {
   var sock = isAllowed(socket, doc, connected);
@@ -23,8 +38,10 @@ function onSave(socket, doc, connected) {
 }
 
 function isAllowed(socket, doc, connected) {
+  console.log(JSON.stringify(doc));
   if(connected[doc.author]){
     if(socket.decoded_token._id == doc.author) {
+      console.log('to author');
       return connected[doc.author];
     }
   }
@@ -38,16 +55,6 @@ function isAllowed(socket, doc, connected) {
   return;
 }
 
-/*function onSave(socket, doc, connected) {
-  //return function(){
-    if(doc.notifications.length > 0) {
-      //console.log('emit notification');
-      if(connected[doc._id]){
-        connected[doc._id].emit('notifications', doc.notifications);
-      }
-    }
-  //}
-}*/
 function onRemove(socket, doc) {
   socket.emit('travel:remove', doc);
 }

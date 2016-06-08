@@ -4,21 +4,27 @@
 
 'use strict';
 
-var TransportType = require('./transportType.model');
+var TransportTypeEvents = require('./transportType.event');
+var events = ['save' , 'remove'];
 
 exports.register = function(socket) {
-  TransportType.schema.post('save', function (doc) {
-    onSave(socket, doc);
-  });
-  TransportType.schema.post('remove', function (doc) {
-    onRemove(socket, doc);
-  });
+  for(var i = 0, eventsLength = events.length; i < eventsLength; i++) {
+    var event = events[i];
+    var listener = createListener( 'transportType:' + event, socket);
+
+    TransportTypeEvents.on(event, listener);
+    socket.on('disconnect', removeListener(event, listener));
+  }
 };
 
-function onSave(socket, doc) {
-  socket.emit('transportType:save', doc);
+function createListener(event, socket) {
+  return function(doc) {
+    socket.emit(event, doc);
+  }
 }
 
-function onRemove(socket, doc) {
-  socket.emit('transportType:remove', doc);
+function removeListener(event, listener) {
+  return function() {
+    TransportTypeEvents.removeListener(event, listener);
+  }
 }
