@@ -2,6 +2,7 @@ import {Injectable, EventEmitter} from '@angular/core';
 import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router-deprecated';
+import { SocketService } from './socket.service';
 import 'rxjs/add/operator/share';
 
 // DONT MODIFY THIS FILE IF YOU ARE NOT IN REAL TRIPYGO LIB FOLDER (./)
@@ -14,7 +15,7 @@ export class AuthService {
   _userObserver: any;
   errors: EventEmitter<any> = new EventEmitter();
 
-  constructor(private _http: Http, private _router: Router) {
+  constructor(private _http: Http, private _router: Router, private socketService : SocketService) {
     this.userObservable$ = new Observable(observer => this._userObserver = observer).share();
   }
 
@@ -42,6 +43,7 @@ export class AuthService {
         this.user = this.user._body;
         this.user = JSON.parse(this.user);
         localStorage.setItem('jwt-local-user', JSON.stringify(this.user));
+        this.socketService.connexion();
         if(this._userObserver){
           this._userObserver.next(this.user);
         }

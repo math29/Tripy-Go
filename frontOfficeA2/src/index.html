@@ -8,25 +8,20 @@
         <meta name="author" content="m@th29">
         <title>Tripy-Go</title>
         <base href="/">
-        <script src="./angular2-polyfills.js"></script>
+        <script src="./assets/js/angular2-polyfills.js"></script>
         <link rel="icon" type="image/x-icon" href="favicon.ico">
 
         <!-- LOAD CSS LIBRARIES -->
+
         <link rel="stylesheet" type="text/css" href="vendor/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="vendor/bootstrap/dist/css/bootstrap-theme.css" />
         <link rel="stylesheet" type="text/css" href="vendor/font-awesome/css/font-awesome.min.css">
 
         <!-- LOAD TEMPLATE STYLES (CSS) -->
-        <link href="assets/css/animate.min.css" rel="stylesheet">
-        <link href="assets/css/bootstrap-select.min.css" rel="stylesheet">
-        <link href="assets/css/owl.carousel.css" rel="stylesheet">
-        <link href="assets/css/owl-carousel-theme.css" rel="stylesheet">
-        <link href="assets/css/flexslider.css" rel="stylesheet" media="screen">
-        <link href="assets/css/style.css" rel="stylesheet" media="screen">
 
-        <!-- <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet"> -->
+        <!-- injector:css -->
+        <!-- endinjector -->
 
-        <link href="assets/css/light.css" rel="stylesheet" media="screen">
         <link rel="stylesheet" type="text/css" href="lib/flag-icon-css/css/flag-icon.min.css">
 
         <style type="text/css" media="screen">
@@ -38,7 +33,7 @@
 
         <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800,700,600' rel='stylesheet' type='text/css'> -->
 
-        <script type="text/javascript" src="http://maps.google.com/maps/api/js?&libraries=places&language=fr-FR"></script>
+        <script type="text/javascript" async src="http://maps.google.com/maps/api/js?&libraries=places&language=fr-FR"></script>
     </head>
     <body class="load-full-screen">
         <!--[if lt IE 7]>
@@ -58,10 +53,8 @@
         </front-office-a2-app>
 
         <script src="lib/systemjs/dist/system.src.js"></script>
-        <script src="lib/rxjs/bundles/Rx.js"></script>
-        <!--<script src="lib/angular2/bundles/angular2.dev.js"></script>
-        <script src="lib/angular2/bundles/http.dev.js"></script>
-        <script src="lib/angular2/bundles/router.dev.js"></script>-->
+        <script src="lib/rxjs/bundles/Rx.min.js"></script>
+
         <script>
             System.config({
                 packages: {
@@ -84,6 +77,13 @@
                     'angular2-google-maps': {
                       defaultExtension: 'js'
                     },
+                    'lodash': {
+                      defaultExtension: 'js'
+                    },
+                    'socket.io-client':{
+                      defaultExtension: 'js'
+                    },
+                    'ng2-notifications': {defaultExtension:'js'},
                     '@angular/core' : {defaultExtension: 'js', main: 'index.js'},
                     '@angular/common'  : {defaultExtension: 'js', main: 'index.js'},
                     '@angular/compiler'                : {defaultExtension: 'js', main: 'index.js'},
@@ -108,7 +108,9 @@
                     "ng2-file-upload": "lib/ng2-file-upload",
                     'ng2-bootstrap': 'lib/ng2-bootstrap',
                     'marked':'lib/marked/marked.min.js',
-                    'angular2-google-maps': 'lib/angular2-google-maps'
+                    'ng2-notifications': 'lib/ng2-notifications',
+                    'lodash': 'lib/lodash/lodash.min.js',
+                    'socket.io-client':'lib/socket.io-client/socket.io.js'
                 }
             });
             System.import('frontOfficeA2/src/app.js').then(null, console.error.bind(console));
@@ -116,7 +118,8 @@
 
         <!-- LOAD JS LIBRARIES -->
         <script src="assets/js/respond.js"></script>
-        <script src="vendor/jquery/dist/jquery.js"></script>
+        <script src="vendor/jquery/dist/jquery.min.js"></script>
+        <script src="lib/push.js/push.min.js"></script>
         <script src="assets/plugins/owl.carousel.min.js"></script>
         <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="assets/js/jquery-ui.min.js"></script>

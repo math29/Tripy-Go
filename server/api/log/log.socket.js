@@ -2,23 +2,29 @@
  * Broadcast updates to client when the model changes
  */
 
-'use strict';
+ 'use strict';
 
-var Log = require('./log.model');
+ var LogEvents = require('./log.event');
+ var events = ['save' , 'remove'];
 
 exports.register = function(socket) {
-  Log.schema.post('save', function (doc) {
-    onSave(socket, doc);
-  });
-  Log.schema.post('remove', function (doc) {
-    onRemove(socket, doc);
-  });
+  for(var i = 0, eventsLength = events.length; i < eventsLength; i++) {
+    var event = events[i];
+    var listener = createListener( 'log:' + event, socket);
+
+    LogEvents.on(event, listener);
+    socket.on('disconnect', removeListener(event, listener));
+  }
 };
 
-function onSave(socket, doc) {
-  socket.emit('log:save', doc);
+function createListener(event, socket) {
+  return function(doc) {
+    socket.emit(event, doc);
+  }
 }
 
-function onRemove(socket, doc) {
-  socket.emit('log:remove', doc);
+function removeListener(event, listener) {
+  return function() {
+    LogEvents.removeListener(event, listener);
+  }
 }

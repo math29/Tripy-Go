@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
-import { RouterLink, RouteParams } from '@angular/router-deprecated';
+import { RouterLink, RouteParams, Router } from '@angular/router-deprecated';
 
 import { SiteCmp } from './site.component';
 import { MemberService } from '../services/member.service';
 import { SiteService } from '../services/site.service';
 import { TravelService } from '../services/travel.service';
+import { SocketService } from '../../../tripy_go_lib/services/socket.service';
+
 import * as _ from 'lodash';
 
 // import google map
@@ -36,7 +38,10 @@ export class TravelPage implements OnInit, OnDestroy {
   private travel_name : string;
 
   private sites: any;
+
   private map : any;
+  private map_width: string = "70%";
+  private side_width: string = "30%";
 
   private localTravel : any;
   lat: number = 51.223858;
@@ -46,6 +51,8 @@ export class TravelPage implements OnInit, OnDestroy {
   constructor(private memberService : MemberService,
     private siteService: SiteService,
     private travelService : TravelService,
+    private socketService : SocketService,
+    private router : Router,
      private params: RouteParams) {
     this.travelService.getThisOne(params.get('travel_id'))
       .subscribe(success => {
@@ -57,43 +64,55 @@ export class TravelPage implements OnInit, OnDestroy {
         this.localTravel = success;
         this.lat = success.transports[0].departure.loc[0];
         this.lng = success.transports[0].departure.loc[1];
-        this.map.setCenter({lat: this.lat, lng: this.lng});
+        //this.map.setCenter({lat: this.lat, lng: this.lng});
         this.createMarkers();
         if(! this.localTravel.name) {
-          $('#myModal').modal('show');
+          this.lunchUpdateForm();
         }
       }, error => { console.log('error')});
   }
 
+  navigateTo(event : any) : void{
+    this.router.navigate(['ResearchTransport', {comparator_id: event, travel_id: this.localTravel._id}]);
+  }
+
+  /**
+   *
+   * Marqueurs des points de départ et d'arrivée des différents transports
+   *
+   */
   createMarkers() {
+    var bounds = new google.maps.LatLngBounds();
       for(let i = 0; i < this.localTravel.transports.length; i++) {
-        /*this.markers.push({lat: this.localTravel.transports[i].departure.loc[0],lng: this.localTravel.transports[i].departure.loc[1], label: this.localTravel.transports[i].departure.name });
-        this.markers.push({lat: this.localTravel.transports[i].arrival.loc[0], lng: this.localTravel.transports[i].arrival.loc[1], label: this.localTravel.transports[i].arrival.name});
-*/
+
         let marker = new google.maps.Marker({
             position: {lat: this.localTravel.transports[i].departure.loc[0],lng: this.localTravel.transports[i].departure.loc[1]},
             map: this.map,
             title: 'Hello World!'
           });
 
-          let marker1 = new google.maps.Marker({
-              position: {lat: this.localTravel.transports[i].arrival.loc[0],lng: this.localTravel.transports[i].arrival.loc[1]},
-              map: this.map,
-              title: 'Hello World!'
-            });
+        bounds.extend(marker.getPosition());
+        let marker1 = new google.maps.Marker({
+          position: {lat: this.localTravel.transports[i].arrival.loc[0],lng: this.localTravel.transports[i].arrival.loc[1]},
+          map: this.map,
+          title: 'Hello World!'
+        });
 
-            let flightPlanCoordinates = [
-    marker.position,marker1.position
-  ];
-  let flightPath = new google.maps.Polyline({
-    path: flightPlanCoordinates,
-    geodesic: true,
-    strokeColor: '#FF0000',
-    strokeOpacity: 1.0,
-    strokeWeight: 2
-  });
+        bounds.extend(marker1.getPosition());
+        let flightPlanCoordinates = [
+          marker.position,marker1.position
+        ];
+
+        let flightPath = new google.maps.Polyline({
+          path: flightPlanCoordinates,
+          geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2,
+        });
         flightPath.setMap(this.map);
       }
+      this.map.fitBounds(bounds);
   }
 
   ngOnInit() {
@@ -101,17 +120,75 @@ export class TravelPage implements OnInit, OnDestroy {
     center: {lat: -34.397, lng: 150.644},
     zoom: 8
   });
+
+  this.socketService.addListener('travel:remove');
+  this.socketService.addListener('travel:save');
+  this.socketService.socketObservable$.subscribe(socketResponse => {
+    switch(socketResponse.channel){
+      case 'travel:remove':
+        // travel will not be removed for moment
+        break;
+      case 'travel:save':
+        this.onTravelChange(socketResponse.data);
+        break;
+      default:
+    }
+  });
+  }
+
+  /* comparaison du voyage avant et après,
+   * pour ajouter, supprimer ou modifier le voyage en question
+   */
+  onTravelChange(new_travel : any) {
+    let self = this;
+    // check that it's the same travel that we are watching
+    if(new_travel._id != this.localTravel._id) {
+      return;
+    }
+    // update travel name
+    if(new_travel != this.localTravel.name) {
+      this.localTravel.name = new_travel.name;
+    }
+
+      this.participants = [];
+      this.participants.push({user: {name: this.localTravel.author.name, picture: this.localTravel.author.picture, _id: this.localTravel.author._id}, status:'author'});
+
+      this.localTravel.partners = JSON.parse(JSON.stringify(new_travel.partners));
+      for(let i = 0; i < this.localTravel.partners.length; i++){
+        this.memberService.findById(this.localTravel.partners[i].user)
+          .subscribe(success => {
+            let index = _.findIndex(this.participants, function(o){return o['user']._id == success._id});
+            if(index == -1) {
+              this.participants.push({user: {name: success.name, picture: success.picture, _id: this.localTravel.partners[i].user}, status: 'waiting'});
+            }
+          }, error => {});
+      }
+    //}
+    // si les sites différent
+    this.localTravel.sites = new_travel.sites;
+    this.sites = [];
+    for(let i = 0; i < this.localTravel.sites.length; i++) {
+      this.sites.push({site_id:this.localTravel.sites[i].site_id, used_type:['transport']});
+    }
+
   }
 
   addPartner(partner : any) {
     this.travelService.addPartner( this.params.get('travel_id'), partner._id)
       .subscribe(success => {
         if(success.status == 201) {
-          this.participants.push({user: {name: partner.name, picture: partner.picture, _id: partner._id}, status: 'waiting'});
+          let indexParticipant = _.findIndex(this.participants, function(o){return o['user']._id == partner._id;});
+          if(indexParticipant == -1) {
+            this.participants.push({user: {name: partner.name, picture: partner.picture, _id: partner._id}, status: 'waiting'});
+          }
           this.addFriends = false;
           this.friendSearch = '';
+          this.search = [];
         } else {
-          alert('NOK');
+          console.log('error person already exist');
+          this.addFriends = false;
+          this.friendSearch = '';
+          this.search = [];
         }
       }, error => {
         alert('Error');
@@ -165,9 +242,13 @@ export class TravelPage implements OnInit, OnDestroy {
     this.travelService.addUsedSite(this.localTravel._id, site._id, 'transport')
       .subscribe(success => {
         if(success.status == 201) {
-          this.sites.push({site_id:site._id, used_type:['transport']});
+          let siteIndex = _.findIndex(this.localTravel.sites, function(o) { return o['site_id'] == site._id});
+          if(siteIndex == -1) {
+            this.sites.push({site_id:site._id, used_type:['transport']});
+          }
           this.siteSearch = '';
           this.addSite = false;
+          this.sitesRetrieved = [];
         }
       },
       error => {
@@ -177,6 +258,10 @@ export class TravelPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+  }
+
+  lunchUpdateForm(){
+    $('#myModal').modal('show');
   }
 
   updateName(){

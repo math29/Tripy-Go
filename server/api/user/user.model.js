@@ -18,6 +18,8 @@ var UserSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Travel'
   }],
+  connected: {type: Boolean, default: false},
+  notifications: [{title: {type: String}, body: {type: String}, link: {type: String}, template: {type: String, default: 'normal'}}],
   visited_countries: [String],
   dest_prefereds: [String],
   hashedPassword: String,

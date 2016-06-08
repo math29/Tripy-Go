@@ -15,6 +15,7 @@ import { SiteService, RateService } from '../services/index';
 
 export class SiteCmp implements OnInit, OnDestroy {
   @Input() site: any;
+  @Output() navigationEvent = new EventEmitter();
   public max:number = 5;
   public isReadonly:boolean = false;
   private siteContent : any;
@@ -29,7 +30,8 @@ export class SiteCmp implements OnInit, OnDestroy {
     ergo_rate: 0,
     content_rate: 0
   };
-  private comment = "Commentaire bidon";
+  private comment = "";
+  private comment_view: boolean = false;
 
   constructor(private siteService : SiteService, private rateService : RateService, private _ref: ApplicationRef) {
 
@@ -51,10 +53,9 @@ export class SiteCmp implements OnInit, OnDestroy {
   getMyRates() {
     this.rateService.getMyRate(this.siteContent.transport.ergo_rate._id)
       .subscribe(success => {
+        this.rates.ergo_rate = 0;
         if(success.status == 200 ) {
           this.rates.ergo_rate = success.data.action;
-        }else {
-          this.rates.ergo_rate = 0;
         }
         this.previous_rate = JSON.parse(JSON.stringify(this.rates));
       }, error => {
@@ -85,6 +86,7 @@ export class SiteCmp implements OnInit, OnDestroy {
   commentThisSite() {
     this.siteService.commentThisSite('transport', this.site.site_id, this.comment)
       .subscribe(success => {}, error => {});
+    this.comment_view = !this.comment_view;
   }
 
   public hoveringOver(value:number):void {
@@ -99,6 +101,14 @@ export class SiteCmp implements OnInit, OnDestroy {
       this.previous_rate[rate] = this.rates[rate];
     }
     this.overStar = void 0;
+  }
+
+  /**
+   * Navigate to this site with the timeline
+   *
+   */
+  navigateTo() {
+    this.navigationEvent.emit(this.site.site_id);
   }
 
 }

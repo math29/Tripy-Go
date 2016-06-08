@@ -9,6 +9,7 @@ var compose = require('composable-middleware');
 var User = require('../api/user/user.model');
 var logger = require('../config/logger');
 var validateJwt = expressJwt({ secret: config.secrets.session });
+var optionalJwt = expressJwt({ secret: config.secrets.session, credentialsRequired: false});
 
 /**
  * Attaches the user object to the request if authenticated
@@ -39,6 +40,44 @@ function isAuthenticated() {
         req.user = user;
         next();
       });
+    });
+}
+
+/**
+ * Authentification optionnelle
+ *
+ * permet de continuer la requête, même si l'utilisateur n'est pas connecté
+ * si il est connecté, son utilisateur est rataché à la requête
+ */
+function optionalAuth() {
+  return compose()
+    .use(function(req, res, next) {
+      // allow access_token to be passed through query parameter as well
+      if(req.query && req.query.hasOwnProperty('access_token')) {
+        req.headers.authorization = 'Bearer ' + req.query.access_token;
+      }
+      optionalJwt(req, res, next);
+    })
+    .use(function(req, res, next) {
+
+      if(!req.user) {
+        next();
+      }else {
+        User.findById(req.user._id, function (err, user) {
+          if (err){
+            logger.error('Could not attach user to request', user);
+            return next(err);
+          }
+          if (!user) {
+            logger.warn("User is not defined");
+            return res.status(401).send('Unauthorized');
+          }
+
+          req.user = user;
+          next();
+        });
+      }
+
     });
 }
 
@@ -84,6 +123,7 @@ function setTokenCookie(req, res) {
 }
 
 exports.isAuthenticated = isAuthenticated;
+exports.optionalAuth = optionalAuth;
 exports.hasRole = hasRole;
 exports.signToken = signToken;
 exports.setTokenCookie = setTokenCookie;

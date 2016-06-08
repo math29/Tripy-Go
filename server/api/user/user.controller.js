@@ -62,14 +62,17 @@ exports.search = function(req, res) {
  */
 exports.show = function (req, res, next) {
   var userId = req.params.id;
-
-  User.findById(userId, function (err, user, next) {
+  var select = '-salt -role -hashedPassword -provider';
+  if(userId != req.user._id) {
+    select = 'name picture'
+  }
+  User.findById(userId).select(select).exec(function (err, user, next) {
     if (err) {
       logger.error("Could not retrieve user", userId);
       return next(err);
     }
-    if (!user) return res.status(401).send('Unauthorized');
-    res.json(user.profile);
+    if (!user) return res.status(401).json({status: 401, data: 'Unauthorized'});
+    return res.json(user);
   });
 };
 
@@ -271,7 +274,7 @@ exports.me = function(req, res) {
     }
 
     user.visited_countries.push(country);
-    
+
     user.save(function (err) {
       if (err) { return handleError(res, err); }
       res.json(user);

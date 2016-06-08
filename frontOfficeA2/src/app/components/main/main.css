@@ -22,20 +22,20 @@
 	text-shadow: -1px 1px 0px #f9676b;
 }
 
-@media screen and (min-width: 1500px) {
+@media screen and (min-width: 1270px) {
     .single-search {
     	background: url('assets/images/main/slider1-large.jpg');
     }
 }
 
-@media screen and (max-width: 1499px) {
+@media screen and (max-width: 1269px) {
     .single-search {
     	background: url('assets/images/main/slider1-medium.jpg');
     }
 }
 
 .single-search .search-section {
-	margin: 0px;	
+	margin: 0px;
 }
 .single-search h2 {
 	margin: 0 0 15px;
@@ -104,8 +104,8 @@
 	background: #f9676b;
 	border: 1px solid transparent;
 }
-.search-section .nav-tabs > li.active > a, 
-.search-section .nav-tabs > li.active > a:focus, 
+.search-section .nav-tabs > li.active > a,
+.search-section .nav-tabs > li.active > a:focus,
 .search-section .nav-tabs > li.active > a:hover {
 	color: #ffffff;
 	background: #f9676b;
@@ -237,13 +237,13 @@
 	background-attachment: fixed;
 }
 
-@media screen and (min-width: 1500px) {
+@media screen and (min-width:  1271px) {
     #advice-row {
     	background: url('assets/images/main/advice1-large.jpg');
     }
 }
 
-@media screen and (max-width: 1499px) {
+@media screen and (max-width:  1270px) {
     #advice-row {
     	background: url('assets/images/main/advice1-medium.jpg');
     }

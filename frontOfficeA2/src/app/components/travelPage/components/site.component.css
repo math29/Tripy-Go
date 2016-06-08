@@ -7,3 +7,28 @@ img.siteImg {
   max-width: 100%;
   padding: 1px;
 }
+
+.comment-site {
+	position: absolute;
+    right: 15px;
+    bottom: 0;
+    color: #ffffff;
+    padding: 10px;
+    background: #F2676B;
+    cursor: pointer;
+}
+
+.navigate-site {
+	position: absolute;
+    right: 0px;
+    bottom: 35%;
+    color: #ffffff;
+    padding: 5px;
+    background: #F2676B;
+    cursor: pointer;
+}
+
+.holiday-grid-view {
+	text-shadow: 1px 1px 2px #F2676B, 0 0 1em #F2676B, 0 0 0.2em #F2676B;
+   	color: white;
+}

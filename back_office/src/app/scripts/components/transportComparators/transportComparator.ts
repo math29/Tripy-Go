@@ -5,7 +5,7 @@ import {TransportTypeService} from '../../services/transportTypeService';
 import {CompanyService} from '../../services/company';
 
 import {RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
-import {SocketService} from '../../services/socket.service';
+import {SocketService} from '../../tripy-lib/index';
 import * as _ from 'lodash';
 
 @Component({

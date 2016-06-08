@@ -34,6 +34,7 @@ module.exports = function(app) {
   app.use('/api/transport/type', require('./api/transportType'));
   app.use('/api/comparators', require('./api/comparators'));
   app.use('/api/transport/aggregator', require('./api/transport/aggregator'));
+  app.use('/api/notifications', require('./api/notifications'));
 
 
   // All undefined asset or api routes should return a 404

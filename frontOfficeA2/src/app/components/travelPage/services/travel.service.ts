@@ -48,4 +48,11 @@ export class TravelService {
     return this.http.put(`${this.base_url}/name/${travel_id}/${travel_name}`, null, this.postOptions)
       .map(res => <any>res.json());
   }
+
+  replyTravel( accept: boolean, travel_id : string) {
+    let status = 'OK';
+    if(!accept) status = 'NOK';
+    return this.http.post(`/api/notifications/${status}/${travel_id}`, null, this.postOptions)
+      .map(res => <any>res.json());
+  }
 }
