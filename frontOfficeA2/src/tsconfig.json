@@ -23,7 +23,6 @@
         "rewriteTsconfig": true
     },
     "files": [
-        "app/LoggedInOutlet.ts",
         "app/components/account/login/login.spec.ts",
         "app/components/account/login/login.ts",
         "app/components/account/profile/overview/overview.ts",
@@ -58,6 +57,7 @@
         "app/components/travelPage/services/site.service.ts",
         "app/components/travelPage/services/travel.service.ts",
         "app/front-office-a2.ts",
+        "app/LoggedInOutlet.ts",
         "app/pipes/filterRangeRate.pipe.ts",
         "app/pipes/filterTypeTransport.pipe.ts",
         "app/pipes/orderBy.pipe.ts",
@@ -77,7 +77,6 @@
         "app/tripy_go_lib/services/socket.service.ts",
         "app/validators/password.validator.ts",
         "app.ts",
-        "../../typings/angular2/angular2.d.ts",
         "../../typings/browser.d.ts",
         "../../typings/d3/d3.d.ts",
         "../../typings/es6-collections/es6-collections.d.ts",

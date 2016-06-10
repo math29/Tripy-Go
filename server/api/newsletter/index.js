@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-var controller = require('./mail.controller');
+var controller = require('./newsletter.controller');
 var auth = require('../../auth/auth.service');
 
 var router = express.Router();
@@ -17,8 +17,8 @@ var router = express.Router();
  */
 
 /**
-  * @api {post} /api/language Insert a language in database
-  * @apiName InsertLanguage
+  * @api {post} /api/subscribe Subscribe to newsletter
+  * @apiName Subscribe
   * @apiGroup Languages
   *
   * @apiUse ApiParams
@@ -39,7 +39,8 @@ var router = express.Router();
   *     }
   *
   */
-router.post('/', auth.hasRole('admin'), controller.create);
+router.post('/', controller.create);
 
+router.get('/', auth.hasRole('admin'), controller.create);
 
 module.exports = router;
