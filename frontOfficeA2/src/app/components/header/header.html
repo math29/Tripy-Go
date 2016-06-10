@@ -13,11 +13,11 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav stepbar" *ngIf="step != 0">
+          <!-- <ul class="nav navbar-nav stepbar" *ngIf="step != 0">
             <stepbar [step]="step"></stepbar>
-          </ul>
+          </ul> -->
           <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown" *ngIf="notifications.length > 0">
+            <li class="dropdown" *ngIf="notifications.length > 0" *ngIf="step == 0">
               <a href="#" class="dropdown-toggle transition-effect" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-bell"></span> <span class="caret"></span></a>
               <ul class="dropdown-menu" id="notification-menu">
                 <li *ngFor="let notification of notifications">
@@ -25,10 +25,10 @@
                 </li>
               </ul>
             </li>
-            <li>
+            <!-- <li *ngIf="step == 0">
               <a href="" [routerLink]="['Promos']">Bons plans</a>
-            </li>
-            <li class="dropdown">
+            </li> -->
+            <li class="dropdown" *ngIf="step == 0">
               <a href="#" class="dropdown-toggle transition-effect" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tripy-Team <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="#">Pourquoi Tripy-Go?</a></li>
@@ -36,7 +36,9 @@
                 <li><a href="#">Le concept</a></li>
               </ul>
             </li>
-            <li><a class="transition-effect" href="" [routerLink]="['Contact']">Contact</a></li>
+            <li *ngIf="step == 0">
+                <a class="transition-effect" href="" [routerLink]="['Contact']">Contact</a>
+            </li>
             <!-- User not Connected -->
             <li *ngIf="!_auth.isLoggedIn()">
                 <a class="transition-effect" href="" [routerLink]="['Login']">

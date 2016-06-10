@@ -6,7 +6,9 @@ import { DATEPICKER_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
 import { FormBuilder, ControlGroup, Validators, Control } from '@angular/common';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router-deprecated';
+
 import { AuthService } from '../../tripy_go_lib/services/auth.service';
+import { GoogleService } from '../../tripy_go_lib/services/google.service';
 
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
@@ -18,7 +20,7 @@ declare var google: any;
   selector: 'main',
   templateUrl: 'app/components/main/main.html',
   styleUrls: ['app/components/main/main.css'],
-  providers: [FormBuilder],
+  providers: [FormBuilder, GoogleService],
   directives: [DATEPICKER_DIRECTIVES],
   pipes: []
 })
@@ -53,7 +55,7 @@ export class Main implements AfterViewInit, OnInit {
 	dDepartureFocused: Boolean = false;
 	dArrivalFocused: Boolean = false;
 
-	constructor(private el: ElementRef, fb: FormBuilder, private _http: Http, private _auth: AuthService, private _router: Router) {
+	constructor(private el: ElementRef, fb: FormBuilder, private _http: Http, private _auth: AuthService, private _router: Router, private google_service: GoogleService) {
 		this.departure = fb.control('', Validators.compose([Validators.required]));
 		this.arrival = fb.control('', Validators.compose([Validators.required]));
 		this.date_departure = fb.control('');
@@ -138,9 +140,9 @@ export class Main implements AfterViewInit, OnInit {
 					self._http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + self.departure.value + '&key=' + self.googleApiKey, self.options)
 						.map(res => res.json().results[0])
 						.subscribe(response => {
+
 							// Find the Short Code Country
 							var country_code = self.getCountryCode(response);
-							console.log(response);
 
 							self._http.get('/api/countries/country_code/' + country_code, self.options_post)
 								.map(res => res.json())
@@ -152,7 +154,6 @@ export class Main implements AfterViewInit, OnInit {
 											country: country_code_id,
 											loc: [response.geometry.location.lat, response.geometry.location.lng]
 										};
-									console.log(country_code_id);
 									// Post new Location getted from Google Geocode API
 									self._http.post('/api/locations', JSON.stringify(departure), self.options_post)
 										.map(res => res.json())
@@ -162,6 +163,9 @@ export class Main implements AfterViewInit, OnInit {
 											self.departure_place = location_id;
 											nbReqs--;
 											if (!nbReqs) self.persistTransport();
+
+											// Asynchonus call to host google img
+											// this.google_service.populateLocation(location_id, response.place_id);
 										},
 										error => {
 											console.log("Il faudrait gérer ici l'ajout du pars manquant !");

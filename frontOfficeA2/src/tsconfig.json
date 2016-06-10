@@ -73,6 +73,7 @@
         "app/tripy_go_lib/index.ts",
         "app/tripy_go_lib/pipes/marked.ts",
         "app/tripy_go_lib/services/auth.service.ts",
+        "app/tripy_go_lib/services/google.service.ts",
         "app/tripy_go_lib/services/socket.service.ts",
         "app/validators/password.validator.ts",
         "app.ts",

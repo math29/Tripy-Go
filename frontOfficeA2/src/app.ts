@@ -1,6 +1,7 @@
 import {bootstrap} from '@angular/platform-browser-dynamic';
 import { provide } from '@angular/core';
 import { FORM_PROVIDERS } from '@angular/common';
+import { JSONP_PROVIDERS } from '@angular/http';
 import { AuthService } from './app/tripy_go_lib/services/auth.service';
 import { SocketService} from './app/tripy_go_lib/services/socket.service';
 
@@ -19,6 +20,7 @@ bootstrap(FrontOfficeA2App, [
 	FORM_PROVIDERS,
     ROUTER_PROVIDERS,
     HTTP_PROVIDERS,
+    JSONP_PROVIDERS,
     AuthService,
 		SocketService,
 		NotificationService, 

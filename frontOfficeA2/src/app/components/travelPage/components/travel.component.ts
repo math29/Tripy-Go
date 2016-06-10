@@ -40,8 +40,8 @@ export class TravelPage implements OnInit, OnDestroy {
   private sites: any;
 
   private map : any;
-  private map_width: string = "70%";
-  private side_width: string = "30%";
+  private map_width: string = "60%";
+  private side_width: string = "40%";
 
   private localTravel : any;
   lat: number = 51.223858;
@@ -83,57 +83,57 @@ export class TravelPage implements OnInit, OnDestroy {
    */
   createMarkers() {
     var bounds = new google.maps.LatLngBounds();
-      for(let i = 0; i < this.localTravel.transports.length; i++) {
+    for(let i = 0; i < this.localTravel.transports.length; i++) {
 
-        let marker = new google.maps.Marker({
-            position: {lat: this.localTravel.transports[i].departure.loc[0],lng: this.localTravel.transports[i].departure.loc[1]},
-            map: this.map,
-            title: 'Hello World!'
-          });
-
-        bounds.extend(marker.getPosition());
-        let marker1 = new google.maps.Marker({
-          position: {lat: this.localTravel.transports[i].arrival.loc[0],lng: this.localTravel.transports[i].arrival.loc[1]},
+      let marker = new google.maps.Marker({
+          position: {lat: this.localTravel.transports[i].departure.loc[0],lng: this.localTravel.transports[i].departure.loc[1]},
           map: this.map,
           title: 'Hello World!'
         });
 
-        bounds.extend(marker1.getPosition());
-        let flightPlanCoordinates = [
-          marker.position,marker1.position
-        ];
+      bounds.extend(marker.getPosition());
+      let marker1 = new google.maps.Marker({
+        position: {lat: this.localTravel.transports[i].arrival.loc[0],lng: this.localTravel.transports[i].arrival.loc[1]},
+        map: this.map,
+        title: 'Hello World!'
+      });
 
-        let flightPath = new google.maps.Polyline({
-          path: flightPlanCoordinates,
-          geodesic: true,
-          strokeColor: '#FF0000',
-          strokeOpacity: 1.0,
-          strokeWeight: 2,
-        });
-        flightPath.setMap(this.map);
-      }
-      this.map.fitBounds(bounds);
+      bounds.extend(marker1.getPosition());
+      let flightPlanCoordinates = [
+        marker.position,marker1.position
+      ];
+
+      let flightPath = new google.maps.Polyline({
+        path: flightPlanCoordinates,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+      });
+      flightPath.setMap(this.map);
+    }
+    this.map.fitBounds(bounds);
   }
 
   ngOnInit() {
     this.map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: -34.397, lng: 150.644},
-    zoom: 8
-  });
+      center: { lat: -34.397, lng: 150.644 },
+      zoom: 8
+    });
 
-  this.socketService.addListener('travel:remove');
-  this.socketService.addListener('travel:save');
-  this.socketService.socketObservable$.subscribe(socketResponse => {
-    switch(socketResponse.channel){
-      case 'travel:remove':
-        // travel will not be removed for moment
-        break;
-      case 'travel:save':
-        this.onTravelChange(socketResponse.data);
-        break;
-      default:
-    }
-  });
+    this.socketService.addListener('travel:remove');
+    this.socketService.addListener('travel:save');
+    this.socketService.socketObservable$.subscribe(socketResponse => {
+      switch(socketResponse.channel){
+        case 'travel:remove':
+          // travel will not be removed for moment
+          break;
+        case 'travel:save':
+          this.onTravelChange(socketResponse.data);
+          break;
+        default:
+      }
+    });
   }
 
   /* comparaison du voyage avant et après,

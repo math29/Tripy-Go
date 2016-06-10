@@ -1,34 +1,40 @@
-.site {
-  margin: 0px;
-  padding: 1px;
+.holiday-img {
+  text-align:center;
+  height: 200px;
 }
 
 img.siteImg {
-  max-width: 100%;
   padding: 1px;
+  max-width:100%;
+  min-height:100%;
+  vertical-align:middle;
 }
 
 .comment-site {
 	position: absolute;
-    right: 15px;
-    bottom: 0;
-    color: #ffffff;
-    padding: 10px;
-    background: #F2676B;
-    cursor: pointer;
+  right: 15px;
+  bottom: 0;
+  color: #ffffff;
+  padding: 10px;
+  background: #F2676B;
+  cursor: pointer;
 }
 
 .navigate-site {
 	position: absolute;
-    right: 0px;
-    bottom: 35%;
-    color: #ffffff;
-    padding: 5px;
-    background: #F2676B;
-    cursor: pointer;
+  right: 0px;
+  bottom: 35%;
+  color: #ffffff;
+  padding: 5px;
+  background: #F2676B;
+  cursor: pointer;
 }
 
 .holiday-grid-view {
 	text-shadow: 1px 1px 2px #F2676B, 0 0 1em #F2676B, 0 0 0.2em #F2676B;
-   	color: white;
+  color: white;
+}
+
+.holiday-title {
+  padding: 15px 15px 0px 0px;
 }
