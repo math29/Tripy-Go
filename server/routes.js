@@ -35,7 +35,7 @@ module.exports = function(app) {
   app.use('/api/comparators', require('./api/comparators'));
   app.use('/api/transport/aggregator', require('./api/transport/aggregator'));
   app.use('/api/notifications', require('./api/notifications'));
-
+  app.use('/api/subscribe', require('./api/newsletter'));
 
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets|lib)/*')

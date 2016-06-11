@@ -3,6 +3,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var crypto = require('crypto');
+var Subscriber = require('../newsletter/newsletter.model');
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
 var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
@@ -118,11 +119,11 @@ var validatePresenceOf = function(value) {
 UserSchema
   .pre('save', function(next) {
     if (!this.isNew) return next();
-
     if (!validatePresenceOf(this.hashedPassword) && authTypes.indexOf(this.provider) === -1)
       next(new Error('Invalid password'));
-    else
+    else {
       next();
+    }
   });
 
 /**
