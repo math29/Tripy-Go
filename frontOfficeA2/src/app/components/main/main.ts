@@ -5,6 +5,7 @@ import {Component, ElementRef, AfterViewInit, OnInit, EventEmitter } from '@angu
 import { DATEPICKER_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
 import { FormBuilder, ControlGroup, Validators, Control } from '@angular/common';
 import { Http, Headers, RequestOptions } from '@angular/http';
+import { Jsonp } from '@angular/http';
 import { Router } from '@angular/router-deprecated';
 
 import { AuthService } from '../../tripy_go_lib/services/auth.service';
@@ -55,7 +56,7 @@ export class Main implements AfterViewInit, OnInit {
 	dDepartureFocused: Boolean = false;
 	dArrivalFocused: Boolean = false;
 
-	constructor(private el: ElementRef, fb: FormBuilder, private _http: Http, private _auth: AuthService, private _router: Router, private google_service: GoogleService) {
+	constructor(private el: ElementRef, fb: FormBuilder, private _http: Http, private _auth: AuthService, private _router: Router, private google_service: GoogleService, private _jsonp: Jsonp) {
 		this.departure = fb.control('', Validators.compose([Validators.required]));
 		this.arrival = fb.control('', Validators.compose([Validators.required]));
 		this.date_departure = fb.control('');
@@ -164,8 +165,8 @@ export class Main implements AfterViewInit, OnInit {
 											nbReqs--;
 											if (!nbReqs) self.persistTransport();
 
-											// Asynchonus call to host google img
-											// this.google_service.populateLocation(location_id, response.place_id);
+											// Asynchonus call to host google img 
+											this.google_service.populateLocation(location_id, response.place_id);
 										},
 										error => {
 											console.log("Il faudrait gérer ici l'ajout du pars manquant !");
