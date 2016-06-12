@@ -2,13 +2,6 @@
 
 var _ = require('lodash');
 var Location = require('./location.model');
-var http = require('http');
-var fs = require('fs');
-var request = require('request');
-
-// var GOOGLE_API_KEY = 'AIzaSyCbbSgj5Sk0_eiC9TAIbr2Un_trdaUOuwY';
-// var GoogleLocations = require('google-locations'); 
-// var GLocations = new GoogleLocations(GOOGLE_API_KEY);
 
 // Get list of locations
 exports.index = function(req, res) {
