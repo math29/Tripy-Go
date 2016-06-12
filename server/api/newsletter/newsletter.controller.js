@@ -18,7 +18,7 @@ exports.create = function(req, res) {
       console.log(err);
       return res.status(400).json({status: 400, data: 'Unable to save subscriber'});
     }
-    return res.status(201).json({stauts: 201, data: 'Successfully subscribe'});
+    return res.status(201).json({status: 201, data: 'Successfully subscribe'});
   });
 
 

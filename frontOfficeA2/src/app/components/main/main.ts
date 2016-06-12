@@ -141,7 +141,7 @@ export class Main implements AfterViewInit, OnInit {
 					self._http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + self.departure.value + '&key=' + self.googleApiKey, self.options)
 						.map(res => res.json().results[0])
 						.subscribe(response => {
-
+							console.log(response);
 							// Find the Short Code Country
 							var country_code = self.getCountryCode(response);
 
@@ -153,7 +153,8 @@ export class Main implements AfterViewInit, OnInit {
 										{
 											name: self.departure.value,
 											country: country_code_id,
-											loc: [response.geometry.location.lat, response.geometry.location.lng]
+											loc: [response.geometry.location.lat, response.geometry.location.lng],
+											google_place_id: response.place_id
 										};
 									// Post new Location getted from Google Geocode API
 									self._http.post('/api/locations', JSON.stringify(departure), self.options_post)
@@ -164,9 +165,6 @@ export class Main implements AfterViewInit, OnInit {
 											self.departure_place = location_id;
 											nbReqs--;
 											if (!nbReqs) self.persistTransport();
-
-											// Asynchonus call to host google img 
-											this.google_service.populateLocation(location_id, response.place_id);
 										},
 										error => {
 											console.log("Il faudrait gérer ici l'ajout du pars manquant !");
@@ -203,7 +201,8 @@ export class Main implements AfterViewInit, OnInit {
 										{
 											name: self.arrival.value,
 											country: country_code_id,
-											loc: [response.geometry.location.lat, response.geometry.location.lng]
+											loc: [response.geometry.location.lat, response.geometry.location.lng],
+											google_place_id: response.place_id
 										};
 
 									// Post new Location getted from Google Geocode API

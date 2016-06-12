@@ -23,6 +23,7 @@
     "flag-icon-css": "^2.3.0",
     "font-awesome": "^4.5.0",
     "glob": "^7.0.0",
+    "google-locations": "^0.2.0",
     "gridfs-stream": "^1.1.1",
     "jsonwebtoken": "^5.4.1",
     "jwt-decode": "^1.5.1",

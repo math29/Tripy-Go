@@ -13,7 +13,8 @@ var LocationSchema = new Schema({
     type: [Number],  // [<longitude>, <latitude>]
     index: '2d'      // create the geospatial index
   },
-  imgUrl: String
+  img: { data: Buffer, contentType: String },
+  google_place_id: String
 });
 
 module.exports = mongoose.model('Location', LocationSchema);
