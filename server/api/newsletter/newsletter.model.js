@@ -39,14 +39,20 @@ NewsletterSchema.pre('save', function(next){
     var self = this;
     var token = uuid.v1();
     this.unsubscribeToken = token.replace(/\-/g,"");
-    User.findOne({email: this.email}, function(err, user) {
-      if(err) {
+    next();
+    if(this.email) {
+      User.findOne({email: self.email}, function(err, user) {
+        if(err) {
+          next(err);
+        }
+        if(user){
+          self.isUser = true;
+        }
         next();
-      }
-      if(user){
-        self.isUser = true;
-      }
+      })
+    } else {
       next();
-    })
+    }
+
 });
 module.exports = mongoose.model('Subscribers', NewsletterSchema);

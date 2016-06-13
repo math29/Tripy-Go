@@ -10,13 +10,15 @@ var TAG = "NewsletterController";
 // Creates a new country in the DB.
 exports.create = function(req, res) {
   var userMail = req.body.mail;
-  console.log(userMail);
   var subscriber = new Subscriber({email: userMail});
 
   subscriber.save(function(err, doc) {
     if(err) {
-      console.log(err);
-      return res.status(400).json({status: 400, data: 'Unable to save subscriber'});
+      if(err.code == 11000) {
+        return res.status(401).json({status: 401, data: 'User already exist'});
+      } else {
+        return res.status(400).json({status: 400, data: 'Unable to save subscriber'});
+      }
     }
     return res.status(201).json({stauts: 201, data: 'Successfully subscribe'});
   });
