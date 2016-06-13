@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from './tripy-lib/services/auth.service';
 import { HeaderCmp , LoginCmp , HomeCmp, MongoCmp ,
   TimelinesCmp, LogCmp, CountryCmp, LanguageCmp, UsersCmp, TransportTypeCmp, TransportCmp, CompanyCmp,
-  TransportComparatorCmp, PromoCmp} from './components.barrell';
+  TransportComparatorCmp, PromoCmp, NewsletterComponent} from './components.barrell';
 import {HTTP_PROVIDERS} from '@angular/http';
 import {RouteConfig, RouterLink, Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 import {UserSingleton} from './singletons/user.singleton';
@@ -30,7 +30,8 @@ import {LoggedInRouterOutlet} from './LoggedInOutlet';
   { path: '/transports', name: 'Transports', component: TransportCmp},
   { path: '/transports/comparators', name: 'TransportComparator', component: TransportComparatorCmp},
   { path: '/promos', name: 'Promos', component: PromoCmp},
-  { path: '/users', name:'Users', component: UsersCmp}
+  { path: '/users', name:'Users', component: UsersCmp},
+  { path: '/newsletter', name:'Newsletter', component: NewsletterComponent}
 ])
 export class Tripy_Back{
   me: any;

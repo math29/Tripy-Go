@@ -38,6 +38,7 @@ export class SidebarCmp{
   updateItems(){
       let dashboard: Item = {"route":"Home", "icon":"fa-dashboard", "content":"Dashboard"};
       let users: Item = {"route":"Users", "icon":"fa-users", "content":"Users"};
+      let newsletter: Item = {"route":"Newsletter", "icon":"fa-users", "content":"Newsletter"};
       let mongo: Item = {"route":"Mongo", "icon":"fa-database", "content":"Mongo stats"};
       let countries: Item = {"route":"Countries", "icon":"fa-table","content":"Pays"};
       let langues:Item = {"route":"Langues","icon":"fa-table","content":"Langues"};
@@ -58,6 +59,7 @@ export class SidebarCmp{
       this.items.push(timelines);
       //this.items.push(promos);
       this.items.push(users);
+      this.items.push(newsletter);
       this.items.push(transportTypes);
       //this.items.push(transport);
       this.items.push(company);
