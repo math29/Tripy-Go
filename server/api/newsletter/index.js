@@ -41,6 +41,6 @@ var router = express.Router();
   */
 router.post('/', controller.create);
 
-router.get('/', auth.hasRole('admin'), controller.create);
+router.get('/', auth.hasRole('admin'), controller.getAll);
 
 module.exports = router;
