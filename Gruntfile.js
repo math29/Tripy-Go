@@ -187,6 +187,11 @@ module.exports = function (grunt) {
         files: ['<%= yeoman.back_office %>/app/scripts/**/*.ts'],
         tasks: ['back_office']
       },
+      back_office_views: {
+        files: ['<%= yeoman.back_office %>/app/**/*.html',
+                '<%= yeoman.back_office %>/app/**/*.css'],
+        tasks: ['copy:back_office_views']
+      },
       gruntfile: {
         files: ['Gruntfile.js']
       },
@@ -206,7 +211,9 @@ module.exports = function (grunt) {
           '<%= yeoman.back_office %>/app/**/*.css',
           '<%= yeoman.back_office %>/app/**/*.html',
 
-          '<%= yeoman.back_office %>/app/scripts_js/**/*.js'
+          '<%= yeoman.back_office_dist %>/**/*.js',
+          '<%= yeoman.back_office_dist %>/**/*.html',
+          '<%= yeoman.back_office_dist %>/**/*.css'
 
         ],
         options: {
@@ -560,6 +567,16 @@ module.exports = function (grunt) {
         src: [
          '**/*'
          ]
+      },
+      back_office_views: {
+        expand: true,
+        dest: '<%= yeoman.back_office_dist %>',
+        cwd:'./back_office/src/app',
+        src: [
+          '**/*.html',
+          '**/*.css',
+          '!index.html'
+        ]
       },
       // FRONT OFFICE A2
       front_office_base:{
