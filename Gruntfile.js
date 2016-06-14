@@ -167,7 +167,7 @@ module.exports = function (grunt) {
         files: [
           './tripyGo_Libs/**/*'
         ],
-        tasks: ['front_office'],
+        tasks: ['front_office', 'back_office'],
         options: {
           livereload: true
         }
