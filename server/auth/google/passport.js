@@ -2,6 +2,7 @@ var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 exports.setup = function (User, config) {
+  console.log(config.google);
   passport.use(new GoogleStrategy({
       clientID: config.google.clientID,
       clientSecret: config.google.clientSecret,
@@ -18,6 +19,7 @@ exports.setup = function (User, config) {
             role: 'user',
             username: profile.username,
             provider: 'google',
+            picture: profile.image.url,
             google: profile._json
           });
           user.save(function(err) {
