@@ -181,11 +181,17 @@ export class AuthService {
    * supprime le cookie du navigateur
    **/
   logout():void{
-    localStorage.clear();
-    if(this._userObserver){
-      this._userObserver.next(null);
-    }
-    this._router.navigate( ['Login'] );
+    let headers = this.getBearerHeaders();
+    let options = new RequestOptions({ headers: headers });
+    this._http.get('/auth/logout', options)
+      .subscribe(data => {
+        localStorage.clear();
+        if(this._userObserver){
+          this._userObserver.next(null);
+        }
+        this._router.navigate( ['Login'] );
+      }, error => {});
+
   }
 
   checkJWTValid():void {
