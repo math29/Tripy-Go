@@ -2,7 +2,6 @@ var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 exports.setup = function (User, config) {
-  console.log(config.google);
   passport.use(new GoogleStrategy({
       clientID: config.google.clientID,
       clientSecret: config.google.clientSecret,
@@ -12,7 +11,6 @@ exports.setup = function (User, config) {
       User.findOne({
         'google.id': profile.id
       }, function(err, user) {
-        console.log(profile);
         if (!user) {
           user = new User({
             name: profile.displayName,
