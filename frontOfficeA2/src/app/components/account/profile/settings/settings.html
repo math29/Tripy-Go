@@ -45,7 +45,7 @@
       <generalesInfos></generalesInfos>
     </div>
   </div>
-  <changePassword></changePassword>
+  <changePassword *ngIf="userObject.provider == 'local'"></changePassword>
 </div>
 <div class="col-md-6">
   <div class="user-personal-info">

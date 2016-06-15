@@ -29,6 +29,7 @@ const fileAPI = "/api/files";
 	pipes: []
 })
 export class Settings implements AfterViewInit, OnInit{
+	userObject : any;
 	userUpdateForm: ControlGroup;
 	name: Control;
 	fname: Control;
@@ -77,6 +78,8 @@ export class Settings implements AfterViewInit, OnInit{
 		};
 
 		this.options = new RequestOptions({ headers: new Headers(_auth.getBearerHeaders()) });
+
+		this.userObject = JSON.parse(localStorage.getItem('jwt-local-user'));
 	}
 
 	// ****************************************
