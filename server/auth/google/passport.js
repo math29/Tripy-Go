@@ -12,6 +12,7 @@ exports.setup = function (User, config) {
       User.findOne({
         'google.id': profile.id
       }, function(err, user) {
+        console.log(profile);
         if (!user) {
           user = new User({
             name: profile.displayName,
@@ -19,7 +20,7 @@ exports.setup = function (User, config) {
             role: 'user',
             username: profile.username,
             provider: 'google',
-            picture: profile.image.url,
+            picture: profile._json.image.url,
             google: profile._json
           });
           user.save(function(err) {
