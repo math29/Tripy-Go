@@ -24,8 +24,7 @@ var NewsletterSchema = new Schema({
     default: false
   },
   addedAt: {
-    type: Date,
-    default: Date.now()
+    type: Date
   }
 
 });
@@ -38,6 +37,7 @@ var NewsletterSchema = new Schema({
 NewsletterSchema.pre('save', function(next){
     var self = this;
     var token = uuid.v1();
+    this.addedAt = Date.now();
     this.unsubscribeToken = token.replace(/\-/g,"");
     next();
     if(this.email) {

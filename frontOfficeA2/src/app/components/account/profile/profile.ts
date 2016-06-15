@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import { RouterLink } from '@angular/router-deprecated';
-// import { FormBuilder, ControlGroup, Validators, Control } from 'angular2/common';
 import { AuthService } from '../../../tripy_go_lib/services/auth.service';
 
 import { Overview } from './overview/overview';
@@ -17,9 +16,11 @@ import { ProfileTravels } from './travels/profile_travels';
 })
 export class Profile {
     emailUsed: boolean = false;
-    step = 1;
+		user : any;
+    step : number = 1;
 
 	constructor(private _auth: AuthService) {
 		this._auth.storeMe();
+		this.user = JSON.parse(localStorage.getItem('jwt-local-user'));
 	}
 }

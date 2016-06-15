@@ -60,6 +60,11 @@ export class CompanyCmp implements OnInit{
       });
     }
 
+    /**
+     * When a company is saved
+     *
+     * @param data : data composing the company
+     */
     onCompanySave(data: any){
       data.country = _.find(this.countries, { '_id': data.country });
       let index = this.findCompanyIndex(data._id);
@@ -67,10 +72,15 @@ export class CompanyCmp implements OnInit{
       if(index > -1){
         this.companies[index] = data;
       }else{
-      this.companies.push(data);
+        this.companies.push(data);
       }
     }
 
+    /**
+     * When a company is removed
+     *
+     * @param data : data composing the company
+     */
     onCompanyRemove(data: any){
       for(let i = 0; i < this.companies.length; i++){
         if(this.companies[i]._id == data._id){
@@ -162,6 +172,11 @@ export class CompanyCmp implements OnInit{
       return -1;
     }
 
+    /**
+     * Send request to create a company
+     *
+     * @param company: company object
+     */
     create(company:any){
       if(typeof company.country === 'object'){
         company.country = company.country._id;
@@ -170,7 +185,8 @@ export class CompanyCmp implements OnInit{
         .subscribe(data => {
           this.messages.push('L\'entreprise à bien été créée');
           this.companyEdit = null;
-        }, errors => this.errors.push('Impossible de mettre à jour l\'entreprise'));
+          this.uploader.clearQueue();
+        }, errors => this.errors.push('Impossible de mettre à jour l\'entreprise ' + errors.data));
     }
 
     // Lorsque l'on selectionne un pays

@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {Router, RouterLink, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { Http, Headers } from '@angular/http';
 import { AuthService } from '../../../tripy_go_lib/services/auth.service';
 
 @Component({
@@ -17,7 +16,7 @@ export class Login {
     errors: any;
     response: any;
 
-	constructor(private _authService: AuthService, public _router: Router, public http: Http) {
+	constructor(private _authService: AuthService, public _router: Router) {
 	}
 
 	login(){
@@ -45,10 +44,6 @@ export class Login {
 	// 			this.errors.other = err.message;
 	// 		});
 	// 	}
-	// };
-
-	// loginOauth(provider) {
-	// $window.location.href = '/auth/' + provider;
 	// };
 
 }
