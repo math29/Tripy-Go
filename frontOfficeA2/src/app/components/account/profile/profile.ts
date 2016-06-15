@@ -16,9 +16,11 @@ import { ProfileTravels } from './travels/profile_travels';
 })
 export class Profile {
     emailUsed: boolean = false;
-    step = 1;
+		user : any;
+    step : number = 1;
 
 	constructor(private _auth: AuthService) {
 		this._auth.storeMe();
+		this.user = JSON.parse(localStorage.getItem('jwt-local-user'));
 	}
 }

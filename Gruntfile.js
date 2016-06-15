@@ -167,7 +167,7 @@ module.exports = function (grunt) {
         files: [
           './tripyGo_Libs/**/*'
         ],
-        tasks: ['front_office', 'back_office'],
+        tasks: ['front_office'],
         options: {
           livereload: true
         }
@@ -198,20 +198,8 @@ module.exports = function (grunt) {
       liveread: {
         files: [
           // front office
-          '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.css',
-          '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.html',
-
-          '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.js',
-
-          '!{.tmp,<%= yeoman.client %>}{app,components}/**/*.spec.js',
-          '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js',
-          '<%= yeoman.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}',
 
           // back office
-          '<%= yeoman.back_office %>/app/**/*.css',
-          '<%= yeoman.back_office %>/app/**/*.html',
-
-          '<%= yeoman.back_office_dist %>/**/*.js',
           '<%= yeoman.back_office_dist %>/**/*.html',
           '<%= yeoman.back_office_dist %>/**/*.css'
 
@@ -571,7 +559,7 @@ module.exports = function (grunt) {
       back_office_views: {
         expand: true,
         dest: '<%= yeoman.back_office_dist %>',
-        cwd:'./back_office/src/app',
+        cwd:'./<%= yeoman.back_office %>/app',
         src: [
           '**/*.html',
           '**/*.css',
