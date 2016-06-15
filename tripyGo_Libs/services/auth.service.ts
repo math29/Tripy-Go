@@ -17,6 +17,31 @@ export class AuthService {
 
   constructor(private _http: Http, private _router: Router, private socketService : SocketService) {
     this.userObservable$ = new Observable(observer => this._userObserver = observer).share();
+    let tokenCookie = this.getTokenFromCookie();
+    if(tokenCookie != "") {
+      tokenCookie = tokenCookie.replace(/\%22/g,'');
+      localStorage.setItem('jwt', tokenCookie);
+      this.storeMe();
+    }
+  }
+
+  /**
+   * Récupére le token depuis le header et l'enregistre
+   *
+   */
+  getTokenFromCookie():string {
+    let ca: Array<string> = document.cookie.split(';');
+    let caLen: number = ca.length;
+    let cookieName = "token=";
+    let c: string;
+
+    for (let i: number = 0; i < caLen; i += 1) {
+      c = ca[i].replace(/^\s\+/g, "");
+      if (c.indexOf(cookieName) == 0) {
+        return c.substring(cookieName.length, c.length);
+      }
+    }
+    return "";
   }
 
   /**
@@ -76,7 +101,6 @@ export class AuthService {
             this._router.navigate( ['Home'] );
           },
           error => {
-            console.log(JSON.stringify(error));
           }
       );
   }
