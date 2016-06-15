@@ -609,7 +609,8 @@ module.exports = function (grunt) {
           'flag-icon-css/flags/**/*',
           'push.js/push.min.js',
           'lodash/lodash.min.js',
-          'socket.io-client/socket.io.js'
+          'socket.io-client/socket.io.js',
+          'ng2-img-cropper/**/*'
         ]
       },
       upgrade_bootstrap_iconpicker: {
