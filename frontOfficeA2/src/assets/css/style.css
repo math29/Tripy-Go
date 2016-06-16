@@ -64,11 +64,11 @@
 			1. GENERAL STYLES
 **********************************************************/
 body, html {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'drugs font', sans-serif;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	color: #07253F;
-	font-size: 15px;
+	font-size: 18px;
 }
 a {
 	text-decoration: none;
@@ -353,7 +353,7 @@ h5 {
 .nav-container .mega-menu .links li:before {
 	content: "\f105";
 	position: absolute;
-	font-family: "FontAwesome";
+	font-family: "drugs font";
 	color: #BEC4C8;
 	margin-left: -10px;
 }
@@ -433,7 +433,7 @@ h5 {
 }
 .transparent-menu .dropdown-menu > li > a:before {
 	content: "\f105";
-	font-family: "FontAwesome";
+	font-family: "drugs font";
 	position: absolute;
 	margin-left: -10px;
 }
@@ -618,7 +618,7 @@ h5 {
 }
 .light-menu .dropdown-menu > li > a:before {
 	content: "\f105";
-	font-family: "FontAwesome";
+	font-family: "drugs font";
 	position: absolute;
 	margin-left: -10px;
 }
@@ -1895,7 +1895,7 @@ h5 {
 	background: #07253F none repeat scroll 0 0;
     border: 4px solid #0A3152;
     border-radius: 50%;
-    font-family: "FontAwesome";
+    font-family: "drugs font";
     height: 40px;
     left: 42%;
     padding: 4px 6px;
@@ -1946,7 +1946,7 @@ h5 {
 .price-filter .ui-slider .ui-slider-handle:before {
 	content: '\f067';
 	color: red;
-	font-family: FontAwesome;
+	font-family: "drugs font";
 	padding: 5px;
 	background: #00ADEF;
 	color: #ffffff;
@@ -3019,12 +3019,12 @@ h5 {
 }
 .guest-say p:before {
 	content: "\f10d";
-	font-family: FontAwesome;
+	font-family: "drugs font";
 	margin-right: 5px;
 }
 .guest-say p:after {
 	content: "\f10e";
-	font-family: FontAwesome;
+	font-family: "drugs font";
 	margin-left: 5px;
 }
 .guest-say .user-img {
@@ -3373,7 +3373,7 @@ h5 {
     border-radius: 50%;
     color: #fff;
     content: "\f044";
-    font-family: "FontAwesome";
+    font-family: "drugs font";
     left: 45%;
     padding: 10px 17px;
     position: absolute;
@@ -3398,7 +3398,7 @@ h5 {
     border-radius: 50%;
     color: #fff;
     content: "\f095";
-    font-family: "FontAwesome";
+    font-family: "drugs font";
     left: 45%;
     padding: 10px 17px;
     position: absolute;
@@ -3528,7 +3528,7 @@ h5 {
     border-radius: 50%;
     color: #07253F;
     content: "\f18c";
-    font-family: "FontAwesome";
+    font-family: "drugs font";
     left: 50%;
     margin-top: -22px;
     padding: 10px 15px;
@@ -5312,7 +5312,7 @@ h5 {
     border-radius: 50%;
     color: #fff;
     content: "\f046";
-    font-family: FontAwesome;
+    font-family: "drugs font";
     left: 45%;
     padding: 10px;
     position: absolute;
@@ -6145,7 +6145,7 @@ h5 {
 	content: '\f058';
 	color: #008000;
 	position: absolute;
-	font-family: 'FontAwesome';
+	font-family: 'drugs font';
 	left: -20px;
 }
 .car-overview {
@@ -6223,12 +6223,12 @@ h5 {
 
 .flex-direction-nav a::before {
 	content: "\f104";
-	font-family: "FontAwesome";
+	font-family: "drugs font";
 	color: #fff;
 }
 .flex-direction-nav a.flex-next::before {
 	content: "\f105";
-	font-family: "FontAwesome";
+	font-family: "drugs font";
 	color: #fff;
 }
 .flexslider {
@@ -6278,7 +6278,7 @@ h5 {
 }
 .product-brief-info .detail-body ul li:before {
 	content: "\f058";
-	font-family: "FontAwesome";
+	font-family: "drugs font";
 	margin-right: 10px;
 	color: #f9676b;
 }
@@ -6482,7 +6482,7 @@ h5 {
 .main-footer .links ul li:before {
 	content: "\f105";
 	position: absolute;
-	font-family: "FontAwesome";
+	font-family: "drugs font";
 	color: #BEC4C8;
 }
 .main-footer .contact-box p {
@@ -6692,13 +6692,13 @@ h5 {
 }
 .quote-para:before {
 	content: "\f10d";
-	font-family: "FontAwesome";
+	font-family: "drugs font";
 	position: relative;
 	padding-right: 10px;
 }
 .quote-para:after {
 	content: "\f10e";
-	font-family: "FontAwesome";
+	font-family: "drugs font";
 	position: relative;
 	padding-left: 10px;
 }
