@@ -1,27 +1,57 @@
-/****************************/
-/* Social Links Design */
-/****************************/
-.navbar-contact .social-media ul {
-	padding: 0px;
-	list-style-type: none;
-    margin-bottom: 0px !important;
+.social {
+  position: relative;
+  width: 100%;
+  top: 50%;
+  text-align: center;
 }
-.navbar-contact .social-media ul li {
-	display: inline;
+
+.social .link {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px dashed white;
+  background-clip: content-box;
+  padding: 10px;
+  transition: .5s;
+  color: #D7D0BE;
+  margin-left: 15px;
+  margin-right: 15px;
+  text-shadow:
+    0 -1px 0 rgba(0, 0, 0, 0.2),
+    0 1px 0 rgba(255, 255, 255, 0.2);
+  font-size: 35px;
 }
-.navbar-contact .social-media li a {
-	background: #f9676b none repeat scroll 0 0;
-    border-radius: 50%;
-    color: #fff;
-    display: inline-block;
-    height: 30px;
-    margin: 0px 5px 0;
-    padding: 8px 10px;
-    width: 30px;
+
+.social .link span {
+  display: block;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
-.navbar-contact .social-media li a:hover {
-	background: #F19C4F;
+
+.social .link:hover {
+  padding: 20px;
+  color: white;
+  margin-left: -5px;
+  transform: translateX(10px) rotate(360deg);
 }
-.navbar-contact .social-media li a i {
-	font-size: 16px;
+
+.social .link.google-plus {
+  background-color: tomato;
+  color: white;
+}
+
+.social .link.twitter {
+  background-color: #00ACEE;
+  color: white;
+}
+
+.social .link.facebook {
+  background-color: #3B5998;
+  color: white;
 }

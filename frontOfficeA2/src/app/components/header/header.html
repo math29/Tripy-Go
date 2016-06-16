@@ -28,7 +28,9 @@
             <!-- <li *ngIf="step == 0">
               <a href="" [routerLink]="['Promos']">Bons plans</a>
             </li> -->
-            <li><a href="" [routerLink]="['AboutUs']">Tripy-Team</a></li>
+            <li class="dropdown" *ngIf="step == 0">
+              <a href="#" class="transition-effect" [routerLink]="['AboutUs']">Tripy-Team</a>
+            </li>
             <li *ngIf="step == 0">
                 <a class="transition-effect" href="" [routerLink]="['Contact']">Contact</a>
             </li>
