@@ -12,6 +12,11 @@ module.exports = {
     clientSecret: 'ViAh9-tpcqIzy2SCFlmfaMm0',
     callbackURL: '/auth/google/callback'
   },
+  facebook: {
+    clientID: '1458587271137573',
+    clientSecret: 'af81e48c41f532e4074c5faae25129b5',
+    callbackURL: '/auth/facebook/callback'
+  },
 
   seedDB: true,
   // reprise de données

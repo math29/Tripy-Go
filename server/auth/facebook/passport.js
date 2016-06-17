@@ -15,10 +15,16 @@ exports.setup = function (User, config) {
         if (err) {
           return done(err);
         }
+        var email = "";
+        if(profile.emails){
+          email = profile.emails[0].value
+        }else{
+          email="@facebook.com";
+        }
         if (!user) {
           user = new User({
             name: profile.displayName,
-            email: profile.emails[0].value,
+            email: email,
             role: 'user',
             username: profile.username,
             provider: 'facebook',

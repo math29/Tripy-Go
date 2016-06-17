@@ -36,6 +36,11 @@
             </li>
             <!-- User not Connected -->
             <li *ngIf="!_auth.isLoggedIn()">
+                <a class="transition-effect" href="" [routerLink]="['Signup']">
+                    Inscription
+                </a>
+            </li>
+            <li *ngIf="!_auth.isLoggedIn()">
                 <a class="transition-effect" href="" [routerLink]="['Login']">
                     <i class="fa fa-sign-in"></i> Connexion
                 </a>

@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
-      <h1>Sign up</h1>
+      <h1>S'inscrire</h1>
     </div>
     <div class="col-sm-12">
       <form class="form" name="form" (ngSubmit)="register()" [ngFormModel]="userForm">
@@ -9,7 +9,7 @@
         <div class="form-group" >
         <!-- ng-class="{ 'has-success': form.name.$valid && submitted, -->
                                             <!-- 'has-error': form.name.$invalid && submitted }" -->
-          <label>Name</label>
+          <label>Nom</label>
 
           <input type="text" name="name" class="form-control" ngControl="name"/>
           <p class="help-block" *ngIf="name.dirty && name.hasError('required')">Nom d'utilisateur requis</p>
@@ -38,7 +38,7 @@
         <div class="form-group">
         <!-- ng-class="{ 'has-success': form.password.$valid && submitted,
                                             'has-error': form.password.$invalid && submitted }" -->
-          <label>Password</label>
+          <label>Mot de passe</label>
 
           <input type="password" name="password" class="form-control" ngControl="password"/>
           <p class="help-block" *ngIf="password.dirty && password.hasError('required')">Mot de passe requis</p>
@@ -50,7 +50,7 @@
 
         <div>
           <button class="btn btn-inverse btn-lg btn-login" type="submit" [disabled]="!userForm.valid">
-            Sign up
+            S'inscrire
           </button>
           <!-- <a class="btn btn-default btn-lg btn-register" href="" [routerLink]="['Login']">
             Login
@@ -70,6 +70,13 @@
           </a>
         </div> -->
       </form>
+      <hr>
+      <a class="btn btn-social btn-facebook" href="/auth/facebook">
+        <span class="fa fa-facebook"></span> Se connecter avec Facebook
+      </a>
+      <a class="btn btn-social btn-google" href="/auth/google" >
+        <span class="fa fa-google"></span> Se connecter avec Google+
+      </a>
     </div>
   </div>
   <hr>
