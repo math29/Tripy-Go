@@ -51,11 +51,11 @@ module.exports = function(app) {
   // We need to enable sessions for passport twitter because its an oauth 1.0 strategy
   app.use(session({
     secret: config.secrets.session,
-    resave: true,
+    resave: false,
     saveUninitialized: true,
     store: new mongoStore({
       mongooseConnection: mongoose.connection,
-      db: 'wtc'
+      db: process.env.OPENSHIFT_APP_NAME || 'wtc-dev'
     })
   }));
 

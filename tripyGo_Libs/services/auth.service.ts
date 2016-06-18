@@ -22,6 +22,8 @@ export class AuthService {
       tokenCookie = tokenCookie.replace(/\%22/g,'');
       localStorage.setItem('jwt', tokenCookie);
       this.storeMe();
+    }else {
+      localStorage.clear();
     }
   }
 
@@ -72,7 +74,10 @@ export class AuthService {
         if(this._userObserver){
           this._userObserver.next(this.user);
         }
-    }, errors => console.log('Could not retrieve user'));
+    }, errors => {
+      localStorage.clear();
+      this._router.navigate(['Login']);
+    });
   }
 
   /**

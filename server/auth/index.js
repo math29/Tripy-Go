@@ -13,11 +13,13 @@ require('./twitter/passport').setup(User, config);
 
 var router = express.Router();
 router.get('/logout', function(req, res){
-  req.session.destroy(function(err){
+  req.logOut();
+  /*req.session.destroy(function(err){
     res.clearCookie('connect.sid');
     res.clearCookie('token');
-    res.redirect('/login');
-  });
+    //res.redirect('/login');
+    return res.status(200).send();
+  });*/
 });
 router.use('/local', require('./local'));
 router.use('/facebook', require('./facebook'));
