@@ -36,6 +36,7 @@
     "node-geo-distance": "^1.2.0",
     "node-uuid": "^1.4.7",
     "nodemailer": "^2.4.2",
+    "opbeat": "^3.6.12",
     "passport": "~0.2.0",
     "passport-facebook": "latest",
     "passport-google-oauth": "latest",

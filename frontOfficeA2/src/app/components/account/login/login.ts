@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
-import {Router, RouterLink, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
+import {Router, RouterLink, ROUTER_DIRECTIVES, RouteParams} from '@angular/router-deprecated';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
 import { AuthService } from '../../../tripy_go_lib/services/auth.service';
 
+declare var $:any;
 @Component({
   selector: 'login',
   templateUrl: 'app/components/account/login/login.html',
@@ -13,10 +14,15 @@ import { AuthService } from '../../../tripy_go_lib/services/auth.service';
 })
 export class Login {
 	public user: any = { email: "", password: "" };
-    errors: any;
-    response: any;
+  errors: any;
+  response: any;
 
-	constructor(private _authService: AuthService, public _router: Router) {
+	constructor(private _authService: AuthService, public _router: Router, params: RouteParams) {
+    if(params.get("error")) {
+      if(params.get("error") == "email") {
+        $('#myModal').modal()                      // initialized with defaults
+      }
+    }
 	}
 
 	login(){
