@@ -9,11 +9,13 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var TAG = "Tripygo-App";
 
-var opbeat = require('opbeat').start({
-  appId: '6a7c671113',
-  organizationId: '7d627d1ebae349f4998468bc2339b064',
-  secretToken: 'f12fa9b600f7c51934f58b7db4b20379487c52a5'
-})
+if(process.env.NODE_ENV == 'production') {
+  var opbeat = require('opbeat').start({
+    appId: '6a7c671113',
+    organizationId: '7d627d1ebae349f4998468bc2339b064',
+    secretToken: 'f12fa9b600f7c51934f58b7db4b20379487c52a5'
+  });
+}
 
 var express = require('express');
 var mongoose = require('mongoose');
