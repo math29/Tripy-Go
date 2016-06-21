@@ -45,7 +45,6 @@ module.exports = function(app) {
   app.use(methodOverride());
   app.use(cookieParser());
   app.use(passport.initialize());
-  app.use(passport.session());
   app.use(busboyBodyParser());
 
   // Persist sessions with mongoStore
