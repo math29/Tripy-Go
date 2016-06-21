@@ -16,6 +16,7 @@ export class LoggedInRouterOutlet extends RouterOutlet {
     this.publicRoutes = {
       '': true,
       '/login': true,
+      '/signup?error=email': true,
       '/signup': true,
       '/discounts': true
     };
