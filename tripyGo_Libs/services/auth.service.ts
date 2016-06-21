@@ -36,9 +36,9 @@ export class AuthService {
     let caLen: number = ca.length;
     let cookieName = "token=";
     let c: string;
-
     for (let i: number = 0; i < caLen; i += 1) {
       c = ca[i].replace(/^\s\+/g, "");
+      c = c.trim();
       if (c.indexOf(cookieName) == 0) {
         return c.substring(cookieName.length, c.length);
       }
@@ -76,7 +76,7 @@ export class AuthService {
         }
     }, errors => {
       localStorage.clear();
-      this._router.navigate(['Login']);
+      //this._router.navigate(['Login']);
     });
   }
 
