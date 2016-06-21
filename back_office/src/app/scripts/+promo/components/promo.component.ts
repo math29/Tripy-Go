@@ -104,12 +104,9 @@ export class PromoCmp implements OnInit{
   savePromo() {
     // delete clicks to reduce transfers time
     delete this.editPromo.clicks;
-    console.log(this.editPromo);
     this.promo_service.savePromo(this.editPromo).subscribe(success => {
-      console.log('OK');
       this.editPromo = null;
     }, error => {
-      console.log('fail');
     })
   }
 

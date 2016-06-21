@@ -100,7 +100,6 @@ export class LanguageCmp{
             this.keys.splice(0,1);
             this.selection = this.keys[1];
             this.orderby = this.keys[1];
-            console.log(this.orderType+this.orderby);
           }
         },
         errors => console.log(errors));

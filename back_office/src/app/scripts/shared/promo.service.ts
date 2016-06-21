@@ -49,7 +49,6 @@ export class PromoService {
   savePromo(promo:any){
     //let body = JSON.stringify({code: language.code, name: language.name, note: language.note});
     let body = JSON.stringify(promo);
-    console.log('body: '+ body);
     // l'opération existe déjà
     if(promo._id !== undefined && promo._id !== ""){
       return this._http.put(this.base_url + promo._id, body, this.getHeaders()).map(res => <any> res.json());
