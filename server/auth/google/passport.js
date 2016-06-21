@@ -28,7 +28,6 @@ exports.setup = function (User, config) {
             if (err) {
               if(err.name == 'ValidationError') {
                 if(err.errors.email && err.errors.email.message == 'The specified email address is already in use.') {
-                  console.error("Validation error ");
                   return done(err, false, { message : 'L\'adresse email est déjà utilisée' });
                 }else {
                   return done(err);
