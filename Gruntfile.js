@@ -773,6 +773,19 @@ module.exports = function (grunt) {
           '<%= yeoman.front_office_dist %>/index.html': ['<%= yeoman.front_office_dist %>/assets/css/built.css']
         }
       },
+      analytics: {
+        options: {
+          transform: function(filePath) {
+            filePath = filePath.replace('./frontOfficeA2/dist/', '');
+            return '<script src="'+ filePath+'"></script>';
+          },
+          starttag: '<!-- injector:analytics -->',
+          endtag: '<!-- endinjector -->'
+        },
+        files: {
+          '<%= yeoman.front_office_dist %>/index.html': ['ga.js']
+        }
+      },
       back_css: {
         options: {
           transform: function(filePath) {
@@ -1003,6 +1016,7 @@ module.exports = function (grunt) {
     'concurrent:dist',
     'useminPrepare',
     'front_office:dist',
+    'injector:analytics',
     'back_office',
     'autoprefixer',
     'copy:dist',
