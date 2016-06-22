@@ -185,13 +185,11 @@ export class TravelPage implements OnInit, OnDestroy {
           this.friendSearch = '';
           this.search = [];
         } else {
-          console.log('error person already exist');
           this.addFriends = false;
           this.friendSearch = '';
           this.search = [];
         }
       }, error => {
-        alert('Error');
       })
   }
 

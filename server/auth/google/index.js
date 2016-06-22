@@ -14,11 +14,23 @@ router
       'https://www.googleapis.com/auth/userinfo.email'
     ],
     session: false
-  }))
+  }), function(req, res) {
+  })
 
-  .get('/callback', passport.authenticate('google', {
-    failureRedirect: '/signup',
-    session: false
-  }), auth.setTokenCookie);
+  .get('/callback', function(req, res, next) {
+    passport.authenticate('google',
+      function(err, user, info) {
+        if(err) {
+          if(err.errors.email && err.errors.email.message == 'The specified email address is already in use.') {
+            return res.redirect('/signup?error=email')
+          }else{
+            return res.redirect('/signup');
+          }
+        }
+        req.user = user;
+        auth.setTokenCookie(req, res);
+      }
+  )(req, res, next);
+});
 
 module.exports = router;

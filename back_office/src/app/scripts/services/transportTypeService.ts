@@ -47,7 +47,6 @@ export class TransportTypeService {
     //let body = JSON.stringify({code: language.code, name: language.name, note: language.note});
     let body = JSON.stringify(transportType);
     // l'opération existe déjà
-    console.log(body);
     if(transportType._id !== undefined && transportType._id !== ""){
       return this._http.put(this.base_url + transportType._id, body, this.getHeaders()).map(res => <any> res.json());
     }else{
@@ -68,7 +67,6 @@ export class TransportTypeService {
   private handleError (error: Response) {
     // in a real world app, we may send the server to some remote logging infrastructure
     // instead of just logging it to the console
-    console.error(error);
     return Observable.throw(error.json().error || 'Server error');
   }
 }

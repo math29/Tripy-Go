@@ -142,9 +142,8 @@ export class TransportCmp{
         this.dt_end.setHours(23);
         options.date.max = this.dt_end.toISOString();
       }
-      console.log(options);
       this._agregatorService.getTransportAgregation(options)
-          .subscribe(success => {this.agregation = success; console.log(this.agregation);}
+          .subscribe(success => {this.agregation = success; }
           , error=> this.errors.push('Impossible de récupérer les statistiques'))
     }
 

@@ -72,7 +72,6 @@ export class TimelineCmp{
         if(index != -1){
           operation.steps.splice(index, 1);
         }
-        console.log(operation);
         this._operationsService.saveOperation(operation).subscribe(data =>
           this.onUpdate.emit({'type':'message', 'message':'L\'opération à été supprimée de la timeline'}),
           error => this.onUpdate.emit({'type':'error','message':'Impossible de supprimer l\'opération de la timeline'})

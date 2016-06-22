@@ -141,7 +141,6 @@ export class Main implements AfterViewInit, OnInit {
 					self._http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + self.departure.value + '&key=' + self.googleApiKey, self.options)
 						.map(res => res.json().results[0])
 						.subscribe(response => {
-							console.log(response);
 							// Find the Short Code Country
 							var country_code = self.getCountryCode(response);
 
@@ -167,7 +166,6 @@ export class Main implements AfterViewInit, OnInit {
 											if (!nbReqs) self.persistTransport();
 										},
 										error => {
-											console.log("Il faudrait gérer ici l'ajout du pars manquant !");
 											console.log(JSON.stringify(error));
 										}
 										);
@@ -221,7 +219,6 @@ export class Main implements AfterViewInit, OnInit {
 										);
 								},
 								error => {
-									console.log("Il faudrait gérer ici l'ajout du pars manquant !");
 									console.log(JSON.stringify(error));
 								});
 							}
