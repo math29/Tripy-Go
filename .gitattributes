@@ -1,4 +1,4 @@
-* text eol=lf
+* text eolcr=lf
 *.png binary
 *.jpg binary
 *.otf binary
