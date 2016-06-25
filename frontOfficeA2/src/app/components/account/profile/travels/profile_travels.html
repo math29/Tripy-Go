@@ -1,0 +1,24 @@
+<div class="tab-pane fade in">
+	<div class="col-md-4 col-sm-6" *ngFor="let travel of travels" (click)="navigateTo(travel)">
+		<div class="holiday-grid-view">
+			<div class="holiday-header-wrapper">
+				<div class="holiday-header">
+					<div class="holiday-img">
+						<img src="assets/images/tour2.jpg" alt="cruise">
+					</div>
+					<div class="detail">
+						<a><i class="fa fa-plus"></i></a>
+					</div>
+					<!-- <div class="holiday-price">
+						<h4>$499</h4>
+						<h5>7 Days</h5>
+					</div> -->
+					<div class="holiday-title">
+						<h3>{{ travel.name }}</h3>
+						<h5 *ngIf="travel.date_departure && travel.date_return">{{ stringAsDate(travel.date_departure) | date:'d/M/y' }} &#187; {{ stringAsDate(travel.date_return) | date:'d/M/y' }}</h5>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

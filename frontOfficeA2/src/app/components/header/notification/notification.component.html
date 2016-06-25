@@ -1,0 +1,23 @@
+<div class="notification row" *ngIf="notification">
+  <div class="col-lg-2 col-xs-1 col-md-2">
+    <!-- Image de la notification -->
+    <img src="" class="thumb-notification" *ngIf="notification.img"/>
+    <img src="/assets/images/cruise-thumb1.jpg" class="thumb-notification" *ngIf="!notification.img" />
+  </div>
+  <div class="col-lg-10 col-xs-9 col-md-9">
+    <div class="row">
+      <!-- Titre -->
+      <div class="col-md-12 col-lg-12 col-xs-12">
+        <span class="notificationTitle">{{notification.title}}</span>
+      </div>
+      <!-- Corps de la notification -->
+      <div class="col-md-12 col-lg-12 col-xs-12">
+        {{notification.body}}
+      </div>
+    </div>
+  </div>
+  <!-- actions -->
+  <div class="selector" *ngIf="notification.template == 'trip-ack'">
+    <span (click)="acceptTravel(notification.link)" class="action glyphicon glyphicon-ok"></span><span (click)="rejectTravel(notification.link)" class="action glyphicon glyphicon-remove"> </span>
+  </div>
+</div>

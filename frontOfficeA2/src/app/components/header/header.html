@@ -1,0 +1,64 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid transparent-menu-top">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="" [routerLink]="['Home']">Tripy-Go</a>
+            alpha version
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <!-- <ul class="nav navbar-nav stepbar" *ngIf="step != 0">
+            <stepbar [step]="step"></stepbar>
+          </ul> -->
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown" *ngIf="notifications.length > 0" *ngIf="step == 0">
+              <a href="#" class="dropdown-toggle transition-effect" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-bell"></span> <span class="caret"></span></a>
+              <ul class="dropdown-menu" id="notification-menu">
+                <li *ngFor="let notification of notifications">
+                    <notification [notification]="notification" (click)="ackNotif(notification)"></notification>
+                </li>
+              </ul>
+            </li>
+            <!-- <li *ngIf="step == 0">
+              <a href="" [routerLink]="['Promos']">Bons plans</a>
+            </li> -->
+            <li class="dropdown" *ngIf="step == 0">
+              <a href="#" class="transition-effect" [routerLink]="['AboutUs']">Tripy-Team</a>
+            </li>
+            <li *ngIf="step == 0">
+                <a class="transition-effect" href="" [routerLink]="['Contact']">Contact</a>
+            </li>
+            <!-- User not Connected -->
+            <li *ngIf="!_auth.isLoggedIn()">
+                <a class="transition-effect" href="" [routerLink]="['Signup']">
+                    Inscription
+                </a>
+            </li>
+            <li *ngIf="!_auth.isLoggedIn()">
+                <a class="transition-effect" href="" [routerLink]="['Login']">
+                    <i class="fa fa-sign-in"></i> Connexion
+                </a>
+            </li>
+            <!-- User Connected -->
+                <li *ngIf="_auth.isLoggedIn()">
+                    <a class="transition-effect" href="" class="transition-effect" [routerLink]="['Profile']">
+                        <img [src]="_auth.getUserAvatar()" alt="User icon">
+                        {{ _auth.getMe().name }}
+                    </a>
+                </li>
+                <li *ngIf="_auth.isLoggedIn()">
+                    <a href="" (click)="_auth.logout()" class="transition-effect">
+                        <i class="fa fa-sign-out"></i> Déconnexion
+                    </a>
+                </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>

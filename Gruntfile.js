@@ -16,9 +16,11 @@ module.exports = function (grunt) {
     useminPrepareBack: 'grunt-usemin',
     useminBack: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
+    ts: 'grunt-ts',
+    concat: 'grunt-contrib-concat',
     cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner',
-    buildcontrol: 'grunt-build-control'
+    buildcontrol: 'grunt-build-control',
   });
 
   // Time how long tasks take. Can help when optimizing build times
@@ -26,16 +28,100 @@ module.exports = function (grunt) {
 
   // Define the configuration for all the tasks
   grunt.initConfig({
-
     // Project settings
     pkg: grunt.file.readJSON('package.json'),
     yeoman: {
       // configurable paths
       client: require('./bower.json').appPath || 'client',
-      back_office: require('./back_office/bower.json').appPath || 'back_office',
+      front_office_A2: './frontOfficeA2/src',
+      front_office_dist: './frontOfficeA2/dist',
+      back_office: 'back_office/src',
+      back_office_dist: 'back_office/dist',
+      lib:'tripyGo_Libs',
       dist: 'dist',
       public: 'dist/public',
-      private: 'dist/back'
+      private: 'dist/back',
+      back_office_libs: [
+        '@angular/**/*',
+        'reflect-metadata/**/*',
+        'systemjs/dist/**/*',
+        'rxjs/**/*',
+        'ng2-bootstrap/**/*',
+        'ng2-charts/**/*',
+        'ng2-file-upload/**/*',
+        'bootstrap/dist/**/*',
+        'json3/lib/json3.min.js',
+        'font-awesome/**/*.min.*',
+        'chart.js/Chart.min.js',
+        'socket.io-client/socket.io.js',
+        'angular2-jwt/angular2-jwt.js*',
+        'd3/d3.min.js',
+        'marked/marked.min.js',
+        'lodash/lodash.min.js',
+        'jquery/dist/jquery.min.js',
+        'jquery-ui-bundle/**/*',
+        'tinymce/**/*',
+        'font-awesome/**/*',
+        'datamaps/dist/**/*',
+        'to-markdown/dist/**/*',
+        'moment/min/**/*',
+        'reflect-metadata/**/*',
+        'push.js/push.min.js'
+      ],
+      back_office_css: [
+        'bower_components/metisMenu/dist/metisMenu.min.css',
+        '<%= yeoman.back_office %>/app/styles/sb-admin-2.css',
+        '<%= yeoman.back_office %>/app/styles/timeline.css',
+        '<%= yeoman.back_office %>/app/styles/main.css',
+        'node_modules/jquery-ui-bundle/jquery-ui.min.css'
+      ],
+      front_office_css: [
+        '<%= yeoman.front_office_A2 %>/assets/css/animate.min.css',
+        '<%= yeoman.front_office_A2 %>/assets/css/bootstrap-select.min.css',
+        '<%= yeoman.front_office_A2 %>/assets/css/owl.carousel.css',
+        '<%= yeoman.front_office_A2 %>/assets/css/owl-carousel-theme.css',
+        '<%= yeoman.front_office_A2 %>/assets/css/flexslider.css',
+        '<%= yeoman.front_office_A2 %>/assets/css/style.css',
+        '<%= yeoman.front_office_A2 %>/assets/css/light.css'
+      ]
+    },
+    ts: {
+      options:{
+        target: 'es5',
+        module: 'system',
+        moduleResolution: 'node',
+        sourceMap: true,
+        emitDecoratorMetadata: true,
+        experimentalDecorators: true,
+        removeComments: false,
+        noImplicitAny: false,
+        suppressImplicitAnyIndexErrors: true,
+        reference: './typings/tsd.d.ts'
+      },
+	     back_office:{
+		       tsconfig:"<%= yeoman.back_office %>/tsconfig.json"
+	    },
+      front_office: {
+        tsconfig:"<%= yeoman.front_office_A2 %>/tsconfig.json",
+      }
+    },
+    concat: {
+      options: {
+        separator: '\n',
+        sourceMap: false,
+        process: function(src, filepath) {
+         return '/* Source: ' + filepath + '*/\n' +
+           src.replace(/\/\*\#.*\*\//g, '');
+       }
+      },
+      back_css: {
+        src: '<%= yeoman.back_office_css %>',
+        dest: '<%= yeoman.back_office_dist %>/styles/built.css',
+      },
+      front_css: {
+        src: '<%= yeoman.front_office_css %>',
+        dest: '<%= yeoman.front_office_dist %>/assets/css/built.css'
+      }
     },
     express: {
       options: {
@@ -60,22 +146,31 @@ module.exports = function (grunt) {
     },
     watch: {
       bower: {
-        files: ['bower.json', './back_office/bower.json'],
+        files: ['bower.json'],
         tasks: ['wiredep']
       },
-      injectJS: {
+      front_office: {
         files: [
-          '<%= yeoman.client %>/{app,components}/**/*.js',
-          '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
-          '!<%= yeoman.client %>/{app,components}/**/*.mock.js',
-          '!<%= yeoman.client %>/app/app.js'],
-        tasks: ['injector:scripts']
-      },
-      injectCss: {
-        files: [
-          '<%= yeoman.client %>/{app,components}/**/*.css'
+          '<%= yeoman.front_office_A2 %>/app/**/*.ts',
+          '<%= yeoman.front_office_A2 %>/*.html',
+          // Front Office A2
+          '<%= yeoman.front_office_A2 %>/app/**/*.html',
+          '<%= yeoman.front_office_A2 %>/app/**/*.js',
+          '<%= yeoman.front_office_A2 %>/app/**/*.css'
         ],
-        tasks: ['injector:css']
+        tasks: ['front_office'],
+        options: {
+          livereload: true
+        }
+      },
+      tripyGoLib: {
+        files: [
+          './tripyGo_Libs/**/*'
+        ],
+        tasks: ['front_office'],
+        options: {
+          livereload: true
+        }
       },
       mochaTest: {
         files: ['server/**/*.spec.js'],
@@ -88,26 +183,26 @@ module.exports = function (grunt) {
         ],
         tasks: ['newer:jshint:all', 'karma']
       },
+      back_office: {
+        files: ['<%= yeoman.back_office %>/app/scripts/**/*.ts'],
+        tasks: ['back_office']
+      },
+      back_office_views: {
+        files: ['<%= yeoman.back_office %>/app/**/*.html',
+                '<%= yeoman.back_office %>/app/**/*.css'],
+        tasks: ['copy:back_office_views']
+      },
       gruntfile: {
         files: ['Gruntfile.js']
       },
-      livereload: {
+      liveread: {
         files: [
           // front office
-          '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.css',
-          '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.html',
-
-          '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.js',
-
-          '!{.tmp,<%= yeoman.client %>}{app,components}/**/*.spec.js',
-          '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js',
-          '<%= yeoman.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}',
 
           // back office
-          '<%= yeoman.back_office %>/app/**/*.css',
-          '<%= yeoman.back_office %>/app/views/**/*.html',
+          '<%= yeoman.back_office_dist %>/**/*.html',
+          '<%= yeoman.back_office_dist %>/**/*.css'
 
-          '<%= yeoman.back_office %>/app/scripts/**/*.js'
         ],
         options: {
           livereload: true
@@ -134,6 +229,34 @@ module.exports = function (grunt) {
         livereload: true
       }
     },
+	replace:{
+		rec: {
+			options: {
+				patterns: [
+					{
+					match: /\/socket\.io\-client/g,
+					replacement: 'http://tripygo-breizher.rhcloud.com:8080/socket.io-client'
+					}
+				]
+			},
+			files: [
+			{expand: true, flatten: false, src: ['dist/back/scripts_js/components/**/*', 'dist/public/frontOfficeA2/src/**/*']}
+			]
+		},
+		prod: {
+			options: {
+				patterns: [
+					{
+					match: /\/socket\.io\-client/g,
+					replacement: 'http://tripygo-math29land.rhcloud.com:8080/socket.io-client'
+					}
+				]
+			},
+			files: [
+			{expand: true, flatten: false, src: ['dist/back/scripts_js/components/**/*', 'dist/public/frontOfficeA2/src/**/*']}
+			]
+		}
+	},
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
       options: {
@@ -154,18 +277,17 @@ module.exports = function (grunt) {
           jshintrc: 'server/.jshintrc-spec'
         },
         src: ['server/**/*.spec.js']
-      },
-      all: [
-        '<%= yeoman.client %>/{app,components}/**/*.js',
-        '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
-        '!<%= yeoman.client %>/{app,components}/**/*.mock.js',
-        '<%= yeoman.back_office %>/app/scripts/**/*.js'
-      ],
-      test: {
-        src: [
-          '<%= yeoman.client %>/{app,components}/**/*.spec.js',
-          '<%= yeoman.client %>/{app,components}/**/*.mock.js'
-        ]
+      //},
+      //all: [
+      //  '<%= yeoman.client %>/{app,components}/**/*.js',
+      //  '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
+      //  '!<%= yeoman.client %>/{app,components}/**/*.mock.js',
+      //],
+      //test: {
+      //  src: [
+      //    '<%= yeoman.client %>/{app,components}/**/*.spec.js',
+      //    '<%= yeoman.client %>/{app,components}/**/*.mock.js'
+      //  ]
       },
       jenkins: {
         options: {
@@ -193,7 +315,8 @@ module.exports = function (grunt) {
           ]
         }]
       },
-      server: '.tmp'
+      server: '.tmp',
+      back_office_dist: '<%= yeoman.back_office_dist %>'
     },
 
     // Add vendor prefixed styles
@@ -257,13 +380,8 @@ module.exports = function (grunt) {
         src: '<%= yeoman.client %>/index.html',
         ignorePath: '<%= yeoman.client %>/',
         exclude: [/bootstrap-sass-official/, /bootstrap.js/, '/json3/', '/es5-shim/']
-      }/*,
-      back_office: {
-        src: '<%= yeoman.back_office %>/app/index.html',
-        ignorePath: '<%= yeoman.back_office %>/app/'
-      }*/
+      }
     },
-
     // Renames files for browser caching purposes
     rev: {
       dist: {
@@ -282,7 +400,6 @@ module.exports = function (grunt) {
         }
       }
     },
-
     // Reads HTML for usemin blocks to enable smart builds that automatically
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
@@ -292,14 +409,6 @@ module.exports = function (grunt) {
           dest: '<%= yeoman.public %>'
         }
       },
-    useminPrepareBack: {
-      html: '<%= yeoman.back_office %>/app/index.html',
-      options: {
-        staging: '.tmpBack',
-        dest: '<%= yeoman.private %>'
-      }
-
-    },
     // Performs rewrites based on rev and the useminPrepare configuration
     usemin: {
       html: ['<%= yeoman.dist %>/public/{,*/}*.html'],
@@ -318,24 +427,7 @@ module.exports = function (grunt) {
         }
       }
     },
-    // Performs rewrites based on rev and the useminPrepare configuration
-    useminBack: {
-      html: ['<%= yeoman.private %>/{,*/}*.html'],
-      css: ['<%= yeoman.private %>/{,*/}*.css'],
-      js: ['<%= yeoman.private %>/{,*/}*.js$', '!<%= yeoman.private %>/bower_components/*'],
-      options: {
-        assetsDirs: [
-          '<%= yeoman.private %>',
-          '<%= yeoman.private %>/assets/images'
-        ],
-        // This is so we update image references in our ng-templates
-        patterns: {
-          js: [
-            [/(assets\/images\/.*?\.(?:gif|jpeg|jpg|png|webp|svg))/gm, 'Update the JS to reference our revved images']
-          ]
-        }
-      }
-    },
+
     // The following *-min tasks produce minified files in the dist folder
     imagemin: {
       dist: {
@@ -358,52 +450,13 @@ module.exports = function (grunt) {
         }]
       }
     },
-
-    // Allow the use of non-minsafe AngularJS files. Automatically makes it
-    // minsafe compatible so Uglify does not destroy the ng references
-    ngAnnotate: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '.tmp/concat',
-          src: '**/*.js',
-          dest: '.tmp/concat'
-        }]
-      }
-    },
-
-    // Package all the html partials into a single javascript payload
-    ngtemplates: {
-      options: {
-        // This should be the name of your apps angular module
-        module: 'wtcApp',
-        htmlmin: {
-          collapseBooleanAttributes: true,
-          collapseWhitespace: true,
-          removeAttributeQuotes: true,
-          removeEmptyAttributes: true,
-          removeRedundantAttributes: true,
-          removeScriptTypeAttributes: true,
-          removeStyleLinkTypeAttributes: true
-        },
-        usemin: 'app/app.js'
-      },
-      main: {
-        cwd: '<%= yeoman.client %>',
-        src: ['{app,components}/**/*.html'],
-        dest: '.tmp/templates.js'
-      },
-      tmp: {
-        cwd: '.tmp',
-        src: ['{app,components}/**/*.html'],
-        dest: '.tmp/tmp-templates.js'
-      }
-    },
-
     // Replace Google CDN references
     cdnify: {
       dist: {
         html: ['<%= yeoman.dist %>/public/*.html']
+      },
+      back_office_dist: {
+        html: ['<%= yeoman.private %>/*.html']
       }
     },
 
@@ -413,13 +466,17 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           dot: true,
-          cwd: '<%= yeoman.client %>',
+          cwd: '<%= yeoman.front_office_dist %>',
           dest: '<%= yeoman.public %>',
           src: [
             '*.{ico,png,txt}',
             '.htaccess',
-            'bower_components/**/*',
+            'app/**/*',
             'assets/**/*',
+            'lib/**/*',
+            'node_modules/**/*',
+            'vendor/**/*',
+            'frontOfficeA2/**/*',
             'index.html'
           ]
         }, {
@@ -438,10 +495,11 @@ module.exports = function (grunt) {
         {
           expand: true,
           dot: true,
-          cwd: '<%= yeoman.back_office %>/app',
+          cwd: '<%= yeoman.back_office_dist %>',
           dest: '<%= yeoman.private %>',
           src: [
-'**/*'          ]
+            '**/*'
+          ]
         }]
       },
       styles: {
@@ -449,6 +507,133 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.client %>',
         dest: '.tmp/',
         src: ['{app,components}/**/*.css']
+      },
+      back_office_base:{
+        expand: true,
+        dest: '<%= yeoman.back_office_dist %>',
+        cwd: '<%= yeoman.back_office %>/app/',
+        src: [
+          '**/*',
+          '!/scripts/**/*'
+        ]
+      },
+	  back_office_bower:{
+		expand: true,
+		dest:'./<%= yeoman.back_office_dist %>/bower_components',
+		cwd:'bower_components',
+		src:[
+      'bootstrap-iconpicker/bootstrap-iconpicker/**/*',
+			'metisMenu/dist/**/*.min.*',
+		]
+	  },
+      back_office_lib: {
+        expand: true,
+        dest: './<%= yeoman.back_office_dist %>/lib',
+        cwd: 'node_modules',
+        src: '<%= yeoman.back_office_libs %>'
+      },
+      tripy_go_lib_back: {
+        expand: true,
+        dest: '<%= yeoman.back_office %>/app/scripts/tripy-lib',
+        cwd: './<%= yeoman.lib %>',
+        src: [
+          '**/*'
+        ]
+      },
+      back_office_compiled: {
+        expand: true,
+        dest: './<%= yeoman.back_office_dist %>/scripts_js',
+        cwd: './<%= yeoman.back_office_dist %>/scripts_js/back_office/src/app/scripts',
+        src: [
+          '<%= yeoman.back_office_dist %>/scripts_js/back_office/src/app/scripts/**/*.js'
+        ]
+      },
+      back_office_inner: {
+        expand: true,
+        dest: './<%= yeoman.back_office_dist %>/scripts_js',
+        cwd: './<%= yeoman.back_office_dist %>/scripts_js/back_office/src/app/scripts',
+        src: [
+         '**/*'
+         ]
+      },
+      back_office_views: {
+        expand: true,
+        dest: '<%= yeoman.back_office_dist %>',
+        cwd:'./<%= yeoman.back_office %>/app',
+        src: [
+          '**/*.html',
+          '**/*.css',
+          '!index.html'
+        ]
+      },
+      // FRONT OFFICE A2
+      front_office_base:{
+        expand: true,
+        dest: './frontOfficeA2/dist',
+        cwd: './frontOfficeA2/src',
+        src: [
+          // '*',
+          '**/*'
+        ]
+      },
+      front_office_vendor: {
+        expand: true,
+        dest: './frontOfficeA2/dist/vendor',
+        cwd: './bower_components',
+        src: [
+          'jquery/**/*'
+        ]
+      },
+      front_office_vendor_npm: {
+        expand: true,
+        dest: './frontOfficeA2/dist/vendor',
+        cwd: './node_modules',
+        src: [
+          'bootstrap/dist/**/*',
+          'font-awesome/**/*'
+        ]
+      },
+      front_office_lib: {
+        expand: true,
+        dest: './frontOfficeA2/dist/lib',
+        cwd: './node_modules',
+        src: [
+          '@angular/**/*',
+          'angular2-google-maps/**/*',
+          'reflect-metadata/Reflect.js',
+          'systemjs/dist/**/*',
+          'rxjs/**/*',
+          'angular2-jwt/*',
+          'ng2-bootstrap/**/*',
+          'moment/min/**/*',
+          'ng2-bootstrap/**/*',
+          'ng2-notifications/**/*',
+          'ng2-file-upload/**/*',
+          'marked/marked.min.js',
+          'flag-icon-css/css/flag-icon.min.css',
+          'flag-icon-css/flags/**/*',
+          'push.js/push.min.js',
+          'lodash/lodash.min.js',
+          'socket.io-client/socket.io.js',
+          'ng2-img-cropper/**/*'
+        ]
+      },
+      upgrade_bootstrap_iconpicker: {
+        expand: true,
+        dest: './<%= yeoman.back_office.dist %>/bower_components/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset',
+        cwd: './localUpgrade/bootstrap-iconpicker',
+        src: [
+          '**/*'
+        ]
+      },
+      // TRIPY-GO LIBRAIRIES GLOBALES
+      tripy_go_lib: {
+        expand: true,
+        dest: '<%= yeoman.front_office_A2 %>/app/tripy_go_lib',
+        cwd: './tripyGo_Libs',
+        src: [
+          '**/*.ts'
+        ]
       }
     },
 
@@ -561,26 +746,93 @@ module.exports = function (grunt) {
       options: {
 
       },
-      // Inject application script files into index.html (doesn't include bower)
-      scripts: {
+      front_css_dev: {
         options: {
           transform: function(filePath) {
-            filePath = filePath.replace('/client/', '');
-            filePath = filePath.replace('/.tmp/', '');
+            filePath = filePath.replace('./frontOfficeA2/src/', '');
+            return '<link rel="stylesheet" href="' + filePath + '">';
+          },
+          starttag: '<!-- injector:css -->',
+          endtag: '<!-- endinjector -->'
+        },
+        files: {
+          '<%= yeoman.front_office_dist %>/index.html': ['<%= yeoman.front_office_css %>']
+        }
+      },
+      front_css_dist: {
+        options: {
+          transform: function(filePath) {
+            filePath = filePath.replace('./frontOfficeA2/src/', '');
+            filePath = filePath.replace('./frontOfficeA2/dist/', '');
+            return '<link rel="stylesheet" href="' + filePath + '">';
+          },
+          starttag: '<!-- injector:css -->',
+          endtag: '<!-- endinjector -->'
+        },
+        files: {
+          '<%= yeoman.front_office_dist %>/index.html': ['<%= yeoman.front_office_dist %>/assets/css/built.css']
+        }
+      },
+      analytics: {
+        options: {
+          transform: function(filePath) {
+            filePath = filePath.replace('./frontOfficeA2/dist/', '');
+            return '<script src="'+ filePath+'"></script>';
+          },
+          starttag: '<!-- injector:analytics -->',
+          endtag: '<!-- endinjector -->'
+        },
+        files: {
+          '<%= yeoman.front_office_dist %>/index.html': ['ga.js']
+        }
+      },
+      back_css: {
+        options: {
+          transform: function(filePath) {
+            filePath = filePath.replace('/back_office/dist/', '');
+            //filePath = filePath.replace('/.tmp/', '');
+            return '<link rel="stylesheet" href="' + filePath + '">';
+          },
+          starttag: '<!-- injector:css -->',
+          endtag: '<!-- endinjector -->'
+        },
+        files: {
+          '<%= yeoman.back_office_dist %>/index.html': [
+            '<%= yeoman.back_office_dist %>/styles/built.css'
+          ]
+        }
+      },
+      // Inject application script files into index.html (doesn't include bower)
+      back_lib: {
+        options: {
+          transform: function(filePath) {
+            filePath = filePath.replace('/back_office/dist/', '');
+            //filePath = filePath.replace('/.tmp/', '');
             return '<script src="' + filePath + '"></script>';
           },
           starttag: '<!-- injector:js -->',
           endtag: '<!-- endinjector -->'
         },
         files: {
-          '<%= yeoman.client %>/index.html': [
+          '<%= yeoman.back_office_dist %>/index.html': [
                [
-
-                 '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.js',
-
-                 '!{.tmp,<%= yeoman.client %>}/app/app.js',
-                 '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.spec.js',
-                 '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js'
+                 "<%= yeoman.back_office_dist %>/js/angular2-polyfills.js",
+                 "<%= yeoman.back_office_dist %>/lib/tinymce/tinymce.min.js",
+                 "<%= yeoman.back_office_dist %>/lib/jquery/dist/jquery.min.js",
+                 "<%= yeoman.back_office_dist %>/lib/bootstrap/dist/js/bootstrap.min.js",
+                 "<%= yeoman.back_office_dist %>/bower_components/metisMenu/dist/metisMenu.min.js",
+                 "<%= yeoman.back_office_dist %>/bower_components/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.6.5.min.js",
+                 "<%= yeoman.back_office_dist %>/bower_components/bootstrap-iconpicker/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js",
+                 "<%= yeoman.back_office_dist %>/lib/systemjs/dist/system.src.js",
+                 "<%= yeoman.back_office_dist %>/lib/rxjs/bundles/Rx.js",
+                 "<%= yeoman.back_office_dist %>/lib/d3/d3.min.js",
+                 "<%= yeoman.back_office_dist %>/lib/marked/marked.min.js",
+                 "<%= yeoman.back_office_dist %>/lib/to-markdown/dist/to-markdown.js",
+                 "<%= yeoman.back_office_dist %>/lib/datamaps/dist/datamaps.world.min.js",
+                 "<%= yeoman.back_office_dist %>/lib/chart.js/Chart.min.js",
+                 "<%= yeoman.back_office_dist %>/js/*.js",
+                 "<%= yeoman.back_office_dist %>/lib/jquery-ui-bundle/jquery-ui.min.js",
+                 "<%= yeoman.back_office_dist %>/lib/push.js/push.min.js"
                ]
             ]
         }
@@ -603,7 +855,7 @@ module.exports = function (grunt) {
           ]
         }
       }
-    },
+    }
   });
 
   // Used for delaying livereload until after server has restarted
@@ -633,7 +885,7 @@ module.exports = function (grunt) {
         'env:all',
         'concurrent:server',
         'injector',
-        'wiredep',
+        // 'wiredep',
         'autoprefixer',
         'concurrent:debug',
         'apidoc'
@@ -644,8 +896,10 @@ module.exports = function (grunt) {
       'clean:server',
       'env:all',
       'concurrent:server',
-      'injector',
-      'wiredep',
+      'copy:tripy_go_lib',
+      'front_office',
+      'back_office',
+      // 'wiredep',
       'autoprefixer',
       'express:dev',
       'apidoc',
@@ -680,7 +934,6 @@ module.exports = function (grunt) {
         'clean:server',
         'env:all',
         'concurrent:test',
-        'injector',
         'autoprefixer',
         'karma'
       ]);
@@ -692,7 +945,6 @@ module.exports = function (grunt) {
         'env:all',
         'env:test',
         'concurrent:test',
-        'injector',
         'wiredep',
         'autoprefixer',
         'express:dev',
@@ -701,8 +953,7 @@ module.exports = function (grunt) {
     }
 
     else grunt.task.run([
-      'test:server',
-      'test:client'
+      'test:server'
     ]);
   });
 
@@ -718,27 +969,62 @@ module.exports = function (grunt) {
       grunt.task.run('usemin');
     });
 
+  grunt.registerTask('back_office', [
+    'clean:back_office_dist',
+    'copy:back_office_base',
+    'concat:back_css',
+	  'copy:back_office_bower',
+    'copy:back_office_lib',
+    'copy:upgrade_bootstrap_iconpicker',
+    'copy:tripy_go_lib_back',
+    'injector:back_lib',
+    'injector:back_css',
+    'ts:back_office',
+    'copy:back_office_compiled',
+    'copy:back_office_inner'
+  ]);
+
+  grunt.registerTask('front_office', function(target) {
+    console.log('target: ' + target);
+    if(target == 'dist') {
+      return grunt.task.run([
+        'copy:tripy_go_lib',
+        'copy:front_office_base',
+        'copy:front_office_lib',
+        'copy:front_office_vendor',
+        'copy:front_office_vendor_npm',
+        'concat:front_css',
+        'injector:front_css_dist',
+        'ts:front_office'
+      ]);
+    }else {
+      return grunt.task.run([
+        'copy:tripy_go_lib',
+        'copy:front_office_base',
+        'copy:front_office_lib',
+        'copy:front_office_vendor',
+        'copy:front_office_vendor_npm',
+        'injector:front_css_dev',
+        'ts:front_office'
+      ]);
+    }
+
+  });
+
   grunt.registerTask('build', [
     'clean:dist',
     'concurrent:dist',
-    'injector',
-    'wiredep',
     'useminPrepare',
-    //'useminPrepareBack',
+    'front_office:dist',
+    'injector:analytics',
+    'back_office',
     'autoprefixer',
-    'ngtemplates',
-    'concat',
-    'ngAnnotate',
     'copy:dist',
-    'cdnify',
-    'cssmin',
-    'uglify',
-    'rev',
-    'usemin',
     'mkdir',
     'touch'
-    //'useminBack'
   ]);
+
+
 
   grunt.registerTask('default', [
     'newer:jshint',

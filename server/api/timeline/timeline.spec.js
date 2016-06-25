@@ -100,7 +100,7 @@ describe('API /api/timeline', function() {
   });
 
   it("Simple users can't add new Timeline", function(done){
-  request(app)
+    request(app)
         .post('/api/timeline/'+timeline.name)
         .set({'Authorization': 'Bearer '+token})
         .send({'description':timeline.description})
@@ -112,11 +112,11 @@ describe('API /api/timeline', function() {
         });
   });
 
-  it('should add an operation to the timeline', function(done){
-    request(app)
+  /*it('should add an operation to the timeline', function(done){
+    var req = request(app)
       .post('/api/timeline/add/'+timeline._id+'/'+operation._id)
-      .set({'Authorization' : 'Bearer '+tokenAdmin})
-      .send()
+      .set('Authorization', 'Bearer '+tokenAdmin);
+      req.send()
       .expect(202)
       .expect('Content-Type', /json/)
       .end(function(err, res){
@@ -124,13 +124,13 @@ describe('API /api/timeline', function() {
         res.body.should.be.instanceof(Object);
         done();
       });
-
-  });
+  });*/
 
   it('should remove an operation to the timeline', function(done){
-      request(app)
+      var req = request(app)
         .post('/api/timeline/remove/'+timeline._id+'/'+operation._id)
-        .set({'Authorization' : 'Bearer '+tokenAdmin})
+        .set('Authorization' , 'Bearer '+tokenAdmin);
+      req
         .send()
         .expect(202)
         .expect('Content-Type', /json/)
@@ -143,4 +143,3 @@ describe('API /api/timeline', function() {
     });
 
 });
-

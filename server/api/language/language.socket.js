@@ -2,23 +2,30 @@
  * Broadcast updates to client when the model changes
  */
 
-'use strict';
+ 'use strict';
 
-var Language = require('./language.model');
+ var LanguageEvents = require('./language.event');
+ var events = ['save' , 'remove'];
 
 exports.register = function(socket) {
-  Language.schema.post('save', function (doc) {
-    onSave(socket, doc);
-  });
-  Language.schema.post('remove', function (doc) {
-    onRemove(socket, doc);
-  });
+
+  for(var i = 0, eventsLength = events.length; i < eventsLength; i++) {
+    var event = events[i];
+    var listener = createListener( 'language:' + event, socket);
+
+    LanguageEvents.on(event, listener);
+    socket.on('disconnect', removeListener(event, listener));
+  }
 };
 
-function onSave(socket, doc) {
-  socket.emit('language:save', doc);
+function createListener(event, socket) {
+  return function(doc) {
+    socket.emit(event, doc);
+  }
 }
 
-function onRemove(socket, doc) {
-  socket.emit('language:remove', doc);
+function removeListener(event, listener) {
+  return function() {
+    LanguageEvents.removeListener(event, listener);
+  }
 }

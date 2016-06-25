@@ -9,6 +9,25 @@ var LanguageSchema = new Schema({
   note: {type: String}
   });
 
+var LanguageModel = mongoose.model('Language', LanguageSchema);
 
+/**
+ * Vérifie que la langue n'existe pas déjà
+ *
+ */
+LanguageSchema.pre('save', function(next){
+  var self = this;
+  if(self.force){
+    delete self.force;
+    next();
+  }
+  LanguageModel.find({name: self.name},function(err, docs){
+    if(!docs.length){
+      next();
+    }else{
+      next(new Error("Language exists!"));
+    }
+  });
+});
 
-module.exports = mongoose.model('Language', LanguageSchema);
+module.exports = LanguageModel;

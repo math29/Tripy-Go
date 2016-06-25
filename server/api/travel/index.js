@@ -115,6 +115,44 @@ router.get('/', controller.index);
 router.get('/:id', controller.show);
 
 /**
+ * @api {get} /api/travels/user/:id Get By User Id
+ * @apiVersion 0.0.0
+ * @apiName GetTravelsByUserId
+ * @apiGroup Travels
+ *
+ * @apiParam {Number} id  Id of the user target
+ *
+ * @apiSuccess {Travels} Travels
+ *
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 200 OK
+ *  [
+ *      {
+ *          "_id": "5612bb652e5ef4a40f41acc4",
+ *          "author": "5612bad22e5ef4a40f41acc3",
+ *          "date_departure": null,
+ *          "date_return": null,
+ *          "month_departure": null,
+ *          "choose_by_dates": false,
+ *          "choose_by_month": false,
+ *          "budget": 2000000,
+ *          "nbTravellers": 15,
+ *          "__v": 0,
+ *          "selectedHashtags": [],
+ *          "region_idea": "",
+ *          "personal_interest": {
+ *              "mountain": false,
+ *              "playa": false
+ *          },
+ *          "date_created": "2015-10-05T18:03:17.925Z"
+ *      }
+ *  ]
+ *
+ * @apiUse UserNotAuthorized
+ */
+router.get('/user/:id', controller.get_by_user_id);
+
+/**
   * @api {post} /api/travels Post travel
   * @apiName InsertTravel
   * @apiGroup Travels
@@ -210,5 +248,63 @@ router.patch('/:id', controller.update);
   *
   */
 router.delete('/:id', auth.isAuthenticated(), controller.destroy);
+
+/**
+ * @api {put} /api/travels/addPartner/:id/:userId Add a partner to travel
+ * @apiName addPartner
+ * @apiGroup Travels
+ *
+ * @apiParam {String} id  Id of the travel
+ * @apiParam {String} userId  Id of the friend we want to add to the travel
+ *
+ * @apiSuccess {Object} Object response
+ *
+ * @apiSuccessExample Success-Response:
+ *    HTTP/1.1 201 Content added:
+ *    {
+ *      status: 201,
+ *      data: "User added"
+ *    }
+ */
+router.put('/addPartner/:id/:userId', auth.isAuthenticated(), controller.addPartner);
+
+/**
+ * @api {put} /api/travels/site/:type/:siteId/:travelId Add a site used for a travel
+ * @apiName addUsedSite
+ * @apiGroup Travels
+ *
+ * @apiParam {String} type of site used (transport, hotel, ...)
+ * @apiParam {String} id of the site
+ * @apiParam {String} travelId id of the travel where we want to add the site
+ *
+ * @apiSuccess {Object} object response
+ *
+ * @apiSuccessExample Success-Response:
+ *    HTTP/1.1 201 Content added:
+ *      {
+ *        status: 201,
+ *        data: "Site added"
+ *      }
+ */
+ router.put('/site/:type/:siteId/:travelId', auth.isAuthenticated(), controller.addSite);
+
+/**
+ * @api {put} /api/travels/name/:id/:name Rename travel
+ * @apiName renameTravel
+ * @apiGroup travels
+ *
+ * @apiParam {string} id id of the travel
+ * @apiParam {string} name name of the travel
+ *
+ * @apiSuccess {Object} object response
+ *
+ * @apiSuccessExample Success-Response:
+ *    HTTP/1.1 200 OK
+ *    {
+ *      status: 200,
+ *      data: 'Travel renamed'
+ *    }
+ */
+ router.put('/name/:id/:name', auth.isAuthenticated(), controller.setName);
 
 module.exports = router;

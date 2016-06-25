@@ -1,0 +1,74 @@
+.price i {
+	padding: 15px 0px 0px 15px;
+}
+
+/* TITLE PART */
+.listing-page-title {
+	background: url('assets/images/bg-image10.jpg');
+	padding: 60px 0px;
+	background-attachment: fixed;
+	background-size: contain;
+	color: #ffffff;
+}
+.listing-page-title h3 {
+	font-weight: 800;
+	font-size: 28px;
+	letter-spacing: 1px;
+}
+.listing-page-title h5 i {
+	color: #F19C4F;
+}
+.listing-page-title p {
+	color: #fff;
+}
+.listing-page-title p i {
+	margin-right: 5px;
+}
+
+.listing-page-title span {
+	color: #fff;
+}
+.listing-page-title span i {
+	margin: 0px 5px;
+	font-weight: normal;
+}
+.listing-page-title  h4 {
+	font-weight: bold;
+	color: #fff;
+}
+
+
+/***************************/
+/* Filters Checkboxs */
+/***************************/
+
+.filterType input[type="checkbox"] {
+    display:none;
+}
+
+.filterType input[type="checkbox"] + label span {
+    display:inline-block;
+    width:19px;
+    height:19px;
+    background: url('assets/fonts/empty-checkbox.png') top no-repeat;
+    cursor:pointer;
+    margin:-1px 4px 0 0;
+    vertical-align:middle;
+}
+
+.filterType input[type="checkbox"] + label span svg {
+    width:19px;
+    height:19px;
+}
+
+.filterType input[type="checkbox"]:checked + label span {
+    background:url('assets/fonts/checked-box.png') top no-repeat;
+}
+
+
+/**************************************/
+/************* Range Sliders  ****************/
+/**************************************/
+.ui-widget-header {
+	background: #00ADEF;
+}

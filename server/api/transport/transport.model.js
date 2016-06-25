@@ -1,38 +1,42 @@
 'use strict';
 
+var Location = require('../location/location.model');
+var geo = require('node-geo-distance');
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 
 var TransportSchema = new Schema({
-  name: String,
-  active: Boolean,
+  type: {
+    type: Schema.Types.ObjectId,
+    ref: 'TransportType'
+  },
+  distance: {type: Number},
   departure: {
     type: Schema.Types.ObjectId,
-    ref: 'Location'
+    ref: 'Location',
+    required: true
   },
   arrival: {
     type: Schema.Types.ObjectId,
-    ref: 'Location'
+    ref: 'Location',
+    required: true
   },
+  class: String,
   cost: Number,
-  duration: {
-    start_date: Date,
-    end_date: Date
-  },
-  departure_time: Date,
-  arrival_time: Date,
-  travel: {
-    type: Schema.Types.ObjectId,
-    ref: 'Travel'
-  },
-  walking_time: { // Only for Intern Transports
-    start_date: Date,
-    end_date: Date
-  },
-  baggages: String, // Enum SMALL/MEDIUM/LARGE - Only for external Transports
-  confort: Number, // 1->5 - Only for external Transports
-  type: String
+  date_departure: {type: Date, required: true}
+});
+
+TransportSchema.pre('save', function(next){
+  var self = this;
+  Location.find({_id: {$in: [self.departure, self.arrival]}}, function(err, locations){
+    if(!locations[1])locations[1] = locations[0];
+    geo.vincenty({latitude: locations[0].loc[0], longitude: locations[0].loc[1]},
+      {latitude: locations[1].loc[0], longitude: locations[1].loc[1]}, function(dist) {
+        self.distance = dist / 1000;
+        next();
+    });
+  })
 });
 
 module.exports = mongoose.model('Transport', TransportSchema);

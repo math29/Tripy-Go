@@ -22,7 +22,7 @@ var router = express.Router();
  * @apiParam {File} file   		File you wanna store
  */
 
-// router.get('/', controller.index);
+ router.get('/', controller.index);
 
 /**
  * @api {get} /api/files/:id Get By Id
@@ -65,8 +65,5 @@ router.get('/:id', controller.show);
   *
   */
 router.post('/', controller.create);
-// router.put('/:id', controller.update);
-// router.patch('/:id', controller.update);
-// router.delete('/:id', controller.destroy);
 
 module.exports = router;

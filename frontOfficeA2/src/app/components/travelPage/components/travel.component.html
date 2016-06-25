@@ -1,0 +1,102 @@
+<div [style.width]="side_width" class="package-detail-sidebar">
+  <!-- Panneau de gauche -->
+  <div *ngIf="localTravel" class="sidebar-wrapper">
+    <div class="row">
+      <div class="package-summary sidebar-item">
+        <h4 class="header-title">
+          {{localTravel.name}}
+          <span class="fa fa-edit right" (click)="lunchUpdateForm()"></span>
+        </h4>
+        <div class="participants">
+          <h2 class="travelSubTitle">Participants</h2>
+
+          <!-- Photo des utilisateurs -->
+          <div class="row" style="margin: 10px 0px;">
+            <div class="col-lg-12 col-md-12 col-xs-12">
+              <div class="row" *ngIf="participants.length > 0">
+                <div *ngFor="let partner of participants" class="col-sm-6 col-md-4 col-lg-4 col-xs-12" style="text-align: center;">
+                  <div *ngIf="partner.user" class="participant">
+                    <img src="{{partner.user.picture}}" class="userPic" />
+                  </div>
+                </div>
+                <div *ngIf="!addFriends" class="col-sm-4 col-md-3 col-lg-3 col-xs-12" style="text-align: center;">
+                  <div (click)="addFriends = !addFriends" class="participant">
+                    <img class="addIcon" src="/assets/fonts/plus.svg" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Photo des utilisateurs -->
+
+          <div class="find"  [class.active]="addFriends">
+            <input type="text" class="form-control" placeholder="ajouter un ami" [(ngModel)]="friendSearch" (keyup)="searchRequest()"/>
+            <ul>
+              <li *ngFor="let member of search" (click)="addPartner(member)" class="memberFind">
+                <img src="{{member.picture}}" class="friend-img" /><span>{{member.name}}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="used_site">
+          <h2 class="travelSubTitle">Sites utilisés</h2>
+          <div class="row row-eq-height">
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12" *ngFor="let site of sites">
+              <site [site]="site" (navigationEvent)="navigateTo($event)"></site>
+            </div>
+            <!-- Nouveau Site -->
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12" *ngIf="!addSite">
+              <div class="holiday-grid-view" (click)="addSite = !addSite">
+                <div class="holiday-header-wrapper">
+                  <div class="holiday-header">
+                    <div class="holiday-img">
+                      <img src="assets/fonts/browser.svg" alt="addSite">
+                    </div>
+                    <div class="detail">
+                      <a><i class="fa fa-plus"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Fin nouveau site -->
+          </div>
+
+          <!-- Formulaire d'ajout d'un site utilisé -->
+          <div class="find" [class.active]="addSite" style="margin-top: 10px;">
+            <input type="text" placeholder="ajouter un site utilisé" [(ngModel)]="siteSearch" (keyup)="searchSiteRequest()"/>
+            <ul>
+              <li *ngFor="let site of sitesRetrieved" (click)="addThisSite(site)" class="memberFind">
+                <img src="{{site.company.img}}" class="friend-img" /><span>{{site.company.name}}</span>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Fin Formulaire d'ajout d'un site utilisé -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div [style.width]="map_width" id="map"></div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Nom de voyage</h4>
+      </div>
+      <div class="modal-body">
+        <h2>Choisissez un nom pour votre voyage:</h2>
+        <input type="text" [(ngModel)]="travel_name" class="form-control"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-primary" (click)="updateName()">Sauvegarder</button>
+      </div>
+    </div>
+  </div>
+</div>

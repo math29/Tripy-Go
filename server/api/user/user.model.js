@@ -3,15 +3,26 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var crypto = require('crypto');
+var Subscriber = require('../newsletter/newsletter.model');
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 var UserSchema = new Schema({
   name: String,
+  fname: String,
   email: { type: String, lowercase: true },
   role: {
     type: String,
     default: 'user'
   },
+  travels: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Travel'
+  }],
+  connected: {type: Boolean, default: false},
+  notifications: [{title: {type: String}, body: {type: String}, link: {type: String}, template: {type: String, default: 'normal'}}],
+  visited_countries: [String],
+  dest_prefereds: [String],
   hashedPassword: String,
   provider: String,
   salt: String,
@@ -19,14 +30,14 @@ var UserSchema = new Schema({
   twitter: {},
   google: {},
   github: {},
-  fname: String,  // NEW
-  phone: String,  // NEW
-  birthday: Date, // NEW
-  address: String,  // NEW
-  zipcode: Number,  // NEW
-  city: String,  // NEW
-  country: String,  // NEW
-  picture: String // NEW
+  picture: {type: String, default:'assets/images/user.png'}
+});
+
+UserSchema.plugin(deepPopulate, {
+  whitelist: [
+    'travels.transports.departure.country',
+    'travels.transports.arrival.country'
+  ]
 });
 
 /**
@@ -108,11 +119,11 @@ var validatePresenceOf = function(value) {
 UserSchema
   .pre('save', function(next) {
     if (!this.isNew) return next();
-
     if (!validatePresenceOf(this.hashedPassword) && authTypes.indexOf(this.provider) === -1)
       next(new Error('Invalid password'));
-    else
+    else {
       next();
+    }
   });
 
 /**

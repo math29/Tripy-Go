@@ -1,0 +1,17 @@
+.notificationTitle {
+  font-size: 1.25em;
+}
+
+.thumb-notification {
+  width: 300%;
+  margin: auto;
+  margin-top: 15px;
+}
+
+.action {
+  background-color: #f9676b;
+  color: #00adef;
+  border-radius: 50%;
+  padding: 2px;
+  margin-left: 5px;
+}

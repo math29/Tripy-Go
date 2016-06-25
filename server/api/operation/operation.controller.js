@@ -58,7 +58,7 @@ exports.create = function(req, res){
   }else{
     return res.status(400).json(errors);
   }
-}
+};
 
 /**
  * Update an operation and the timelines associated
@@ -85,7 +85,7 @@ exports.update = function(req, res){
     }
     return res.status(200).json(update);
   });
-}
+};
 
 /**
  * Remove an operation from timeline
@@ -98,7 +98,7 @@ function removeOperationFromTimeline(timelineId, operation){
 
     // on décrémente l'ensemble des opérations qui suivent celle que l'on supprime de la timeline
     for(var i = 0; i < operation.steps.length; i++){
-      if(operation.steps[i].id == timelineId){
+      if(operation.steps[i].id === timelineId){
         Operation.update({"steps.id":timelineId, "steps.step": {$gt: operation.steps[i].step}},{$inc:{"steps.$.step":-1}},{multi: true}).exec();
       }
     }
@@ -165,7 +165,7 @@ function sym() {
 
     // Run filter function on each array against the other
     return filterFunction(arr1, arr2)
-      .concat(filterFunction(arr2, arr1));
+      .concat(filterFunction(arr2, arr1));//NOSONAR
   };
 
   // Reduce all arguments getting the difference of them
@@ -192,7 +192,7 @@ exports.show = function(req, res) {
  * Removed specified operation from database
  */
 exports.destroy = function(req, res) {
-  Operation.findOneAndRemove({_id: req.params.id}, function(err, operation){
+  Operation.findOne({_id: req.params.id}, function(err, operation){
     if(err){
       return handleError(res, err);
     }
@@ -206,7 +206,7 @@ exports.destroy = function(req, res) {
  * Vérifie que l'objet log comporte tous les attributs nécessaire
  */
 function checkOperationObject(operation){
-	var errors = {};
+  var errors = {};
 	errors.errors = [];
 
 	if(!isDefined(operation.type)){

@@ -1,0 +1,39 @@
+<div class="holiday-grid-view" (click)="addSite = !addSite">
+    <div class="holiday-header-wrapper">
+        <div class="holiday-header">
+            <div class="holiday-img" *ngIf="siteContent">
+                <img class="siteImg" src="{{siteContent.company.img}}" alt="{{siteContent.company.name}}">
+            </div>
+            <div class="holiday-price" *ngIf="rates.ergo_rate == 0 && rates.content_rate == 0">
+                <p>Votez!</p>
+            </div>
+            <div class="comment-site" *ngIf="comment == ''" (click)="comment_view = !comment_view">
+                <i class="fa fa-comments-o fa-2x" aria-hidden="true"></i>
+            </div>
+            <div class="navigate-site" (click)="navigateTo()">
+                <i class="fa fa-chevron-right fa-2x" aria-hidden="true"></i>
+            </div>
+            <div class="holiday-title" *ngIf="siteContent">
+                <h3>{{siteContent.company.name}}</h3>
+                <h5>
+                    <span>Ergonomie</span><br/>
+                    <rating [(ngModel)]="rates.ergo_rate"
+                        (onHover)="hoveringOver($event)"
+                        (onLeave)="resetStar('ergo_rate', $event)"
+                    ></rating>
+                </h5>
+                <h5>
+                    <span>Contenu</span><br />
+                    <rating [(ngModel)]="rates.content_rate"
+                        (onHover)="hoveringOver($event)"
+                        (onLeave)="resetStar('content_rate', $event)"
+                    ></rating>
+                </h5>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="comment_view" class="col-md-12 col-sm-12 clear-padding comment-form">
+        <textarea [(ngModel)]="comment" class="form-control"></textarea>
+        <button class="btn btn-submit form-control" *ngIf="comment" (click)="commentThisSite()">Commenter</button>
+    </div>
+</div>

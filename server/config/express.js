@@ -21,14 +21,25 @@ var mongoose = require('mongoose');
 var logger = require('./logger');
 var busboyBodyParser = require('busboy-body-parser');
 
+//CORS middleware
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'POST');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    next();
+}
 
 module.exports = function(app) {
   var env = app.get('env');
+  var development_cache = 0;
+  var production_cache = 86400000;
 
   app.set('views', config.root + '/server/views');
   app.engine('html', require('ejs').renderFile);
   app.set('view engine', 'html');
   app.use(compression());
+  app.use(allowCrossDomain);
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
   app.use(methodOverride());
@@ -40,30 +51,34 @@ module.exports = function(app) {
   // We need to enable sessions for passport twitter because its an oauth 1.0 strategy
   app.use(session({
     secret: config.secrets.session,
-    resave: true,
+    resave: false,
     saveUninitialized: true,
     store: new mongoStore({
       mongooseConnection: mongoose.connection,
-      db: 'wtc'
+      db: process.env.OPENSHIFT_APP_NAME || 'wtc-dev'
     })
   }));
 
   if ('production' === env) {
     app.use(favicon(path.join(config.root, 'public', 'favicon.ico')));
-    app.use(express.static(path.join(config.root, 'public')));
+    app.use(express.static(path.join(config.root, 'public'), { maxAge: production_cache}));
     app.set('appPath', path.join(config.root, 'public'));
-    app.use('/back', express.static(path.join(config.root, 'back')));
+    app.set('back', path.join(config.root, 'back/'));
+    app.use('/back', express.static(path.join(config.root, 'back/'), { maxAge: production_cache}));
     app.use(morgan('dev'));
   }
 
   if ('development' === env || 'test' === env) {
     app.use(require('connect-livereload')());
     app.use(express.static(path.join(config.root, '.tmp')));
-    app.use(express.static(path.join(config.root, 'client')));
-    app.set('appPath', path.join(config.root, 'client'));
-    app.use('/back',express.static(path.join(config.root, 'back_office/app/')));
+    // app.use('/front',express.static(path.join(config.root, 'client')));
+    // app.set('/front', path.join(config.root, 'client'));
+    app.set('appPath', path.join(config.root, 'frontOfficeA2/dist/'));
+    app.set('back', path.join(config.root, 'back_office/dist/'));
+    app.use( express.static(path.join(config.root, 'frontOfficeA2/dist/'), { maxAge: development_cache}));
+    app.use('/back',express.static(path.join(config.root, 'back_office/dist/'), { maxAge: development_cache}));
     if('test' !== env){
-      app.use('/doc', express.static(path.join(config.root, 'apidoc')));
+      app.use('/doc', express.static(path.join(config.root, 'apidoc'), { maxAge: development_cache}));
       app.use(require('morgan')({ "stream": logger.stream }));
     }
     app.use(errorHandler()); // Error handler - has to be last

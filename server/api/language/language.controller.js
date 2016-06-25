@@ -56,20 +56,17 @@ exports.showByName = function(req, res) {
 
 // Creates a new country in the DB.
 exports.create = function(req, res) {
-
-  var statusCode = 202;
+  var statusCode = 201;
 
   //verrification de l'objet country
   var errors = checkLanguageObject(req.body);
 
   // si il n'y à aucun message d'erreur, on ajoute le pays
-	if(errors.errors.length === 0){
-		Language.update({ name: { $eq: req.body.name}}, req.body, {upsert: true}, function(err, language) {
+  if(errors.errors.length === 0){
+    var language = new Language(req.body);
+	  language.save(function(err){
 		if(err) {
-		  return handleError(res, err);
-		}
-		if(typeof language.upserted !== 'undefined'){
-		  statusCode = 201;
+		  return res.status(202).json('{error: \'La langue existe déjà\'}');
 		}
 		return res.status(statusCode).json(language);
 		});
@@ -96,7 +93,7 @@ exports.update = function(req, res) {
     if(!language) {
       return res.status(404).send('Not Found');
     }
-
+    language.force = true;
     _.merge(language, req.body).save(function (err) {
       if (err) {
         return handleError(res, err);
@@ -105,7 +102,6 @@ exports.update = function(req, res) {
     });
   });
   }
-  return res.status(400).json(errors);
 
 };
 

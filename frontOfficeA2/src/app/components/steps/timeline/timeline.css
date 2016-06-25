@@ -1,0 +1,121 @@
+/*********************************/
+/* GENERAL */
+/*********************************/
+
+.header-title {
+	text-align: right;
+}
+
+
+
+/*********************************/
+/* FOOTER DESIGN */
+/*********************************/
+
+/* Navigation dans les operations*/
+.sidebar-item-bottom {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	z-index: 900;
+	text-align:center;
+	/*background: #e6e6e6;*/
+}
+
+.sidebar-item-bottom .previous-step {
+	float:left;
+	border-radius: 50%;
+}
+
+.sidebar-item-bottom .next-step {
+	float:right;
+	border-radius: 50%;
+}
+
+.step-arrow {
+	font-size: large;
+	padding: 15px 20px;
+	margin: 0px 5px;
+	background: rgba(242,103,107,0.9);
+	color: white;
+	cursor: pointer;
+}
+
+.step-arrow:hover {
+	background: rgba(242,103,107,0.5);
+	color: #00adef;
+}
+
+/*********************************************************
+			3. RATE
+**********************************************************/
+.operation-rate{
+	background: rgba(242,103,107,0.7);
+	border-radius: 5px;
+}
+
+.operation-rate span {
+	display: block;
+	margin: -14px 0px -11px 0px;
+	font-weight: bold;
+}
+
+.operation-rate i svg {
+	cursor: pointer;
+	width: 25px;
+}
+
+.operation-rate .rate-up svg {
+	margin-top: 5px;
+	margin-bottom: 4px;
+	color: green;
+}
+
+.operation-rate .rate-up svg path {
+	fill: green;
+}
+
+.operation-rate .rate-down svg {
+	color: red;
+	margin-top: 4px;
+}
+
+.operation-rate .rate-down svg path {
+	fill: red;
+}
+
+@media screen and (min-width: 1100px) and (max-width: 1250px) {
+    .operation-rate i svg {
+        padding-right: 7px;
+    }
+}
+
+@media screen and (min-width: 990px) and (max-width: 1250px) {
+    .operation-rate i svg {
+        padding-right: 12px;
+        margin-top: 8px !important;
+    }
+}
+
+/*********************************************************
+			3-1. After RATE
+**********************************************************/
+
+/* Cas vote positif */
+.sidebar-item-bottom .up .rate-down svg path {
+	fill: grey;
+	fill-opacity: 0.5;
+}
+
+.sidebar-item-bottom .down .rate-up svg path {
+	fill: grey;
+	fill-opacity: 0.5;
+}
+
+.sidebar-item-bottom .up span {
+	color: green;
+}
+
+.sidebar-item-bottom .down span {
+	color: red;
+}

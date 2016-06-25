@@ -34,6 +34,23 @@ var router = express.Router();
 router.get('/', auth.hasRole('admin'), controller.index);
 
 /**
+ * @api {get} /api/timeline/:name Get Timeline by name
+ * @apiVersion 1.0.0
+ * @apiName GetTimelines
+ * @apiGroup Timelines
+ *
+ * @apiSuccess {Object} timeline requested
+ *
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *
+ *
+ * @apiUse UserNotAuthorized
+ */
+router.get('/name/:name', auth.isAuthenticated(), controller.getByName);
+
+/**
  * @api {get} /api/timeline/:navigation Request timeline for specified navigation
  * @apiVersion 1.0.0
  * @apiName GetTimeline
@@ -49,11 +66,27 @@ router.get('/', auth.hasRole('admin'), controller.index);
  */
 router.get('/:id', auth.isAuthenticated(), controller.show);
 
+
 router.post('/:name', auth.hasRole('admin'), controller.create);
+router.patch('/:timelineId/:name', auth.hasRole('admin'), controller.updateName);
 
 router.post('/add/:timelineId/:operationId',  auth.hasRole('admin'), controller.addOperation);
 router.post('/remove/:timelineId/:operationId',  auth.hasRole('admin'), controller.removeOperation);
 
+
+/**
+  * @api {put} /api/timeline/:side/:timelineId/:opId Move operation in the timeline
+  * @apiName MoveOperation
+  * @apiGroup Timelines
+  *
+  * @apiParam (side) {Number} side to move operation -1 appears before 1 appears after
+  * @apiParam (timelineId) {String} id of the timeline
+  * @apiParam (opId) {String} id of operation
+  *
+  * @apiSuccess {Object} old timeline
+  *
+  *
+  */
 router.put('/:side/:timelineId/:opId', auth.hasRole('admin'), controller.moveOperation);
 /**
   * @api {delete} /api/timeline/:id Delete a timeline

@@ -1,0 +1,67 @@
+/* GENERAL */
+.navbar {
+    margin-bottom: 0px;
+}
+
+.navbar a:hover {
+    -webkit-transition-property: color;
+    -moz-transition-property: color;
+    -o-transition-property: color;
+    transition-property: color;
+    color: #f9676b;
+}
+
+/* Navbar-nav*/
+
+.navbar-nav a {
+    color: #07253f;
+    margin-right: 5px;
+}
+
+.navbar-nav a i {
+    color: #f9676b;
+    margin-right: 5px;
+}
+
+.navbar-nav .form-control {
+    background: #0A3152 none repeat scroll 0 0;
+    border: medium none;
+    border-radius: 0;
+    box-shadow: none;
+    color: #bec4c8;
+    height: 30px;
+    padding: 0 5px 0 10px;
+}
+
+/* StepBar */
+.stepbar {
+    padding-top: 10px;
+}
+
+@media screen and (min-width: 1500px) {
+    .stepbar {
+        width: 60%;
+    }
+}
+
+@media screen and (min-width: 1250px) and (max-width: 1499px) {
+    .stepbar {
+        width: 50%;
+    }
+}
+
+@media screen and (min-width: 990px) and (max-width: 1249px) {
+    .stepbar {
+        width: 37%;
+    }
+}
+
+/* Connected User */
+
+.navbar-nav  img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-top: -5px;
+    margin-right: 5px;
+}

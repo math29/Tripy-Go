@@ -1,0 +1,40 @@
+<!-- <div class="travels">
+	<div class="panel panel-default travel-panel" ng-repeat="travel in travels">
+		<div class="panel-heading">
+			{{ travel.title }}
+		</div>
+		<div class="panel-body">
+			{{ travel.description }}
+		</div>
+	</div>
+</div>
+
+<div class="profile-map-travels">
+	<ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+</div> -->
+
+<!-- START: USER PROFILE -->
+	<div class="row user-profile" ng-controller="ProfileCtrl">
+		<div class="container">
+			<div class="col-md-2 col-sm-2">
+				<div class="user-profile-tabs">
+					<ul class="nav nav-tabs">
+						<li ng-class="{'active' : step == 1}"><a data-toggle="tab" (click)="step = 1" class="text-center"><i class="fa fa-bolt"></i> <span>Vue de mon profil</span></a></li>
+						<li ng-class="{'active' : step == 2}"><a data-toggle="tab"  (click)="step = 2" class="text-center"><i class="fa fa-user"></i> <span>Mon profil</span></a></li>
+						<li *ngIf="user.travels.length > 0" ng-class="{'active' : step == 3}"><a data-toggle="tab"  (click)="step = 3" class="text-center"><i class="fa fa-plane"></i> <span>Mes Voyages</span></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-10 col-sm-10">
+				<div class="tab-pane fade in active" *ngIf="step == 1">
+					<overview></overview>
+				</div>
+				<div class="tab-pane fade in" *ngIf="step == 2">
+					<settings></settings>
+				</div>
+				<div class="tab-pane fade in" *ngIf="step == 3">
+					<profileTravels></profileTravels>
+				</div>
+			</div>
+		</div>
+	</div>

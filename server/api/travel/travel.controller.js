@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 var Travel = require('./travel.model');
-var Loc = require('../location/location.model');
+var User = require('../user/user.model');
 
 // Get list of travels
 exports.index = function(req, res) {
@@ -14,34 +14,74 @@ exports.index = function(req, res) {
 
 // Get a single travel
 exports.show = function(req, res) {
-  Travel.findById(req.params.id, function (err, travel) {
+  Travel.findById(req.params.id)
+    .populate('author partners.user', '-hashedPassword -salt')
+    .deepPopulate('transports.arrival.country transports.departure.country partners.user.picture')
+    .exec(function (err, travel) {
     if(err) { return handleError(res, err); }
     if(!travel) { return res.status(404).send('Not Found'); }
     return res.json(travel);
   });
 };
 
+exports.addPartner = function(req, res) {
+  var updateObj = {user: req.params.userId, status: 'waiting'};
+  Travel.findOne({_id: req.params.id,
+    $or: [{ 'author':req.user._id }, {'partners.user': { $in : [req.user._id]}}],
+    'partners.user': {$nin: [req.params.user_id]}},
+     function(err, travel) {
+    if(err) {
+      return handleError(err, res);
+    }
+    var userIndex = _.findIndex(travel.partners, function(o) { return o.user == req.params.userId});
+    if(userIndex == -1 ) {
+      travel.partners.push(updateObj);
+      travel.save(function(err){});
+      User.findById(req.params.userId, function(err, user) {
+        if(err){
+          console.log(err);
+        }else {
+        user.notifications.push({title:'Nouveau voyage ', body: req.user.name + ' souhaite vous ajouter à son voyage' + (travel.name ? travel.name : ''), link: req.params.id, template: 'trip-ack'});
+        user.save(function(err){if(err){}});
+        }
+      });
+      return res.status(201).json({status: 201, data: 'User added'});
+    }else {
+      return res.status(200).json({status: 204, data: 'Can\'t add friend'});
+    }
+  });
+}
+
+exports.get_by_user_id = function(req, res) {
+  User.findById(req.params.id, function(err, user){
+    Travel.find({'_id':{$in: user.travels}},
+      function (err, travels) {
+        if(err) { return handleError(res, err); }
+        return res.status(200).json(travels);
+      });
+  });
+};
+
 
 var save_travel = function(req, res) {
   delete req.body.date_created;
+  req.body.author = req.user._id;
   Travel.create(req.body, function(err, travel) {
     if(err) { return handleError(res, err); }
+    if(travel.author){
+      User.update(
+        {_id: travel.author},
+        { $push: {travels: travel}},
+        function(err, affected, resp) {
+        })
+    }
     return res.status(201).json(travel);
   });
 };
 
 // Creates a new travel in the DB.
 exports.create = function(req, res) {
-  // don't include the date_created, if a user specified it
-  if(req.body.arrival){
-    Loc.create(req.body.arrival, function(err, loc) {
-      if(err) { return handleError(res, err); }
-      req.body.arrival = loc;
-      save_travel(req, res);
-    });
-  }else{
-    save_travel(req, res);
-  }
+  save_travel(req, res);
 };
 
 // Updates an existing travel in the DB.
@@ -63,12 +103,70 @@ exports.destroy = function(req, res) {
   Travel.findById(req.params.id, function (err, travel) {
     if(err) { return handleError(res, err); }
     if(!travel) { return res.status(404).send('Not Found'); }
-    travel.remove(function(err) {
-      if(err) { return handleError(res, err); }
-      return res.status(204).send('No Content');
-    });
+    if(travel.author == req.user._id) {
+      travel.remove(function(err) {
+        if(err) { return handleError(res, err); }
+        return res.status(200).json({status: 200, data: 'Voyage supprimé'});
+      });
+    } else {
+      return res.status(400).json({status: 400, data: 'Vous n\'avez pas les droits pour supprimer ce voyage'});
+    }
   });
 };
+
+exports.addSite = function(req, res) {
+  Travel.findOne({_id: req.params.travelId,
+    $or: [{'author': req.user._id}, {'partners.user': {$in: [req.user._id]}}]},
+    function(err, travel) {
+      if(err) {
+        return handleError(err, res);
+      }
+      var siteIndex = _.findIndex(travel.sites, function(o){return o.site_id == req.params.siteId;});
+
+      // si le site existe déjà
+      if(siteIndex != -1) {
+        // je vérifie qu'il n'est pas utilisé pour le même type de prestation
+        var prestation = _.findIndex(travel.sites, function(o){return o.used_type == req.params.type});
+        if(prestation != -1) {
+          return res.status(200).json({status: 200, data:'Le site est déjà utilisé pour ce type de prestation'});
+        } else {
+          travel.sites[siteIndex].used_type.push(req.params.type);
+          travel.save(function(err) {
+            if(err) {
+              return handleError(err, res);
+            }
+            return res.status(201).json({status: 200, data: 'La nouvelle prestation à bien été ajoutée'});
+          })
+        }
+      }
+      if(!travel.sites) {
+        travel.sites = [];
+      }
+      travel.sites.push({site_id: req.params.siteId, used_type: [req.params.type]});
+      travel.save(function(err) {
+        if(err) {
+          return handleError(err, res);
+        }
+        return res.status(201).json({status:201, data: 'Le site à bien été ajouté au voyage'});
+      })
+    }
+  )
+
+}
+
+exports.setName = function(req, res) {
+  Travel.findOne({_id: req.params.id, $or: [{author: req.user._id}, {'partners.user': {$in: [req.user._id]}}]},
+    function(err, travel) {
+      if(err) {
+        return handleError(res, err);
+      }
+      if(req.params.name) {
+        travel.name = req.params.name;
+      }
+      travel.save(function(err){});
+      return res.status(200).json({status: 200, data: 'Name updated'});
+    });
+}
 
 function handleError(res, err) {
   return res.status(500).send(err);

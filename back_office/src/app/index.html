@@ -1,0 +1,118 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <base href="/back/">
+  <meta charset="utf-8">
+  <title>Tripy go, Yppi go</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+
+  <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
+
+  <!-- injector:css -->
+  <!-- endinjector -->
+
+  <!--<link rel="stylesheet" href="bower_components/metisMenu/dist/metisMenu.min.css"> -->
+  <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="bower_components/bootstrap-iconpicker/bootstrap-iconpicker/css/bootstrap-iconpicker.min.css">
+
+  <!-- endbuild -->
+
+  <!-- build:js({.tmp,app}) scripts/scripts.js -->
+  <!-- endbuild -->
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+  <!-- injector:js -->
+  <!-- endinjector -->
+
+<script>
+  var to_markdown = {
+    toMarkdown: toMarkdown
+  };
+</script>
+  <!-- Custom CSS -->
+
+  <!-- Custom Fonts -->
+
+
+</head>
+
+<body>
+
+<wtc-back>
+  Loading ...
+</wtc-back>
+
+<script>
+System.config({
+  packages: {
+    'scripts_js': {
+      format: 'register',
+    },
+    angular2: {
+      defaultExtension: 'js'
+    },
+    rxjs: {
+      defaultExtension: 'js'
+    },
+    'ng2-charts': {
+      defaultExtension: 'js'
+    },
+    'ng2-bootstrap': {
+      defaultExtension: 'js'
+    },
+    'ng2-file-upload': {
+      defaultExtension: 'js'
+    },
+    'ng2-bootstrap':{
+      defaultExtension: 'js'
+    },
+    'marked':{
+      defaultExtension: 'js'
+    },
+    'socket.io-client':{
+      defaultExtension: 'js'
+    },
+    'angular2-jwt': {
+      'defaultExtension': 'js'
+    },
+    'trypy-lib': {
+      'defaultExtension': 'js'
+    },
+    '@angular/core' : {defaultExtension: 'js', main: 'index.js'},
+    '@angular/common'  : {defaultExtension: 'js', main: 'index.js'},
+    '@angular/compiler'                : {defaultExtension: 'js', main: 'index.js'},
+    '@angular/router'                  : {defaultExtension: 'js', main: 'index.js'},
+    '@angular/router-deprecated'       : {defaultExtension: 'js', main: 'index.js'},
+    '@angular/http': {defaultExtension: 'js', main: 'index.js'},
+    '@angular/platform-browser': {defaultExtension: 'js', main: 'index.js'},
+    '@angular/platform-browser-dynamic': {defaultExtension: 'js', main: 'index.js'}
+  },
+
+      map: {
+        '@angular': 'lib/@angular',
+        '@angular/platform-browser-dynamic': 'lib/@angular/platform-browser-dynamic',
+        '@angular/platform-browser': 'lib/@angular/platform-browser',
+        '@angular/compiler': 'lib/@angular/compiler',
+        '@angular/core':'lib/@angular/core',
+        '@angular/common':'lib/@angular/common',
+        '@angular/http':'lib/@angular/http',
+        '@angular/router-deprecated': 'lib/@angular/router-deprecated',
+        rxjs: 'lib/rxjs',
+        moment: 'lib/moment/min/moment.min.js',
+        'ng2-charts': 'lib/ng2-charts',
+        'ng2-bootstrap': 'lib/ng2-bootstrap',
+        'marked':'lib/marked/marked.min.js',
+        'socket.io-client':'lib/socket.io-client/socket.io.js',
+        'angular2-jwt': 'lib/angular2-jwt',
+        'd3':'lib/d3/d3.min.js',
+        'ng2-file-upload': 'lib/ng2-file-upload',
+        'lodash': 'lib/lodash/lodash.min.js'
+      }
+    });
+    System.import('./scripts_js/app.js').then(null, console.error.bind(console));
+ </script>
+
+</body>
+
+</html>

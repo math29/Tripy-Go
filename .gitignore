@@ -5,13 +5,27 @@ public
 .tmp
 .tmpBack
 .idea
+.tscache/
+tscommand*
 
-client/bower_components
-back_office/app/bower_components
+bower_components
+
 dist
 apidoc
 report
-logs
+/logs/
+typings
 
 /server/config/local.env.js
 npm-debug.log
+
+# frontOfficeA2
+frontOfficeA2/src/lib/
+frontOfficeA2/src/app/tripy_go_lib/
+
+# Back office
+back_office/src/app/bower_components
+back_office/src/app/lib
+back_office/src/app/scripts/tripy-lib
+back_office/src/app/scripts_js
+back_office/dist

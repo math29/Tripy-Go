@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Connexion</h1>
+      <p>Entrez vous identifiants, ou identifiez vous via <i class="fa fa-facebook"></i>Facebook ou <i class="fa fa-google-plus"></i> Google+</p>
+    </div>
+    <div class="col-sm-12">
+      <form class="form" name="form" (submit)="login()" novalidate>
+
+        <div class="form-group">
+          <label>Email</label>
+
+          <input type="email" name="email" class="form-control" [(ngModel)]="user.email" required>
+        </div>
+
+        <div class="form-group">
+          <label>Mot de passe</label>
+
+          <input type="password" name="password" class="form-control" [(ngModel)]="user.password" required>
+        </div>
+
+        <div class="form-group has-error">
+          <p class="help-block" ng-show="form.email.$error.required && form.password.$error.required && submitted">
+             Veuillez entrer votre email et mot de passe.
+          </p>
+          <p class="help-block" ng-show="form.email.$error.email && submitted">
+             Veuillez entrer un email valide
+          </p>
+
+          <!-- <p class="help-block">{{ errors.other }}</p> -->
+        </div>
+
+        <div>
+          <button class="btn btn-inverse btn-lg btn-login" type="submit">
+            Login
+          </button>
+          <!-- <a class="btn btn-default btn-lg btn-register" href="" [routerLink]="['Signup']">
+            Register
+          </a> -->
+        </div>
+
+        <hr>
+        <div class="row">
+          <a class="btn btn-social btn-facebook" href="/auth/facebook">
+            <span class="fa fa-facebook"></span> Se connecter avec Facebook
+          </a>
+          <a class="btn btn-social btn-google" href="/auth/google" >
+            <span class="fa fa-google"></span> Se connecter avec Google+
+          </a>
+          <!--<a class="btn btn-twitter" href="" ng-click="loginOauth('twitter')">
+            <i class="fa fa-twitter"></i> Connect with Twitter
+          </a>-->
+        </div>
+      </form>
+    </div>
+  </div>
+  <hr>
+</div>

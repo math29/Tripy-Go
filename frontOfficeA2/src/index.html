@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Tripy-go vous accompagne dans la préparation de votre voyage. Voyager, c'est tellement mieux à plusieurs!">
+        <meta name="author" content="Tripy-go">
+        <meta name="robots" content="index, follow" />
+        <title>Tripy-Go</title>
+        <base href="/">
+        <script src="./assets/js/angular2-polyfills.js"></script>
+        <link rel="icon" type="image/x-icon" href="small-logo.png">
+
+        <!-- LOAD CSS LIBRARIES -->
+
+        <link rel="stylesheet" type="text/css" href="vendor/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="vendor/bootstrap/dist/css/bootstrap-theme.css" />
+        <link rel="stylesheet" type="text/css" href="vendor/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="assets/bootstrap-social-gh-pages/bootstrap-social.css">
+
+        <!-- LOAD TEMPLATE STYLES (CSS) -->
+
+        <!-- injector:css -->
+        <!-- endinjector -->
+
+        <link rel="stylesheet" type="text/css" href="lib/flag-icon-css/css/flag-icon.min.css">
+
+        <style type="text/css">
+            @font-face {
+                font-family: "duepuntozero font";
+                src: url(./assets/fonts/duepuntozero/duepuntozero_regular.otf) format("truetype");
+            }
+        </style>
+
+        <style type="text/css" media="screen">
+            html,
+            body {
+                height: 100%;
+                background: #f7f7f7;
+            }
+        </style>
+
+        <script type="text/javascript" async src="http://maps.google.com/maps/api/js?&libraries=places&language=fr-FR"></script>
+    </head>
+    <body class="load-full-screen">
+        <!--[if lt IE 7]>
+          <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+        <front-office-a2-app>
+            <div id="loader" class="load-full-screen">
+                <div class="loading-animation">
+                    <span><i class="fa fa-plane"></i></span>
+                    <span><i class="fa fa-bed"></i></span>
+                    <span><i class="fa fa-ship"></i></span>
+                    <span><i class="fa fa-suitcase"></i></span>
+                </div>
+            </div>
+        </front-office-a2-app>
+
+        <script src="lib/systemjs/dist/system.src.js"></script>
+        <script src="lib/rxjs/bundles/Rx.min.js"></script>
+
+        <script>
+            System.config({
+                packages: {
+                    "frontOfficeA2/src": {
+                        format: 'register',
+                        defaultExtension: 'js'
+                    },
+                    "angular2-jwt": {
+                        "defaultExtension": "js"
+                    },
+                    "ng2-bootstrap": {
+                        "defaultExtension": "js"
+                    },
+                    "ng2-file-upload" : {
+                        "defaultExtension": "js"
+                    },
+                    'marked':{
+                      defaultExtension: 'js'
+                    },
+                    'angular2-google-maps': {
+                      defaultExtension: 'js'
+                    },
+                    'lodash': {
+                      defaultExtension: 'js'
+                    },
+                    'socket.io-client':{
+                      defaultExtension: 'js'
+                    },
+                    'ng2-notifications': {defaultExtension:'js'},
+                    '@angular/core' : {defaultExtension: 'js', main: 'index.js'},
+                    '@angular/common'  : {defaultExtension: 'js', main: 'index.js'},
+                    '@angular/compiler' : {defaultExtension: 'js', main: 'index.js'},
+                    '@angular/router' : {defaultExtension: 'js', main: 'index.js'},
+                    '@angular/router-deprecated' : {defaultExtension: 'js', main: 'index.js'},
+                    '@angular/http': {defaultExtension: 'js', main: 'index.js'},
+                    '@angular/platform-browser': {defaultExtension: 'js', main: 'index.js'},
+                    '@angular/platform-browser-dynamic': {defaultExtension: 'js', main:'index.js'}
+                },
+                map: {
+                    '@angular': 'lib/@angular',
+                    '@angular/platform-browser-dynamic': 'lib/@angular/platform-browser-dynamic',
+                    '@angular/platform-browser': 'lib/@angular/platform-browser',
+                    '@angular/compiler': 'lib/@angular/compiler',
+                    '@angular/core':'lib/@angular/core',
+                    '@angular/common':'lib/@angular/common',
+                    '@angular/http':'lib/@angular/http',
+                    '@angular/router-deprecated': 'lib/@angular/router-deprecated',
+                    "angular2-jwt": "lib/angular2-jwt",
+                    "ng2-bootstrap": "lib/ng2-bootstrap",
+                    "moment": 'lib/moment/min/moment.min.js',
+                    "ng2-file-upload": "lib/ng2-file-upload",
+                    'ng2-bootstrap': 'lib/ng2-bootstrap',
+                    'marked':'lib/marked/marked.min.js',
+                    'ng2-notifications': 'lib/ng2-notifications',
+                    'lodash': 'lib/lodash/lodash.min.js',
+                    'socket.io-client':'lib/socket.io-client/socket.io.js'
+                }
+            });
+            System.import('frontOfficeA2/src/app.js').then(null, console.error.bind(console));
+        </script>
+
+        <!-- LOAD JS LIBRARIES -->
+        <script src="assets/js/respond.js"></script>
+        <script src="vendor/jquery/dist/jquery.min.js"></script>
+        <script src="lib/push.js/push.min.js"></script>
+        <script src="assets/plugins/owl.carousel.min.js"></script>
+        <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="assets/js/jquery-ui.min.js"></script>
+        <script src="assets/js/datepicker-fr.js"></script>
+        <script src="lib/marked/marked.min.js"></script>
+        <script src="assets/plugins/wow.min.js"></script>
+
+        <!-- injector:analytics -->
+        <!-- endinjector -->
+    </body>
+</html>

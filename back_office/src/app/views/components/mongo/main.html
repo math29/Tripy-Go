@@ -1,0 +1,94 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">Main information</h1>
+  </div>
+  <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div *ngIf="db_info" class="row">
+
+  <stats [number]="db_info.collections" comments="Collections" colour="primary" type="table"></stats>
+  <stats [number]="db_info.objects" comments="Objects" colour="primary" type="user"></stats>
+  <stats [number]="db_info.avgObjSize" comments="avgSize" colour="yellow" type="list"></stats>
+  <stats [number]="db_info.dataSize" comments="Data Size" colour="red" type="list"></stats>
+
+</div>
+<!-- /.row -->
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">Server information:</h1>
+  </div>
+  <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+  <div class="col-lg-4">
+    <div class="panel panel-danger">
+      <div class="panel-heading">
+        Host
+      </div>
+      <div  *ngIf="host" class="panel-body">
+        Hostname: {{host.system.hostname}}<br/>
+        Time: {{host.system.currentTime}}<br/>
+        Memory size: {{host.system.memSizeMB}}<br/>
+        NumCores: {{host.system.numCores}}
+      </div>
+    </div>
+  </div>
+  <div  *ngIf="host" class="col-lg-4">
+    <div class="panel panel-warning">
+      <div class="panel-heading">
+        OS
+      </div>
+      <div class="panel-body">
+        type: {{host.os.type}}<br/>
+        name: {{host.os.name}}
+      </div>
+    </div>
+  </div>
+  <div *ngIf="status" class="col-lg-4">
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        Status
+      </div>
+      <div class="panel-body">
+        Uptime: {{status.uptime}} s<br/>
+        Time: {{status.localTime}}<br/>
+        Connections: {{status.connections.current}}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">Tables</h1>
+  </div>
+  <!-- /.col-lg-12 -->
+</div>
+<div *ngIf="stats" class="row">
+  <div class="" *ngFor="let stat of stats">
+    <div class="col-lg-3 col-md-6">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          {{stat.ns}}
+        </div>
+        <div class="panel-body">
+          size: {{stat.size}}<br/>
+          count: {{stat.count}}<br/>
+          averageSize: {{stat.avgObjSize}}<br/>
+          OK: {{stat.ok}}
+        </div>
+        <a>
+          <div *ngIf="stat.goto" class="panel-footer">
+            <span class="pull-left">View Details</span>
+            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+            <div class="clearfix"></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

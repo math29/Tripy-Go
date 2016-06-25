@@ -1,0 +1,66 @@
+<!-- START: PAGE TITLE -->
+<div class="row listing-page-title">
+	<div class="container clear-padding text-center flight-title">
+		<h3>Première étape</h3>
+		<h4 class="thank">Trouvons un moyen de nous déplacer ! :)</h4>
+	</div>
+</div>
+<!-- END: PAGE TITLE -->
+
+<div class="row">
+	<div class="container">
+		<div class="col-md-9 hotel-listing">
+			<div *ngFor="let comparator of comparators">
+				<div class="col-md-12 col-sm-12">
+					<comparator [comparator]="comparator"></comparator>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3 clear-padding">
+			<div class="filter-head text-center">
+				<h4>Transports</h4>
+			</div>
+			<div class="filter-area">
+				<p>Vous retrouvez sur cette page tous les comparateurs de transport.
+					Ils vous proposerons les trajets actuellement disponibles pour votre voyage.
+					Attention, le prix affiché en premier lieu n'est pas forcément celui que vous allez payer.</p>
+				<div class="star-filter filter">
+					<h5><i class="fa fa-dashboard"></i> Trier par</h5>
+					<select class="form-control" (change)="onOrderChange($event.target.value)">
+                        <option value="content_score">Contenu</option>
+                        <option value="ergo_score">Ergonomie</option>
+                        <option value="nbCompanies">Nombre companies</option>
+                    </select>
+					<select class="form-control" (change)="onOrderDirChange($event.target.value)" style="margin-top: 10px;">
+                        <option value="-">Du plus au moins</option>
+                        <option value="+">Du moins au plus</option>
+                    </select>
+				</div>
+				<div class="star-filter filter">
+					<form #filterForm = "ngForm">
+						<h5><i class="fa fa-dashboard"></i> Moyens de transports</h5>
+						<ul class="filterType">
+							<li *ngFor="let type of transportTypes">
+								<input type="checkbox" name="filterType"
+									value="{{ type.name }}"
+									id="{{ type._id }}"
+                           			[checked]="transportTypes.indexOf(option) >= 0"
+                           			(change)="updateCheckedOptions(type.name, $event)">
+                           		<label [attr.for]="type._id"><span></span>{{ type.name }}</label>
+							</li>
+						</ul>
+					</form>
+
+					<h5 style="margin-top: 20px;">Ergonomie : {{ergonomyRange[0]}} à {{ergonomyRange[1]}} étoiles</h5>
+					<div class="ergonomy_rangeslider">
+					</div>
+					<h5 style="margin-top: 20px;">Content : {{contentRange[0]}} à {{contentRange[1]}} étoiles</h5>
+					<div class="content_rangeslider">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<br><br><br>

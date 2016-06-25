@@ -11,72 +11,60 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'client/bower_components/jquery/dist/jquery.js',
-      'client/bower_components/angular/angular.js',
-      'client/bower_components/angular-mocks/angular-mocks.js',
-      'client/bower_components/angular-resource/angular-resource.js',
-      'client/bower_components/angular-cookies/angular-cookies.js',
-      'client/bower_components/angular-sanitize/angular-sanitize.js',
-      'client/bower_components/angular-route/angular-route.js',
-      'client/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-      'client/bower_components/lodash/dist/lodash.compat.js',
-      'client/bower_components/angular-socket-io/socket.js',
-      'client/bower_components/angular-animate/angular-animate.js',
-      'client/bower_components/angular-google-maps/dist/angular-google-maps.js',
-      'client/app/app.js',
-      'client/app/app.css',
-      'client/app/**/*.js',
-      'client/app/**/*.coffee',
-      'client/components/**/*.js',
-      'client/components/**/*.coffee',
-      'client/app/**/*.jade',
-      'client/components/**/*.jade',
-      'client/app/**/*.html',
-      'client/components/**/*.html'
+      // paths loaded by Karma
+      {pattern: 'node_modules/angular2/bundles/angular2-polyfills.js', included: true, watched: true},
+      {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: true},
+      {pattern: 'node_modules/rxjs/bundles/Rx.js', included: true, watched: true},
+      {pattern: 'node_modules/angular2/bundles/angular2.dev.js', included: true, watched: true},
+      {pattern: 'node_modules/angular2/bundles/testing.dev.js', included: true, watched: true},
+      {pattern: 'karma-test-shim.js', included: true, watched: true},
+
+      // paths loaded via module imports
+      {pattern: 'frontOfficeA2/dist/**/*.js', included: false, watched: true},
+
+      // paths to support debugging with source maps in dev tools
+      {pattern: 'frontOfficeA2/src/**/*.ts', included: false, watched: false},
+      {pattern: 'frontOfficeA2/dist/**/*.js.map', included: false, watched: false}
     ],
 
-    preprocessors: {
-      '**/*.jade': 'ng-jade2js',
-      '**/*.html': 'html2js',
-      '**/*.coffee': 'coffee',
+    // proxied base paths
+    proxies: {
+        // required for component assests fetched by Angular's compiler
+        '/src/': '/base/src/'
     },
 
-    ngHtml2JsPreprocessor: {
-      stripPrefix: 'client/'
-    },
+    port: 9876,
 
-    ngJade2JsPreprocessor: {
-      stripPrefix: 'client/'
-    },
-
-    // list of files / patterns to exclude
-    exclude: [],
-
-    // web server port
-    port: 8080,
-
-    // level of logging
-    // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
     logLevel: config.LOG_INFO,
 
+    colors: true,
 
-    // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
+    browsers: ['Chrome'],
 
-    // Start these browsers, currently available:
-    // - Chrome
-    // - ChromeCanary
-    // - Firefox
-    // - Opera
-    // - Safari (only Mac)
-    // - PhantomJS
-    // - IE (only Windows)
-    browsers: ['PhantomJS'],
+    // Karma plugins loaded
+    plugins: [
+        'karma-jasmine',
+        'karma-coverage',
+        'karma-chrome-launcher'
+    ],
 
+    // Coverage reporter generates the coverage
+    reporters: ['progress', 'dots', 'coverage'],
 
-    // Continuous Integration mode
-    // if true, it capture browsers, run tests and exit
-    singleRun: false
+    // Source files that you wanna generate coverage for.
+    // Do not include tests or libraries (these files will be instrumented by Istanbul)
+    preprocessors: {
+        'frontOfficeA2/dist/**/!(*spec).js': ['coverage']
+    },
+
+    coverageReporter: {
+        reporters:[
+            {type: 'json', subdir: '.', file: 'coverage-final.json'}
+        ]
+    },
+
+    singleRun: true
   });
 };

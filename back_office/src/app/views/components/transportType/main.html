@@ -1,0 +1,67 @@
+<!-- Errors -->
+<div  *ngFor="let error of errors" class="alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Error:</span>
+  {{error}}
+  <button type="button" class="close" (click)="errors.splice(errors.indexOf(error),1)" style="float: right;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+</div>
+
+<!-- messages -->
+<div  *ngFor="let message of messages" class="alert alert-success" role="alert">
+  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+  <span class="sr-only">Success:</span>
+  {{message}}
+  <button type="button" class="close" (click)="messages.splice(messages.indexOf(message),1)" style="float: right;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  OK
+</div>
+
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    Infos
+  </div>
+  <div class="panel-body">
+    <button class="btn" *ngIf="typeEdit == undefined"  (click)="initNewTransportType()"><i class="glyphicon glyphicon-plus"></i>Ajouter une moyen de transport</button>
+    <div class="form-group">
+    </div>
+    <div class="row" *ngIf="typeEdit != null">
+      <form class="form-horizontal" role="form" novalidate>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="name">Nom du moyen de transport:</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" id="name" [(ngModel)]="typeEdit.name" placeholder="Entrez le nom du moyen de transport" required>
+          </div>
+          <div class="col-sm-2">
+            <input type="text" [(ngModel)]="typeEdit.img" id="typeEditValue" hidden>
+            <button class="btn btn-default" id="typeIcon" role="iconpicker"></button>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default" (click)="saveTransportType(typeEdit)"><span *ngIf="typeEdit._id">Mettre à jour</span><span *ngIf="!typeEdit._id">Créer</span></button>
+            <button type="submit" class="btn btn-warn" (click)="typeEdit = null">Annuler</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row">
+      <div class="col-lg-7">
+        <table class="table table-striped table-bordered table-hover" role="grid">
+          <thead>
+          <tr role="row">
+            <th class="sorting">Nom</th>
+          </tr>
+          </thead>
+          <tbody>
+            <!-- |filter:query |orderBy:orderType+orderby-->
+          <tr *ngFor="let type of transportTypes">
+            <td> <span class="col-sm-2 fa {{type.img}}"></span> {{type.name}}</td>
+            <td><a (click)="edit(type)" class="trash"><span class="glyphicon glyphicon-edit pull-right"></span></a></td>
+            <td><a (click)="deleteTransportType(type)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

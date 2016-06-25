@@ -13,19 +13,15 @@ var mongoClient = mongo.MongoClient;
  * @param res response
  */
 exports.stats = function(req, res) {
-  mongoClient.connect(config.mongo.uri, function(err, db) {
-    assert.equal(null, err);
-    db.stats(1024, function(err, stats){
-      if(err){
-        logger.error(err);
-      }
-      // delete db name info for security issues
-      delete stats.db;
-      closeDB(db);
-      return res.status(200).json(stats);
-    });
-
+  global.mongo_connection.stats(1024, function(err, stats){
+    if(err){
+      logger.error(err);
+    }
+    // delete db name info for security issues
+    delete stats.db;
+    return res.status(200).json(stats);
   });
+
  };
 
 /**
@@ -59,7 +55,7 @@ exports.getCollectionNames = function(req, res){
     }
   });
 
-}
+};
 
 /**
  * Récupére les statistiques de toutes les collections
@@ -96,7 +92,7 @@ exports.getCollectionNames = function(req, res){
       }
     });
   });
-}
+};
 
 exports.serverStatus = function(req, res){
   // Establish connection to db
@@ -126,7 +122,7 @@ exports.serverStatus = function(req, res){
       });
     });
   });
-}
+};
 
 exports.hostInfos = function(req, res){
   // Establish connection to db
@@ -153,7 +149,7 @@ exports.hostInfos = function(req, res){
       });
     });
   });
-}
+};
 
 /**
  * Close database

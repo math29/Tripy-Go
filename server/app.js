@@ -4,9 +4,18 @@
 
 'use strict';
 
+
 // Set default node environment to development
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-var TAG = "WTC-App";
+var TAG = "Tripygo-App";
+
+if(process.env.NODE_ENV == 'production') {
+  var opbeat = require('opbeat').start({
+    appId: '6a7c671113',
+    organizationId: '7d627d1ebae349f4998468bc2339b064',
+    secretToken: 'f12fa9b600f7c51934f58b7db4b20379487c52a5'
+  });
+}
 
 var express = require('express');
 var mongoose = require('mongoose');
@@ -14,9 +23,18 @@ var config = require('./config/environment');
 var logger = require('./config/logger');
 var winston = require('winston');
 var User = require('./api/user/user.model.js');
+var mongo = require('mongodb');
+var mongoClient = mongo.MongoClient;
 // requiert WinstonDB pour logger dans mongoDB.
 require('winston-mongodb');
 
+
+mongoClient.connect(config.mongo.uri, function(err, db) {
+  if(err){
+    exit(-1);
+  }
+  global.mongo_connection = db;
+  });
 // on ne transmet les logs que sur les environnement de développement et de production
 switch(process.env.NODE_ENV){
   case 'production':
@@ -49,8 +67,16 @@ mongoose.connection.on('error', function(err) {
 	}
 );
 // Populate DB with sample data
-if(config.seedDB) { require('./config/seed'); }else{User.update({email: {$in : ['yoann.diquelou@gmail.com', 'maaath29@gmail.com']}},{$set:{role: 'adminInfo'}}).exec();}
+if(config.seedDB) {
+  require('./config/seed');
+}else{
+  User.update({email: {$in : ['yoann.diquelou@gmail.com', 'maaath29@gmail.com']}},{$set:{role: 'adminInfo'}}).exec();
+}
 
+if(config.rdo){
+  require('./rdo/rates');
+  require('./rdo/countries');
+}
 // Setup server
 var app = express();
 var server = require('http').createServer(app);
@@ -91,7 +117,7 @@ function removeConsole(log){
  */
 function addMongoLog(log, database){
   log.add(winston.transports.MongoDB,{
-    level: 'info',
+    level: 'warn',
     db: database
    });
    log.info("add MongoDB output to output");

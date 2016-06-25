@@ -1,0 +1,129 @@
+/**
+*
+* Author: Mathieu ALLAIN
+* Description: Stylesheet transport comparator comment page
+*
+**/
+
+/*********************************************************
+	TABLE OF CONTENTS
+	1. GENERAL
+	2. IMG
+	3. RATE
+	4. CONTENT
+**********************************************************/
+
+/*********************************************************
+			1. GENERAL
+**********************************************************/
+
+.comparator-comment {
+	min-height: 55px;
+	margin-right: 15px;
+}
+
+/*********************************************************
+			2. IMG
+**********************************************************/
+
+.user-picture {
+	height: 55px;
+	text-align: center;
+	margin: 1em 0;
+}
+
+.user-picture img {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	display: inline-block;
+	vertical-align: middle;
+	float: none;
+}
+
+/*********************************************************
+			3. RATE
+**********************************************************/
+
+.comment-rate span {
+	display: block;
+	margin: -14px 0px -11px 0px;
+	font-weight: bold;
+}
+
+.comment-rate i svg {
+	cursor: pointer;
+	width: 25px;
+}
+
+.comment-rate .rate-up svg {
+	margin-top: 5px;
+	margin-bottom: 4px;
+	color: green;
+}
+
+.comment-rate .rate-up svg path {
+	fill: green;
+}
+
+.comment-rate .rate-down svg {
+	color: red;
+	margin-top: 4px;
+}
+
+.comment-rate .rate-down svg path {
+	fill: red;
+}
+
+/*********************************************************
+			3-1. After RATE
+**********************************************************/
+
+/* Cas vote positif */
+.comparator-comment .up .rate-down svg path {
+	fill: grey;
+	fill-opacity: 0.5;
+}
+
+.comparator-comment .down .rate-up svg path {
+	fill: grey;
+	fill-opacity: 0.5;
+}
+
+.comparator-comment .up span {
+	color: green;
+}
+
+.comparator-comment .down span {
+	color: red;
+}
+
+/*********************************************************
+			4. CONTENT
+**********************************************************/
+
+.comment-content {
+	margin: 1em 0;
+	border: 1px solid #e6e6e6;
+    box-shadow: 0px 0px 5px #e6e6e6;
+    border-radius: 3px;
+}
+
+.comment-content .tooltip-comment {
+    visibility: hidden;
+    width: 120px;
+    background-color: #00adef;
+    color: white;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-weight: bold;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+.comment-content:hover .tooltip-comment {
+    visibility: visible;
+}

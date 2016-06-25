@@ -57,20 +57,20 @@ exports.showByName = function(req, res) {
 // Creates a new country in the DB.
 exports.create = function(req, res) {
 
-  var statusCode = 202;
+  var statusCode = 201;
 
   //verrification de l'objet country
   var errors = checkCountryObject(req.body);
 
   // si il n'y à aucun message d'erreur, on ajoute le pays
 	if(errors.errors.length === 0){
-		Country.update({ country_name: { $eq: req.body.country_name}}, req.body, {upsert: true}, function(err, country) {
+		var country = new Country(req.body);
+		country.save(function(err){
 		if(err) {
-		  return handleError(res, err);
+		  logger.error(err);
+		  return res.status(400).json({error:'Le pays éxiste déjà'});
 		}
-		if(typeof country.upserted !== 'undefined'){
-		  statusCode = 201;
-		}
+
 		return res.status(statusCode).json(country);
 		});
 
@@ -98,6 +98,7 @@ exports.update = function(req, res) {
     }
 
     _.merge(country, req.body).save(function (err) {
+
       if (err) {
         return handleError(res, err);
       }
@@ -105,7 +106,6 @@ exports.update = function(req, res) {
     });
   });
   }
-  return res.status(400).json(errors);
 
 };
 

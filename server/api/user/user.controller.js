@@ -21,8 +21,9 @@ exports.index = function(req, res) {
       logger.error("Could not find users");
       return res.status(500).send(err);
     }
-    res.status(200).json(users);
+    return res.status(200).json(users);
   });
+
 };
 
 /**
@@ -30,6 +31,7 @@ exports.index = function(req, res) {
  */
 exports.create = function (req, res) {
   var newUser = new User(req.body);
+  logger.error("Contenu requête", req.body);
   newUser.provider = 'local';
   newUser.role = 'user';
   newUser.save(function(err, user) {
@@ -42,19 +44,35 @@ exports.create = function (req, res) {
   });
 };
 
+exports.search = function(req, res) {
+  var re = new RegExp(req.params.search, 'i');
+
+  User.find().or([{"name": {$regex: re}}, {"fname": {$regex: re}}]).select({ name: 1, fname: 1, picture: 1 })
+    .limit(5)
+    .exec(function( err, users) {
+        if(err) {
+          return res.status(400).json({status: 400, data: 'Impossible de trouver la personne'});
+        }
+        return res.status(200).json({status: 200, data: users});
+    });
+}
+
 /**
  * Get a single user
  */
 exports.show = function (req, res, next) {
   var userId = req.params.id;
-
-  User.findById(userId, function (err, user, next) {
+  var select = '-salt -role -hashedPassword -provider';
+  if(userId != req.user._id) {
+    select = 'name picture'
+  }
+  User.findById(userId).select(select).exec(function (err, user, next) {
     if (err) {
       logger.error("Could not retrieve user", userId);
       return next(err);
     }
-    if (!user) return res.status(401).send('Unauthorized');
-    res.json(user.profile);
+    if (!user) return res.status(401).json({status: 401, data: 'Unauthorized'});
+    return res.json(user);
   });
 };
 
@@ -85,10 +103,10 @@ exports.changePassword = function(req, res) {
       user.password = newPass;
       user.save(function(err) {
         if (err) return validationError(res, err);
-        res.status(200).send('OK');
+        res.status(200).json({data: 'OK', status: 200});
       });
     } else {
-      res.status(403).send('Forbidden');
+      res.status(202).json({data: 'No accepted', status: 202});
     }
   });
 };
@@ -101,7 +119,7 @@ exports.update = function(req, res) {
     _id: req.params.id
   }, '-salt -hashedPassword', function(err, user, next) { // don't ever give out the password or salt
     if (err) {
-      logger.error("Could not ge user infos ME", user);
+      logger.error("Could not get user infos ME", user);
       return next(err);
     }
     if (!user) {
@@ -115,6 +133,33 @@ exports.update = function(req, res) {
     });
   });
 };
+
+// Add a Prefered Destination
+exports.addPreferedDestination = function(req, res) {
+  User.findOne({
+    _id: req.params.id
+  }, '-salt -hashedPassword', function(err, user, next){
+    if (err) {
+      logger.error("Could not get user infos ME", user);
+      return next(err);
+    }
+    if (!user) {
+      logger.warn("User not auhenticated");
+      return res.status(401).send('Unauthorized');
+    }
+    if (!req.body.preferedDests) {
+      logger.warn("No preferedDest Given");
+      return res.status(401).send('No preferedDest Given');
+    }
+
+    user.dest_prefereds = req.body.preferedDests;
+
+    user.save(function (err) {
+      if (err) { return handleError(res, err); }
+      res.json(user);
+    });
+  });
+}
 
 /**
  * Change a users role
@@ -137,9 +182,9 @@ exports.changeRole = function(req, res) {
  */
 exports.me = function(req, res) {
   var userId = req.user._id;
-  User.findOne({
-    _id: userId
-  }, '-salt -hashedPassword', function(err, user, next) { // don't ever give out the password or salt
+  User.findOne({_id: userId}, '-salt -hashedPassword')
+    .populate('travels')
+    .exec(function(err, user, next) { // don't ever give out the password or salt
     if (err) {
       logger.error("Could not ge user infos ME", user);
       return next(err);
@@ -151,6 +196,91 @@ exports.me = function(req, res) {
     res.json(user);
   });
 };
+
+/**
+ * Automatic update User Visited Countries
+ */
+ exports.putAutomaticUpdateVisetedCountries = function(req, res){
+  var userId = req.params.id;
+  User.findOne({_id: userId}, '-salt -hashedPassword')
+    .populate('travels')
+    .exec(function(err, user, next){
+      if (err) {
+        logger.error("Could not ge user", user);
+        return next(err);
+      }
+      if (!user) {
+        logger.warn("User not auhenticated");
+        return res.status(401).send('Unauthorized');
+      }
+      User.deepPopulate(user,[
+          'travels.transports.departure.country',
+          'travels.transports.arrival.country'
+        ],function(err, user){
+          // Instanciation si première complétion
+          if(!user.visited_countries){
+            user.visited_countries = [];
+          }
+          if(user.travels){
+            // On récupère la liste des pays visités
+            for(var i = 0; i<user.travels.length; i++){
+              var travel = user.travels[i];
+              for(var j=0; j<travel.transports.length; j++){
+                var transport = travel.transports[j];
+                var dep_code = transport.departure.country.country_code.toLowerCase();
+                var arr_code = transport.arrival.country.country_code.toLowerCase();
+                if(user.visited_countries.indexOf(dep_code) == -1){
+                  user.visited_countries.push(dep_code);
+                }
+                if(user.visited_countries.indexOf(arr_code) == -1){
+                  user.visited_countries.push(arr_code);
+                }
+              }
+            }
+          }
+          user.save(function (err) {
+            if (err) { return handleError(res, err); }
+            res.json(user);
+          });
+        });
+    });
+ }
+
+ /**
+ * Add or remove a Visited Country
+ */
+ exports.putUpdateVisetedCountries = function(req, res){
+  var userId = req.params.id;
+  var country = req.body.country.toLowerCase();
+
+  if(!country || country == ""){
+    logger.warn("Country not founded in body");
+    return res.status(401).send('Need a country code');
+  }
+
+  User.findOne({_id: userId}, '-salt -hashedPassword', function(err, user, next){
+    if (err) {
+      logger.error("Could not ge user", user);
+      return next(err);
+    }
+    if (!user) {
+      logger.warn("User not auhenticated");
+      return res.status(401).send('Unauthorized');
+    }
+
+    if(user.visited_countries.indexOf(country) > -1){
+      logger.warn("Country already added");
+      return res.status(401).send('This country is already in visited countries of this user');
+    }
+
+    user.visited_countries.push(country);
+
+    user.save(function (err) {
+      if (err) { return handleError(res, err); }
+      res.json(user);
+    });
+  });
+ }
 
 /**
  * Récupére l'ensemble des roles que l'administrateur peut assigner

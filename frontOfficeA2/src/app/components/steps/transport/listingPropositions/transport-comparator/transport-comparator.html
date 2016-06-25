@@ -1,0 +1,80 @@
+<div *ngIf="comparator">
+	<div class="cruise-list-view">
+		<div class="col-md-3 col-sm-3 clear-padding">
+			<img *ngIf="comparator.company.img" [src]="comparator.company.img" [alt]="comparator.company.name">
+		</div>
+		<div class="col-md-3 col-sm-3 clear-padding booking-box text-center">
+			<div class="element-box comparator-title">
+				<h3>{{ comparator.company.name }}</h3>
+				<span class="tooltip-title">Nom du comparateur</span>
+			</div>
+			<div class="element-box nb-company">
+				<span class="tooltip-nb-company">Nombre de compagnies proposées</span>
+				<h3>{{ comparator.transport.nbCompanies }}</h3>
+			</div>
+		</div>
+		<div class="col-md-2 col-sm-2 booking-box clear-padding text-center">
+			<div class="rating-box">
+				<i *ngIf="comparator.transport.ergo_rate.score > 0" class="fa fa-star"></i>
+				<i *ngIf="comparator.transport.ergo_rate.score > 1" class="fa fa-star"></i>
+				<i *ngIf="comparator.transport.ergo_rate.score > 2" class="fa fa-star"></i>
+				<i *ngIf="comparator.transport.ergo_rate.score > 3" class="fa fa-star"></i>
+				<i *ngIf="comparator.transport.ergo_rate.score > 4" class="fa fa-star"></i>
+				<i *ngIf="comparator.transport.ergo_rate.score < 1" class="fa fa-star-o"></i>
+				<i *ngIf="comparator.transport.ergo_rate.score < 2" class="fa fa-star-o"></i>
+				<i *ngIf="comparator.transport.ergo_rate.score < 3" class="fa fa-star-o"></i>
+				<i *ngIf="comparator.transport.ergo_rate.score < 4" class="fa fa-star-o"></i>
+				<i *ngIf="comparator.transport.ergo_rate.score < 5" class="fa fa-star-o"></i>
+				<h5>Ergonomie</h5>
+				<span class="tooltip-ergo">Note de l'ergonomie par utilisateurs</span>
+			</div>
+			<div class="rating-box">
+				<span class="tooltip-contenu">Note du contenu par utilisateurs</span>
+				<i *ngIf="comparator.transport.content_rate.score > 0" class="fa fa-star"></i>
+				<i *ngIf="comparator.transport.content_rate.score > 1" class="fa fa-star"></i>
+				<i *ngIf="comparator.transport.content_rate.score > 2" class="fa fa-star"></i>
+				<i *ngIf="comparator.transport.content_rate.score > 3" class="fa fa-star"></i>
+				<i *ngIf="comparator.transport.content_rate.score > 4" class="fa fa-star"></i>
+				<i *ngIf="comparator.transport.content_rate.score < 1" class="fa fa-star-o"></i>
+				<i *ngIf="comparator.transport.content_rate.score < 2" class="fa fa-star-o"></i>
+				<i *ngIf="comparator.transport.content_rate.score < 3" class="fa fa-star-o"></i>
+				<i *ngIf="comparator.transport.content_rate.score < 4" class="fa fa-star-o"></i>
+				<i *ngIf="comparator.transport.content_rate.score < 5" class="fa fa-star-o"></i>
+				<h5>Contenu</h5>
+			</div>
+		</div>
+		<!-- *ngIf="comments" -->
+		<div class="col-md-2 col-sm-2 booking-box clear-padding text-center">
+			<div class="rating-box">
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star-o"></i>
+				<i class="fa fa-star-o"></i>
+				<h5>Véracité prix</h5>
+				<span class="tooltip-ergo">Prix affichés VS prix payés</span>
+			</div>
+			<div class="comments-link" (click)="comments = !comments" [ngClass]="{'comments-link-active': comments}">
+				<i class="fa fa-comments-o fa-4x" aria-hidden="true"></i>
+			</div>
+		</div>
+		<div class="col-md-2 col-sm-2 booking-box clear-padding text-center external-link-container">
+			<a href="" [routerLink]="['ResearchTransport', {comparator_id: comparator._id, travel_id: travel_id}]">
+				<div class="external-link">
+					<i class="fa fa-arrow-right fa-4x" aria-hidden="true"></i>
+				</div>
+			</a>
+		</div>
+	</div>
+	<div *ngIf="comments" class="col-md-12 col-sm-12 clear-padding list-comments">
+		<div *ngFor="let comment of comparator.transport.comments">
+			<comparatorComment [comment]="comment"></comparatorComment>
+		</div>
+		<div *ngIf="comment_offset > 0" class="previous-comments comments-arrow" (click)="previousComments()">
+			<i class="fa fa-chevron-left" aria-hidden="true" ></i>
+		</div>
+		<div *ngIf="(comment_offset + comment_limit) < number_comments" class="next-comments comments-arrow" (click)="nextComments()">
+			<i class="fa fa-chevron-right" aria-hidden="true" ></i>
+		</div>
+	</div>
+</div>

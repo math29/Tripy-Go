@@ -1,0 +1,56 @@
+/*************************************/
+/* CHANGE PICTURE STYLE */
+/*************************************/
+.my-drop-zone {
+	border: dotted 3px lightgray;
+	margin: 25px 0px 20px 0px;
+}
+
+/* Default class applied to drop zones on over */
+.nv-file-over {
+	border: dotted 3px red;
+}
+.another-file-over-class { border: dotted 3px green; }
+
+html, body { height: 100%; }
+
+
+/**********************************/
+/* FORM GENERAL USER */
+/**********************************/
+
+.space {
+	margin-bottom: 15px;
+}
+
+.user-personal-info label,
+.user-preference label {
+	font-weight: normal;
+}
+
+.user-preference .form-control {
+	border-radius: 0px;
+	padding: 10px;
+	height: 40px;
+}
+
+.user-personal-info textarea {
+	height: auto !important;
+}
+
+.user-preference button,
+.user-add-card button,
+.submit-complaint button {
+	border: 0px;
+	color: #fff;
+	background: #00adef;
+	padding: 10px 20px;
+	margin-top: 20px;
+	font-weight: bold;
+}
+
+.user-preference button, 
+.user-add-card button,
+.submit-complaint button {
+	margin-top: 5px;
+}

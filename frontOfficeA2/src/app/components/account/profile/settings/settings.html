@@ -1,0 +1,96 @@
+<!-- <div ng-include="'components/navbar/navbar.html'"></div> -->
+
+<!-- <div class="container" ng-controller="SettingsCtrl">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Change Password</h1>
+    </div>
+    <div class="col-sm-12">
+      <form class="form" name="form" ng-submit="changePassword(form)" novalidate>
+
+        <div class="form-group">
+          <label>Current Password</label>
+
+          <input type="password" name="password" class="form-control" ng-model="user.oldPassword"
+                 mongoose-error/>
+          <p class="help-block" ng-show="form.password.$error.mongoose">
+              {{ errors.other }}
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label>New Password</label>
+
+          <input type="password" name="newPassword" class="form-control" ng-model="user.newPassword"
+                 ng-minlength="3"
+                 required/>
+          <p class="help-block"
+             ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
+            Password must be at least 3 characters.
+          </p>
+        </div>
+
+        <p class="help-block"> {{ message }} </p>
+
+        <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
+      </form>
+    </div>
+  </div>
+</div> -->
+
+<div class="col-md-6">
+  <div class="user-personal-info">
+    <h4>Informations générales</h4>
+    <div class="user-info-body">
+      <generalesInfos></generalesInfos>
+    </div>
+  </div>
+  <changePassword *ngIf="userObject.provider == 'local'"></changePassword>
+</div>
+<div class="col-md-6">
+  <div class="user-personal-info">
+    <h4>Change Avatar</h4>
+    <div class="user-info-body">
+      <form class="form" name="personal_photo_form" novalidate>
+        <div class="col-md-12 col-sm-12 clear-padding text-center">
+          <img [src]="_auth.getUserAvatar()" alt="avatar"/>
+        </div>
+        <!-- <div class="col-md-12 col-sm-12">
+          <label>Télécharger Avatar</label>
+          <input type="file" name="filefield" class="upload-pic" onchange="angular.element(this).scope().changePersonalPhoto(this.files)">
+        </div> -->
+        <div class="row">
+
+          <div class="col-md-12">
+              <div ng2FileDrop
+                   [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                   (fileOver)="fileOverBase($event)"
+                   [uploader]="uploader"
+                   class="well my-drop-zone">
+                  Déposez ici une nouvelle photo
+              </div>
+
+              Ou ici
+              <input type="file" ng2FileSelect [uploader]="uploader" />
+          </div>
+
+          <div class="col-md-12 text-center" style="margin-bottom: 40px">
+            <div *ngFor="let item of uploader.queue">
+              <button type="button" class="btn btn-success btn-xs"
+                      (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                  <span class="glyphicon glyphicon-upload"></span> Upload
+              </button>
+              <button type="button" class="btn btn-danger btn-xs"
+                      (click)="item.remove()">
+                  <span class="glyphicon glyphicon-trash"></span> Annuler
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <p class="help-block">{{ photo_info_message }}</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

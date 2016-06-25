@@ -12,7 +12,14 @@ require('./google/passport').setup(User, config);
 require('./twitter/passport').setup(User, config);
 
 var router = express.Router();
-
+router.get('/logout', function(req, res){
+  //req.logOut();
+  req.session.destroy(function(err){
+    res.clearCookie('connect.sid');
+    res.clearCookie('token');
+    return res.redirect('/');
+  });
+});
 router.use('/local', require('./local'));
 router.use('/facebook', require('./facebook'));
 router.use('/twitter', require('./twitter'));

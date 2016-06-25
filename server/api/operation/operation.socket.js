@@ -2,23 +2,29 @@
  * Broadcast updates to client when the model changes
  */
 
-'use strict';
+ 'use strict';
 
-var Operation = require('./operation.model');
+ var OperationEvents = require('./operation.event');
+ var events = ['save' , 'remove'];
 
 exports.register = function(socket) {
-  Operation.schema.post('save', function (doc) {
-    onSave(socket, doc);
-  });
-  Operation.schema.post('remove', function (doc) {
-    onRemove(socket, doc);
-  });
+  for(var i = 0, eventsLength = events.length; i < eventsLength; i++) {
+    var event = events[i];
+    var listener = createListener( 'operation:' + event, socket);
+
+    OperationEvents.on(event, listener);
+    socket.on('disconnect', removeListener(event, listener));
+  }
 };
 
-function onSave(socket, doc) {
-  socket.emit('operation:save', doc);
+function createListener(event, socket) {
+  return function(doc) {
+    socket.emit(event, doc);
+  }
 }
 
-function onRemove(socket, doc) {
-  socket.emit('operation:remove', doc);
+function removeListener(event, listener) {
+  return function() {
+    OperationEvents.removeListener(event, listener);
+  }
 }

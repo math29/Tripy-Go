@@ -11,6 +11,9 @@ exports.setup = function (User, config) {
       User.findOne({
         'google.id': profile.id
       }, function(err, user) {
+        if(err) {
+          return done(err);
+        }
         if (!user) {
           user = new User({
             name: profile.displayName,
@@ -18,10 +21,21 @@ exports.setup = function (User, config) {
             role: 'user',
             username: profile.username,
             provider: 'google',
+            picture: profile._json.image.url,
             google: profile._json
           });
           user.save(function(err) {
-            if (err) return done(err);
+            if (err) {
+              if(err.name == 'ValidationError') {
+                if(err.errors.email && err.errors.email.message == 'The specified email address is already in use.') {
+                  return done(err, false, { message : 'L\'adresse email est déjà utilisée' });
+                }else {
+                  return done(err);
+                }
+              }else {
+                return done(err);
+              }
+            }
             done(err, user);
           });
         } else {
