@@ -83,6 +83,7 @@
         "app/scripts/tripy-lib/services/auth.service.ts",
         "app/scripts/tripy-lib/services/google.service.ts",
         "app/scripts/tripy-lib/services/socket.service.ts",
+        "../../typings/angular2/angular2.d.ts",
         "../../typings/browser.d.ts",
         "../../typings/d3/d3.d.ts",
         "../../typings/es6-collections/es6-collections.d.ts",
