@@ -66,7 +66,7 @@ export class Research implements OnInit {
 	ngOnInit() {
 		this.getComparator(this.params.get('comparator_id'));
 		this.travel_id = this.params.get('comparator_id');
-		this.iframe_height = window.innerHeight -87 -50;
+		this.iframe_height = window.innerHeight -87 -70;
 		this.openTimeline();
 	}
 }
