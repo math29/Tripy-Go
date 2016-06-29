@@ -8,7 +8,7 @@
 	<iframe [style.height.px]="iframe_height" [style.width]="iframe_width" [src]="comparator.company.url" frameborder="0" allowfullscreen></iframe>
 	
 	<!-- I use this comparator button -->
-	<span class="booked-button"><!-- (click)="useThisComparator()" -->
+	<span class="booked-button" href="" [routerLink]="['TravelRateSite', {site_id: comparator._id}]">
 		J'ai réservé <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
 	</span>
 </div>
