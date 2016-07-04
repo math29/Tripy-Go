@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouteParams } from '@angular/router-deprecated';
+import { RouterLink, RouteParams, Router } from '@angular/router-deprecated';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { AuthService } from '../../../tripy_go_lib/services/auth.service';
 import { SiteService, RateService } from '../../travelPage/services/index';
@@ -38,7 +38,7 @@ export class RateSite implements OnInit{
 	};
 	private comment = "";
 
-	constructor(private params: RouteParams, private _http: Http, private _auth: AuthService, private rateService : RateService, private siteService: SiteService) {
+	constructor(private params: RouteParams, private _http: Http, private _auth: AuthService, private rateService : RateService, private siteService: SiteService, private router: Router) {
 		this.options_post = new RequestOptions({ headers: _auth.getBearerHeaders() });
 		this.site_id = params.get('site_id');
 	}
@@ -95,11 +95,16 @@ export class RateSite implements OnInit{
 		this.overStar = void 0;
 	}
 
+	submitForm() {
+		if(this.comment != "") { this.commentThisSite(); }
+		this.router.navigate(['Profile']);
+	}
+
 	ngOnInit() {
-    this.siteService.getThisSite(this.site_id)
-      .subscribe(success => {
-        this.siteContent = success;
-      }, error => {console.log('error');}
-    );
-  }
+		this.siteService.getThisSite(this.site_id)
+		.subscribe(success => {
+				this.siteContent = success;
+			}, error => {console.log('error');}
+		);
+	}
 }

@@ -1,124 +1,34 @@
-<div *ngIf="siteContent">
-    <h3>{{siteContent.company.name}}</h3>
-    <h5>
-        <span>Ergonomie</span><br/>
-        <div class="rating-box">
-            <rating [(ngModel)]="rates.ergo_rate"
-                (onHover)="hoveringOver($event)"
-                (onLeave)="resetStar('ergo_rate', $event)"
-            >
-            </rating>
+<div *ngIf="siteContent" style="text-align: center;">
+    <div class="panel-comparator">
+        <h3 class="panel-title">{{siteContent.company.name}}</h3>
+        <div class="img-container">
+            <img src="{{ siteContent.company.img }}" class="img-comparator">
         </div>
-    </h5>
-    <h5>
-        <span>Contenu</span><br />
-        <rating [(ngModel)]="rates.content_rate"
-            (onHover)="hoveringOver($event)"
-            (onLeave)="resetStar('content_rate', $event)"
-        ></rating>
-    </h5>
-    <div class="col-md-12 col-sm-12 clear-padding comment-form">
-        <textarea [(ngModel)]="comment" class="form-control"></textarea>
-        <button class="btn btn-submit form-control" *ngIf="comment" (click)="commentThisSite()">Commenter</button>
-    </div>
-</div>
-
-<div class="row hotel-detail">
-    <div class="container">
-        <div class="product-brief-info">
-            <div class="col-md-8 clear-padding">
-                <div id="slider" class="flexslider">
-                    <ul class="slides">
-                        <li>
-                            <img src="assets/images/hotel-slide.jpg" alt="cruise" />
-                        </li>
-                        <li>
-                            <img src="assets/images/hotel-slide1.jpg" alt="cruise" />
-                        </li>
-                        <li>
-                            <img src="assets/images/hotel-slide2.jpg" alt="cruise" />
-                        </li>
-                        <li>
-                            <img src="assets/images/hotel-slide.jpg" alt="cruise" />
-                        </li>
-                        <li>
-                            <img src="assets/images/hotel-slide1.jpg" alt="cruise" />
-                        </li>
-                        <li>
-                            <img src="assets/images/hotel-slide2.jpg" alt="cruise" />
-                        </li>
-                    </ul>
-                </div>
-                <div id="carousel" class="flexslider">
-                    <ul class="slides">
-                        <li>
-                            <img src="assets/images/hotel-thumb.jpg" alt="cruise" />
-                        </li>
-                        <li>
-                            <img src="assets/images/hotel-thumb1.jpg" alt="cruise" />
-                        </li>
-                        <li>
-                            <img src="assets/images/hotel-thumb2.jpg" alt="cruise" />
-                        </li>
-                        <li>
-                            <img src="assets/images/hotel-thumb.jpg" alt="cruise" />
-                        </li>
-                        <li>
-                            <img src="assets/images/hotel-thumb1.jpg" alt="cruise" />
-                        </li>
-                        <li>
-                            <img src="assets/images/hotel-thumb2.jpg" alt="cruise" />
-                        </li>
-                    </ul>
-                </div>  
+        <h5 class="form-block">
+            <span class="rating-title">Ergonomie</span><br/>
+            <div class="rating-box">
+                <rating [(ngModel)]="rates.ergo_rate"
+                    (onHover)="hoveringOver($event)"
+                    (onLeave)="resetStar('ergo_rate', $event)"
+                >
+                </rating>
             </div>
-            <div class="col-md-4 detail clear-padding">
-                <div class="review sidebar-item">
-                    <h4><i class="fa fa-comments"></i> Hotel Reviews</h4>
-                    <div class="sidebar-item-body text-center">
-                        <div class="rating-box">
-                            <div class="col-md-6 col-sm-6 col-xs-6 clear-padding tripadvisor">
-                                <img src="assets/images/tripadvisor.png" alt="cruise"><br>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
-                                <h5>4.0/5.0 Based on 12 Reviews</h5>
-                            </div>
-                            <div class="col-md-6 col-sm-6 col-xs-6 clear-padding">
-                                <i class="fa fa-users"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
-                                <h5>Based on 128 Guest Reviews</h5>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="guest-say rating-box">
-                            <h2><i class="fa fa-check-circle"></i> Perfect</h2>
-                            <div>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p> 
-                            </div>
-                            <div class="col-md-5 col-sm-5 col-xs-5 clear-padding user-img">
-                                <img src="assets/images/user1.jpg" alt="cruise">
-                            </div>
-                            <div class="col-md-7 col-sm-7 col-xs-7 clear-padding user-name">
-                                <span>Lenore, USA</span>
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        </h5>
+        <h5 class="form-block">
+            <span class="rating-title">Contenu</span><br/>
+            <div class="rating-box">
+                <rating [(ngModel)]="rates.content_rate"
+                    (onHover)="hoveringOver($event)"
+                    (onLeave)="resetStar('content_rate', $event)"
+                ></rating>
             </div>
+        </h5>
+        <div class="col-md-12 col-sm-12 clear-padding comment-form form-block">
+            <span class="rating-title">Commentaire</span><br/>
+            <textarea [(ngModel)]="comment" class="form-control"></textarea>
+        </div>
+        <div class="form-block">
+            <button class="btn form-control" (click)="submitForm()">Continuer</button>
         </div>
     </div>
 </div>
