@@ -130,6 +130,7 @@ exports.destroy = function(req, res) {
 
 exports.vote = function(req, res){
   var rateId = req.params.id;
+  console.log(rateId);
   var userId = req.user._id;
   var side = req.params.side;
   var sideValue = 1;
@@ -153,7 +154,8 @@ exports.vote = function(req, res){
       return res.status(204).json({'error': 'No content'});
     }
     var userVote = _.findIndex(result.raters, function(o){
-      return String(o.user) == String(userId);});
+      return String(o.user) == String(userId);
+    });
     if(userVote == -1){
       result.raters.push(rateOb);
       result.score += sideValue;

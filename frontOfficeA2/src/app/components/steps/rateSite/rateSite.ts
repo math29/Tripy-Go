@@ -3,7 +3,7 @@ import { RouterLink, RouteParams, Router } from '@angular/router-deprecated';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { AuthService } from '../../../tripy_go_lib/services/auth.service';
 import { SiteService, RateService } from '../../travelPage/services/index';
-import {CORE_DIRECTIVES, FORM_DIRECTIVES} from '@angular/common';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
 
 import { RatingComponent } from 'ng2-bootstrap/ng2-bootstrap';
 
@@ -41,6 +41,7 @@ export class RateSite implements OnInit{
 	constructor(private params: RouteParams, private _http: Http, private _auth: AuthService, private rateService : RateService, private siteService: SiteService, private router: Router) {
 		this.options_post = new RequestOptions({ headers: _auth.getBearerHeaders() });
 		this.site_id = params.get('site_id');
+		console.log(this.site_id);
 	}
 
 	getMyRates() {
@@ -66,7 +67,7 @@ export class RateSite implements OnInit{
 	}
 
 	getMyComment() {
-		this.siteService.getMyComment('transport', this.site.site_id)
+		this.siteService.getMyComment('transport', this.site_id)
 		  .subscribe(success => {
 		    if(success.status == 200) {
 		      this.comment = success.data.comment;
@@ -88,22 +89,26 @@ export class RateSite implements OnInit{
 
 	public resetStar(rate:string, v:any):void {
 		if(this.rates[rate] != this.previous_rate[rate]) {
-		this.rateService.updateRate(this.siteContent.transport[rate]._id, this.rates[rate])
+			console.log(this.siteContent);
+			this.rateService.updateRate(this.siteContent.transport[rate]._id, this.rates[rate])
 		.subscribe(success => {}, error => {});
-		this.previous_rate[rate] = this.rates[rate];
+			this.previous_rate[rate] = this.rates[rate];
 		}
 		this.overStar = void 0;
 	}
 
 	submitForm() {
 		if(this.comment != "") { this.commentThisSite(); }
-		this.router.navigate(['Profile']);
+		// this.router.navigate(['Profile']);
 	}
 
 	ngOnInit() {
 		this.siteService.getThisSite(this.site_id)
 		.subscribe(success => {
 				this.siteContent = success;
+				console.log(this.siteContent);
+				this.getMyRates();
+        		this.getMyComment();
 			}, error => {console.log('error');}
 		);
 	}

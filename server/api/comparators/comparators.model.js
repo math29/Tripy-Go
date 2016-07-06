@@ -45,21 +45,25 @@ var Comparator = mongoose.model('Comparators', ComparatorSchema);
 
 ComparatorSchema.pre('save', function(next){
   var self = this;
-  Rate.create(
-    {type:'Stars', raters:[], score: 0},
-    {type:'Stars', raters:[], score: 0}
-    , function(err, r1, r2){
-        if(err){
-          logger.error('Could not create Rate');
-          next(new Error('Impossible de créer le vote'));
-        }
-        /* To check when add types */
-        if(self.types[0] === 'transport') {
-          self.transport.ergo_rate = r1;
-          self.transport.content_rate = r2;
-        }
-        next();
-  });
+  if(!self.transport.ergo_rate && !self.transport.content_rate) {
+    Rate.create(
+      {type:'Stars', raters:[], score: 0},
+      {type:'Stars', raters:[], score: 0}
+      , function(err, r1, r2){
+          if(err){
+            logger.error('Could not create Rate');
+            next(new Error('Impossible de créer le vote'));
+          }
+          /* To check when add types */
+          if(self.types[0] === 'transport') {
+            self.transport.ergo_rate = r1;
+            self.transport.content_rate = r2;
+          }
+          next();
+    });
+  }else {
+    next();
+  }
 });
 
 ComparatorSchema.post('remove', function(doc){
