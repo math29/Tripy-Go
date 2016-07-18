@@ -1,0 +1,34 @@
+<div *ngIf="siteContent" style="text-align: center;">
+    <div class="panel-comparator">
+        <h3 class="panel-title">{{siteContent.company.name}}</h3>
+        <div class="img-container">
+            <img src="{{ siteContent.company.img }}" class="img-comparator">
+        </div>
+        <h5 class="form-block">
+            <span class="rating-title">Ergonomie</span><br/>
+            <div class="rating-box">
+                <rating [(ngModel)]="rates.ergo_rate"
+                    (onHover)="hoveringOver($event)"
+                    (onLeave)="resetStar('ergo_rate', $event)"
+                >
+                </rating>
+            </div>
+        </h5>
+        <h5 class="form-block">
+            <span class="rating-title">Contenu</span><br/>
+            <div class="rating-box">
+                <rating [(ngModel)]="rates.content_rate"
+                    (onHover)="hoveringOver($event)"
+                    (onLeave)="resetStar('content_rate', $event)"
+                ></rating>
+            </div>
+        </h5>
+        <div class="col-md-12 col-sm-12 clear-padding comment-form form-block">
+            <span class="rating-title">Commentaire</span><br/>
+            <textarea [(ngModel)]="comment" class="form-control"></textarea>
+        </div>
+        <div class="form-block">
+            <button class="btn form-control" (click)="submitForm()">Continuer</button>
+        </div>
+    </div>
+</div>

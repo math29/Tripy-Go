@@ -23,7 +23,7 @@ module.exports = function(app) {
   app.use('/api/operations', require('./api/operation'));
   app.use('/api/rate', require('./api/rate'));
   app.use('/api/timeline', require('./api/timeline'));
-  app.use('/api/promos', require('./api/promo'));
+  app.use('/api/advices', require('./api/advices'));
 
   /* database info api */
   app.use('/api/back/db', require('./api/dbAPI'));

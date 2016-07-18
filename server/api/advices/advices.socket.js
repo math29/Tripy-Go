@@ -4,7 +4,7 @@
 
  'use strict';
 
- var PromoEvents = require('./promo.event');
+ var AdviceEvents = require('./advices.event');
  var events = ['save' , 'remove'];
 
 
@@ -13,7 +13,7 @@ exports.register = function(socket) {
     var event = events[i];
     var listener = createListener( 'promo:' + event, socket);
 
-    PromoEvents.on(event, listener);
+    AdviceEvents.on(event, listener);
     socket.on('disconnect', removeListener(event, listener));
   }
 };
@@ -26,6 +26,6 @@ function createListener(event, socket) {
 
 function removeListener(event, listener) {
   return function() {
-    PromoEvents.removeListener(event, listener);
+    AdviceEvents.removeListener(event, listener);
   }
 }

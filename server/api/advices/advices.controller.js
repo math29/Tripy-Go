@@ -1,6 +1,6 @@
 'use strict';
 
-var Promo = require('./promo.model.js');
+var Advice = require('./advices.model.js');
 var logger = require('../../config/logger');
 var TypeChecker = require('../../utils/checkObjects');
 var mongoose = require('mongoose');
@@ -13,24 +13,22 @@ var Facebook = require('../facebook_platform/facebook.model');
  * restriction: 'no'
  */
 exports.index = function(req, res) {
-  Promo.find({active: true})
-    .limit(req.query.limit || 15).exec(function (err, promos) {
+  Advice.find({})
+    .limit(req.query.limit || 15).exec(function (err, advices) {
     if(err) {
-      logger.error("Could not find promos");
+      logger.error("Could not find advices");
       return res.status(400).send(err);
     }
-    res.status(200).json(promos);
+    res.status(200).json(advices);
   });
 };
 
 exports.notifyFb = function(req, res) {
-  if(process.env.NODE_ENV == 'production') {
+  if(process.env.NODE_ENV === 'production') {
     Facebook.find({}, function(err, doc) {
       if(err) {
-        console.log(err);
         return res.status(400).json({'error':'facebook can\'t be notified'});
       }else {
-        console.log(doc);
         var tr_req = http.request({
           host: 'yoann-diquelou.fr',
           port: '8082',
@@ -41,7 +39,6 @@ exports.notifyFb = function(req, res) {
           }
         }, function(resp) {
           resp.on('data', function(chunk){
-            console.log(chunk)
           }).on("error", function(e){
           console.log("Got error: " + e.message);
         });
@@ -52,7 +49,6 @@ exports.notifyFb = function(req, res) {
       }
     });
   }else {
-    console.log('Messenger platform message will not be send, it could be take as a spam');
     return res.status(200).json({'ok':'facebook would be notified in production'});
 
   }
@@ -60,15 +56,14 @@ exports.notifyFb = function(req, res) {
 
 exports.create = function(req, res) {
   var body = req.body;
-  if(body.type && body.url && body.vendor && body.discount && body.initial_price && body.img && body.end_date) {
-    body.clicks = {anonymous: 0, connected: []};
-    var promo = new Promo(body);
-    promo.save( function(err, doc) {
+  if(body.title && body.img && body.description) {
+    var advice = new Advice(body);
+    advice.save( function(err, doc) {
         if(err) {
           return res.status(400).json({ 'error': err});
         }
         else {
-          return res.status(201).json( { 'ok': 'La promo à été créée'});
+          return res.status(201).json( { 'ok': 'Le conseil à été créée'});
         }
     });
   }else {
@@ -84,7 +79,7 @@ exports.update = function(req, res) {
     update_obj[k] = body[k];
   }
 
-  Promo.update({_id: req.params.id}, {"$set": update_obj}, function(err, updat) {
+  Advice.update({_id: req.params.id}, {"$set": update_obj}, function(err, updat) {
     if(err) {
       return res.status(400).json({ 'error': 'Impossible de mettre à jour la promotion'});
     }
@@ -98,39 +93,11 @@ exports.update = function(req, res) {
  * restriction: 'admin'
  */
 exports.destroy = function(req, res) {
-  Promo.update({_id: req.params.id}, {$set: {"active": false, "archived": true}}, function(err, promo) {
+  Advice.delete({_id: req.params.id}, function(err, promo) {
     if(err) {
-      logger.error('Could not archive promo');
+      logger.error('Could not delete advices');
       return res.status(500).send(err);
     }
     return res.status(204).send('No Content');
   });
 };
-
-exports.show = function(req, res, next) {
-  var promoId = req.params.id;
-  if(req.headers.authorization) {
-    return res.redirect('connected/'+promoId);
-  }
-  Promo.findOneAndUpdate({_id: promoId}, {"$inc": {"clicks.anonymous": 1}}, function(err, find) {
-    if(err) {
-      console.log(err);
-      return res.redirect('../../index.html');
-    }else {
-      return res.redirect(find.url);
-    }
-  });
-}
-
-exports.showConnected = function(req, res, next) {
-  var promoId = req.params.id;
-
-  Promo.findOneAndUpdate({_id: promoId}, {"$push": {"clicks.connected": req.user._id}}, function(err, find) {
-    if(err) {
-      console.log(err);
-      return res.redirect('../../index.html');
-    }else {
-      return res.redirect(find.url);
-    }
-  });
-}

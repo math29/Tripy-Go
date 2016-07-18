@@ -9,7 +9,7 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var TAG = "Tripygo-App";
 
-if(process.env.NODE_ENV == 'production') {
+if(process.env.NODE_ENV === 'production') {
   var opbeat = require('opbeat').start({
     appId: '6a7c671113',
     organizationId: '7d627d1ebae349f4998468bc2339b064',

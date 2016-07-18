@@ -23,7 +23,6 @@
         "rewriteTsconfig": true
     },
     "files": [
-        "app/LoggedInOutlet.ts",
         "app/components/account/login/login.spec.ts",
         "app/components/account/login/login.ts",
         "app/components/account/profile/overview/overview.ts",
@@ -42,6 +41,7 @@
         "app/components/main/main.spec.ts",
         "app/components/main/main.ts",
         "app/components/socialMedias/socialMedias.ts",
+        "app/components/steps/rateSite/rateSite.ts",
         "app/components/steps/timeline/timeline.ts",
         "app/components/steps/transport/listingPropositions/listingPropositions.ts",
         "app/components/steps/transport/listingPropositions/transport-comparator/transport-comparator-comment/transport-comparator-comment.ts",
@@ -58,6 +58,7 @@
         "app/components/travelPage/services/site.service.ts",
         "app/components/travelPage/services/travel.service.ts",
         "app/front-office-a2.ts",
+        "app/LoggedInOutlet.ts",
         "app/pipes/filterRangeRate.pipe.ts",
         "app/pipes/filterTypeTransport.pipe.ts",
         "app/pipes/orderBy.pipe.ts",

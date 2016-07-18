@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-var controller = require('./promo.controller');
+var controller = require('./advices.controller');
 var auth = require('../../auth/auth.service');
 
 var router = express.Router();
@@ -56,8 +56,6 @@ router.get('/', auth.optionalAuth(),controller.index);
 router.post('/', auth.hasRole('admin'), controller.create);
 router.put('/:id', auth.hasRole('admin'), controller.update);
 router.patch('/notify', auth.hasRole('admin'), controller.notifyFb);
-router.get('/:id', controller.show);
-router.get('/connected/:id', auth.isAuthenticated(), controller.showConnected);
 
 
 /**

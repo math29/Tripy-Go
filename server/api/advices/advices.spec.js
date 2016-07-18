@@ -4,7 +4,7 @@ var should = require('should');
 var app = require('../../app');
 var request = require('supertest');
 var User = require('../user/user.model');
-var Promo = require('./promo.model');
+var Advices = require('./advices.model');
 
 var simpleUser = new User({
  provider: 'local',
@@ -59,33 +59,24 @@ adminUser.save(function(){
 /*
  * Let's test the API
  */
-describe('API /api/promo', function() {
+describe('API /api/advices', function() {
 
   after(function(done) {
-    Promo.remove({}).exec().then(function(){
+    Advices.remove({}).exec().then(function(){
       done();
     });
   });
 
-  it('should create a promo', function(done) {
+  it('should create an advice', function(done) {
     request(app)
-      .post('/api/promos')
+      .post('/api/advices')
       .set({'Authorization': 'Bearer '+tokenAdmin})
       .send(
         {
-          "active":true,
-          "archived": false,
-          "type": "transport",
           "url": "https://google.com",
-          "vendor": "Google",
-          "discount": 50,
-          "initial_price": 1000,
-          "end_date": "Wed, 18 May 2016 18:58:15 GMT",
           "img":"http://vignette4.wikia.nocookie.net/desencyclopedie/images/2/26/Sourire_de_biquette.jpg/revision/latest?cb=20090902212908",
-          "clicks": {
-            "anonymous": 0,
-            "connected": []
-          }
+          "title":"Titre bidon",
+          "description":"Description bidon"
       }
       )
       .expect(201)
@@ -97,9 +88,9 @@ describe('API /api/promo', function() {
       });
   });
 
-  it('should get all promos actives', function(done){
+  it('should get all advices', function(done){
     request(app)
-      .get('/api/promos')
+      .get('/api/advices')
       .send()
       .expect(200)
       .expect('Content-Type', /json/)

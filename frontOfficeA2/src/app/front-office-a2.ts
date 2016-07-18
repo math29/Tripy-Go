@@ -20,6 +20,7 @@ import { Promos } from './components/discount/discounts';
 import { ListingPropositions } from './components/steps/transport/listingPropositions/listingPropositions';
 import { Research } from './components/steps/transport/research/research';
 import { TravelPage } from './components/travelPage/index';
+import { RateSite } from './components/steps/rateSite/rateSite';
 
 @Component({
   selector: 'front-office-a2-app',
@@ -37,10 +38,11 @@ import { TravelPage } from './components/travelPage/index';
 	{ path: '/login', component: Login, name: 'Login' },
 	{ path: '/signup', component: Signup, name: 'Signup' },
 	{ path: '/profile', component: Profile, name: 'Profile' },
-  { path: '/discounts', component: Promos, name: 'Promos'},
+  	{ path: '/discounts', component: Promos, name: 'Promos'},
 	{ path: '/transport/listing/:id', component: ListingPropositions, name: 'ListingPropositionsComparatorsTransport' },
 	{ path: '/transport/research/:comparator_id/:travel_id', component: Research, name: 'ResearchTransport' },
-  { path: '/travel/:travel_id', component: TravelPage, name: 'TravelPage'}
+	{ path: '/travel/rate/:site_id', component: RateSite, name: 'TravelRateSite' },
+  	{ path: '/travel/:travel_id', component: TravelPage, name: 'TravelPage'}
 ])
 export class FrontOfficeA2App {
 

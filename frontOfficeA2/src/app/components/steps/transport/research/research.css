@@ -6,6 +6,32 @@ iframe {
 }
 
 /*****************************/
+/* USE THIS COMPARATOR */
+/*****************************/
+
+.booked-button {
+	z-index: 900;
+	position: fixed;
+	bottom: 85px;
+	left: 0px;
+	cursor: pointer;
+	width: 140px;
+	line-height: 60px;
+	background-color: #F2676B;
+	color: white;
+	font-weight: 800;
+	font-size: 25px;
+	text-align: vertical;
+	font-style: bold;
+	padding-left: 5px;
+	border-radius: 0px 5px 0px 0px;
+}
+
+.booked-button:hover {
+	color: #00adef !important;
+}
+
+/*****************************/
 /* TIMELINE DESIGN */
 /*****************************/
 .timeline-sidebar{
