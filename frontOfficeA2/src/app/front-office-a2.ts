@@ -17,6 +17,7 @@ import { AboutUs } from './components/team/about-us/about-us';
 import { Contact } from './components/team/contact/contact';
 import { Profile } from './components/account/profile/profile';
 import { Promos } from './components/discount/discounts';
+import { Advices } from './components/advices/advices';
 import { ListingPropositions } from './components/steps/transport/listingPropositions/listingPropositions';
 import { Research } from './components/steps/transport/research/research';
 import { TravelPage } from './components/travelPage/index';
@@ -39,6 +40,7 @@ import { RateSite } from './components/steps/rateSite/rateSite';
 	{ path: '/signup', component: Signup, name: 'Signup' },
 	{ path: '/profile', component: Profile, name: 'Profile' },
   	{ path: '/discounts', component: Promos, name: 'Promos'},
+  	{ path: '/conseils', component: Advices, name: 'Conseils'},
 	{ path: '/transport/listing/:id', component: ListingPropositions, name: 'ListingPropositionsComparatorsTransport' },
 	{ path: '/transport/research/:comparator_id/:travel_id', component: Research, name: 'ResearchTransport' },
 	{ path: '/travel/rate/:site_id', component: RateSite, name: 'TravelRateSite' },

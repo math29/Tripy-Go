@@ -1,0 +1,19 @@
+<div class="col-sm-6 col-md-4">
+    <article class="card">
+        <header class="card__thumb">
+            <a href="{{ advice.url }}">
+                <img src="http://lorempicsum.com/futurama/500/150/2">
+            </a>
+        </header>
+        <div class="card__date">
+            <span class="card__date__day">{{ stringAsDate(advice.date_creation)|date:'dd' }}</span>
+            <span class="card__date__month">{{ stringAsDate(advice.date_creation)|date:'MMM' }}</span>
+        </div>
+        <div class="card__body">
+            <h2 class="card__title">{{ advice.title }}</h2>
+            <p class="card__description">
+                {{ advice.description }}
+            </p>
+        </div>
+    </article>
+</div>
