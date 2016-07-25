@@ -93,7 +93,7 @@ exports.update = function(req, res) {
  * restriction: 'admin'
  */
 exports.destroy = function(req, res) {
-  Advice.delete({_id: req.params.id}, function(err, promo) {
+  Advice.remove({_id: req.params.id}, function(err, promo) {
     if(err) {
       logger.error('Could not delete advices');
       return res.status(500).send(err);
