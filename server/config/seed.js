@@ -16,6 +16,7 @@ var Location = require('../api/location/location.model');
 var Rate = require('../api/rate/rate.model');
 var Timeline = require('../api/timeline/timeline.model');
 var Operation = require('../api/operation/operation.model');
+var Advice = require('../api/advices/advices.model');
 var mongoose = require('mongoose');
 
 
@@ -3158,4 +3159,34 @@ Timeline.find().remove(function() {
             });
         });
     })
+});
+
+Timeline.find().remove(function() {
+    Advice.create({
+            url: "https://github.com/",
+            img: "https://assets-cdn.github.com/images/modules/open_graph/github-mark.png",
+            title: "Conseil GITHUB",
+            description: "C'est une plateforme très utile pour pouvoir coder ! Elle permet aussi de suivre l'avancer d'un projet, de brancher tout un outillage autour de la plateforme etc..."
+        },
+        {
+            url: "https://github.com/",
+            img: "https://assets-cdn.github.com/images/modules/open_graph/github-mark.png",
+            title: "Conseil GITHUB",
+            description: "baffg fg dfgfdgfhhhg f h htrt  rhe rhe t hrhr h tt trh gf dfth t t jt j y jytjt .."
+        },
+        {
+            url: "https://github.com/",
+            img: "https://assets-cdn.github.com/images/modules/open_graph/github-mark.png",
+            title: "Conseil GITHUB",
+            description: "C'est une plateforme très utile pour pouvoir coder ! Elle permet aussi de suivre l'avancer d'un projet, de brancher tout un outillage autour de la plateforme etc..."
+        },
+        {
+            url: "https://github.com/",
+            img: "https://assets-cdn.github.com/images/modules/open_graph/github-mark.png",
+            title: "Conseil GITHUB",
+            description: "baffg fg dfgfdgfhhhg f h htrt  rhe rhe t hrhr h tt trh gf dfth t t jt j y jytjt .. baffg fg dfgfdgfhhhg f h htrt  rhe rhe t hrhr h tt trh gf dfth t t jt j y jytjt ..baffg fg dfgfdgfhhhg f h htrt  rhe rhe t hrhr h tt trh gf dfth t t jt j y jytjt ..baffg fg dfgfdgfhhhg f h htrt  rhe rhe t hrhr h tt trh gf dfth t t jt j y jytjt ..baffg fg dfgfdgfhhhg f h htrt  rhe rhe t hrhr h tt trh gf dfth t t jt j y jytjt .."
+        }, function(err, advice1) {
+            console.log("Advice created");
+        }
+    );
 });
