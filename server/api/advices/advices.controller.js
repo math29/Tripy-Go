@@ -14,12 +14,15 @@ var Facebook = require('../facebook_platform/facebook.model');
  */
 exports.index = function(req, res) {
   Advice.find({})
-    .limit(req.query.limit || 15).exec(function (err, advices) {
+    .exec(function (err, advices) {
     if(err) {
       logger.error("Could not find advices");
       return res.status(400).send(err);
     }
-    res.status(200).json(advices);
+    req.params.limit = 3;
+    req.params.offset = 0;
+    filterAdvices(advices, req, res);
+    // res.status(200).json(advices);
   });
 };
 
@@ -101,3 +104,34 @@ exports.destroy = function(req, res) {
     return res.status(204).send('No Content');
   });
 };
+
+// A FAIRE : ORDER BY DATE
+function compareByDateDESC(a, b){
+    if(a.date_creation < b.date_creation)
+      return 1;
+    else if(a.date_creation > b.date_creation)
+      return -1;
+    else
+      return 0;
+}
+
+function filterAdvices(advices, req, res){
+  var limit = req.params.limit;
+  var offset = req.params.offset;
+
+  console.log("aquis ?");
+
+  if(!limit) { return res.status(404).send('No limit given'); }
+  if(offset!=0 && !offset) { return res.status(404).send('No Offset given'); }
+
+  // On récupère seulement les résultats du bon type
+  // var comments = result[req.params.type].comments;
+
+  // Puis on les tris dans l'ordre descendant
+  advices.sort(compareByDateDESC);
+
+  // On applique les limit et offset
+  var selected_advices = advices.splice(offset, limit);
+
+  return res.status(200).json(selected_advices);
+}
