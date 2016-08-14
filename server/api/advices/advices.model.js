@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 
 var AdvicesSchema = new Schema({
   url: {type: String},
-  img: {type: String, required: true},
+  img: {type: String},
   title: {type: String, required: true},
   description: {type: String, required: true},
   date_creation: {type: Date, default: Date.now}
