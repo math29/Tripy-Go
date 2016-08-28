@@ -1,0 +1,58 @@
+<div class="row">
+    <div class="col-md-12">
+        <button (click)="editAdvice()" class="btn btn-primary" *ngIf="!newAdvice">Nouveau bon plan</button>
+    </div>
+    <div class="col-md-12" *ngIf="newAdvice">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="title">Titre</label>
+                    <input type="text" class="form-control" [(ngModel)]="newAdvice.title" />
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Description</label>
+                    <md-editor [mceContent]="newAdvice.description | markdown" (contentChanged)="descriptionChanged($event)"></md-editor>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="url">URL</label>
+                    <input type="text" class="form-control" [(ngModel)]="newAdvice.url" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="url">Image</label>
+                    <input type="text" class="form-control" [(ngModel)]="newAdvice.img" />
+                </div>
+            </div>
+        </div>
+        <button (click)="addAdvice()" class="btn btn-primary">Ajouter</button><button (click)="newAdvice = null" class="btn btn-warning">Annuler</button>
+    </div>
+    <div class="row" *ngFor="let advice of advices">
+        <div class="col-md-12">
+            <h1>{{advice.title}}</h1>
+        </div>
+        <div class="col-md-4">
+            <img style="width: 100%" src="{{advice.img}}"  />
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-7">
+                    <span >{{advice.url}}</span>
+                </div>
+                <div class="col-md-1">
+                    <span class="fa fa-edit" (click)="newAdvice = advice"></span>
+                </div>
+                <div class="col-md-7" [innerHtml]="advice.description | markdown">
+                </div>
+                <div class="col-md-1">
+                    <span class="fa fa-remove" (click)="deleteAdvice(advice)"></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

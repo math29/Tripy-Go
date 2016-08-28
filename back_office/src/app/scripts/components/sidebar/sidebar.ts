@@ -50,6 +50,7 @@ export class SidebarCmp{
       let transportComparator: Item = {"route": "TransportComparator", "icon":"fa-balance-scale", "content": "Comparateur de transport"};
       let transportAgregator: Item = {"route":"Transports", "icon":"fa-filter", "content":"Agregateur"};
       let promos: Item = {"route":"Promos", "icon": "fa-percent", "content": "Promos"};
+      let advices : Item = {"route":"Advices", "icon": "fa-percent", "content": "Bon plans"};
 
       this.items = [];
       this.items.push(dashboard);
@@ -65,6 +66,7 @@ export class SidebarCmp{
       this.items.push(company);
       this.items.push(transportAgregator);
       this.items.push(transportComparator);
+      this.items.push(advices);
       if(this.isAdminInfo()){
         //this.items.push(mongo);
         this.items.push(logs);
