@@ -2,7 +2,7 @@
     <article class="card">
         <header class="card__thumb" ng-if="advice.url">
             <a href="{{ advice.url }}">
-                <img src="http://lorempicsum.com/futurama/500/150/2">
+                <img src="{{ advice.img }}">
             </a>
         </header>
         <div class="card__date">
@@ -12,7 +12,8 @@
         <div class="card__body">
             <h2 class="card__title">{{ advice.title }}</h2>
             <p class="card__description">
-                {{ advice.description }}
+                <span [innerHTML]="advice.description | markdown"></span>
+                <!-- {{ advice.description }} -->
             </p>
         </div>
     </article>

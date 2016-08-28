@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import { ROUTER_DIRECTIVES, Router } from '@angular/router-deprecated';
+import { MarkdownPipe } from '../../../tripy_go_lib/pipes/marked';
 
 @Component({
 	selector: 'advice',
@@ -8,7 +9,7 @@ import { ROUTER_DIRECTIVES, Router } from '@angular/router-deprecated';
 	styleUrls: ['app/components/advices/components/advice.css'],
 	providers: [],
 	directives: [ROUTER_DIRECTIVES],
-	pipes: [DatePipe]
+	pipes: [DatePipe, MarkdownPipe]
 })
 export class Advice {
 	@Input() advice;
