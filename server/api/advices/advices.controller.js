@@ -19,7 +19,7 @@ exports.index = function(req, res) {
       logger.error("Could not find advices");
       return res.status(400).send(err);
     }
-    req.params.limit = 3;
+    req.params.limit = 20;
     req.params.offset = 0;
     filterAdvices(advices, req, res);
     // res.status(200).json(advices);
